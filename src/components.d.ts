@@ -6,12 +6,30 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface MenuDropDown {
+        "list": string;
+        "listTitle": string;
+    }
+    interface MenuItems {
+    }
     interface NavBar {
     }
     interface SignIn {
     }
 }
 declare global {
+    interface HTMLMenuDropDownElement extends Components.MenuDropDown, HTMLStencilElement {
+    }
+    var HTMLMenuDropDownElement: {
+        prototype: HTMLMenuDropDownElement;
+        new (): HTMLMenuDropDownElement;
+    };
+    interface HTMLMenuItemsElement extends Components.MenuItems, HTMLStencilElement {
+    }
+    var HTMLMenuItemsElement: {
+        prototype: HTMLMenuItemsElement;
+        new (): HTMLMenuItemsElement;
+    };
     interface HTMLNavBarElement extends Components.NavBar, HTMLStencilElement {
     }
     var HTMLNavBarElement: {
@@ -25,16 +43,26 @@ declare global {
         new (): HTMLSignInElement;
     };
     interface HTMLElementTagNameMap {
+        "menu-drop-down": HTMLMenuDropDownElement;
+        "menu-items": HTMLMenuItemsElement;
         "nav-bar": HTMLNavBarElement;
         "sign-in": HTMLSignInElement;
     }
 }
 declare namespace LocalJSX {
+    interface MenuDropDown {
+        "list"?: string;
+        "listTitle"?: string;
+    }
+    interface MenuItems {
+    }
     interface NavBar {
     }
     interface SignIn {
     }
     interface IntrinsicElements {
+        "menu-drop-down": MenuDropDown;
+        "menu-items": MenuItems;
         "nav-bar": NavBar;
         "sign-in": SignIn;
     }
@@ -43,6 +71,8 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "menu-drop-down": LocalJSX.MenuDropDown & JSXBase.HTMLAttributes<HTMLMenuDropDownElement>;
+            "menu-items": LocalJSX.MenuItems & JSXBase.HTMLAttributes<HTMLMenuItemsElement>;
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
             "sign-in": LocalJSX.SignIn & JSXBase.HTMLAttributes<HTMLSignInElement>;
         }
