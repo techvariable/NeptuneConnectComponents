@@ -2,7 +2,6 @@ import { Component, h, State } from '@stencil/core';
 
 @Component({
   tag: 'sign-in',
-  // styleUrl: 'sign-in.css',
   scoped: true,
 })
 export class SignIn {

@@ -6,6 +6,14 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface FluidContainer {
+        "breakpoint": 'xl' | 'lg' | 'md';
+    }
+    interface IconButton {
+        "btnLabel": string;
+        "iconPosition": string;
+        "type": string;
+    }
     interface MenuDropDown {
         "list": string;
         "listTitle": string;
@@ -14,10 +22,26 @@ export namespace Components {
     }
     interface NavBar {
     }
+    interface PlainButton {
+        "btnLabel": string;
+        "type": string;
+    }
     interface SignIn {
     }
 }
 declare global {
+    interface HTMLFluidContainerElement extends Components.FluidContainer, HTMLStencilElement {
+    }
+    var HTMLFluidContainerElement: {
+        prototype: HTMLFluidContainerElement;
+        new (): HTMLFluidContainerElement;
+    };
+    interface HTMLIconButtonElement extends Components.IconButton, HTMLStencilElement {
+    }
+    var HTMLIconButtonElement: {
+        prototype: HTMLIconButtonElement;
+        new (): HTMLIconButtonElement;
+    };
     interface HTMLMenuDropDownElement extends Components.MenuDropDown, HTMLStencilElement {
     }
     var HTMLMenuDropDownElement: {
@@ -36,6 +60,12 @@ declare global {
         prototype: HTMLNavBarElement;
         new (): HTMLNavBarElement;
     };
+    interface HTMLPlainButtonElement extends Components.PlainButton, HTMLStencilElement {
+    }
+    var HTMLPlainButtonElement: {
+        prototype: HTMLPlainButtonElement;
+        new (): HTMLPlainButtonElement;
+    };
     interface HTMLSignInElement extends Components.SignIn, HTMLStencilElement {
     }
     var HTMLSignInElement: {
@@ -43,13 +73,24 @@ declare global {
         new (): HTMLSignInElement;
     };
     interface HTMLElementTagNameMap {
+        "fluid-container": HTMLFluidContainerElement;
+        "icon-button": HTMLIconButtonElement;
         "menu-drop-down": HTMLMenuDropDownElement;
         "menu-items": HTMLMenuItemsElement;
         "nav-bar": HTMLNavBarElement;
+        "plain-button": HTMLPlainButtonElement;
         "sign-in": HTMLSignInElement;
     }
 }
 declare namespace LocalJSX {
+    interface FluidContainer {
+        "breakpoint"?: 'xl' | 'lg' | 'md';
+    }
+    interface IconButton {
+        "btnLabel"?: string;
+        "iconPosition"?: string;
+        "type"?: string;
+    }
     interface MenuDropDown {
         "list"?: string;
         "listTitle"?: string;
@@ -58,12 +99,19 @@ declare namespace LocalJSX {
     }
     interface NavBar {
     }
+    interface PlainButton {
+        "btnLabel"?: string;
+        "type"?: string;
+    }
     interface SignIn {
     }
     interface IntrinsicElements {
+        "fluid-container": FluidContainer;
+        "icon-button": IconButton;
         "menu-drop-down": MenuDropDown;
         "menu-items": MenuItems;
         "nav-bar": NavBar;
+        "plain-button": PlainButton;
         "sign-in": SignIn;
     }
 }
@@ -71,9 +119,12 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "fluid-container": LocalJSX.FluidContainer & JSXBase.HTMLAttributes<HTMLFluidContainerElement>;
+            "icon-button": LocalJSX.IconButton & JSXBase.HTMLAttributes<HTMLIconButtonElement>;
             "menu-drop-down": LocalJSX.MenuDropDown & JSXBase.HTMLAttributes<HTMLMenuDropDownElement>;
             "menu-items": LocalJSX.MenuItems & JSXBase.HTMLAttributes<HTMLMenuItemsElement>;
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
+            "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
             "sign-in": LocalJSX.SignIn & JSXBase.HTMLAttributes<HTMLSignInElement>;
         }
     }
