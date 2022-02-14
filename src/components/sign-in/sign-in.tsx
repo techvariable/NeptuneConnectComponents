@@ -17,7 +17,7 @@ export class SignIn {
         <div class="max-w-sm w-full space-y-8">
           <div>
             <div class="flex justify-center ">
-              <img class="h-24" src="https://cdn-icons.flaticon.com/png/512/5551/premium/5551395.png?token=exp=1644517554~hmac=e8ed18e574e0ec566ad6569fb3f88405" alt="" />
+              <img class="h-24" src="https://cdn-icons.flaticon.com/png/512/360/premium/360708.png?token=exp=1644823857~hmac=e940e9ce1d776051a2873177e2012843" alt="" />
             </div>
 
             <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-700 font-serif">Welcome Back</h2>
@@ -25,26 +25,13 @@ export class SignIn {
           </div>
 
           <form class="pt-6 space-y-3">
-            <input
-              id="email-address"
-              name="email"
-              type="email"
-              autocomplete="off"
-              required
-              class="appearance-none block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
-              placeholder="Email address"
-            />
+            {/* email */}
+            <text-field name="email" width="full" type="email"></text-field>
 
+            {/* password */}
             <div class="mt-1 relative rounded-md shadow-sm">
-              <input
-                id="password"
-                name="password"
-                type={this.showPassword ? 'text' : 'password'}
-                autocomplete="off"
-                required
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
-                placeholder="Password"
-              />
+              <text-field name="password" width="full" type={this.showPassword ? 'text' : 'password'}></text-field>
+              {/* eye button */}
               <div class="absolute inset-y-0 right-3 flex items-center text-indigo-500">
                 <div class="cursor-pointer" onClick={() => this.changeView()}>
                   {!this.showPassword ? (
@@ -71,12 +58,10 @@ export class SignIn {
               </div>
             </div>
 
-            <button
-              type="submit"
-              class="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Sign In
-            </button>
+            {/* Submit button */}
+            <div>
+              <plain-button btn-label="submit" width="full" type="contained"></plain-button>
+            </div>
           </form>
         </div>
       </section>

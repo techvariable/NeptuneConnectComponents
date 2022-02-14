@@ -8,7 +8,7 @@ export class NavBar {
   render() {
     return (
       <nav class="py-5">
-        <div class="max-w-6xl mx-auto">
+        <fluid-container>
           <div class="flex justify-between items-center">
             {/* Logo goes here */}
             <div class="flex gap-2 items-center">
@@ -21,7 +21,7 @@ export class NavBar {
               <slot></slot>
             </ul>
           </div>
-        </div>
+        </fluid-container>
       </nav>
     );
   }

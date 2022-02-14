@@ -24,9 +24,18 @@ export namespace Components {
     }
     interface PlainButton {
         "btnLabel": string;
-        "type": string;
+        "type": 'contained' | 'outlined';
+        "width": 'full' | 'auto';
     }
     interface SignIn {
+    }
+    interface TextField {
+        "name": string;
+        "type": 'email' | 'password' | 'text';
+        "width": 'full' | 'auto';
+    }
+    interface TextFieldArea {
+        "width": 'full' | 'auto';
     }
 }
 declare global {
@@ -72,6 +81,18 @@ declare global {
         prototype: HTMLSignInElement;
         new (): HTMLSignInElement;
     };
+    interface HTMLTextFieldElement extends Components.TextField, HTMLStencilElement {
+    }
+    var HTMLTextFieldElement: {
+        prototype: HTMLTextFieldElement;
+        new (): HTMLTextFieldElement;
+    };
+    interface HTMLTextFieldAreaElement extends Components.TextFieldArea, HTMLStencilElement {
+    }
+    var HTMLTextFieldAreaElement: {
+        prototype: HTMLTextFieldAreaElement;
+        new (): HTMLTextFieldAreaElement;
+    };
     interface HTMLElementTagNameMap {
         "fluid-container": HTMLFluidContainerElement;
         "icon-button": HTMLIconButtonElement;
@@ -80,6 +101,8 @@ declare global {
         "nav-bar": HTMLNavBarElement;
         "plain-button": HTMLPlainButtonElement;
         "sign-in": HTMLSignInElement;
+        "text-field": HTMLTextFieldElement;
+        "text-field-area": HTMLTextFieldAreaElement;
     }
 }
 declare namespace LocalJSX {
@@ -101,9 +124,18 @@ declare namespace LocalJSX {
     }
     interface PlainButton {
         "btnLabel"?: string;
-        "type"?: string;
+        "type"?: 'contained' | 'outlined';
+        "width"?: 'full' | 'auto';
     }
     interface SignIn {
+    }
+    interface TextField {
+        "name"?: string;
+        "type"?: 'email' | 'password' | 'text';
+        "width"?: 'full' | 'auto';
+    }
+    interface TextFieldArea {
+        "width"?: 'full' | 'auto';
     }
     interface IntrinsicElements {
         "fluid-container": FluidContainer;
@@ -113,6 +145,8 @@ declare namespace LocalJSX {
         "nav-bar": NavBar;
         "plain-button": PlainButton;
         "sign-in": SignIn;
+        "text-field": TextField;
+        "text-field-area": TextFieldArea;
     }
 }
 export { LocalJSX as JSX };
@@ -126,6 +160,8 @@ declare module "@stencil/core" {
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
             "sign-in": LocalJSX.SignIn & JSXBase.HTMLAttributes<HTMLSignInElement>;
+            "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
+            "text-field-area": LocalJSX.TextFieldArea & JSXBase.HTMLAttributes<HTMLTextFieldAreaElement>;
         }
     }
 }
