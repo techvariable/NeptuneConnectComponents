@@ -2,6 +2,7 @@ import { Component, h, Element, State } from '@stencil/core';
 import { EditorState, basicSetup } from '@codemirror/basic-setup';
 import { EditorView } from '@codemirror/view';
 import { javascript } from '@codemirror/lang-javascript';
+// import { oneDarkTheme } from '@codemirror/theme-one-dark';
 
 @Component({
   tag: 'code-editor',
