@@ -11,6 +11,7 @@ export namespace Components {
     }
     interface CodeEditor {
         "isEditable": 'true' | 'false';
+        "language": 'java' | 'json';
     }
     interface FluidContainer {
         "breakpoint": 'xl' | 'lg' | 'md';
@@ -146,6 +147,7 @@ declare namespace LocalJSX {
     }
     interface CodeEditor {
         "isEditable"?: 'true' | 'false';
+        "language"?: 'java' | 'json';
     }
     interface FluidContainer {
         "breakpoint"?: 'xl' | 'lg' | 'md';

@@ -29,6 +29,7 @@
   "dependencies": {
     "@codemirror/basic-setup": "^0.19.1",
     "@codemirror/lang-java": "^0.19.1",
+    "@codemirror/lang-json": "^0.19.2",
     "@codemirror/theme-one-dark": "^0.19.1",
     "@codemirror/view": "^0.19.42",
     "@stencil/core": "^2.13.0"
