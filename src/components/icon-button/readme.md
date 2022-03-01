@@ -9,7 +9,7 @@
 
 | Property       | Attribute       | Description | Type                        | Default     |
 | -------------- | --------------- | ----------- | --------------------------- | ----------- |
-| `addClass`     | `add-class`     |             | `string`                    | `undefined` |
+| `addClass`     | `add-class`     |             | `string`                    | `''`        |
 | `btnLabel`     | `btn-label`     |             | `string`                    | `undefined` |
 | `iconPosition` | `icon-position` |             | `"left" \| "right"`         | `undefined` |
 | `type`         | `type`          |             | `"contained" \| "outlined"` | `undefined` |

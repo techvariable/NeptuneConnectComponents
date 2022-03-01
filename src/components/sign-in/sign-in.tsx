@@ -17,14 +17,14 @@ export class SignIn {
         <div class="max-w-sm w-full space-y-8">
           <div>
             <div class="flex justify-center ">
-              <img class="h-24" src="https://cdn-icons.flaticon.com/png/512/360/premium/360708.png?token=exp=1644823857~hmac=e940e9ce1d776051a2873177e2012843" alt="" />
+              <img class="h-24" src="https://www.svgrepo.com/show/50237/neptune.svg" alt="neptune logo" />
             </div>
 
             <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-700 font-serif">Welcome Back</h2>
             <p class="mt-2 text-center text-gray-400 font-sans">Enter your credentials to access your acount</p>
           </div>
 
-          <form class="pt-6 space-y-3">
+          <form class="pt-6 space-y-3" action="/" name="login-form" method="post" enctype="multipart/form-data">
             {/* email */}
             <text-field name="email" width="full" type="email"></text-field>
 

@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property   | Attribute   | Description | Type                        | Default       |
-| ---------- | ----------- | ----------- | --------------------------- | ------------- |
-| `addClass` | `add-class` |             | `string`                    | `''`          |
-| `btnLabel` | `btn-label` |             | `string`                    | `undefined`   |
-| `type`     | `type`      |             | `"contained" \| "outlined"` | `'contained'` |
-| `width`    | `width`     |             | `"auto" \| "full"`          | `'auto'`      |
+| Property   | Attribute   | Description | Type                                  | Default       |
+| ---------- | ----------- | ----------- | ------------------------------------- | ------------- |
+| `addClass` | `add-class` |             | `string`                              | `''`          |
+| `btnLabel` | `btn-label` |             | `string`                              | `undefined`   |
+| `type`     | `type`      |             | `"contained" \| "outlined" \| "text"` | `'contained'` |
+| `width`    | `width`     |             | `"auto" \| "full"`                    | `'auto'`      |
 
 
 ## Dependencies

@@ -13,6 +13,12 @@ export namespace Components {
         "isEditable": 'true' | 'false';
         "language": 'java' | 'json';
     }
+    interface CustomTable {
+        "currentPage": string;
+        "onClick": any;
+        "tableBody": object[];
+        "tableHeader": string[];
+    }
     interface FluidContainer {
         "breakpoint": 'xl' | 'lg' | 'md';
     }
@@ -21,6 +27,8 @@ export namespace Components {
         "btnLabel": string;
         "iconPosition": 'right' | 'left';
         "type": 'outlined' | 'contained';
+    }
+    interface MainComponent {
     }
     interface MenuDropDown {
         "list": string;
@@ -33,7 +41,7 @@ export namespace Components {
     interface PlainButton {
         "addClass": string;
         "btnLabel": string;
-        "type": 'contained' | 'outlined';
+        "type": 'contained' | 'outlined' | 'text';
         "width": 'full' | 'auto';
     }
     interface RadioButton {
@@ -41,6 +49,10 @@ export namespace Components {
         "name": string;
     }
     interface SignIn {
+    }
+    interface TableWrapper {
+        "limit": number;
+        "url": string;
     }
     interface TextField {
         "addClass": string;
@@ -66,6 +78,12 @@ declare global {
         prototype: HTMLCodeEditorElement;
         new (): HTMLCodeEditorElement;
     };
+    interface HTMLCustomTableElement extends Components.CustomTable, HTMLStencilElement {
+    }
+    var HTMLCustomTableElement: {
+        prototype: HTMLCustomTableElement;
+        new (): HTMLCustomTableElement;
+    };
     interface HTMLFluidContainerElement extends Components.FluidContainer, HTMLStencilElement {
     }
     var HTMLFluidContainerElement: {
@@ -77,6 +95,12 @@ declare global {
     var HTMLIconButtonElement: {
         prototype: HTMLIconButtonElement;
         new (): HTMLIconButtonElement;
+    };
+    interface HTMLMainComponentElement extends Components.MainComponent, HTMLStencilElement {
+    }
+    var HTMLMainComponentElement: {
+        prototype: HTMLMainComponentElement;
+        new (): HTMLMainComponentElement;
     };
     interface HTMLMenuDropDownElement extends Components.MenuDropDown, HTMLStencilElement {
     }
@@ -114,6 +138,12 @@ declare global {
         prototype: HTMLSignInElement;
         new (): HTMLSignInElement;
     };
+    interface HTMLTableWrapperElement extends Components.TableWrapper, HTMLStencilElement {
+    }
+    var HTMLTableWrapperElement: {
+        prototype: HTMLTableWrapperElement;
+        new (): HTMLTableWrapperElement;
+    };
     interface HTMLTextFieldElement extends Components.TextField, HTMLStencilElement {
     }
     var HTMLTextFieldElement: {
@@ -129,14 +159,17 @@ declare global {
     interface HTMLElementTagNameMap {
         "check-box": HTMLCheckBoxElement;
         "code-editor": HTMLCodeEditorElement;
+        "custom-table": HTMLCustomTableElement;
         "fluid-container": HTMLFluidContainerElement;
         "icon-button": HTMLIconButtonElement;
+        "main-component": HTMLMainComponentElement;
         "menu-drop-down": HTMLMenuDropDownElement;
         "menu-items": HTMLMenuItemsElement;
         "nav-bar": HTMLNavBarElement;
         "plain-button": HTMLPlainButtonElement;
         "radio-button": HTMLRadioButtonElement;
         "sign-in": HTMLSignInElement;
+        "table-wrapper": HTMLTableWrapperElement;
         "text-field": HTMLTextFieldElement;
         "text-field-area": HTMLTextFieldAreaElement;
     }
@@ -149,6 +182,12 @@ declare namespace LocalJSX {
         "isEditable"?: 'true' | 'false';
         "language"?: 'java' | 'json';
     }
+    interface CustomTable {
+        "currentPage"?: string;
+        "onClick"?: any;
+        "tableBody"?: object[];
+        "tableHeader"?: string[];
+    }
     interface FluidContainer {
         "breakpoint"?: 'xl' | 'lg' | 'md';
     }
@@ -157,6 +196,8 @@ declare namespace LocalJSX {
         "btnLabel"?: string;
         "iconPosition"?: 'right' | 'left';
         "type"?: 'outlined' | 'contained';
+    }
+    interface MainComponent {
     }
     interface MenuDropDown {
         "list"?: string;
@@ -169,7 +210,7 @@ declare namespace LocalJSX {
     interface PlainButton {
         "addClass"?: string;
         "btnLabel"?: string;
-        "type"?: 'contained' | 'outlined';
+        "type"?: 'contained' | 'outlined' | 'text';
         "width"?: 'full' | 'auto';
     }
     interface RadioButton {
@@ -177,6 +218,10 @@ declare namespace LocalJSX {
         "name"?: string;
     }
     interface SignIn {
+    }
+    interface TableWrapper {
+        "limit"?: number;
+        "url"?: string;
     }
     interface TextField {
         "addClass"?: string;
@@ -191,14 +236,17 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "check-box": CheckBox;
         "code-editor": CodeEditor;
+        "custom-table": CustomTable;
         "fluid-container": FluidContainer;
         "icon-button": IconButton;
+        "main-component": MainComponent;
         "menu-drop-down": MenuDropDown;
         "menu-items": MenuItems;
         "nav-bar": NavBar;
         "plain-button": PlainButton;
         "radio-button": RadioButton;
         "sign-in": SignIn;
+        "table-wrapper": TableWrapper;
         "text-field": TextField;
         "text-field-area": TextFieldArea;
     }
@@ -209,14 +257,17 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "check-box": LocalJSX.CheckBox & JSXBase.HTMLAttributes<HTMLCheckBoxElement>;
             "code-editor": LocalJSX.CodeEditor & JSXBase.HTMLAttributes<HTMLCodeEditorElement>;
+            "custom-table": LocalJSX.CustomTable & JSXBase.HTMLAttributes<HTMLCustomTableElement>;
             "fluid-container": LocalJSX.FluidContainer & JSXBase.HTMLAttributes<HTMLFluidContainerElement>;
             "icon-button": LocalJSX.IconButton & JSXBase.HTMLAttributes<HTMLIconButtonElement>;
+            "main-component": LocalJSX.MainComponent & JSXBase.HTMLAttributes<HTMLMainComponentElement>;
             "menu-drop-down": LocalJSX.MenuDropDown & JSXBase.HTMLAttributes<HTMLMenuDropDownElement>;
             "menu-items": LocalJSX.MenuItems & JSXBase.HTMLAttributes<HTMLMenuItemsElement>;
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
             "sign-in": LocalJSX.SignIn & JSXBase.HTMLAttributes<HTMLSignInElement>;
+            "table-wrapper": LocalJSX.TableWrapper & JSXBase.HTMLAttributes<HTMLTableWrapperElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
             "text-field-area": LocalJSX.TextFieldArea & JSXBase.HTMLAttributes<HTMLTextFieldAreaElement>;
         }
