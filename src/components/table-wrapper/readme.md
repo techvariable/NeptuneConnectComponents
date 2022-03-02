@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default     |
-| -------- | --------- | ----------- | -------- | ----------- |
-| `limit`  | `limit`   |             | `number` | `10`        |
-| `url`    | `url`     |             | `string` | `undefined` |
+| Property     | Attribute | Description | Type       | Default     |
+| ------------ | --------- | ----------- | ---------- | ----------- |
+| `rowPerPage` | --        |             | `number[]` | `undefined` |
+| `url`        | `url`     |             | `string`   | `undefined` |
 
 
 ## Dependencies
@@ -27,6 +27,7 @@
 ```mermaid
 graph TD;
   table-wrapper --> custom-table
+  custom-table --> plain-button
   main-component --> table-wrapper
   style table-wrapper fill:#f9f,stroke:#333,stroke-width:4px
 ```

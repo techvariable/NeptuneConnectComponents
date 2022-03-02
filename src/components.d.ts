@@ -14,10 +14,15 @@ export namespace Components {
         "language": 'java' | 'json';
     }
     interface CustomTable {
-        "currentPage": string;
-        "onClick": any;
+        "currentPage": number;
+        "limit": number;
+        "next": any;
+        "prev": any;
+        "rows": number[];
+        "rowsHandler": any;
         "tableBody": object[];
-        "tableHeader": string[];
+        "tableHeader": object[];
+        "totalData": string;
     }
     interface FluidContainer {
         "breakpoint": 'xl' | 'lg' | 'md';
@@ -31,7 +36,7 @@ export namespace Components {
     interface MainComponent {
     }
     interface MenuDropDown {
-        "list": string;
+        "list": number[];
         "listTitle": string;
     }
     interface MenuItems {
@@ -40,7 +45,10 @@ export namespace Components {
     }
     interface PlainButton {
         "addClass": string;
-        "btnLabel": string;
+        "clickHandler": any;
+        "color": string;
+        "disabledHandler": boolean;
+        "hoverColor": string;
         "type": 'contained' | 'outlined' | 'text';
         "width": 'full' | 'auto';
     }
@@ -51,7 +59,7 @@ export namespace Components {
     interface SignIn {
     }
     interface TableWrapper {
-        "limit": number;
+        "rowPerPage": number[];
         "url": string;
     }
     interface TextField {
@@ -183,10 +191,15 @@ declare namespace LocalJSX {
         "language"?: 'java' | 'json';
     }
     interface CustomTable {
-        "currentPage"?: string;
-        "onClick"?: any;
+        "currentPage"?: number;
+        "limit"?: number;
+        "next"?: any;
+        "prev"?: any;
+        "rows"?: number[];
+        "rowsHandler"?: any;
         "tableBody"?: object[];
-        "tableHeader"?: string[];
+        "tableHeader"?: object[];
+        "totalData"?: string;
     }
     interface FluidContainer {
         "breakpoint"?: 'xl' | 'lg' | 'md';
@@ -200,7 +213,7 @@ declare namespace LocalJSX {
     interface MainComponent {
     }
     interface MenuDropDown {
-        "list"?: string;
+        "list"?: number[];
         "listTitle"?: string;
     }
     interface MenuItems {
@@ -209,7 +222,10 @@ declare namespace LocalJSX {
     }
     interface PlainButton {
         "addClass"?: string;
-        "btnLabel"?: string;
+        "clickHandler"?: any;
+        "color"?: string;
+        "disabledHandler"?: boolean;
+        "hoverColor"?: string;
         "type"?: 'contained' | 'outlined' | 'text';
         "width"?: 'full' | 'auto';
     }
@@ -220,7 +236,7 @@ declare namespace LocalJSX {
     interface SignIn {
     }
     interface TableWrapper {
-        "limit"?: number;
+        "rowPerPage"?: number[];
         "url"?: string;
     }
     interface TextField {

@@ -9,10 +9,15 @@
 
 | Property      | Attribute      | Description | Type       | Default     |
 | ------------- | -------------- | ----------- | ---------- | ----------- |
-| `currentPage` | `current-page` |             | `string`   | `undefined` |
-| `onClick`     | `on-click`     |             | `any`      | `undefined` |
+| `currentPage` | `current-page` |             | `number`   | `undefined` |
+| `limit`       | `limit`        |             | `number`   | `undefined` |
+| `next`        | `next`         |             | `any`      | `undefined` |
+| `prev`        | `prev`         |             | `any`      | `undefined` |
+| `rows`        | --             |             | `number[]` | `undefined` |
+| `rowsHandler` | `rows-handler` |             | `any`      | `undefined` |
 | `tableBody`   | --             |             | `object[]` | `undefined` |
-| `tableHeader` | --             |             | `string[]` | `undefined` |
+| `tableHeader` | --             |             | `object[]` | `undefined` |
+| `totalData`   | `total-data`   |             | `string`   | `undefined` |
 
 
 ## Dependencies
@@ -21,9 +26,14 @@
 
  - [table-wrapper](../table-wrapper)
 
+### Depends on
+
+- [plain-button](../plain-button)
+
 ### Graph
 ```mermaid
 graph TD;
+  custom-table --> plain-button
   table-wrapper --> custom-table
   style custom-table fill:#f9f,stroke:#333,stroke-width:4px
 ```

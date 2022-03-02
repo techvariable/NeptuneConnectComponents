@@ -7,12 +7,65 @@ import axios from 'axios';
 })
 export class TableWrapper {
   @Prop() url: string;
-  @Prop() limit: number = 10;
+  @Prop() rowPerPage: number[];
 
-  @State() data: any;
-  @State() header: any;
-  @State() page = '1';
-  @State() isLoading = true;
+  @State() data: object[];
+  @State() header: object[];
+  @State() page: number;
+  @State() isLoading: boolean;
+  @State() total: string;
+  @State() limit: number;
+
+  @State() testState: any;
+
+  componentWillLoad() {
+    this.limit = this.rowPerPage.slice(0, 1).shift();
+    this.page = 1;
+    this.isLoading = true;
+
+    this.header = [
+      {
+        title: 'id',
+        filter: {
+          searchable: false,
+          sortable: false,
+        },
+        alias: 'id',
+      },
+      {
+        title: 'name',
+        filter: {
+          searchable: false,
+          sortable: true,
+        },
+        alias: 'name',
+      },
+      {
+        title: 'email',
+        filter: {
+          searchable: false,
+          sortable: false,
+        },
+        alias: 'email',
+      },
+      {
+        title: 'address',
+        filter: {
+          searchable: true,
+          sortable: false,
+        },
+        alias: 'street address',
+      },
+      {
+        title: 'drug',
+        filter: {
+          searchable: false,
+          sortable: false,
+        },
+        alias: 'drug',
+      },
+    ];
+  }
 
   componentWillRender() {
     return axios
@@ -23,22 +76,28 @@ export class TableWrapper {
         },
       })
       .then(res => {
+        this.total = res.headers['x-total-count'];
         this.data = res.data;
-        this.header = Object.keys(res.data.slice(0, 1)?.shift());
         this.isLoading = false;
       })
-      .catch(err => console.log(`eror - ${err}`));
+      .catch(err => console.log(`error - ${err}`));
   }
 
-  getHeader(arr: Object[]) {
-    return arr?.slice(0, 1)?.shift();
+  componentDidLoad() {
+    console.log('componentDidLoad for table wrapper');
   }
 
-  onClick() {
-    let number = parseInt(this.page);
-    number = number + 1;
-    this.page = number.toString();
-    console.log(`page: ${this.page}`);
+  rowsHandler(e) {
+    this.limit = e.target.value;
+    this.page = 1;
+  }
+
+  nextPage() {
+    ++this.page;
+  }
+
+  prevPage() {
+    --this.page;
   }
 
   render() {
@@ -48,7 +107,17 @@ export class TableWrapper {
 
     return (
       <Host>
-        <custom-table tableBody={this.data} tableHeader={this.header} onClick={() => this.onClick()} currentPage={this.page}></custom-table>
+        <custom-table
+          tableBody={this.data}
+          tableHeader={this.header}
+          currentPage={this.page}
+          totalData={this.total}
+          next={() => this.nextPage()}
+          prev={() => this.prevPage()}
+          limit={this.limit}
+          rows={this.rowPerPage}
+          rowsHandler={e => this.rowsHandler(e)}
+        ></custom-table>
       </Host>
     );
   }
