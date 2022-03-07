@@ -16,7 +16,7 @@ export class PlainButton {
 
   outlinedClass = `py-2 px-4 border border-${this.color} text-sm font-medium rounded-md text-${this.color} bg-white hover:bg-${this.hoverColor} hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 capitalize w-${this.width} ${this.addClass}`;
   containedClass = `py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 capitalize w-${this.width} ${this.addClass}`;
-  textClass = `py-2 px-4 border border-transparent text-sm font-medium text-${this.color}  focus:outline-none  capitalize w-${this.width} ${this.addClass}`;
+  textClass = `py-2 px-4 border border-transparent text-sm font-medium text-${this.color}  focus:outline-none  capitalize w-${this.width} ${this.addClass} hover:text-${this.hoverColor}`;
 
   btnClassType = {
     contained: this.containedClass,

@@ -9,8 +9,9 @@
 
 | Property     | Attribute | Description | Type       | Default     |
 | ------------ | --------- | ----------- | ---------- | ----------- |
+| `api`        | `api`     |             | `any`      | `undefined` |
+| `headerList` | --        |             | `object[]` | `undefined` |
 | `rowPerPage` | --        |             | `number[]` | `undefined` |
-| `url`        | `url`     |             | `string`   | `undefined` |
 
 
 ## Dependencies

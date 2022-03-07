@@ -1,95 +1,44 @@
 import { Component, h, Host, Prop, State } from '@stencil/core';
-import axios from 'axios';
+// import axios from 'axios';
 
 @Component({
   tag: 'table-wrapper',
   scoped: true,
 })
 export class TableWrapper {
-  @Prop() url: string;
   @Prop() rowPerPage: number[];
+  @Prop() api: any;
+  @Prop() headerList: object[];
 
   @State() data: object[];
-  @State() header: object[];
-  @State() page: number;
+  @State() page: 1;
   @State() isLoading: boolean;
   @State() total: string;
   @State() limit: number;
-
-  @State() testState: any;
+  @State() tBody: any;
+  @State() toggleSort = true;
+  @State() sortId: string;
+  @State() sortDir: string;
+  @State() sortObj: object;
 
   componentWillLoad() {
+    this.rowPerPage = this.rowPerPage.sort((a, b) => a - b);
     this.limit = this.rowPerPage.slice(0, 1).shift();
     this.page = 1;
     this.isLoading = true;
-
-    this.header = [
-      {
-        title: 'id',
-        filter: {
-          searchable: false,
-          sortable: false,
-        },
-        alias: 'id',
-      },
-      {
-        title: 'name',
-        filter: {
-          searchable: false,
-          sortable: true,
-        },
-        alias: 'name',
-      },
-      {
-        title: 'email',
-        filter: {
-          searchable: false,
-          sortable: false,
-        },
-        alias: 'email',
-      },
-      {
-        title: 'address',
-        filter: {
-          searchable: true,
-          sortable: false,
-        },
-        alias: 'street address',
-      },
-      {
-        title: 'drug',
-        filter: {
-          searchable: false,
-          sortable: false,
-        },
-        alias: 'drug',
-      },
-    ];
   }
 
-  componentWillRender() {
-    return axios
-      .get(this.url, {
-        params: {
-          _limit: this.limit,
-          _page: this.page,
-        },
-      })
-      .then(res => {
-        this.total = res.headers['x-total-count'];
-        this.data = res.data;
-        this.isLoading = false;
-      })
-      .catch(err => console.log(`error - ${err}`));
-  }
-
-  componentDidLoad() {
-    console.log('componentDidLoad for table wrapper');
+  async componentWillRender() {
+    const res = await this.api(this.limit, this.page, this.sortObj);
+    this.data = res.data;
+    this.isLoading = false;
+    this.total = res.total;
   }
 
   rowsHandler(e) {
     this.limit = e.target.value;
     this.page = 1;
+    this.sortObj = {};
   }
 
   nextPage() {
@@ -98,6 +47,12 @@ export class TableWrapper {
 
   prevPage() {
     --this.page;
+  }
+
+  toggleSortMethod(id: string) {
+    this.sortObj = { id: id, dir: this.toggleSort ? 'asc' : 'desc' };
+    this.page = 1;
+    this.toggleSort = !this.toggleSort;
   }
 
   render() {
@@ -109,7 +64,7 @@ export class TableWrapper {
       <Host>
         <custom-table
           tableBody={this.data}
-          tableHeader={this.header}
+          tableHeader={this.headerList}
           currentPage={this.page}
           totalData={this.total}
           next={() => this.nextPage()}
@@ -117,6 +72,7 @@ export class TableWrapper {
           limit={this.limit}
           rows={this.rowPerPage}
           rowsHandler={e => this.rowsHandler(e)}
+          toggleSortMethod={id => this.toggleSortMethod(id)}
         ></custom-table>
       </Host>
     );

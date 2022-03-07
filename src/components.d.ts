@@ -22,6 +22,7 @@ export namespace Components {
         "rowsHandler": any;
         "tableBody": object[];
         "tableHeader": object[];
+        "toggleSortMethod": any;
         "totalData": string;
     }
     interface FluidContainer {
@@ -59,8 +60,9 @@ export namespace Components {
     interface SignIn {
     }
     interface TableWrapper {
+        "api": any;
+        "headerList": object[];
         "rowPerPage": number[];
-        "url": string;
     }
     interface TextField {
         "addClass": string;
@@ -199,6 +201,7 @@ declare namespace LocalJSX {
         "rowsHandler"?: any;
         "tableBody"?: object[];
         "tableHeader"?: object[];
+        "toggleSortMethod"?: any;
         "totalData"?: string;
     }
     interface FluidContainer {
@@ -236,8 +239,9 @@ declare namespace LocalJSX {
     interface SignIn {
     }
     interface TableWrapper {
+        "api"?: any;
+        "headerList"?: object[];
         "rowPerPage"?: number[];
-        "url"?: string;
     }
     interface TextField {
         "addClass"?: string;

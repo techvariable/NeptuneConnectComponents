@@ -7,17 +7,18 @@
 
 ## Properties
 
-| Property      | Attribute      | Description | Type       | Default     |
-| ------------- | -------------- | ----------- | ---------- | ----------- |
-| `currentPage` | `current-page` |             | `number`   | `undefined` |
-| `limit`       | `limit`        |             | `number`   | `undefined` |
-| `next`        | `next`         |             | `any`      | `undefined` |
-| `prev`        | `prev`         |             | `any`      | `undefined` |
-| `rows`        | --             |             | `number[]` | `undefined` |
-| `rowsHandler` | `rows-handler` |             | `any`      | `undefined` |
-| `tableBody`   | --             |             | `object[]` | `undefined` |
-| `tableHeader` | --             |             | `object[]` | `undefined` |
-| `totalData`   | `total-data`   |             | `string`   | `undefined` |
+| Property           | Attribute            | Description | Type       | Default     |
+| ------------------ | -------------------- | ----------- | ---------- | ----------- |
+| `currentPage`      | `current-page`       |             | `number`   | `undefined` |
+| `limit`            | `limit`              |             | `number`   | `undefined` |
+| `next`             | `next`               |             | `any`      | `undefined` |
+| `prev`             | `prev`               |             | `any`      | `undefined` |
+| `rows`             | --                   |             | `number[]` | `undefined` |
+| `rowsHandler`      | `rows-handler`       |             | `any`      | `undefined` |
+| `tableBody`        | --                   |             | `object[]` | `undefined` |
+| `tableHeader`      | --                   |             | `object[]` | `undefined` |
+| `toggleSortMethod` | `toggle-sort-method` |             | `any`      | `undefined` |
+| `totalData`        | `total-data`         |             | `string`   | `undefined` |
 
 
 ## Dependencies
