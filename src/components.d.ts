@@ -41,6 +41,8 @@ export namespace Components {
         "iconPosition": 'right' | 'left';
         "type": 'outlined' | 'contained';
     }
+    interface LoaderComponent {
+    }
     interface MainComponent {
     }
     interface MenuDropDown {
@@ -123,6 +125,12 @@ declare global {
         prototype: HTMLIconButtonElement;
         new (): HTMLIconButtonElement;
     };
+    interface HTMLLoaderComponentElement extends Components.LoaderComponent, HTMLStencilElement {
+    }
+    var HTMLLoaderComponentElement: {
+        prototype: HTMLLoaderComponentElement;
+        new (): HTMLLoaderComponentElement;
+    };
     interface HTMLMainComponentElement extends Components.MainComponent, HTMLStencilElement {
     }
     var HTMLMainComponentElement: {
@@ -190,6 +198,7 @@ declare global {
         "drop-down": HTMLDropDownElement;
         "fluid-container": HTMLFluidContainerElement;
         "icon-button": HTMLIconButtonElement;
+        "loader-component": HTMLLoaderComponentElement;
         "main-component": HTMLMainComponentElement;
         "menu-drop-down": HTMLMenuDropDownElement;
         "menu-items": HTMLMenuItemsElement;
@@ -237,6 +246,8 @@ declare namespace LocalJSX {
         "btnLabel"?: string;
         "iconPosition"?: 'right' | 'left';
         "type"?: 'outlined' | 'contained';
+    }
+    interface LoaderComponent {
     }
     interface MainComponent {
     }
@@ -289,6 +300,7 @@ declare namespace LocalJSX {
         "drop-down": DropDown;
         "fluid-container": FluidContainer;
         "icon-button": IconButton;
+        "loader-component": LoaderComponent;
         "main-component": MainComponent;
         "menu-drop-down": MenuDropDown;
         "menu-items": MenuItems;
@@ -311,6 +323,7 @@ declare module "@stencil/core" {
             "drop-down": LocalJSX.DropDown & JSXBase.HTMLAttributes<HTMLDropDownElement>;
             "fluid-container": LocalJSX.FluidContainer & JSXBase.HTMLAttributes<HTMLFluidContainerElement>;
             "icon-button": LocalJSX.IconButton & JSXBase.HTMLAttributes<HTMLIconButtonElement>;
+            "loader-component": LocalJSX.LoaderComponent & JSXBase.HTMLAttributes<HTMLLoaderComponentElement>;
             "main-component": LocalJSX.MainComponent & JSXBase.HTMLAttributes<HTMLMainComponentElement>;
             "menu-drop-down": LocalJSX.MenuDropDown & JSXBase.HTMLAttributes<HTMLMenuDropDownElement>;
             "menu-items": LocalJSX.MenuItems & JSXBase.HTMLAttributes<HTMLMenuItemsElement>;

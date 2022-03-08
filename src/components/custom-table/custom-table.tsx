@@ -61,7 +61,12 @@ export class CustomTable {
 
                 {/* search */}
                 {item?.filter?.searchable && (
-                  <drop-down searchMethod={this.searchMethod} alias={item.alias} clearSearch={colName => this.clearSearch(colName)}>
+                  <drop-down
+                    searchMethod={(value, field) => this.searchMethod(value, field)}
+                    alias={item.alias}
+                    clearSearch={colName => this.clearSearch(colName)}
+                    // searchMethod={this.searchMethod} alias={item.alias} clearSearch={colName => this.clearSearch(colName)}
+                  >
                     {search}
                   </drop-down>
                 )}
