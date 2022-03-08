@@ -14,16 +14,23 @@ export namespace Components {
         "language": 'java' | 'json';
     }
     interface CustomTable {
+        "clearSearch": any;
         "currentPage": number;
         "limit": number;
         "next": any;
         "prev": any;
         "rows": number[];
         "rowsHandler": any;
+        "searchMethod": any;
         "tableBody": object[];
         "tableHeader": object[];
         "toggleSortMethod": any;
         "totalData": string;
+    }
+    interface DropDown {
+        "alias": string;
+        "clearSearch": any;
+        "searchMethod": any;
     }
     interface FluidContainer {
         "breakpoint": 'xl' | 'lg' | 'md';
@@ -61,13 +68,17 @@ export namespace Components {
     }
     interface TableWrapper {
         "api": any;
+        "autocompute": boolean;
         "headerList": object[];
         "rowPerPage": number[];
     }
     interface TextField {
         "addClass": string;
         "name": string;
-        "type": 'email' | 'password' | 'text';
+        "onChange": any;
+        "onClick": any;
+        "placeholder": string;
+        "type": 'email' | 'password' | 'text' | 'search';
         "width": 'full' | 'auto';
     }
     interface TextFieldArea {
@@ -93,6 +104,12 @@ declare global {
     var HTMLCustomTableElement: {
         prototype: HTMLCustomTableElement;
         new (): HTMLCustomTableElement;
+    };
+    interface HTMLDropDownElement extends Components.DropDown, HTMLStencilElement {
+    }
+    var HTMLDropDownElement: {
+        prototype: HTMLDropDownElement;
+        new (): HTMLDropDownElement;
     };
     interface HTMLFluidContainerElement extends Components.FluidContainer, HTMLStencilElement {
     }
@@ -170,6 +187,7 @@ declare global {
         "check-box": HTMLCheckBoxElement;
         "code-editor": HTMLCodeEditorElement;
         "custom-table": HTMLCustomTableElement;
+        "drop-down": HTMLDropDownElement;
         "fluid-container": HTMLFluidContainerElement;
         "icon-button": HTMLIconButtonElement;
         "main-component": HTMLMainComponentElement;
@@ -193,16 +211,23 @@ declare namespace LocalJSX {
         "language"?: 'java' | 'json';
     }
     interface CustomTable {
+        "clearSearch"?: any;
         "currentPage"?: number;
         "limit"?: number;
         "next"?: any;
         "prev"?: any;
         "rows"?: number[];
         "rowsHandler"?: any;
+        "searchMethod"?: any;
         "tableBody"?: object[];
         "tableHeader"?: object[];
         "toggleSortMethod"?: any;
         "totalData"?: string;
+    }
+    interface DropDown {
+        "alias"?: string;
+        "clearSearch"?: any;
+        "searchMethod"?: any;
     }
     interface FluidContainer {
         "breakpoint"?: 'xl' | 'lg' | 'md';
@@ -240,13 +265,17 @@ declare namespace LocalJSX {
     }
     interface TableWrapper {
         "api"?: any;
+        "autocompute"?: boolean;
         "headerList"?: object[];
         "rowPerPage"?: number[];
     }
     interface TextField {
         "addClass"?: string;
         "name"?: string;
-        "type"?: 'email' | 'password' | 'text';
+        "onChange"?: any;
+        "onClick"?: any;
+        "placeholder"?: string;
+        "type"?: 'email' | 'password' | 'text' | 'search';
         "width"?: 'full' | 'auto';
     }
     interface TextFieldArea {
@@ -257,6 +286,7 @@ declare namespace LocalJSX {
         "check-box": CheckBox;
         "code-editor": CodeEditor;
         "custom-table": CustomTable;
+        "drop-down": DropDown;
         "fluid-container": FluidContainer;
         "icon-button": IconButton;
         "main-component": MainComponent;
@@ -278,6 +308,7 @@ declare module "@stencil/core" {
             "check-box": LocalJSX.CheckBox & JSXBase.HTMLAttributes<HTMLCheckBoxElement>;
             "code-editor": LocalJSX.CodeEditor & JSXBase.HTMLAttributes<HTMLCodeEditorElement>;
             "custom-table": LocalJSX.CustomTable & JSXBase.HTMLAttributes<HTMLCustomTableElement>;
+            "drop-down": LocalJSX.DropDown & JSXBase.HTMLAttributes<HTMLDropDownElement>;
             "fluid-container": LocalJSX.FluidContainer & JSXBase.HTMLAttributes<HTMLFluidContainerElement>;
             "icon-button": LocalJSX.IconButton & JSXBase.HTMLAttributes<HTMLIconButtonElement>;
             "main-component": LocalJSX.MainComponent & JSXBase.HTMLAttributes<HTMLMainComponentElement>;

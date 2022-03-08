@@ -27,10 +27,14 @@ export class CustomTable {
   @Prop() rows: number[];
   @Prop() rowsHandler: any;
   @Prop() toggleSortMethod: any;
+  @Prop() searchMethod: any;
+  @Prop() clearSearch: any;
 
   @State() data: any;
   @State() from: number;
   @State() to: number;
+  @State() isSearchMenuOpen = false;
+  @State() value: string;
 
   componentDidRender() {
     this.from = (this.currentPage - 1) * this.limit + 1;
@@ -45,19 +49,27 @@ export class CustomTable {
           <tr>
             {this.tableHeader.map((item: any) => (
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 uppercase tracking-wider">
+                {/* title */}
                 {item.title}
-                {item.filter.sortable && (
+
+                {/* sort */}
+                {item?.filter?.sortable && (
                   <button class="ml-3" onClick={() => this.toggleSortMethod(item.title)}>
                     {sort}
                   </button>
                 )}
-                {item.filter.searchable && <button class="ml-3">{search}</button>}
+
+                {/* search */}
+                {item?.filter?.searchable && (
+                  <drop-down searchMethod={this.searchMethod} alias={item.alias} clearSearch={colName => this.clearSearch(colName)}>
+                    {search}
+                  </drop-down>
+                )}
               </th>
             ))}
           </tr>
         </thead>
 
-        {/* Table Body */}
         <tbody class="bg-white divide-y divide-gray-200">
           {this.tableBody &&
             this.tableBody.map((item: any) => (

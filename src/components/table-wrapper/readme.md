@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property     | Attribute | Description | Type       | Default     |
-| ------------ | --------- | ----------- | ---------- | ----------- |
-| `api`        | `api`     |             | `any`      | `undefined` |
-| `headerList` | --        |             | `object[]` | `undefined` |
-| `rowPerPage` | --        |             | `number[]` | `undefined` |
+| Property      | Attribute     | Description | Type       | Default     |
+| ------------- | ------------- | ----------- | ---------- | ----------- |
+| `api`         | `api`         |             | `any`      | `undefined` |
+| `autocompute` | `autocompute` |             | `boolean`  | `undefined` |
+| `headerList`  | --            |             | `object[]` | `undefined` |
+| `rowPerPage`  | --            |             | `number[]` | `undefined` |
 
 
 ## Dependencies
@@ -28,6 +29,7 @@
 ```mermaid
 graph TD;
   table-wrapper --> custom-table
+  custom-table --> drop-down
   custom-table --> plain-button
   main-component --> table-wrapper
   style table-wrapper fill:#f9f,stroke:#333,stroke-width:4px

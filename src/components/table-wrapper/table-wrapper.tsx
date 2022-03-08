@@ -1,5 +1,4 @@
 import { Component, h, Host, Prop, State } from '@stencil/core';
-// import axios from 'axios';
 
 @Component({
   tag: 'table-wrapper',
@@ -9,6 +8,7 @@ export class TableWrapper {
   @Prop() rowPerPage: number[];
   @Prop() api: any;
   @Prop() headerList: object[];
+  @Prop() autocompute: boolean;
 
   @State() data: object[];
   @State() page: 1;
@@ -20,6 +20,7 @@ export class TableWrapper {
   @State() sortId: string;
   @State() sortDir: string;
   @State() sortObj: object;
+  @State() search: object[];
 
   componentWillLoad() {
     this.rowPerPage = this.rowPerPage.sort((a, b) => a - b);
@@ -29,16 +30,39 @@ export class TableWrapper {
   }
 
   async componentWillRender() {
-    const res = await this.api(this.limit, this.page, this.sortObj);
+    const res = await this.api(this.limit, this.page, this.sortObj, this.search);
     this.data = res.data;
     this.isLoading = false;
     this.total = res.total;
+    if (this.autocompute) this.computeHeader();
+  }
+
+  computeHeader() {
+    const firstObjectOfData = Object.keys(this.data.slice(0, 1).shift());
+    console.log(firstObjectOfData);
+    this.headerList = firstObjectOfData.map(item => {
+      return {
+        title: item,
+        alias: item,
+        filter: {
+          searchable: !/^-?\d+$/.test(this.data.slice(0, 1).shift()[`${item}`]),
+          sortable: /^-?\d+$/.test(this.data.slice(0, 1).shift()[`${item}`]),
+        },
+      };
+    });
   }
 
   rowsHandler(e) {
     this.limit = e.target.value;
     this.page = 1;
     this.sortObj = {};
+  }
+
+  clearSearch(colName) {
+    if (this.search.length >= 1) {
+      const searchArr = this.search.filter((item: any) => item.colName !== colName);
+      this.search = searchArr;
+    }
   }
 
   nextPage() {
@@ -53,6 +77,14 @@ export class TableWrapper {
     this.sortObj = { id: id, dir: this.toggleSort ? 'asc' : 'desc' };
     this.page = 1;
     this.toggleSort = !this.toggleSort;
+  }
+
+  searchMethod(searchValue: string, colName: string) {
+    if (this.search) {
+      this.search = [...this.search, { searchValue, colName }];
+    } else {
+      this.search = [{ searchValue, colName }];
+    }
   }
 
   render() {
@@ -73,6 +105,8 @@ export class TableWrapper {
           rows={this.rowPerPage}
           rowsHandler={e => this.rowsHandler(e)}
           toggleSortMethod={id => this.toggleSortMethod(id)}
+          searchMethod={(value, field) => this.searchMethod(value, field)}
+          clearSearch={colName => this.clearSearch(colName)}
         ></custom-table>
       </Host>
     );

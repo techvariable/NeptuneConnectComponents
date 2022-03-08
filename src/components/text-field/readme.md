@@ -7,12 +7,15 @@
 
 ## Properties
 
-| Property   | Attribute   | Description | Type                              | Default     |
-| ---------- | ----------- | ----------- | --------------------------------- | ----------- |
-| `addClass` | `add-class` |             | `string`                          | `undefined` |
-| `name`     | `name`      |             | `string`                          | `undefined` |
-| `type`     | `type`      |             | `"email" \| "password" \| "text"` | `'text'`    |
-| `width`    | `width`     |             | `"auto" \| "full"`                | `'auto'`    |
+| Property      | Attribute     | Description | Type                                          | Default       |
+| ------------- | ------------- | ----------- | --------------------------------------------- | ------------- |
+| `addClass`    | `add-class`   |             | `string`                                      | `undefined`   |
+| `name`        | `name`        |             | `string`                                      | `undefined`   |
+| `onChange`    | `on-change`   |             | `any`                                         | `undefined`   |
+| `onClick`     | `on-click`    |             | `any`                                         | `undefined`   |
+| `placeholder` | `placeholder` |             | `string`                                      | `'something'` |
+| `type`        | `type`        |             | `"email" \| "password" \| "search" \| "text"` | `'text'`      |
+| `width`       | `width`       |             | `"auto" \| "full"`                            | `'auto'`      |
 
 
 ## Dependencies

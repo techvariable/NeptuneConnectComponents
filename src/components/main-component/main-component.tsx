@@ -26,7 +26,7 @@ export class MainComponent {
     {
       title: 'email',
       filter: {
-        searchable: false,
+        searchable: true,
         sortable: false,
       },
       alias: 'email',
@@ -49,7 +49,7 @@ export class MainComponent {
     },
   ];
 
-  async api(limit: number, page: number, sortObj: any) {
+  async api(limit: number, page: number, sortObj: any, search: any) {
     let filterPar = '';
 
     if (limit) {
@@ -65,6 +65,12 @@ export class MainComponent {
       filterPar += `&_sort=${id}&_order=${dir}`;
     }
 
+    if (search) {
+      search.map(search => {
+        filterPar = filterPar + `&${search.colName}_like=${search.searchValue}`;
+      });
+    }
+
     const result = await axios.get(`http://localhost:4000/unassignedPatient?${filterPar}`);
 
     return {
@@ -76,7 +82,7 @@ export class MainComponent {
   render() {
     return (
       <Host>
-        <table-wrapper api={this.api} headerList={this.headerList} rowPerPage={[50, 10, 20, 30]}></table-wrapper>
+        <table-wrapper api={this.api} autocompute={true} headerList={this.headerList} rowPerPage={[50, 10, 20, 30]}></table-wrapper>
       </Host>
     );
   }
