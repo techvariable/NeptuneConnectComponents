@@ -16,6 +16,9 @@ export namespace Components {
     interface CustomTable {
         "clearSearch": any;
         "currentPage": number;
+        "dataLength": string;
+        "isLoading": boolean;
+        "isLoadingError": boolean;
         "limit": number;
         "next": any;
         "prev": any;
@@ -25,7 +28,6 @@ export namespace Components {
         "tableBody": object[];
         "tableHeader": object[];
         "toggleSortMethod": any;
-        "totalData": string;
     }
     interface DropDown {
         "alias": string;
@@ -73,6 +75,8 @@ export namespace Components {
         "autocompute": boolean;
         "headerList": object[];
         "rowPerPage": number[];
+    }
+    interface TestCom {
     }
     interface TextField {
         "addClass": string;
@@ -179,6 +183,12 @@ declare global {
         prototype: HTMLTableWrapperElement;
         new (): HTMLTableWrapperElement;
     };
+    interface HTMLTestComElement extends Components.TestCom, HTMLStencilElement {
+    }
+    var HTMLTestComElement: {
+        prototype: HTMLTestComElement;
+        new (): HTMLTestComElement;
+    };
     interface HTMLTextFieldElement extends Components.TextField, HTMLStencilElement {
     }
     var HTMLTextFieldElement: {
@@ -207,6 +217,7 @@ declare global {
         "radio-button": HTMLRadioButtonElement;
         "sign-in": HTMLSignInElement;
         "table-wrapper": HTMLTableWrapperElement;
+        "test-com": HTMLTestComElement;
         "text-field": HTMLTextFieldElement;
         "text-field-area": HTMLTextFieldAreaElement;
     }
@@ -222,6 +233,9 @@ declare namespace LocalJSX {
     interface CustomTable {
         "clearSearch"?: any;
         "currentPage"?: number;
+        "dataLength"?: string;
+        "isLoading"?: boolean;
+        "isLoadingError"?: boolean;
         "limit"?: number;
         "next"?: any;
         "prev"?: any;
@@ -231,7 +245,6 @@ declare namespace LocalJSX {
         "tableBody"?: object[];
         "tableHeader"?: object[];
         "toggleSortMethod"?: any;
-        "totalData"?: string;
     }
     interface DropDown {
         "alias"?: string;
@@ -280,6 +293,8 @@ declare namespace LocalJSX {
         "headerList"?: object[];
         "rowPerPage"?: number[];
     }
+    interface TestCom {
+    }
     interface TextField {
         "addClass"?: string;
         "name"?: string;
@@ -309,6 +324,7 @@ declare namespace LocalJSX {
         "radio-button": RadioButton;
         "sign-in": SignIn;
         "table-wrapper": TableWrapper;
+        "test-com": TestCom;
         "text-field": TextField;
         "text-field-area": TextFieldArea;
     }
@@ -332,6 +348,7 @@ declare module "@stencil/core" {
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
             "sign-in": LocalJSX.SignIn & JSXBase.HTMLAttributes<HTMLSignInElement>;
             "table-wrapper": LocalJSX.TableWrapper & JSXBase.HTMLAttributes<HTMLTableWrapperElement>;
+            "test-com": LocalJSX.TestCom & JSXBase.HTMLAttributes<HTMLTestComElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
             "text-field-area": LocalJSX.TextFieldArea & JSXBase.HTMLAttributes<HTMLTextFieldAreaElement>;
         }

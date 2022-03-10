@@ -11,6 +11,9 @@
 | ------------------ | -------------------- | ----------- | ---------- | ----------- |
 | `clearSearch`      | `clear-search`       |             | `any`      | `undefined` |
 | `currentPage`      | `current-page`       |             | `number`   | `undefined` |
+| `dataLength`       | `data-length`        |             | `string`   | `undefined` |
+| `isLoading`        | `is-loading`         |             | `boolean`  | `undefined` |
+| `isLoadingError`   | `is-loading-error`   |             | `boolean`  | `undefined` |
 | `limit`            | `limit`              |             | `number`   | `undefined` |
 | `next`             | `next`               |             | `any`      | `undefined` |
 | `prev`             | `prev`               |             | `any`      | `undefined` |
@@ -20,7 +23,6 @@
 | `tableBody`        | --                   |             | `object[]` | `undefined` |
 | `tableHeader`      | --                   |             | `object[]` | `undefined` |
 | `toggleSortMethod` | `toggle-sort-method` |             | `any`      | `undefined` |
-| `totalData`        | `total-data`         |             | `string`   | `undefined` |
 
 
 ## Dependencies

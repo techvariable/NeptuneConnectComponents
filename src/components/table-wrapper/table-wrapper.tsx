@@ -1,5 +1,7 @@
 import { Component, h, Host, Prop, State } from '@stencil/core';
 
+// let renders = 0;
+
 @Component({
   tag: 'table-wrapper',
   scoped: true,
@@ -11,8 +13,9 @@ export class TableWrapper {
   @Prop() autocompute: boolean;
 
   @State() data: object[];
-  @State() page: 1;
-  @State() isLoading: boolean;
+  @State() page = 1;
+  @State() isLoading = false;
+  @State() isLoadingError = false;
   @State() total: string;
   @State() limit: number;
   @State() tBody: any;
@@ -25,21 +28,28 @@ export class TableWrapper {
   componentWillLoad() {
     this.rowPerPage = this.rowPerPage.sort((a, b) => a - b);
     this.limit = this.rowPerPage.slice(0, 1).shift();
-    this.page = 1;
-    this.isLoading = true;
+    this.fetchData();
   }
 
-  async componentWillRender() {
-    const res = await this.api(this.limit, this.page, this.sortObj, this.search);
-    this.data = res.data;
-    this.isLoading = false;
-    this.total = res.total;
-    if (this.autocompute) this.computeHeader();
+  fetchData() {
+    this.isLoading = true;
+    this.isLoadingError = false;
+    this.api(this.limit, this.page, this.sortObj, this.search)
+      .then(res => {
+        this.data = res.data;
+        this.total = res.total;
+        if (this.autocompute) this.computeHeader();
+        this.isLoading = false;
+      })
+      .catch(error => {
+        console.log(error);
+        this.isLoadingError = true;
+        this.isLoading = false;
+      });
   }
 
   computeHeader() {
     const firstObjectOfData = Object.keys(this.data.slice(0, 1).shift());
-    console.log(firstObjectOfData);
     this.headerList = firstObjectOfData.map(item => {
       return {
         title: item,
@@ -56,6 +66,7 @@ export class TableWrapper {
     this.limit = e.target.value;
     this.page = 1;
     this.sortObj = {};
+    this.fetchData();
   }
 
   clearSearch(colName) {
@@ -63,20 +74,24 @@ export class TableWrapper {
       const searchArr = this.search.filter((item: any) => item.colName !== colName);
       this.search = searchArr;
     }
+    this.fetchData();
   }
 
   nextPage() {
     ++this.page;
+    this.fetchData();
   }
 
   prevPage() {
     --this.page;
+    this.fetchData();
   }
 
   toggleSortMethod(id: string) {
     this.sortObj = { id: id, dir: this.toggleSort ? 'asc' : 'desc' };
     this.page = 1;
     this.toggleSort = !this.toggleSort;
+    this.fetchData();
   }
 
   searchMethod(searchValue: string, colName: string) {
@@ -85,20 +100,19 @@ export class TableWrapper {
     } else {
       this.search = [{ searchValue, colName }];
     }
+    this.fetchData();
   }
 
   render() {
-    if (this.isLoading) {
-      return <p>loading...</p>;
-    }
-
     return (
       <Host>
         <custom-table
+          isLoading={this.isLoading}
+          isLoadingError={this.isLoadingError}
           tableBody={this.data}
           tableHeader={this.headerList}
           currentPage={this.page}
-          totalData={this.total}
+          dataLength={this.total}
           next={() => this.nextPage()}
           prev={() => this.prevPage()}
           limit={this.limit}

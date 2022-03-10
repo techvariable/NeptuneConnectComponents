@@ -20,7 +20,7 @@ export class CustomTable {
   @Prop() tableHeader: object[];
   @Prop() tableBody: object[];
   @Prop() currentPage: number;
-  @Prop() totalData: string;
+  @Prop() dataLength: string;
   @Prop() next: any;
   @Prop() prev: any;
   @Prop() limit: number;
@@ -29,6 +29,8 @@ export class CustomTable {
   @Prop() toggleSortMethod: any;
   @Prop() searchMethod: any;
   @Prop() clearSearch: any;
+  @Prop() isLoading: boolean;
+  @Prop() isLoadingError: boolean;
 
   @State() data: any;
   @State() from: number;
@@ -36,14 +38,14 @@ export class CustomTable {
   @State() isSearchMenuOpen = false;
   @State() value: string;
 
-  componentDidRender() {
+  componentWillRender() {
     this.from = (this.currentPage - 1) * this.limit + 1;
     this.to = this.currentPage * this.limit;
   }
 
   render() {
     return (
-      <table class="min-w-full divide-y divide-gray-200 relative">
+      <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative">
         {/* Table Head */}
         <thead class="bg-violet-50 sticky top-0">
           <tr>
@@ -76,7 +78,19 @@ export class CustomTable {
         </thead>
 
         <tbody class="bg-white divide-y divide-gray-200">
+          {/* loading screen */}
+          {this.isLoading && (
+            <tr class="h-full">
+              <td colSpan={this.tableHeader.length} rowSpan={10} class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <p>loading...</p>
+              </td>
+            </tr>
+          )}
+
+          {/* loaded body */}
           {this.tableBody &&
+            !this.isLoading &&
+            !this.isLoadingError &&
             this.tableBody.map((item: any) => (
               <tr class="hover:bg-gray-100 transition">
                 {this.tableHeader.map((id: any) => (
@@ -84,6 +98,27 @@ export class CustomTable {
                 ))}
               </tr>
             ))}
+
+          {/* error screen */}
+          {!this.isLoading && this.isLoadingError && (
+            <div>
+              <tr>
+                <td colSpan={this.tableHeader.length} rowSpan={10} class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  {/* <loader-component></loader-component> */}
+                  <p>error found</p>
+                </td>
+              </tr>
+              <tr></tr>
+              <tr></tr>
+              <tr></tr>
+              <tr></tr>
+              <tr></tr>
+              <tr></tr>
+              <tr></tr>
+              <tr></tr>
+              <tr></tr>
+            </div>
+          )}
         </tbody>
 
         {/* Table Footer */}
@@ -93,7 +128,7 @@ export class CustomTable {
               <div class="flex justify-between items-center">
                 {/* pagination description */}
                 <p>
-                  Showing <strong>{this.from}</strong> to <strong>{this.to}</strong> of <strong>{this.totalData}</strong> results
+                  Showing <strong>{this.from}</strong> to <strong>{this.to}</strong> of <strong>{this.dataLength}</strong> results
                 </p>
 
                 {/* rows per page  */}
@@ -114,7 +149,13 @@ export class CustomTable {
                   <plain-button color="gray-500" type="text" clickHandler={() => this.prev()} disabledHandler={this.currentPage === 1} addClass="disabled:opacity-50">
                     prev
                   </plain-button>
-                  <plain-button color="gray-500" type="text" clickHandler={() => this.next()} disabledHandler={parseInt(this.totalData) === this.to} addClass="disabled:opacity-50">
+                  <plain-button
+                    color="gray-500"
+                    type="text"
+                    clickHandler={() => this.next()}
+                    disabledHandler={parseInt(this.dataLength) === this.to}
+                    addClass="disabled:opacity-50"
+                  >
                     next
                   </plain-button>
                 </nav>
