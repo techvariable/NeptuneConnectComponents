@@ -82,7 +82,7 @@ export class MainComponent {
   render() {
     return (
       <Host>
-        <table-wrapper api={this.api} autocompute={false} headerList={this.headerList} rowPerPage={[50, 10, 5, 20, 30]}></table-wrapper>
+        <table-wrapper api={this.api} autocompute={false} headerList={this.headerList} rowPerPage={[50, 10, 20, 30]}></table-wrapper>
       </Host>
     );
   }

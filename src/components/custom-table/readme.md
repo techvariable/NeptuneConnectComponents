@@ -34,12 +34,14 @@
 ### Depends on
 
 - [drop-down](../drop-down)
+- [loader-component](../loader-component)
 - [plain-button](../plain-button)
 
 ### Graph
 ```mermaid
 graph TD;
   custom-table --> drop-down
+  custom-table --> loader-component
   custom-table --> plain-button
   table-wrapper --> custom-table
   style custom-table fill:#f9f,stroke:#333,stroke-width:4px

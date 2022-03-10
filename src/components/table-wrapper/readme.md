@@ -30,6 +30,7 @@
 graph TD;
   table-wrapper --> custom-table
   custom-table --> drop-down
+  custom-table --> loader-component
   custom-table --> plain-button
   main-component --> table-wrapper
   style table-wrapper fill:#f9f,stroke:#333,stroke-width:4px

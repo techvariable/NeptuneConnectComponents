@@ -44,6 +44,15 @@ export class CustomTable {
   }
 
   render() {
+    const trList = [];
+    for (let i = 1; i < this.rows[0]; i++) {
+      trList.push(
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">&nbsp;</td>
+        </tr>,
+      );
+    }
+
     return (
       <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative">
         {/* Table Head */}
@@ -51,42 +60,40 @@ export class CustomTable {
           <tr>
             {this.tableHeader.map((item: any) => (
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 uppercase tracking-wider">
-                {/* title */}
                 {item.title}
 
-                {/* sort */}
                 {item?.filter?.sortable && (
                   <button class="ml-3" onClick={() => this.toggleSortMethod(item.title)}>
                     {sort}
                   </button>
                 )}
 
-                {/* search */}
                 {item?.filter?.searchable && (
-                  <drop-down
-                    searchMethod={(value, field) => this.searchMethod(value, field)}
-                    alias={item.alias}
-                    clearSearch={colName => this.clearSearch(colName)}
-                    // searchMethod={this.searchMethod} alias={item.alias} clearSearch={colName => this.clearSearch(colName)}
-                  >
+                  <drop-down searchMethod={(value, field) => this.searchMethod(value, field)} alias={item.alias} clearSearch={colName => this.clearSearch(colName)}>
                     {search}
                   </drop-down>
                 )}
               </th>
             ))}
+            {this.isLoading && <th class="text-gray-500 ">&nbsp;</th>}
           </tr>
         </thead>
 
-        <tbody class="bg-white divide-y divide-gray-200">
-          {/* loading screen */}
-          {this.isLoading && (
-            <tr class="h-full">
+        {/* loading screen */}
+        {this.isLoading && (
+          <tbody>
+            <tr>
               <td colSpan={this.tableHeader.length} rowSpan={10} class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                <p>loading...</p>
+                <loader-component></loader-component>
               </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">&nbsp;</td>
             </tr>
-          )}
 
+            {trList}
+          </tbody>
+        )}
+
+        <tbody class="bg-white divide-y divide-gray-200">
           {/* loaded body */}
           {this.tableBody &&
             !this.isLoading &&
@@ -98,28 +105,21 @@ export class CustomTable {
                 ))}
               </tr>
             ))}
-
-          {/* error screen */}
-          {!this.isLoading && this.isLoadingError && (
-            <div>
-              <tr>
-                <td colSpan={this.tableHeader.length} rowSpan={10} class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {/* <loader-component></loader-component> */}
-                  <p>error found</p>
-                </td>
-              </tr>
-              <tr></tr>
-              <tr></tr>
-              <tr></tr>
-              <tr></tr>
-              <tr></tr>
-              <tr></tr>
-              <tr></tr>
-              <tr></tr>
-              <tr></tr>
-            </div>
-          )}
         </tbody>
+
+        {/* error screen */}
+        {!this.isLoading && this.isLoadingError && (
+          <tbody>
+            <tr>
+              <td colSpan={this.tableHeader.length} rowSpan={10} class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-900">
+                <p>Error Found</p>
+                <plain-button type="text">retry</plain-button>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">&nbsp;</td>
+            </tr>
+            {trList}
+          </tbody>
+        )}
 
         {/* Table Footer */}
         <tfoot class="bg-violet-50 w-full sticky bottom-0">
@@ -161,6 +161,7 @@ export class CustomTable {
                 </nav>
               </div>
             </td>
+            {this.isLoading && <td class="text-gray-500">&nbsp;</td>}
           </tr>
         </tfoot>
       </table>
