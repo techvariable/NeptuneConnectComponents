@@ -32,7 +32,8 @@
     "@codemirror/lang-json": "^0.19.2",
     "@codemirror/theme-one-dark": "^0.19.1",
     "@codemirror/view": "^0.19.42",
-    "@stencil/core": "^2.13.0"
+    "@stencil/core": "^2.13.0",
+    "axios": "^0.26.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.3",

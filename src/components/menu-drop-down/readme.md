@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property    | Attribute    | Description | Type     | Default     |
-| ----------- | ------------ | ----------- | -------- | ----------- |
-| `list`      | `list`       |             | `string` | `undefined` |
-| `listTitle` | `list-title` |             | `string` | `undefined` |
+| Property    | Attribute    | Description | Type       | Default     |
+| ----------- | ------------ | ----------- | ---------- | ----------- |
+| `list`      | --           |             | `number[]` | `undefined` |
+| `listTitle` | `list-title` |             | `string`   | `undefined` |
 
 
 ----------------------------------------------
