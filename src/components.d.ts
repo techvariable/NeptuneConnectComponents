@@ -10,16 +10,22 @@ export namespace Components {
         "name": string;
     }
     interface CodeEditor {
+        "doc": any;
+        "header": string;
         "isEditable": 'true' | 'false';
         "language": 'java' | 'json';
+        "runBtn": 'on' | 'off';
+        "url": string;
+    }
+    interface EditorContainer {
     }
     interface FluidContainer {
         "breakpoint": 'xl' | 'lg' | 'md';
     }
     interface IconButton {
         "addClass": string;
-        "btnLabel": string;
         "iconPosition": 'right' | 'left';
+        "label": string;
         "type": 'outlined' | 'contained';
     }
     interface MenuDropDown {
@@ -39,6 +45,9 @@ export namespace Components {
     interface RadioButton {
         "align": 'vertical' | 'horizontal';
         "name": string;
+    }
+    interface ResEditor {
+        "doc": any;
     }
     interface SignIn {
     }
@@ -65,6 +74,12 @@ declare global {
     var HTMLCodeEditorElement: {
         prototype: HTMLCodeEditorElement;
         new (): HTMLCodeEditorElement;
+    };
+    interface HTMLEditorContainerElement extends Components.EditorContainer, HTMLStencilElement {
+    }
+    var HTMLEditorContainerElement: {
+        prototype: HTMLEditorContainerElement;
+        new (): HTMLEditorContainerElement;
     };
     interface HTMLFluidContainerElement extends Components.FluidContainer, HTMLStencilElement {
     }
@@ -108,6 +123,12 @@ declare global {
         prototype: HTMLRadioButtonElement;
         new (): HTMLRadioButtonElement;
     };
+    interface HTMLResEditorElement extends Components.ResEditor, HTMLStencilElement {
+    }
+    var HTMLResEditorElement: {
+        prototype: HTMLResEditorElement;
+        new (): HTMLResEditorElement;
+    };
     interface HTMLSignInElement extends Components.SignIn, HTMLStencilElement {
     }
     var HTMLSignInElement: {
@@ -129,6 +150,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "check-box": HTMLCheckBoxElement;
         "code-editor": HTMLCodeEditorElement;
+        "editor-container": HTMLEditorContainerElement;
         "fluid-container": HTMLFluidContainerElement;
         "icon-button": HTMLIconButtonElement;
         "menu-drop-down": HTMLMenuDropDownElement;
@@ -136,6 +158,7 @@ declare global {
         "nav-bar": HTMLNavBarElement;
         "plain-button": HTMLPlainButtonElement;
         "radio-button": HTMLRadioButtonElement;
+        "res-editor": HTMLResEditorElement;
         "sign-in": HTMLSignInElement;
         "text-field": HTMLTextFieldElement;
         "text-field-area": HTMLTextFieldAreaElement;
@@ -146,16 +169,22 @@ declare namespace LocalJSX {
         "name"?: string;
     }
     interface CodeEditor {
+        "doc"?: any;
+        "header"?: string;
         "isEditable"?: 'true' | 'false';
         "language"?: 'java' | 'json';
+        "runBtn": 'on' | 'off';
+        "url"?: string;
+    }
+    interface EditorContainer {
     }
     interface FluidContainer {
         "breakpoint"?: 'xl' | 'lg' | 'md';
     }
     interface IconButton {
         "addClass"?: string;
-        "btnLabel"?: string;
         "iconPosition"?: 'right' | 'left';
+        "label"?: string;
         "type"?: 'outlined' | 'contained';
     }
     interface MenuDropDown {
@@ -176,6 +205,9 @@ declare namespace LocalJSX {
         "align"?: 'vertical' | 'horizontal';
         "name"?: string;
     }
+    interface ResEditor {
+        "doc"?: any;
+    }
     interface SignIn {
     }
     interface TextField {
@@ -191,6 +223,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "check-box": CheckBox;
         "code-editor": CodeEditor;
+        "editor-container": EditorContainer;
         "fluid-container": FluidContainer;
         "icon-button": IconButton;
         "menu-drop-down": MenuDropDown;
@@ -198,6 +231,7 @@ declare namespace LocalJSX {
         "nav-bar": NavBar;
         "plain-button": PlainButton;
         "radio-button": RadioButton;
+        "res-editor": ResEditor;
         "sign-in": SignIn;
         "text-field": TextField;
         "text-field-area": TextFieldArea;
@@ -209,6 +243,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "check-box": LocalJSX.CheckBox & JSXBase.HTMLAttributes<HTMLCheckBoxElement>;
             "code-editor": LocalJSX.CodeEditor & JSXBase.HTMLAttributes<HTMLCodeEditorElement>;
+            "editor-container": LocalJSX.EditorContainer & JSXBase.HTMLAttributes<HTMLEditorContainerElement>;
             "fluid-container": LocalJSX.FluidContainer & JSXBase.HTMLAttributes<HTMLFluidContainerElement>;
             "icon-button": LocalJSX.IconButton & JSXBase.HTMLAttributes<HTMLIconButtonElement>;
             "menu-drop-down": LocalJSX.MenuDropDown & JSXBase.HTMLAttributes<HTMLMenuDropDownElement>;
@@ -216,6 +251,7 @@ declare module "@stencil/core" {
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
+            "res-editor": LocalJSX.ResEditor & JSXBase.HTMLAttributes<HTMLResEditorElement>;
             "sign-in": LocalJSX.SignIn & JSXBase.HTMLAttributes<HTMLSignInElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
             "text-field-area": LocalJSX.TextFieldArea & JSXBase.HTMLAttributes<HTMLTextFieldAreaElement>;

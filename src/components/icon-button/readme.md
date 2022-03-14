@@ -10,8 +10,8 @@
 | Property       | Attribute       | Description | Type                        | Default     |
 | -------------- | --------------- | ----------- | --------------------------- | ----------- |
 | `addClass`     | `add-class`     |             | `string`                    | `undefined` |
-| `btnLabel`     | `btn-label`     |             | `string`                    | `undefined` |
 | `iconPosition` | `icon-position` |             | `"left" \| "right"`         | `undefined` |
+| `label`        | `label`         |             | `string`                    | `undefined` |
 | `type`         | `type`          |             | `"contained" \| "outlined"` | `undefined` |
 
 
