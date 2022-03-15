@@ -23,13 +23,11 @@
 ### Used by
 
  - [custom-table](../custom-table)
- - [sign-in](../sign-in)
 
 ### Graph
 ```mermaid
 graph TD;
   custom-table --> plain-button
-  sign-in --> plain-button
   style plain-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

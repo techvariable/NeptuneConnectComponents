@@ -16,12 +16,12 @@
 
 ### Used by
 
- - [req-editor](../req-editor)
+ - [code-editor](../code-editor)
 
 ### Graph
 ```mermaid
 graph TD;
-  req-editor --> res-editor
+  code-editor --> res-editor
   style res-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -29,7 +29,7 @@ export class ResEditor {
   render() {
     return (
       <Host>
-        <p class="text-gray-400 pt-4 pb-2">Output :</p>
+        <p class="text-gray-400 pt-8 pb-2">Output :</p>
         <div id="res-editor"></div>;
       </Host>
     );

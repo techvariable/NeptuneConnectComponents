@@ -10,7 +10,7 @@ export namespace Components {
         "name": string;
     }
     interface CodeEditor {
-        "headerText": string;
+        "doc": any;
         "url": string;
     }
     interface CustomTable {
@@ -68,15 +68,8 @@ export namespace Components {
         "align": 'vertical' | 'horizontal';
         "name": string;
     }
-    interface ReqEditor {
-        "doc": any;
-        "header": string;
-        "url": string;
-    }
     interface ResEditor {
         "doc": any;
-    }
-    interface SignIn {
     }
     interface TableWrapper {
         "api": any;
@@ -93,7 +86,6 @@ export namespace Components {
         "onClick": any;
         "placeholder": string;
         "type": 'email' | 'password' | 'text' | 'search';
-        "width": 'full' | 'auto';
     }
     interface TextFieldArea {
         "addClass": string;
@@ -179,23 +171,11 @@ declare global {
         prototype: HTMLRadioButtonElement;
         new (): HTMLRadioButtonElement;
     };
-    interface HTMLReqEditorElement extends Components.ReqEditor, HTMLStencilElement {
-    }
-    var HTMLReqEditorElement: {
-        prototype: HTMLReqEditorElement;
-        new (): HTMLReqEditorElement;
-    };
     interface HTMLResEditorElement extends Components.ResEditor, HTMLStencilElement {
     }
     var HTMLResEditorElement: {
         prototype: HTMLResEditorElement;
         new (): HTMLResEditorElement;
-    };
-    interface HTMLSignInElement extends Components.SignIn, HTMLStencilElement {
-    }
-    var HTMLSignInElement: {
-        prototype: HTMLSignInElement;
-        new (): HTMLSignInElement;
     };
     interface HTMLTableWrapperElement extends Components.TableWrapper, HTMLStencilElement {
     }
@@ -235,9 +215,7 @@ declare global {
         "nav-bar": HTMLNavBarElement;
         "plain-button": HTMLPlainButtonElement;
         "radio-button": HTMLRadioButtonElement;
-        "req-editor": HTMLReqEditorElement;
         "res-editor": HTMLResEditorElement;
-        "sign-in": HTMLSignInElement;
         "table-wrapper": HTMLTableWrapperElement;
         "test-com": HTMLTestComElement;
         "text-field": HTMLTextFieldElement;
@@ -249,7 +227,7 @@ declare namespace LocalJSX {
         "name"?: string;
     }
     interface CodeEditor {
-        "headerText"?: string;
+        "doc"?: any;
         "url"?: string;
     }
     interface CustomTable {
@@ -307,15 +285,8 @@ declare namespace LocalJSX {
         "align"?: 'vertical' | 'horizontal';
         "name"?: string;
     }
-    interface ReqEditor {
-        "doc"?: any;
-        "header"?: string;
-        "url"?: string;
-    }
     interface ResEditor {
         "doc"?: any;
-    }
-    interface SignIn {
     }
     interface TableWrapper {
         "api"?: any;
@@ -332,7 +303,6 @@ declare namespace LocalJSX {
         "onClick"?: any;
         "placeholder"?: string;
         "type"?: 'email' | 'password' | 'text' | 'search';
-        "width"?: 'full' | 'auto';
     }
     interface TextFieldArea {
         "addClass"?: string;
@@ -352,9 +322,7 @@ declare namespace LocalJSX {
         "nav-bar": NavBar;
         "plain-button": PlainButton;
         "radio-button": RadioButton;
-        "req-editor": ReqEditor;
         "res-editor": ResEditor;
-        "sign-in": SignIn;
         "table-wrapper": TableWrapper;
         "test-com": TestCom;
         "text-field": TextField;
@@ -378,9 +346,7 @@ declare module "@stencil/core" {
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
-            "req-editor": LocalJSX.ReqEditor & JSXBase.HTMLAttributes<HTMLReqEditorElement>;
             "res-editor": LocalJSX.ResEditor & JSXBase.HTMLAttributes<HTMLResEditorElement>;
-            "sign-in": LocalJSX.SignIn & JSXBase.HTMLAttributes<HTMLSignInElement>;
             "table-wrapper": LocalJSX.TableWrapper & JSXBase.HTMLAttributes<HTMLTableWrapperElement>;
             "test-com": LocalJSX.TestCom & JSXBase.HTMLAttributes<HTMLTestComElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;

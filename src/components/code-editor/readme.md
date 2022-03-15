@@ -7,25 +7,22 @@
 
 ## Properties
 
-| Property     | Attribute     | Description | Type     | Default     |
-| ------------ | ------------- | ----------- | -------- | ----------- |
-| `headerText` | `header-text` |             | `string` | `undefined` |
-| `url`        | `url`         |             | `string` | `undefined` |
+| Property | Attribute | Description | Type     | Default     |
+| -------- | --------- | ----------- | -------- | ----------- |
+| `doc`    | `doc`     |             | `any`    | `'\n\n\n'`  |
+| `url`    | `url`     |             | `string` | `undefined` |
 
 
 ## Dependencies
 
 ### Depends on
 
-- [fluid-container](../fluid-container)
-- [req-editor](../req-editor)
+- [res-editor](../res-editor)
 
 ### Graph
 ```mermaid
 graph TD;
-  code-editor --> fluid-container
-  code-editor --> req-editor
-  req-editor --> res-editor
+  code-editor --> res-editor
   style code-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
