@@ -1,4 +1,4 @@
-import { Component, h, Element, State, Prop } from '@stencil/core';
+import { Component, h, Element, State, Prop, Host } from '@stencil/core';
 import { EditorState, basicSetup } from '@codemirror/basic-setup';
 import { EditorView } from '@codemirror/view';
 import { json } from '@codemirror/lang-json';
@@ -27,6 +27,11 @@ export class ResEditor {
   }
 
   render() {
-    return <div id="res-editor"></div>;
+    return (
+      <Host>
+        <p class="text-gray-400 pt-4 pb-2">Output :</p>
+        <div id="res-editor"></div>;
+      </Host>
+    );
   }
 }

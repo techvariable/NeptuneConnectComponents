@@ -49,11 +49,11 @@ export class SignIn {
 
           <form class="pt-6 space-y-3" action="/" name="login-form" method="post" enctype="multipart/form-data">
             {/* email */}
-            <text-field name="email" width="full" type="email"></text-field>
+            <text-field name="email" width="full" type="email" placeholder="email"></text-field>
 
             {/* password */}
             <div class="mt-1 relative rounded-md shadow-sm">
-              <text-field name="password" width="full" type={this.showPassword ? 'text' : 'password'}></text-field>
+              <text-field name="password" width="full" type={this.showPassword ? 'text' : 'password'} placeholder="password"></text-field>
               {/* eye button */}
               <div class="absolute inset-y-0 right-3 flex items-center text-indigo-500">
                 <div class="cursor-pointer" onClick={() => this.changeView()}>

@@ -10,11 +10,7 @@ export namespace Components {
         "name": string;
     }
     interface CodeEditor {
-        "doc": any;
-        "header": string;
-        "isEditable": 'true' | 'false';
-        "language": 'java' | 'json';
-        "runBtn": 'on' | 'off';
+        "headerText": string;
         "url": string;
     }
     interface CustomTable {
@@ -37,8 +33,6 @@ export namespace Components {
         "alias": string;
         "clearSearch": any;
         "searchMethod": any;
-    }
-    interface EditorContainer {
     }
     interface FluidContainer {
         "breakpoint": 'xl' | 'lg' | 'md';
@@ -73,6 +67,11 @@ export namespace Components {
     interface RadioButton {
         "align": 'vertical' | 'horizontal';
         "name": string;
+    }
+    interface ReqEditor {
+        "doc": any;
+        "header": string;
+        "url": string;
     }
     interface ResEditor {
         "doc": any;
@@ -125,12 +124,6 @@ declare global {
     var HTMLDropDownElement: {
         prototype: HTMLDropDownElement;
         new (): HTMLDropDownElement;
-    };
-    interface HTMLEditorContainerElement extends Components.EditorContainer, HTMLStencilElement {
-    }
-    var HTMLEditorContainerElement: {
-        prototype: HTMLEditorContainerElement;
-        new (): HTMLEditorContainerElement;
     };
     interface HTMLFluidContainerElement extends Components.FluidContainer, HTMLStencilElement {
     }
@@ -186,6 +179,12 @@ declare global {
         prototype: HTMLRadioButtonElement;
         new (): HTMLRadioButtonElement;
     };
+    interface HTMLReqEditorElement extends Components.ReqEditor, HTMLStencilElement {
+    }
+    var HTMLReqEditorElement: {
+        prototype: HTMLReqEditorElement;
+        new (): HTMLReqEditorElement;
+    };
     interface HTMLResEditorElement extends Components.ResEditor, HTMLStencilElement {
     }
     var HTMLResEditorElement: {
@@ -227,7 +226,6 @@ declare global {
         "code-editor": HTMLCodeEditorElement;
         "custom-table": HTMLCustomTableElement;
         "drop-down": HTMLDropDownElement;
-        "editor-container": HTMLEditorContainerElement;
         "fluid-container": HTMLFluidContainerElement;
         "icon-button": HTMLIconButtonElement;
         "loader-component": HTMLLoaderComponentElement;
@@ -237,6 +235,7 @@ declare global {
         "nav-bar": HTMLNavBarElement;
         "plain-button": HTMLPlainButtonElement;
         "radio-button": HTMLRadioButtonElement;
+        "req-editor": HTMLReqEditorElement;
         "res-editor": HTMLResEditorElement;
         "sign-in": HTMLSignInElement;
         "table-wrapper": HTMLTableWrapperElement;
@@ -250,11 +249,7 @@ declare namespace LocalJSX {
         "name"?: string;
     }
     interface CodeEditor {
-        "doc"?: any;
-        "header"?: string;
-        "isEditable"?: 'true' | 'false';
-        "language"?: 'java' | 'json';
-        "runBtn": 'on' | 'off';
+        "headerText"?: string;
         "url"?: string;
     }
     interface CustomTable {
@@ -277,8 +272,6 @@ declare namespace LocalJSX {
         "alias"?: string;
         "clearSearch"?: any;
         "searchMethod"?: any;
-    }
-    interface EditorContainer {
     }
     interface FluidContainer {
         "breakpoint"?: 'xl' | 'lg' | 'md';
@@ -314,6 +307,11 @@ declare namespace LocalJSX {
         "align"?: 'vertical' | 'horizontal';
         "name"?: string;
     }
+    interface ReqEditor {
+        "doc"?: any;
+        "header"?: string;
+        "url"?: string;
+    }
     interface ResEditor {
         "doc"?: any;
     }
@@ -345,7 +343,6 @@ declare namespace LocalJSX {
         "code-editor": CodeEditor;
         "custom-table": CustomTable;
         "drop-down": DropDown;
-        "editor-container": EditorContainer;
         "fluid-container": FluidContainer;
         "icon-button": IconButton;
         "loader-component": LoaderComponent;
@@ -355,6 +352,7 @@ declare namespace LocalJSX {
         "nav-bar": NavBar;
         "plain-button": PlainButton;
         "radio-button": RadioButton;
+        "req-editor": ReqEditor;
         "res-editor": ResEditor;
         "sign-in": SignIn;
         "table-wrapper": TableWrapper;
@@ -371,7 +369,6 @@ declare module "@stencil/core" {
             "code-editor": LocalJSX.CodeEditor & JSXBase.HTMLAttributes<HTMLCodeEditorElement>;
             "custom-table": LocalJSX.CustomTable & JSXBase.HTMLAttributes<HTMLCustomTableElement>;
             "drop-down": LocalJSX.DropDown & JSXBase.HTMLAttributes<HTMLDropDownElement>;
-            "editor-container": LocalJSX.EditorContainer & JSXBase.HTMLAttributes<HTMLEditorContainerElement>;
             "fluid-container": LocalJSX.FluidContainer & JSXBase.HTMLAttributes<HTMLFluidContainerElement>;
             "icon-button": LocalJSX.IconButton & JSXBase.HTMLAttributes<HTMLIconButtonElement>;
             "loader-component": LocalJSX.LoaderComponent & JSXBase.HTMLAttributes<HTMLLoaderComponentElement>;
@@ -381,6 +378,7 @@ declare module "@stencil/core" {
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
+            "req-editor": LocalJSX.ReqEditor & JSXBase.HTMLAttributes<HTMLReqEditorElement>;
             "res-editor": LocalJSX.ResEditor & JSXBase.HTMLAttributes<HTMLResEditorElement>;
             "sign-in": LocalJSX.SignIn & JSXBase.HTMLAttributes<HTMLSignInElement>;
             "table-wrapper": LocalJSX.TableWrapper & JSXBase.HTMLAttributes<HTMLTableWrapperElement>;
