@@ -11,7 +11,41 @@
   </head>
   <body class="selection:bg-indigo-200 selection:text-violet-800">
     <fluid-container>
-      <code-editor url="http://localhost:5000/query"></code-editor>
+      <section class="text-gray-600 body-font relative">
+        <div class="container px-5 py-24 mx-auto">
+          <div class="flex flex-col text-center w-full mb-12">
+            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Account Setup</h1>
+            <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Please fill in the form below to continue signing up.</p>
+          </div>
+          <div class="lg:w-1/2 md:w-2/3 mx-auto">
+            <form class="pt-6 space-y-3" action="/users" name="invite-form" method="post" enctype="multipart/form-data">
+              <div class="flex flex-wrap -m-2">
+                <div class="w-full">
+                  <text-field name="name" type="text" placeholder="Enter name"></text-field>
+                  <div class="pt-3 w-full">
+                    <text-field name="password" type="password" placeholder="Enter password"></text-field>
+                  </div>
+
+                  <div class="pt-3 w-full">
+                    <text-field name="confirmedPassword" type="password" placeholder="Confirm password"></text-field>
+                  </div>
+                </div>
+
+                <div class="pt-3 w-full">
+                  <plain-button width="full" type="contained"> register </plain-button>
+                </div>
+
+                <div class="pt-8">
+                  <p class="text-gray-500">
+                    Already have an account!
+                    <a href="<%= url %>" class="text-indigo-500 font-semibold ml-3 hover:underline">Sign In</a>
+                  </p>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
     </fluid-container>
   </body>
 </html>

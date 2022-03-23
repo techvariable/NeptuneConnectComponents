@@ -11,8 +11,10 @@ export class CodeEditor {
   @Prop() url: string;
   @Prop() doc: any = '\n\n\n';
   @State() response: any;
+  @State() responseLabel: any;
   @State() view: EditorView;
   @State() state: EditorState;
+  @State() isLoading = false;
   @Element() element: HTMLElement;
 
   componentDidLoad() {
@@ -28,6 +30,7 @@ export class CodeEditor {
   }
 
   clickHandler() {
+    this.isLoading = true;
     let transaction = this.view.state.update();
     const query = transaction.state.doc.toString().trim();
     this.view.dispatch(transaction);
@@ -39,7 +42,9 @@ export class CodeEditor {
         apiKey: 'VD695S0-471MNBN-Q253RNQ-TZ2G9PT',
       })
       .then((res: any) => {
-        this.response = res.data;
+        this.response = Object.values(res.data)[0];
+        this.responseLabel = Object.keys(res.data)[0];
+        this.isLoading = false;
       })
       .catch(err => console.log(err));
   }
@@ -59,8 +64,13 @@ export class CodeEditor {
             Run
           </button>
         </div>
-
-        {this.response && <res-editor doc={JSON.stringify(this.response, null, 2)}></res-editor>}
+        {this.isLoading && (
+          <div>
+            <p class="text-gray-400 pt-8 pb-12">Output :</p>
+            <loader-component></loader-component>
+          </div>
+        )}
+        {this.response && !this.isLoading && <res-editor responseLabel={this.responseLabel} doc={JSON.stringify(this.response, null, 2)}></res-editor>}
       </Host>
     );
   }

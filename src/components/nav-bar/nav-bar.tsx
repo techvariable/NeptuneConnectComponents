@@ -7,7 +7,7 @@ import { Component, h } from '@stencil/core';
 export class NavBar {
   render() {
     return (
-      <nav class="py-5">
+      <nav class="absolute top-0 bg-white inset-x-0 py-5">
         <fluid-container>
           <div class="flex justify-between items-center">
             {/* Logo goes here */}

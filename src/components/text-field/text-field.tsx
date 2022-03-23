@@ -34,6 +34,7 @@ export class TextField {
   @Prop() placeholder: string = 'something';
   @Prop() onChange: any;
   @Prop() onClick: any;
+  @Prop() eye: boolean;
 
   @State() showPassword: boolean = false;
 
@@ -48,10 +49,10 @@ export class TextField {
           type={this.showPassword ? 'text' : this.type}
           class={`appearance-none block  px-3 py-2 border-2 border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm w-full ${this.addClass} `}
           name={this.name}
-          placeholder={`Enter ${this.placeholder}`}
+          placeholder={this.placeholder}
           required
         />
-        {this.type === 'password' && (
+        {this.type === 'password' && this.eye && (
           <div class="absolute z-10 inset-y-0 right-3 flex items-center text-indigo-500">
             <div class="cursor-pointer" onClick={() => this.changeView()}>
               {!this.showPassword ? eyeOff : eyeOn}

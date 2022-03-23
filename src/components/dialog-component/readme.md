@@ -1,4 +1,4 @@
-# test-com
+# dialog-component
 
 
 

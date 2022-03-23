@@ -9,7 +9,7 @@ export class FluidContainer {
 
   render() {
     return (
-      <div class={'mx-auto ' + `max-w-screen-${this.breakpoint}`}>
+      <div class={`mx-auto max-w-screen-${this.breakpoint}`}>
         <slot></slot>
       </div>
     );
