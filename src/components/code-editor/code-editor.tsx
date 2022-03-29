@@ -1,8 +1,9 @@
 import { Component, h, Element, State, Prop, Host } from '@stencil/core';
 import { EditorState, basicSetup } from '@codemirror/basic-setup';
-import { EditorView } from '@codemirror/view';
-import axios from 'axios';
+import { EditorView, keymap } from '@codemirror/view';
+// import { defaultKeymap } from '@codemirror/commands';
 import { java } from '@codemirror/lang-java';
+import axios from 'axios';
 @Component({
   tag: 'code-editor',
   scoped: true,
@@ -20,7 +21,12 @@ export class CodeEditor {
   componentDidLoad() {
     this.state = EditorState.create({
       doc: this.doc,
-      extensions: [basicSetup, java()],
+      extensions: [
+        basicSetup,
+        java(),
+        // keymap.of(defaultKeymap),
+        this.dummyKeymap(),
+      ],
     });
 
     this.view = new EditorView({
@@ -49,12 +55,26 @@ export class CodeEditor {
       .catch(err => console.log(err));
   }
 
+  dummyKeymap() {
+    let self = this;
+    return keymap.of([
+      {
+        key: 'Ctrl-Shift-Enter',
+        run() {
+          self.clickHandler();
+          return true;
+        },
+      },
+    ]);
+  }
+
   render() {
     return (
       <Host>
         <div class="border border-gray-300 shadow-gray-300   p-3 space-y-2">
           <div id="editor" class="border border-gray-300"></div>
           <button
+            title="Ctrl+Shift+Enter to run"
             onClick={() => this.clickHandler()}
             class="flex text-sm gap-2 items-center justify-center text-gray-600 border border-gray-300 px-3 py-2 hover:bg-gray-200 hover:text-gray-800"
           >
@@ -64,13 +84,15 @@ export class CodeEditor {
             Run
           </button>
         </div>
+
         {this.isLoading && (
           <div>
             <p class="text-gray-400 pt-8 pb-12">Output :</p>
             <loader-component></loader-component>
           </div>
         )}
-        {this.response && !this.isLoading && <res-editor responseLabel={this.responseLabel} doc={JSON.stringify(this.response, null, 2)}></res-editor>}
+        {this.response && !this.isLoading && <tab-component responseLabel={this.responseLabel} doc={this.response}></tab-component>}
+        {/* {this.response && !this.isLoading && <res-editor responseLabel={this.responseLabel} doc={JSON.stringify(this.response, null, 2)}></res-editor>} */}
       </Host>
     );
   }

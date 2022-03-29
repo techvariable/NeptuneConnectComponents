@@ -29,6 +29,9 @@ export namespace Components {
         "tableHeader": object[];
         "toggleSortMethod": any;
     }
+    interface DataTable {
+        "doc": any;
+    }
     interface DialogComponent {
     }
     interface DropDown {
@@ -74,6 +77,10 @@ export namespace Components {
         "doc": any;
         "responseLabel": 'result' | 'error';
     }
+    interface TabComponent {
+        "doc": any;
+        "responseLabel": any;
+    }
     interface TableWrapper {
         "api": any;
         "autocompute": boolean;
@@ -112,6 +119,12 @@ declare global {
     var HTMLCustomTableElement: {
         prototype: HTMLCustomTableElement;
         new (): HTMLCustomTableElement;
+    };
+    interface HTMLDataTableElement extends Components.DataTable, HTMLStencilElement {
+    }
+    var HTMLDataTableElement: {
+        prototype: HTMLDataTableElement;
+        new (): HTMLDataTableElement;
     };
     interface HTMLDialogComponentElement extends Components.DialogComponent, HTMLStencilElement {
     }
@@ -185,6 +198,12 @@ declare global {
         prototype: HTMLResEditorElement;
         new (): HTMLResEditorElement;
     };
+    interface HTMLTabComponentElement extends Components.TabComponent, HTMLStencilElement {
+    }
+    var HTMLTabComponentElement: {
+        prototype: HTMLTabComponentElement;
+        new (): HTMLTabComponentElement;
+    };
     interface HTMLTableWrapperElement extends Components.TableWrapper, HTMLStencilElement {
     }
     var HTMLTableWrapperElement: {
@@ -207,6 +226,7 @@ declare global {
         "check-box": HTMLCheckBoxElement;
         "code-editor": HTMLCodeEditorElement;
         "custom-table": HTMLCustomTableElement;
+        "data-table": HTMLDataTableElement;
         "dialog-component": HTMLDialogComponentElement;
         "drop-down": HTMLDropDownElement;
         "fluid-container": HTMLFluidContainerElement;
@@ -219,6 +239,7 @@ declare global {
         "plain-button": HTMLPlainButtonElement;
         "radio-button": HTMLRadioButtonElement;
         "res-editor": HTMLResEditorElement;
+        "tab-component": HTMLTabComponentElement;
         "table-wrapper": HTMLTableWrapperElement;
         "text-field": HTMLTextFieldElement;
         "text-field-area": HTMLTextFieldAreaElement;
@@ -247,6 +268,9 @@ declare namespace LocalJSX {
         "tableBody"?: object[];
         "tableHeader"?: object[];
         "toggleSortMethod"?: any;
+    }
+    interface DataTable {
+        "doc"?: any;
     }
     interface DialogComponent {
     }
@@ -293,6 +317,10 @@ declare namespace LocalJSX {
         "doc"?: any;
         "responseLabel"?: 'result' | 'error';
     }
+    interface TabComponent {
+        "doc"?: any;
+        "responseLabel"?: any;
+    }
     interface TableWrapper {
         "api"?: any;
         "autocompute"?: boolean;
@@ -316,6 +344,7 @@ declare namespace LocalJSX {
         "check-box": CheckBox;
         "code-editor": CodeEditor;
         "custom-table": CustomTable;
+        "data-table": DataTable;
         "dialog-component": DialogComponent;
         "drop-down": DropDown;
         "fluid-container": FluidContainer;
@@ -328,6 +357,7 @@ declare namespace LocalJSX {
         "plain-button": PlainButton;
         "radio-button": RadioButton;
         "res-editor": ResEditor;
+        "tab-component": TabComponent;
         "table-wrapper": TableWrapper;
         "text-field": TextField;
         "text-field-area": TextFieldArea;
@@ -340,6 +370,7 @@ declare module "@stencil/core" {
             "check-box": LocalJSX.CheckBox & JSXBase.HTMLAttributes<HTMLCheckBoxElement>;
             "code-editor": LocalJSX.CodeEditor & JSXBase.HTMLAttributes<HTMLCodeEditorElement>;
             "custom-table": LocalJSX.CustomTable & JSXBase.HTMLAttributes<HTMLCustomTableElement>;
+            "data-table": LocalJSX.DataTable & JSXBase.HTMLAttributes<HTMLDataTableElement>;
             "dialog-component": LocalJSX.DialogComponent & JSXBase.HTMLAttributes<HTMLDialogComponentElement>;
             "drop-down": LocalJSX.DropDown & JSXBase.HTMLAttributes<HTMLDropDownElement>;
             "fluid-container": LocalJSX.FluidContainer & JSXBase.HTMLAttributes<HTMLFluidContainerElement>;
@@ -352,6 +383,7 @@ declare module "@stencil/core" {
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
             "res-editor": LocalJSX.ResEditor & JSXBase.HTMLAttributes<HTMLResEditorElement>;
+            "tab-component": LocalJSX.TabComponent & JSXBase.HTMLAttributes<HTMLTabComponentElement>;
             "table-wrapper": LocalJSX.TableWrapper & JSXBase.HTMLAttributes<HTMLTableWrapperElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
             "text-field-area": LocalJSX.TextFieldArea & JSXBase.HTMLAttributes<HTMLTextFieldAreaElement>;

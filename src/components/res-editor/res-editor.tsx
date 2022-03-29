@@ -40,9 +40,8 @@ export class ResEditor {
   render() {
     return (
       <Host>
-        <p class="text-gray-400 pt-8 pb-2">Output :</p>
         <p class={this.labelTitle[this.responseLabel].class}>{this.labelTitle[this.responseLabel].tag}</p>
-        <div id="res-editor"></div>;
+        <div id="res-editor" class="max-h-48 overflow-y-scroll"></div>
       </Host>
     );
   }
