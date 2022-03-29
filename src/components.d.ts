@@ -10,8 +10,8 @@ export namespace Components {
         "name": string;
     }
     interface CodeEditor {
-        "isEditable": 'true' | 'false';
-        "language": 'java' | 'json';
+        "doc": any;
+        "url": string;
     }
     interface CustomTable {
         "clearSearch": any;
@@ -28,6 +28,11 @@ export namespace Components {
         "tableBody": object[];
         "tableHeader": object[];
         "toggleSortMethod": any;
+    }
+    interface DataTable {
+        "doc": any;
+    }
+    interface DialogComponent {
     }
     interface DropDown {
         "alias": string;
@@ -68,7 +73,13 @@ export namespace Components {
         "align": 'vertical' | 'horizontal';
         "name": string;
     }
-    interface SignIn {
+    interface ResEditor {
+        "doc": any;
+        "responseLabel": 'result' | 'error';
+    }
+    interface TabComponent {
+        "doc": any;
+        "responseLabel": any;
     }
     interface TableWrapper {
         "api": any;
@@ -76,16 +87,14 @@ export namespace Components {
         "headerList": object[];
         "rowPerPage": number[];
     }
-    interface TestCom {
-    }
     interface TextField {
         "addClass": string;
+        "eye": boolean;
         "name": string;
         "onChange": any;
         "onClick": any;
         "placeholder": string;
         "type": 'email' | 'password' | 'text' | 'search';
-        "width": 'full' | 'auto';
     }
     interface TextFieldArea {
         "addClass": string;
@@ -110,6 +119,18 @@ declare global {
     var HTMLCustomTableElement: {
         prototype: HTMLCustomTableElement;
         new (): HTMLCustomTableElement;
+    };
+    interface HTMLDataTableElement extends Components.DataTable, HTMLStencilElement {
+    }
+    var HTMLDataTableElement: {
+        prototype: HTMLDataTableElement;
+        new (): HTMLDataTableElement;
+    };
+    interface HTMLDialogComponentElement extends Components.DialogComponent, HTMLStencilElement {
+    }
+    var HTMLDialogComponentElement: {
+        prototype: HTMLDialogComponentElement;
+        new (): HTMLDialogComponentElement;
     };
     interface HTMLDropDownElement extends Components.DropDown, HTMLStencilElement {
     }
@@ -171,23 +192,23 @@ declare global {
         prototype: HTMLRadioButtonElement;
         new (): HTMLRadioButtonElement;
     };
-    interface HTMLSignInElement extends Components.SignIn, HTMLStencilElement {
+    interface HTMLResEditorElement extends Components.ResEditor, HTMLStencilElement {
     }
-    var HTMLSignInElement: {
-        prototype: HTMLSignInElement;
-        new (): HTMLSignInElement;
+    var HTMLResEditorElement: {
+        prototype: HTMLResEditorElement;
+        new (): HTMLResEditorElement;
+    };
+    interface HTMLTabComponentElement extends Components.TabComponent, HTMLStencilElement {
+    }
+    var HTMLTabComponentElement: {
+        prototype: HTMLTabComponentElement;
+        new (): HTMLTabComponentElement;
     };
     interface HTMLTableWrapperElement extends Components.TableWrapper, HTMLStencilElement {
     }
     var HTMLTableWrapperElement: {
         prototype: HTMLTableWrapperElement;
         new (): HTMLTableWrapperElement;
-    };
-    interface HTMLTestComElement extends Components.TestCom, HTMLStencilElement {
-    }
-    var HTMLTestComElement: {
-        prototype: HTMLTestComElement;
-        new (): HTMLTestComElement;
     };
     interface HTMLTextFieldElement extends Components.TextField, HTMLStencilElement {
     }
@@ -205,6 +226,8 @@ declare global {
         "check-box": HTMLCheckBoxElement;
         "code-editor": HTMLCodeEditorElement;
         "custom-table": HTMLCustomTableElement;
+        "data-table": HTMLDataTableElement;
+        "dialog-component": HTMLDialogComponentElement;
         "drop-down": HTMLDropDownElement;
         "fluid-container": HTMLFluidContainerElement;
         "icon-button": HTMLIconButtonElement;
@@ -215,9 +238,9 @@ declare global {
         "nav-bar": HTMLNavBarElement;
         "plain-button": HTMLPlainButtonElement;
         "radio-button": HTMLRadioButtonElement;
-        "sign-in": HTMLSignInElement;
+        "res-editor": HTMLResEditorElement;
+        "tab-component": HTMLTabComponentElement;
         "table-wrapper": HTMLTableWrapperElement;
-        "test-com": HTMLTestComElement;
         "text-field": HTMLTextFieldElement;
         "text-field-area": HTMLTextFieldAreaElement;
     }
@@ -227,8 +250,8 @@ declare namespace LocalJSX {
         "name"?: string;
     }
     interface CodeEditor {
-        "isEditable"?: 'true' | 'false';
-        "language"?: 'java' | 'json';
+        "doc"?: any;
+        "url"?: string;
     }
     interface CustomTable {
         "clearSearch"?: any;
@@ -245,6 +268,11 @@ declare namespace LocalJSX {
         "tableBody"?: object[];
         "tableHeader"?: object[];
         "toggleSortMethod"?: any;
+    }
+    interface DataTable {
+        "doc"?: any;
+    }
+    interface DialogComponent {
     }
     interface DropDown {
         "alias"?: string;
@@ -285,7 +313,13 @@ declare namespace LocalJSX {
         "align"?: 'vertical' | 'horizontal';
         "name"?: string;
     }
-    interface SignIn {
+    interface ResEditor {
+        "doc"?: any;
+        "responseLabel"?: 'result' | 'error';
+    }
+    interface TabComponent {
+        "doc"?: any;
+        "responseLabel"?: any;
     }
     interface TableWrapper {
         "api"?: any;
@@ -293,16 +327,14 @@ declare namespace LocalJSX {
         "headerList"?: object[];
         "rowPerPage"?: number[];
     }
-    interface TestCom {
-    }
     interface TextField {
         "addClass"?: string;
+        "eye"?: boolean;
         "name"?: string;
         "onChange"?: any;
         "onClick"?: any;
         "placeholder"?: string;
         "type"?: 'email' | 'password' | 'text' | 'search';
-        "width"?: 'full' | 'auto';
     }
     interface TextFieldArea {
         "addClass"?: string;
@@ -312,6 +344,8 @@ declare namespace LocalJSX {
         "check-box": CheckBox;
         "code-editor": CodeEditor;
         "custom-table": CustomTable;
+        "data-table": DataTable;
+        "dialog-component": DialogComponent;
         "drop-down": DropDown;
         "fluid-container": FluidContainer;
         "icon-button": IconButton;
@@ -322,9 +356,9 @@ declare namespace LocalJSX {
         "nav-bar": NavBar;
         "plain-button": PlainButton;
         "radio-button": RadioButton;
-        "sign-in": SignIn;
+        "res-editor": ResEditor;
+        "tab-component": TabComponent;
         "table-wrapper": TableWrapper;
-        "test-com": TestCom;
         "text-field": TextField;
         "text-field-area": TextFieldArea;
     }
@@ -336,6 +370,8 @@ declare module "@stencil/core" {
             "check-box": LocalJSX.CheckBox & JSXBase.HTMLAttributes<HTMLCheckBoxElement>;
             "code-editor": LocalJSX.CodeEditor & JSXBase.HTMLAttributes<HTMLCodeEditorElement>;
             "custom-table": LocalJSX.CustomTable & JSXBase.HTMLAttributes<HTMLCustomTableElement>;
+            "data-table": LocalJSX.DataTable & JSXBase.HTMLAttributes<HTMLDataTableElement>;
+            "dialog-component": LocalJSX.DialogComponent & JSXBase.HTMLAttributes<HTMLDialogComponentElement>;
             "drop-down": LocalJSX.DropDown & JSXBase.HTMLAttributes<HTMLDropDownElement>;
             "fluid-container": LocalJSX.FluidContainer & JSXBase.HTMLAttributes<HTMLFluidContainerElement>;
             "icon-button": LocalJSX.IconButton & JSXBase.HTMLAttributes<HTMLIconButtonElement>;
@@ -346,9 +382,9 @@ declare module "@stencil/core" {
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
-            "sign-in": LocalJSX.SignIn & JSXBase.HTMLAttributes<HTMLSignInElement>;
+            "res-editor": LocalJSX.ResEditor & JSXBase.HTMLAttributes<HTMLResEditorElement>;
+            "tab-component": LocalJSX.TabComponent & JSXBase.HTMLAttributes<HTMLTabComponentElement>;
             "table-wrapper": LocalJSX.TableWrapper & JSXBase.HTMLAttributes<HTMLTableWrapperElement>;
-            "test-com": LocalJSX.TestCom & JSXBase.HTMLAttributes<HTMLTestComElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
             "text-field-area": LocalJSX.TextFieldArea & JSXBase.HTMLAttributes<HTMLTextFieldAreaElement>;
         }
