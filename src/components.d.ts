@@ -30,7 +30,7 @@ export namespace Components {
         "toggleSortMethod": any;
     }
     interface DataTable {
-        "doc": any;
+        "doc": object[];
     }
     interface DialogComponent {
     }
@@ -270,7 +270,7 @@ declare namespace LocalJSX {
         "toggleSortMethod"?: any;
     }
     interface DataTable {
-        "doc"?: any;
+        "doc"?: object[];
     }
     interface DialogComponent {
     }

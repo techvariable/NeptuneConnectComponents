@@ -41,7 +41,7 @@ export class ResEditor {
     return (
       <Host>
         <p class={this.labelTitle[this.responseLabel].class}>{this.labelTitle[this.responseLabel].tag}</p>
-        <div id="res-editor" class="max-h-48 overflow-y-scroll"></div>
+        <div id="res-editor"></div>
       </Host>
     );
   }

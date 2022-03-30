@@ -1,4 +1,4 @@
-# editor-container
+# code-editor
 
 
 
@@ -27,6 +27,7 @@ graph TD;
   code-editor --> tab-component
   tab-component --> res-editor
   tab-component --> data-table
+  data-table --> plain-button
   style code-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

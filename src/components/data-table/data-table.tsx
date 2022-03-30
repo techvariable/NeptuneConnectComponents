@@ -5,14 +5,71 @@ import { Component, Host, h, Prop, State } from '@stencil/core';
   scoped: true,
 })
 export class DataTable {
-  @Prop() doc;
-  @State() header;
+  @Prop() doc: object[];
+  @State() header: any;
+  @State() body: object[];
+  @State() value: string;
+  @State() toggleSort = false;
+  @State() currentPage = 1;
+  @State() dataPerPage = 5;
 
   componentWillLoad() {
-    this.header = Object.keys(this.doc.slice(0, 1).shift());
+    this.body = this.doc;
+    this.header = Object.keys(this.doc.slice(0, 1).shift()).map(title => {
+      return {
+        title,
+        sortIcon: <span class="pl-1 text-gray-500">&#8645;</span>,
+        sortDirection: 'none',
+      };
+    });
+  }
+
+  handleChange(event) {
+    this.value = event.target.value;
+    const searchedValues = this.doc.filter(items => Object.values(items).some((item: any) => item.toLowerCase().indexOf(this.value.toLowerCase()) > -1));
+    this.body = searchedValues;
+  }
+
+  nextPage() {
+    ++this.currentPage;
+  }
+
+  previousPage() {
+    --this.currentPage;
+  }
+
+  sortData(title, direction) {
+    let sortedData: object[];
+    let sortDir: string;
+    let icon: string;
+    let objIndex = this.header.findIndex(obj => obj.title == title);
+
+    if (direction === 'none' || direction === 'desc') {
+      sortedData = this.body.sort((a, b) => a[title].localeCompare(b[title]));
+      sortDir = 'asc';
+      icon = <span class="pl-1 text-gray-500">&#8595;</span>;
+    }
+
+    if (direction === 'asc') {
+      sortedData = this.body.sort((b, a) => a[title].localeCompare(b[title]));
+      sortDir = 'desc';
+      icon = <span class="pl-1 text-gray-500">&#8593;</span>;
+    }
+
+    this.body = [...sortedData];
+    this.header[objIndex].sortDirection = sortDir;
+    this.header[objIndex].sortIcon = icon;
+
+    // sortedValues = this.body.sort((a, b) => a[sortObj.title].localeCompare(b[sortObj.title]));
+    // sortedValues = this.body.sort((b, a) => a[sortObj.title].localeCompare(b[sortObj.title]));
   }
 
   render() {
+    const indexOfLastPost = this.currentPage * this.dataPerPage;
+    const indexOfFirstPost = indexOfLastPost - this.dataPerPage;
+    const currentData = this.body.slice(indexOfFirstPost, indexOfLastPost);
+    const totalPage = this.body.length / this.dataPerPage;
+
     return (
       <Host>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -35,108 +92,65 @@ export class DataTable {
                 id="table-search"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Search for items"
+                value={this.value}
+                onInput={e => this.handleChange(e)}
               />
             </div>
           </div>
+
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                {this.header.map(name => (
-                  <th scope="col" class="px-6 py-3">
-                    {name}
+                {this.header.map(item => (
+                  <th scope="col" onClick={() => this.sortData(item.title, item.sortDirection)} class="px-6 py-3 cursor-pointer" title="click to sort data">
+                    {item.title}
+                    {item.sortIcon}
                   </th>
                 ))}
               </tr>
             </thead>
 
             <tbody>
-              {this.doc.map(row => (
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              {currentData.map(row => (
+                <tr class="bg-white border-b hover:bg-gray-50">
                   {Object.values(row).map(item => (
-                    // <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                     <td class="px-6 py-4">{item}</td>
                   ))}
                 </tr>
               ))}
             </tbody>
 
-            {/* <tbody>
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td class="w-4 p-4">
-                  <div class="flex items-center">
-                    <input
-                      id="checkbox-table-search-1"
-                      type="checkbox"
-                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    />
-                    <label htmlFor="checkbox-table-search-1" class="sr-only">
-                      checkbox
-                    </label>
+            <tfoot>
+              <tr>
+                <td colSpan={5} class="py-4">
+                  <div class="flex gap-2 items-center">
+                    <plain-button
+                      color="gray-500"
+                      disabledHandler={this.currentPage === 1}
+                      clickHandler={() => this.previousPage()}
+                      type="text"
+                      addClass="bg-gray-200 hover:text-gray-700 disabled:opacity-50 "
+                    >
+                      <span>Previous</span>
+                    </plain-button>
+
+                    <plain-button
+                      color="gray-500"
+                      disabledHandler={totalPage === this.currentPage}
+                      type="text"
+                      clickHandler={() => this.nextPage()}
+                      addClass="bg-gray-200 hover:text-gray-700 disabled:opacity-50"
+                    >
+                      Next
+                    </plain-button>
+
+                    <p class="pl-5">
+                      Showing <strong>{indexOfFirstPost + 1}</strong> to <strong>{indexOfLastPost}</strong> of <strong>{this.body.length}</strong> results
+                    </p>
                   </div>
                 </td>
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                  Apple MacBook Pro 17"
-                </th>
-                <td class="px-6 py-4">Sliver</td>
-                <td class="px-6 py-4">Laptop</td>
-                <td class="px-6 py-4">$2999</td>
-                <td class="px-6 py-4 text-right">
-                  <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                    Edit
-                  </a>
-                </td>
               </tr>
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td class="w-4 p-4">
-                  <div class="flex items-center">
-                    <input
-                      id="checkbox-table-search-2"
-                      type="checkbox"
-                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    />
-                    <label htmlFor="checkbox-table-search-2" class="sr-only">
-                      checkbox
-                    </label>
-                  </div>
-                </td>
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                  Microsoft Surface Pro
-                </th>
-                <td class="px-6 py-4">White</td>
-                <td class="px-6 py-4">Laptop PC</td>
-                <td class="px-6 py-4">$1999</td>
-                <td class="px-6 py-4 text-right">
-                  <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                    Edit
-                  </a>
-                </td>
-              </tr>
-              <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td class="w-4 p-4">
-                  <div class="flex items-center">
-                    <input
-                      id="checkbox-table-search-3"
-                      type="checkbox"
-                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 "
-                    />
-                    <label htmlFor="checkbox-table-search-3" class="sr-only">
-                      checkbox
-                    </label>
-                  </div>
-                </td>
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                  Magic Mouse 2
-                </th>
-                <td class="px-6 py-4">Black</td>
-                <td class="px-6 py-4">Accessories</td>
-                <td class="px-6 py-4">$99</td>
-                <td class="px-6 py-4 text-right">
-                  <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                    Edit
-                  </a>
-                </td>
-              </tr>
-            </tbody> */}
+            </tfoot>
           </table>
         </div>
       </Host>

@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type  | Default     |
-| -------- | --------- | ----------- | ----- | ----------- |
-| `doc`    | `doc`     |             | `any` | `undefined` |
+| Property | Attribute | Description | Type       | Default     |
+| -------- | --------- | ----------- | ---------- | ----------- |
+| `doc`    | --        |             | `object[]` | `undefined` |
 
 
 ## Dependencies
@@ -18,9 +18,14 @@
 
  - [tab-component](../tab-component)
 
+### Depends on
+
+- [plain-button](../plain-button)
+
 ### Graph
 ```mermaid
 graph TD;
+  data-table --> plain-button
   tab-component --> data-table
   style data-table fill:#f9f,stroke:#333,stroke-width:4px
 ```
