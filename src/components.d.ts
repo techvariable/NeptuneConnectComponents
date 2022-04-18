@@ -40,7 +40,6 @@ export namespace Components {
         "searchMethod": any;
     }
     interface FluidContainer {
-        "breakpoint": 'xl' | 'lg' | 'md';
     }
     interface IconButton {
         "addClass": string;
@@ -76,6 +75,8 @@ export namespace Components {
     interface ResEditor {
         "doc": any;
         "responseLabel": 'result' | 'error';
+    }
+    interface SideBar {
     }
     interface TabComponent {
         "doc": any;
@@ -198,6 +199,12 @@ declare global {
         prototype: HTMLResEditorElement;
         new (): HTMLResEditorElement;
     };
+    interface HTMLSideBarElement extends Components.SideBar, HTMLStencilElement {
+    }
+    var HTMLSideBarElement: {
+        prototype: HTMLSideBarElement;
+        new (): HTMLSideBarElement;
+    };
     interface HTMLTabComponentElement extends Components.TabComponent, HTMLStencilElement {
     }
     var HTMLTabComponentElement: {
@@ -239,6 +246,7 @@ declare global {
         "plain-button": HTMLPlainButtonElement;
         "radio-button": HTMLRadioButtonElement;
         "res-editor": HTMLResEditorElement;
+        "side-bar": HTMLSideBarElement;
         "tab-component": HTMLTabComponentElement;
         "table-wrapper": HTMLTableWrapperElement;
         "text-field": HTMLTextFieldElement;
@@ -280,7 +288,6 @@ declare namespace LocalJSX {
         "searchMethod"?: any;
     }
     interface FluidContainer {
-        "breakpoint"?: 'xl' | 'lg' | 'md';
     }
     interface IconButton {
         "addClass"?: string;
@@ -316,6 +323,8 @@ declare namespace LocalJSX {
     interface ResEditor {
         "doc"?: any;
         "responseLabel"?: 'result' | 'error';
+    }
+    interface SideBar {
     }
     interface TabComponent {
         "doc"?: any;
@@ -357,6 +366,7 @@ declare namespace LocalJSX {
         "plain-button": PlainButton;
         "radio-button": RadioButton;
         "res-editor": ResEditor;
+        "side-bar": SideBar;
         "tab-component": TabComponent;
         "table-wrapper": TableWrapper;
         "text-field": TextField;
@@ -383,6 +393,7 @@ declare module "@stencil/core" {
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
             "res-editor": LocalJSX.ResEditor & JSXBase.HTMLAttributes<HTMLResEditorElement>;
+            "side-bar": LocalJSX.SideBar & JSXBase.HTMLAttributes<HTMLSideBarElement>;
             "tab-component": LocalJSX.TabComponent & JSXBase.HTMLAttributes<HTMLTabComponentElement>;
             "table-wrapper": LocalJSX.TableWrapper & JSXBase.HTMLAttributes<HTMLTableWrapperElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;

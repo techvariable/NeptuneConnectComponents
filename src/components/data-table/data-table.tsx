@@ -11,7 +11,7 @@ export class DataTable {
   @State() value: string;
   @State() toggleSort = false;
   @State() currentPage = 1;
-  @State() dataPerPage = 5;
+  @State() dataPerPage = 10;
 
   componentWillLoad() {
     this.body = this.doc;
@@ -26,8 +26,9 @@ export class DataTable {
 
   handleChange(event) {
     this.value = event.target.value;
-    const searchedValues = this.doc.filter(items => Object.values(items).some((item: any) => item.toLowerCase().indexOf(this.value.toLowerCase()) > -1));
+    const searchedValues = this.doc.filter(items => Object.values(items).some((item: any) => item.toString().toLowerCase().indexOf(this.value.toLowerCase()) > -1));
     this.body = searchedValues;
+    this.currentPage = 1;
   }
 
   nextPage() {
@@ -59,9 +60,6 @@ export class DataTable {
     this.body = [...sortedData];
     this.header[objIndex].sortDirection = sortDir;
     this.header[objIndex].sortIcon = icon;
-
-    // sortedValues = this.body.sort((a, b) => a[sortObj.title].localeCompare(b[sortObj.title]));
-    // sortedValues = this.body.sort((b, a) => a[sortObj.title].localeCompare(b[sortObj.title]));
   }
 
   render() {
@@ -136,7 +134,7 @@ export class DataTable {
 
                     <plain-button
                       color="gray-500"
-                      disabledHandler={totalPage === this.currentPage}
+                      disabledHandler={totalPage === this.currentPage || currentData.length < this.dataPerPage}
                       type="text"
                       clickHandler={() => this.nextPage()}
                       addClass="bg-gray-200 hover:text-gray-700 disabled:opacity-50"

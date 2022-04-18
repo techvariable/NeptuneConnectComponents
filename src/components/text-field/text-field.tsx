@@ -31,7 +31,7 @@ export class TextField {
   @Prop() name: string;
   @Prop() addClass: string;
   @Prop() type: 'email' | 'password' | 'text' | 'search' = 'text';
-  @Prop() placeholder: string = 'something';
+  @Prop() placeholder: string;
   @Prop() onChange: any;
   @Prop() onClick: any;
   @Prop() eye: boolean;

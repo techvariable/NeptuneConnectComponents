@@ -1,4 +1,4 @@
-# fluid-container
+# side-bar
 
 
 
@@ -7,15 +7,15 @@
 
 ## Dependencies
 
-### Used by
+### Depends on
 
- - [nav-bar](../nav-bar)
+- [plain-button](../plain-button)
 
 ### Graph
 ```mermaid
 graph TD;
-  nav-bar --> fluid-container
-  style fluid-container fill:#f9f,stroke:#333,stroke-width:4px
+  side-bar --> plain-button
+  style side-bar fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

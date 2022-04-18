@@ -38,7 +38,9 @@
     "sweetalert2": "^11.4.6"
   },
   "devDependencies": {
+    "@stencil/postcss": "^2.1.0",
     "@types/jest": "^27.0.3",
+    "autoprefixer": "^10.4.4",
     "jest": "^27.4.5",
     "jest-cli": "^27.4.5",
     "puppeteer": "^10.0.0",
