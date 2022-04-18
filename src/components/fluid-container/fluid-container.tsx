@@ -1,15 +1,22 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h } from '@stencil/core';
 
 @Component({
   tag: 'fluid-container',
   scoped: true,
 })
 export class FluidContainer {
-  @Prop() breakpoint: 'xl' | 'lg' | 'md' = 'lg';
+  // @Prop() breakpoint: 'xl' | 'lg' | 'md' = 'lg';
+
+  // screen = {
+  //   xl: 'max-w-screen-xl',
+  //   lg: 'max-w-screen-lg',
+  //   md: 'max-w-screen-md',
+  // };
 
   render() {
     return (
-      <div class={`mx-auto max-w-screen-${this.breakpoint}`}>
+      // <div class={`max-w-screen-${this.breakpoint} mx-auto`}>
+      <div class="max-w-screen-lg mx-auto">
         <slot></slot>
       </div>
     );

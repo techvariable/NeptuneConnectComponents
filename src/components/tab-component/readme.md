@@ -29,6 +29,7 @@
 graph TD;
   tab-component --> res-editor
   tab-component --> data-table
+  data-table --> plain-button
   code-editor --> tab-component
   style tab-component fill:#f9f,stroke:#333,stroke-width:4px
 ```

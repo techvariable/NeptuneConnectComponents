@@ -4,15 +4,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
     <title>Neptune Connect</title>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/build/neptune.css" />
+
     <script type="module" src="build/neptune.esm.js"></script>
     <script nomodule src="build/neptune.js"></script>
   </head>
   <body class="selection:bg-indigo-200 selection:text-violet-800">
-    <fluid-container>
-      <code-editor url="http://ec2-54-221-111-75.compute-1.amazonaws.com:5000/query"></code-editor>
-      <!-- <tab-component></tab-component> -->
+  <fluid-container breakpoint="lg">
+    <div class="bg-green-200">
+      <h1>with container hi</h1>
+    </div>
     </fluid-container>
+    </div>
   </body>
 </html>

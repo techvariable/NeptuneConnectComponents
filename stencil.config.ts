@@ -1,5 +1,9 @@
 import { Config } from '@stencil/core';
 
+import { postcss } from '@stencil/postcss';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
+
 export const config: Config = {
   namespace: 'neptune',
   globalStyle: 'src/global/global.css',
@@ -18,5 +22,10 @@ export const config: Config = {
       type: 'www',
       serviceWorker: null, // disable service workers
     },
+  ],
+  plugins: [
+    postcss({
+      plugins: [tailwindcss(), autoprefixer],
+    }),
   ],
 };
