@@ -25,6 +25,11 @@ export class SideBar {
         }
       })
       .catch(err => console.log('Error Found', err));
+
+    // temp code
+    // this.apiExist = true;
+    // this.name = 'Jintu Das';
+    // this.api = '456ytTYukdgh67996fGGt';
   }
 
   async createHandler() {
@@ -72,13 +77,25 @@ export class SideBar {
     }
   }
 
+  copyToClipboard() {
+    navigator.clipboard.writeText(this.api);
+
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      text: 'API key copied!',
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
+
   render() {
     return (
       <Host>
         {this.apiExist ? (
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <table class="w-full text-sm text-left text-gray-500 ">
+              <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                 <tr>
                   <th scope="col" class="px-6 py-3">
                     Name
@@ -87,19 +104,34 @@ export class SideBar {
                     API Key
                   </th>
                   <th scope="col" class="px-6 py-3">
+                    <span class="sr-only">Copy</span>
+                  </th>
+                  <th scope="col" class="px-6 py-3">
                     <span class="sr-only">Delete</span>
                   </th>
                 </tr>
               </thead>
               <tbody>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                <tr class="bg-white border-b ">
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                     {this.name}
                   </th>
-                  <td class="px-6 py-4">{this.api}</td>
+                  <td class="px-6 py-4 ">{this.api}</td>
 
                   <td class="px-6 py-4 text-right">
-                    <button onClick={() => this.deleteHandler()} class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                    <button title="Click to copy" onClick={() => this.copyToClipboard()} class=" hover:text-indigo-700">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                        />
+                      </svg>
+                    </button>
+                  </td>
+
+                  <td class="px-6 py-4 text-right">
+                    <button onClick={() => this.deleteHandler()} class="font-medium text-blue-600 hover:underline">
                       Delete
                     </button>
                   </td>

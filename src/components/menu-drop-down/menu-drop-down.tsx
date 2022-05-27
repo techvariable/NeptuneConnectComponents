@@ -26,11 +26,11 @@ export class MenuDropDown {
         </h2>
 
         {/* List */}
-        <div class={this.showDropdown ? 'absolute bg-white z-10 w-44 text-sm list-none mt-2 rounded divide-y divide-gray-100 shadow dark:bg-gray-700' : 'hidden'}>
+        <div class={this.showDropdown ? 'absolute bg-white z-10 w-44 text-sm list-none mt-2 rounded divide-y divide-gray-100 shadow ' : 'hidden'}>
           <ul class="py-1">
             {this.list?.map(item => (
               <li>
-                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">
                   {item}
                 </a>
               </li>
