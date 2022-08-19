@@ -126,8 +126,8 @@ export class DataTable {
             <tbody>
               {currentData.map(row => (
                 <tr class="bg-white border-b hover:bg-gray-50">
-                  {Object.values(row).map(item => (
-                    <td class="px-6 py-4">{item}</td>
+                  {this.header.map(item => (
+                    <td class="px-6 py-4">{row[item.title] ?? <span>&#8212;</span>}</td>
                   ))}
                 </tr>
               ))}
