@@ -24,7 +24,8 @@
     "distBuild": "stencil build --es5",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
-    "generate": "stencil generate"
+    "generate": "stencil generate",
+    "lint": "eslint src/**/*{.ts,.tsx}"
   },
   "dependencies": {
     "@codemirror/basic-setup": "^0.19.1",
@@ -38,6 +39,7 @@
     "sweetalert2": "^11.4.6"
   },
   "devDependencies": {
+    "@stencil/eslint-plugin": "^0.4.0",
     "@stencil/postcss": "^2.1.0",
     "@types/jest": "^27.0.3",
     "autoprefixer": "^10.4.4",
