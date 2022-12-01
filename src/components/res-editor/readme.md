@@ -10,7 +10,7 @@
 | Property        | Attribute        | Description | Type                  | Default     |
 | --------------- | ---------------- | ----------- | --------------------- | ----------- |
 | `doc`           | `doc`            |             | `any`                 | `undefined` |
-| `responseLabel` | `response-label` |             | `"error" \| "result"` | `undefined` |
+| `responseLabel` | `response-label` |             | `"error" \| "result"` | `'result'`  |
 
 
 ## Dependencies

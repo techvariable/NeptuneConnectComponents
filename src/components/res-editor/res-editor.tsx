@@ -12,7 +12,7 @@ export class ResEditor {
   @State() view: EditorView;
   @State() state: EditorState;
   @Prop() doc: any;
-  @Prop() responseLabel: 'result' | 'error';
+  @Prop() responseLabel: 'result' | 'error' = 'result';
 
   labelTitle = {
     result: {
