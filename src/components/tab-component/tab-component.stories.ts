@@ -3,12 +3,11 @@ export default {
   argTypes: {},
 };
 
-const Template = args => `<tab-component doc="${args.doc}" responseLabel="${args.slot}">${args.buttonName}</tab-component>`;
+const Template = args => `<tab-component doc="${args.doc}" responseLabel="${args.slot}"></tab-component>`;
 
 export const TabComponent = Template.bind({});
 
 TabComponent.args = {
   doc: '',
   responseLabel: '',
-  slot: '\n\n\n',
 };

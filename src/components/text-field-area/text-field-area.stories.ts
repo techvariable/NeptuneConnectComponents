@@ -9,11 +9,12 @@ export default {
   },
 };
 
-const Template = args => `<text-field-area width="${args.name}" addClass="${args.addClass}"></text-field-area>`;
+const Template = args => `<text-field-area width="${args.name}" addClass="${args.addClass}">${args.slot}</text-field-area>`;
 
 export const TextFieldArea = Template.bind({});
 
 TextFieldArea.args = {
   width: 'full',
   addClass: '',
+  slot: '',
 };

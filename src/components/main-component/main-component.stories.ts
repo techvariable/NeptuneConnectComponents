@@ -2,10 +2,10 @@ export default {
   title: 'Components/MainComponent',
 };
 
-const Template = args => `<main-component>${args.slot}</main-component>`;
+const Template = () => `<main-component></main-component>`;
 
 export const MainComponent = Template.bind({});
 
-MainComponent.args = {
-  slot: '',
+MainComponent.parameters = {
+  controls: { hideNoControlsWarning: true },
 };

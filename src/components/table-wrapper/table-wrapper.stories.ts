@@ -7,8 +7,7 @@ export default {
   },
 };
 
-const Template = args =>
-  `<table-wrapper rowPerPage="${args.rowPerPage}" api="${args.api}" headerList="${args.headerList}" autocompute='${args.autocompute}'>${args.slot}</table-wrapper>`;
+const Template = args => `<table-wrapper rowPerPage="${args.rowPerPage}" api="${args.api}" headerList="${args.headerList}" autocompute='${args.autocompute}'></table-wrapper>`;
 
 export const TableWrapper = Template.bind({});
 
@@ -17,5 +16,4 @@ TableWrapper.args = {
   api: '',
   headerList: [{}],
   autocompute: 'true',
-  slot: '',
 };

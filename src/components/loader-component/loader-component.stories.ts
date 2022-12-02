@@ -2,10 +2,10 @@ export default {
   title: 'Components/LoaderComponent',
 };
 
-const Template = args => `<loader-component >${args.slot}</loader-component>`;
+const Template = () => `<loader-component ></loader-component>`;
 
 export const LoaderComponent = Template.bind({});
 
-LoaderComponent.args = {
-  slot: '',
+LoaderComponent.parameters = {
+  controls: { hideNoControlsWarning: true },
 };
