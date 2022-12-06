@@ -33,6 +33,7 @@ export namespace Components {
         "doc": object[];
     }
     interface DialogComponent {
+        "url": string;
     }
     interface DropDown {
         "alias": string;
@@ -281,6 +282,7 @@ declare namespace LocalJSX {
         "doc"?: object[];
     }
     interface DialogComponent {
+        "url"?: string;
     }
     interface DropDown {
         "alias"?: string;
