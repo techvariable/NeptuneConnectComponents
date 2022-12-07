@@ -12,13 +12,15 @@ export class SideBar {
   @State() apiExist: boolean = false;
 
   componentWillLoad() {
+    // return axios.get('api/setting')
     return axios
-      .get('/setting/api')
+      .get('http://localhost:3000/api/settings')
       .then(res => {
+        console.log(res);
         const data = res.data;
-        if (data.success) {
-          this.api = data.api;
-          this.name = data.name;
+        if (data.apiKey) {
+          this.api = data.apiKey;
+          this.name = data.user.name;
           this.apiExist = true;
         } else {
           this.apiExist = false;
@@ -34,10 +36,12 @@ export class SideBar {
 
   async createHandler() {
     try {
-      const res = await axios.post('/setting/api');
+      // const res = await axios.post('api/settings');
+      const res = await axios.post('http://localhost:3000/api/settings');
+      console.log(res);
       const data = res.data;
-      this.api = data.api;
-      this.name = data.name;
+      this.api = data.apiKey;
+      this.name = data.user.name;
       this.apiExist = true;
       Swal.fire({
         position: 'center',
@@ -58,7 +62,8 @@ export class SideBar {
   async deleteHandler() {
     console.log('deleted');
     try {
-      await axios.get('setting/api/del');
+      // await axios.get('api/settings');
+      await axios.delete('http://localhost:3000/api/settings');
       this.apiExist = false;
       Swal.fire({
         position: 'center',
