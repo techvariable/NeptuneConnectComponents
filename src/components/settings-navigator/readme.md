@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property   | Attribute   | Description | Type  | Default                                                                                                                                                                                                                                                   |
-| ---------- | ----------- | ----------- | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `itemsObj` | `items-obj` |             | `any` | `[     {       accessFlag: true,       svg: 'public/assets/images/apikey.svg',       name: 'API',       link: '#',     },     {       accessFlag: false,       svg: 'public/assets/images/logs.svg',       name: 'logs',       link: '/logs',     },   ]` |
+| Property     | Attribute    | Description | Type  | Default     |
+| ------------ | ------------ | ----------- | ----- | ----------- |
+| `navigators` | `navigators` |             | `any` | `undefined` |
 
 
 ----------------------------------------------

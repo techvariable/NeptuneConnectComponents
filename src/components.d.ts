@@ -77,7 +77,7 @@ export namespace Components {
         "responseLabel": 'result' | 'error';
     }
     interface SettingsNavigator {
-        "itemsObj": any;
+        "navigators": any;
     }
     interface SideBar {
     }
@@ -335,7 +335,7 @@ declare namespace LocalJSX {
         "responseLabel"?: 'result' | 'error';
     }
     interface SettingsNavigator {
-        "itemsObj"?: any;
+        "navigators"?: any;
     }
     interface SideBar {
     }
