@@ -18,16 +18,13 @@
 ### Depends on
 
 - [loader-component](../loader-component)
-- [tab-component](../tab-component)
+- [res-editor](../res-editor)
 
 ### Graph
 ```mermaid
 graph TD;
   code-editor --> loader-component
-  code-editor --> tab-component
-  tab-component --> res-editor
-  tab-component --> data-table
-  data-table --> plain-button
+  code-editor --> res-editor
   style code-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

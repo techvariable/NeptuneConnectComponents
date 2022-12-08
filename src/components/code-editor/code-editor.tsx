@@ -17,6 +17,20 @@ export class CodeEditor {
   @State() state: EditorState;
   @State() isLoading = false;
   @Element() element: HTMLElement;
+  @State() apiKey: string;
+
+  componentWillLoad() {
+    return axios
+      .get('/setting/api')
+      .then(res => {
+        console.log(res);
+        this.apiKey = res.data.api;
+        console.log(this.apiKey);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
   componentDidLoad() {
     this.state = EditorState.create({
@@ -40,12 +54,13 @@ export class CodeEditor {
     let transaction = this.view.state.update();
     const query = transaction.state.doc.toString().trim();
     this.view.dispatch(transaction);
-
+    console.log(this.apiKey);
     //axios call
     axios
       .post(this.url, {
         query,
-        apiKey: 'VD695S0-471MNBN-Q253RNQ-TZ2G9PT',
+        // apiKey: this.apiKey,
+        apiKey: 'E0331P1-EXEM13D-QRSCAG9-30GTTGJ',
       })
       .then((res: any) => {
         this.response = Object.values(res.data)[0];
@@ -91,8 +106,8 @@ export class CodeEditor {
             <loader-component></loader-component>
           </div>
         )}
-        {this.response && !this.isLoading && <tab-component responseLabel={this.responseLabel} doc={this.response}></tab-component>}
-        {/* {this.response && !this.isLoading && <res-editor responseLabel={this.responseLabel} doc={JSON.stringify(this.response, null, 2)}></res-editor>} */}
+        {/* {this.response && !this.isLoading && <tab-component responseLabel={this.responseLabel} doc={this.response}></tab-component>} */}
+        {this.response && !this.isLoading && <res-editor responseLabel={this.responseLabel} doc={JSON.stringify(this.response, null, 2)}></res-editor>}
       </Host>
     );
   }

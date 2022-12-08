@@ -61,16 +61,40 @@ export class DataTable {
     let objIndex = this.header.findIndex(obj => obj.title == title);
 
     if (direction === 'none' || direction === 'desc') {
-      sortedData = this.body.sort((a, b) => (a[title] > b[title] ? -1 : a[title] === b[title] ? 0 : 1));
+      sortedData = this.body.sort((a, b) => {
+        if (isFinite(a[title]) && isFinite(b[title])) {
+          return a[title] - b[title];
+        } else {
+          return a[title] > b[title] ? -1 : a[title] === b[title] ? 0 : 1;
+        }
+      });
       sortDir = 'asc';
       icon = <span class="pl-1 text-gray-500">&#8595;</span>;
     }
 
     if (direction === 'asc') {
-      sortedData = this.body.sort((b, a) => (a[title] > b[title] ? -1 : a[title] === b[title] ? 0 : 1));
+      sortedData = this.body.sort((b, a) => {
+        if (isFinite(a[title]) && isFinite(b[title])) {
+          return a[title] - b[title];
+        } else {
+          return a[title] > b[title] ? -1 : a[title] === b[title] ? 0 : 1;
+        }
+      });
       sortDir = 'desc';
       icon = <span class="pl-1 text-gray-500">&#8593;</span>;
     }
+
+    // if (direction === 'none' || direction === 'desc') {
+    //   sortedData = this.body.sort((a, b) => (a[title] > b[title] ? -1 : a[title] === b[title] ? 0 : 1));
+    //   sortDir = 'asc';
+    //   icon = <span class="pl-1 text-gray-500">&#8595;</span>;
+    // }
+
+    // if (direction === 'asc') {
+    //   sortedData = this.body.sort((b, a) => (a[title] > b[title] ? -1 : a[title] === b[title] ? 0 : 1));
+    //   sortDir = 'desc';
+    //   icon = <span class="pl-1 text-gray-500">&#8593;</span>;
+    // }
 
     this.body = [...sortedData];
     this.header[objIndex].sortDirection = sortDir;

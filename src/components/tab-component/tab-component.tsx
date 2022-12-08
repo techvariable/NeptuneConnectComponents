@@ -60,6 +60,7 @@ export class TabComponent {
           {this.setActive === 'json' ? (
             <res-editor responseLabel={this.responseLabel} doc={JSON.stringify(this.doc, null, 2)}></res-editor>
           ) : (
+            // <res-editor responseLabel={this.responseLabel} doc={this.doc}></res-editor>
             <data-table doc={this.doc}></data-table>
           )}
         </div>

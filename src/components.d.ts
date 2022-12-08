@@ -68,6 +68,8 @@ export namespace Components {
         "type": 'contained' | 'outlined' | 'text';
         "width": 'full' | 'auto';
     }
+    interface QueryLogs {
+    }
     interface RadioButton {
         "align": 'vertical' | 'horizontal';
         "name": string;
@@ -187,6 +189,12 @@ declare global {
         prototype: HTMLPlainButtonElement;
         new (): HTMLPlainButtonElement;
     };
+    interface HTMLQueryLogsElement extends Components.QueryLogs, HTMLStencilElement {
+    }
+    var HTMLQueryLogsElement: {
+        prototype: HTMLQueryLogsElement;
+        new (): HTMLQueryLogsElement;
+    };
     interface HTMLRadioButtonElement extends Components.RadioButton, HTMLStencilElement {
     }
     var HTMLRadioButtonElement: {
@@ -244,6 +252,7 @@ declare global {
         "menu-items": HTMLMenuItemsElement;
         "nav-bar": HTMLNavBarElement;
         "plain-button": HTMLPlainButtonElement;
+        "query-logs": HTMLQueryLogsElement;
         "radio-button": HTMLRadioButtonElement;
         "res-editor": HTMLResEditorElement;
         "side-bar": HTMLSideBarElement;
@@ -316,6 +325,8 @@ declare namespace LocalJSX {
         "type"?: 'contained' | 'outlined' | 'text';
         "width"?: 'full' | 'auto';
     }
+    interface QueryLogs {
+    }
     interface RadioButton {
         "align"?: 'vertical' | 'horizontal';
         "name"?: string;
@@ -364,6 +375,7 @@ declare namespace LocalJSX {
         "menu-items": MenuItems;
         "nav-bar": NavBar;
         "plain-button": PlainButton;
+        "query-logs": QueryLogs;
         "radio-button": RadioButton;
         "res-editor": ResEditor;
         "side-bar": SideBar;
@@ -391,6 +403,7 @@ declare module "@stencil/core" {
             "menu-items": LocalJSX.MenuItems & JSXBase.HTMLAttributes<HTMLMenuItemsElement>;
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
+            "query-logs": LocalJSX.QueryLogs & JSXBase.HTMLAttributes<HTMLQueryLogsElement>;
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
             "res-editor": LocalJSX.ResEditor & JSXBase.HTMLAttributes<HTMLResEditorElement>;
             "side-bar": LocalJSX.SideBar & JSXBase.HTMLAttributes<HTMLSideBarElement>;

@@ -17,11 +17,13 @@
 
 ### Used by
 
+ - [code-editor](../code-editor)
  - [tab-component](../tab-component)
 
 ### Graph
 ```mermaid
 graph TD;
+  code-editor --> res-editor
   tab-component --> res-editor
   style res-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
