@@ -59,8 +59,8 @@ export class CodeEditor {
     axios
       .post(this.url, {
         query,
-        // apiKey: this.apiKey,
-        apiKey: 'E0331P1-EXEM13D-QRSCAG9-30GTTGJ',
+        apiKey: this.apiKey,
+        // apiKey: 'E0331P1-EXEM13D-QRSCAG9-30GTTGJ',
       })
       .then((res: any) => {
         this.response = Object.values(res.data)[0];
