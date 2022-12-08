@@ -76,6 +76,9 @@ export namespace Components {
         "doc": any;
         "responseLabel": 'result' | 'error';
     }
+    interface SettingsNavigator {
+        "itemsObj": any;
+    }
     interface SideBar {
     }
     interface TabComponent {
@@ -199,6 +202,12 @@ declare global {
         prototype: HTMLResEditorElement;
         new (): HTMLResEditorElement;
     };
+    interface HTMLSettingsNavigatorElement extends Components.SettingsNavigator, HTMLStencilElement {
+    }
+    var HTMLSettingsNavigatorElement: {
+        prototype: HTMLSettingsNavigatorElement;
+        new (): HTMLSettingsNavigatorElement;
+    };
     interface HTMLSideBarElement extends Components.SideBar, HTMLStencilElement {
     }
     var HTMLSideBarElement: {
@@ -246,6 +255,7 @@ declare global {
         "plain-button": HTMLPlainButtonElement;
         "radio-button": HTMLRadioButtonElement;
         "res-editor": HTMLResEditorElement;
+        "settings-navigator": HTMLSettingsNavigatorElement;
         "side-bar": HTMLSideBarElement;
         "tab-component": HTMLTabComponentElement;
         "table-wrapper": HTMLTableWrapperElement;
@@ -324,6 +334,9 @@ declare namespace LocalJSX {
         "doc"?: any;
         "responseLabel"?: 'result' | 'error';
     }
+    interface SettingsNavigator {
+        "itemsObj"?: any;
+    }
     interface SideBar {
     }
     interface TabComponent {
@@ -366,6 +379,7 @@ declare namespace LocalJSX {
         "plain-button": PlainButton;
         "radio-button": RadioButton;
         "res-editor": ResEditor;
+        "settings-navigator": SettingsNavigator;
         "side-bar": SideBar;
         "tab-component": TabComponent;
         "table-wrapper": TableWrapper;
@@ -393,6 +407,7 @@ declare module "@stencil/core" {
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
             "res-editor": LocalJSX.ResEditor & JSXBase.HTMLAttributes<HTMLResEditorElement>;
+            "settings-navigator": LocalJSX.SettingsNavigator & JSXBase.HTMLAttributes<HTMLSettingsNavigatorElement>;
             "side-bar": LocalJSX.SideBar & JSXBase.HTMLAttributes<HTMLSideBarElement>;
             "tab-component": LocalJSX.TabComponent & JSXBase.HTMLAttributes<HTMLTabComponentElement>;
             "table-wrapper": LocalJSX.TableWrapper & JSXBase.HTMLAttributes<HTMLTableWrapperElement>;
