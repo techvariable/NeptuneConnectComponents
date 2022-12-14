@@ -18,6 +18,19 @@
 | `type`        | `type`        |             | `"email" \| "password" \| "search" \| "text"` | `'text'`    |
 
 
+## Dependencies
+
+### Used by
+
+ - [invite-component](../invite-component)
+
+### Graph
+```mermaid
+graph TD;
+  invite-component --> text-field
+  style text-field fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
