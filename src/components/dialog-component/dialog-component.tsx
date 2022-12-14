@@ -1,4 +1,4 @@
-import { Component, Host, h, State } from '@stencil/core';
+import { Component, Host, h, State, Prop } from '@stencil/core';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
   scoped: true,
 })
 export class DialogComponent {
+  @Prop() url: string;
   @State() isModalOpen = false;
   @State() value: string;
 
@@ -18,7 +19,7 @@ export class DialogComponent {
     e.preventDefault();
 
     axios
-      .post('/users/invite', {
+      .post(this.url, {
         email: this.value,
       })
       .then(res => {
