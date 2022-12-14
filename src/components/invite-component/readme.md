@@ -9,6 +9,7 @@
 
 | Property | Attribute | Description | Type     | Default     |
 | -------- | --------- | ----------- | -------- | ----------- |
+| `apiurl` | `apiurl`  |             | `any`    | `undefined` |
 | `url`    | `url`     |             | `string` | `undefined` |
 
 

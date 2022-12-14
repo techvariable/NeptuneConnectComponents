@@ -48,6 +48,7 @@ export namespace Components {
         "type": 'outlined' | 'contained';
     }
     interface InviteComponent {
+        "apiurl": any;
         "url": string;
     }
     interface LoaderComponent {
@@ -316,6 +317,7 @@ declare namespace LocalJSX {
         "type"?: 'outlined' | 'contained';
     }
     interface InviteComponent {
+        "apiurl"?: any;
         "url"?: string;
     }
     interface LoaderComponent {

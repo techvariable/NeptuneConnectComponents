@@ -8,57 +8,60 @@ import Swal from 'sweetalert2';
 })
 export class InviteComponent {
   @Prop() url: string;
+  @Prop() apiurl: any;
   @State() name: string;
   @State() password: string;
   @State() rePassword: string;
   @State() errorMessage: string = '';
+  @State() email: string = '';
 
   comparePassword(password, rePassword) {
+    // console.log(password, rePassword);
     if (password === rePassword) {
       return true;
     }
+    return false;
   }
-  handleSubmit(e) {
+  handleSubmit = e => {
     e.preventDefault();
+    const data = new FormData(e.target);
+    this.name = data.get('name').toString();
+    this.password = data.get('password').toString();
+    this.rePassword = data.get('confirmedPassword').toString();
 
-    this.comparePassword(this.password, this.rePassword) &&
+    if (this.comparePassword(this.password, this.rePassword) === true) {
+      console.log('this is posturl:==>', this.apiurl, 'this is url:===>', this.url);
       axios
-        .get('https://dummyjson.com/products/1')
+        .post(this.apiurl, {
+          email: this.email,
+          name: this.name,
+          password: this.password,
+        })
         .then(res => {
-          console.log(res);
+          //   console.log('Same password');
+
+          if (res.status === 200) {
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              text: 'Invitation sent successfully!',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
         })
         .catch(err => {
           console.log(err);
-        });
-    axios
-      .post('/users/invite', {
-        email: this.name,
-      })
-      .then(res => {
-        console.log('Same password');
-
-        if (res.status === 200) {
           Swal.fire({
-            position: 'center',
-            icon: 'success',
-            text: 'Invitation sent successfully!',
-            showConfirmButton: false,
-            timer: 1500,
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
           });
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
         });
-      });
-
-    // this.value = '';
-    // this.toggleModalState();
-  }
+    } else {
+      this.errorMessage = 'Password does not match';
+    }
+  };
 
   render() {
     return (
@@ -71,9 +74,9 @@ export class InviteComponent {
           <div class="lg:w-1/2 md:w-2/3 mx-auto">
             <form onSubmit={e => this.handleSubmit(e)} class="pt-6 space-y-3" action="/users" name="invite-form" method="post" enctype="multipart/form-data">
               <div class="flex flex-wrap -m-2">
-                if ({this.errorMessage != ''}) <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full -mt-4 mb-6">{this.errorMessage}</p>
+                {this.errorMessage != '' ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full -mt-4 mb-6">{this.errorMessage}</p> : null}
                 <div class="w-full font-medium">
-                  <input name="email" type="email" value="<%= email %>" class="font-medium bg-white text-indigo-600 text-center w-full hidden" />
+                  <input name="email" type="email" value={this.email} class="font-medium bg-white text-indigo-600 text-center w-full hidden" />
                 </div>
                 <div class="w-full pt-3">
                   <text-field name="name" type="text" placeholder="Enter name"></text-field>
