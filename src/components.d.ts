@@ -48,6 +48,10 @@ export namespace Components {
         "iconPosition": 'right' | 'left';
         "type": 'outlined' | 'contained';
     }
+    interface InviteComponent {
+        "apiurl": any;
+        "url": string;
+    }
     interface LoaderComponent {
     }
     interface MainComponent {
@@ -155,6 +159,12 @@ declare global {
         prototype: HTMLIconButtonElement;
         new (): HTMLIconButtonElement;
     };
+    interface HTMLInviteComponentElement extends Components.InviteComponent, HTMLStencilElement {
+    }
+    var HTMLInviteComponentElement: {
+        prototype: HTMLInviteComponentElement;
+        new (): HTMLInviteComponentElement;
+    };
     interface HTMLLoaderComponentElement extends Components.LoaderComponent, HTMLStencilElement {
     }
     var HTMLLoaderComponentElement: {
@@ -248,6 +258,7 @@ declare global {
         "drop-down": HTMLDropDownElement;
         "fluid-container": HTMLFluidContainerElement;
         "icon-button": HTMLIconButtonElement;
+        "invite-component": HTMLInviteComponentElement;
         "loader-component": HTMLLoaderComponentElement;
         "main-component": HTMLMainComponentElement;
         "menu-drop-down": HTMLMenuDropDownElement;
@@ -306,6 +317,10 @@ declare namespace LocalJSX {
         "btnLabel"?: string;
         "iconPosition"?: 'right' | 'left';
         "type"?: 'outlined' | 'contained';
+    }
+    interface InviteComponent {
+        "apiurl"?: any;
+        "url"?: string;
     }
     interface LoaderComponent {
     }
@@ -373,6 +388,7 @@ declare namespace LocalJSX {
         "drop-down": DropDown;
         "fluid-container": FluidContainer;
         "icon-button": IconButton;
+        "invite-component": InviteComponent;
         "loader-component": LoaderComponent;
         "main-component": MainComponent;
         "menu-drop-down": MenuDropDown;
@@ -401,6 +417,7 @@ declare module "@stencil/core" {
             "drop-down": LocalJSX.DropDown & JSXBase.HTMLAttributes<HTMLDropDownElement>;
             "fluid-container": LocalJSX.FluidContainer & JSXBase.HTMLAttributes<HTMLFluidContainerElement>;
             "icon-button": LocalJSX.IconButton & JSXBase.HTMLAttributes<HTMLIconButtonElement>;
+            "invite-component": LocalJSX.InviteComponent & JSXBase.HTMLAttributes<HTMLInviteComponentElement>;
             "loader-component": LocalJSX.LoaderComponent & JSXBase.HTMLAttributes<HTMLLoaderComponentElement>;
             "main-component": LocalJSX.MainComponent & JSXBase.HTMLAttributes<HTMLMainComponentElement>;
             "menu-drop-down": LocalJSX.MenuDropDown & JSXBase.HTMLAttributes<HTMLMenuDropDownElement>;
