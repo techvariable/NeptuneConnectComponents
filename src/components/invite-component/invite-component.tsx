@@ -8,12 +8,12 @@ import Swal from 'sweetalert2';
 })
 export class InviteComponent {
   @Prop() url: string;
-  @Prop() apiurl: any;
+  @Prop() apiurl: string;
+  @Prop() email: string;
   @State() name: string;
   @State() password: string;
   @State() rePassword: string;
   @State() errorMessage: string = '';
-  @State() email: string = '';
 
   comparePassword(password, rePassword) {
     // console.log(password, rePassword);
@@ -75,9 +75,6 @@ export class InviteComponent {
             <form onSubmit={e => this.handleSubmit(e)} class="pt-6 space-y-3" action="/users" name="invite-form" method="post" enctype="multipart/form-data">
               <div class="flex flex-wrap -m-2">
                 {this.errorMessage != '' ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full -mt-4 mb-6">{this.errorMessage}</p> : null}
-                <div class="w-full font-medium">
-                  <input name="email" type="email" value={this.email} class="font-medium bg-white text-indigo-600 text-center w-full hidden" />
-                </div>
                 <div class="w-full pt-3">
                   <text-field name="name" type="text" placeholder="Enter name"></text-field>
                 </div>
