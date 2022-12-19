@@ -30,7 +30,7 @@ export class InviteComponent {
     this.rePassword = data.get('confirmedPassword').toString();
 
     if (this.comparePassword(this.password, this.rePassword) === true) {
-      console.log('this is posturl:==>', this.apiurl, 'this is url:===>', this.url);
+      // console.log('this is posturl:==>', this.apiurl, 'this is url:===>', this.url);
       axios
         .post(this.apiurl, {
           email: this.email,
@@ -39,15 +39,16 @@ export class InviteComponent {
         })
         .then(res => {
           //   console.log('Same password');
-
+          console.log(res);
           if (res.status === 200) {
             Swal.fire({
               position: 'center',
               icon: 'success',
-              text: 'Invitation sent successfully!',
+              text: 'User added successfully!',
               showConfirmButton: false,
               timer: 1500,
             });
+            axios.get(this.apiurl);
           }
         })
         .catch(err => {
