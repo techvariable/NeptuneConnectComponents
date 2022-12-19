@@ -33,6 +33,7 @@ export namespace Components {
         "doc": object[];
     }
     interface DialogComponent {
+        "url": string;
     }
     interface DropDown {
         "alias": string;
@@ -48,7 +49,8 @@ export namespace Components {
         "type": 'outlined' | 'contained';
     }
     interface InviteComponent {
-        "apiurl": any;
+        "apiurl": string;
+        "email": string;
         "url": string;
     }
     interface LoaderComponent {
@@ -302,6 +304,7 @@ declare namespace LocalJSX {
         "doc"?: object[];
     }
     interface DialogComponent {
+        "url"?: string;
     }
     interface DropDown {
         "alias"?: string;
@@ -317,7 +320,8 @@ declare namespace LocalJSX {
         "type"?: 'outlined' | 'contained';
     }
     interface InviteComponent {
-        "apiurl"?: any;
+        "apiurl"?: string;
+        "email"?: string;
         "url"?: string;
     }
     interface LoaderComponent {
