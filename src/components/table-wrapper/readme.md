@@ -20,6 +20,7 @@
 ### Used by
 
  - [main-component](../main-component)
+ - [query-logs](../query-logs)
 
 ### Depends on
 
@@ -33,6 +34,7 @@ graph TD;
   custom-table --> loader-component
   custom-table --> plain-button
   main-component --> table-wrapper
+  query-logs --> table-wrapper
   style table-wrapper fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
