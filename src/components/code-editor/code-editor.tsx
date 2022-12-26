@@ -48,8 +48,8 @@ export class CodeEditor {
         apiKey: 'ETW5KJQ-PDT48MP-H0WVAC4-WQWHEK3',
       })
       .then((res: any) => {
-        this.response = Object.values(res.data)[0];
-        this.responseLabel = Object.keys(res.data)[0];
+        this.response = Object.values(res.data)[1];
+        this.responseLabel = Object.keys(res.data)[1];
         this.isLoading = false;
       })
       .catch(err => console.log(err));
