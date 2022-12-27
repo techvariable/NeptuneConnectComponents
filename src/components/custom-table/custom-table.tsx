@@ -105,12 +105,21 @@ export class CustomTable {
               <tr class="hover:bg-gray-100 transition">
                 {this.tableHeader.map((id: any) => (
                   // <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item[id.alias]}</td>
-                  <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-900">
-                    {!id.click.clickable?item[id.alias] : 
-                    <a target='_blank' href={id.click.url + item[id.alias]} class="flex items-center py-1 px-4 text-base font-normal text-gray-900 rounded-lg bg-gray-200">
-                  <img class="h-4" src={id.click.icon} alt="icon" />
-                  <span class="px-2 ">View</span>
-                </a>}
+                  <td text-overflow:ellipsis max-width="50px" class="px-6 py-3 whitespace-nowrap text-sm text-gray-900">
+                    {!id.click.clickable ? (
+                      item[id.alias].length > 25 ? (
+                        item[id.alias].slice(0, 25) + '...'
+                      ) : /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/.test(item[id.alias]) ? (
+                        item[id.alias].slice(0, 16).split('T')[0] + ' at ' + item[id.alias].slice(11, 19)
+                      ) : (
+                        item[id.alias]
+                      )
+                    ) : (
+                      <a target="_blank" href={id.click.url + item[id.alias]} class="flex items-center py-1 px-4 text-base font-normal text-gray-900 rounded-lg bg-gray-200">
+                        <img class="h-4" src={id.click.icon} alt="icon" />
+                        <span class="px-2 ">View</span>
+                      </a>
+                    )}
                   </td>
                 ))}
               </tr>

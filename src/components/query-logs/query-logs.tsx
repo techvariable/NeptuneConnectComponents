@@ -77,7 +77,7 @@ export class queryLogs {
     {
       title: 'log_Files',
       filter: {
-        searchable: true,
+        searchable: false,
         sortable: false,
       },
       alias: 'queryResult',
