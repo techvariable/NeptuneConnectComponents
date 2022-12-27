@@ -96,7 +96,13 @@ export class TableWrapper {
 
   searchMethod(searchValue: string, colName: string) {
     if (this.search) {
-      this.search = [...this.search, { searchValue, colName }];
+      this.search.forEach(element => {
+        if (element['colName'] === colName) {
+          element['searchValue'] = searchValue;
+        } else {
+          this.search = [...this.search, { searchValue, colName }];
+        }
+      });
     } else {
       this.search = [{ searchValue, colName }];
     }

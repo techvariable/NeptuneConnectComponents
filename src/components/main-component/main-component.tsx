@@ -51,19 +51,20 @@ export class MainComponent {
 
   async api(limit: number, page: number, sortObj: any, search: any) {
     let filterPar = '';
+console.log('==========>', limit, page, sortObj, search);
+if (limit) {
+  filterPar += `_limit=${limit}`;
+}
 
-    if (limit) {
-      filterPar += `_limit=${limit}`;
-    }
+if (page) {
+  filterPar += `&_page=${page}`;
+}
 
-    if (page) {
-      filterPar += `&_page=${page}`;
-    }
-
-    if (sortObj) {
-      const { id, dir } = sortObj;
-      filterPar += `&_sort=${id}&_order=${dir}`;
-    }
+if (sortObj) {
+  console.log(sortObj);
+  const { id, dir } = sortObj;
+  filterPar += `&_sort=${id}&_order=${dir}`;
+}
 
     if (search) {
       search.map(search => {
