@@ -15,6 +15,9 @@ export class queryLogs {
         sortable: false,
       },
       alias: 'id',
+      click: {
+        clickable: false,
+      },
     },
     {
       title: 'query_text',
@@ -23,6 +26,9 @@ export class queryLogs {
         sortable: true,
       },
       alias: 'queryText',
+      click: {
+        clickable: false,
+      },
     },
     {
       title: 'query_status',
@@ -31,6 +37,9 @@ export class queryLogs {
         sortable: true,
       },
       alias: 'queryStatus',
+      click: {
+        clickable: false,
+      },
     },
     {
       title: 'time_of_execution',
@@ -39,6 +48,9 @@ export class queryLogs {
         sortable: true,
       },
       alias: 'timeOfExecution',
+      click: {
+        clickable: false,
+      },
     },
     {
       title: 'time_taken',
@@ -47,6 +59,9 @@ export class queryLogs {
         sortable: true,
       },
       alias: 'timeTaken',
+      click: {
+        clickable: false,
+      },
     },
     {
       title: 'owner_id',
@@ -55,14 +70,22 @@ export class queryLogs {
         sortable: false,
       },
       alias: 'ownerId',
+      click: {
+        clickable: false,
+      },
     },
     {
-      title: 'query_result',
+      title: 'log_Files',
       filter: {
         searchable: true,
         sortable: false,
       },
       alias: 'queryResult',
+      click: {
+        clickable: true,
+        icon: 'https://i.stack.imgur.com/To3El.png',
+        url: '/public/logs/query/',
+      },
     },
   ];
 
@@ -103,10 +126,6 @@ export class queryLogs {
     // const result = await axios.get(`/api/query-logs?${filterPar}`);
 
     const result = await axios.get(`http://localhost:3000/api/query-logs?${filterPar}`);
-    // const result = await axios.get(`http://localhost:3000/api/logs?limit=50&offset=0&_sort=queryStatus&_order=desc&ownerId_like=2`);
-    // console.log(result.data);
-    // console.log('This are headers=========>', result.headers['x-total-count']);
-    // console.log('=====>Data===>', result.data);
 
     return {
       total: result.headers['x-total-count'],

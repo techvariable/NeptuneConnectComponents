@@ -41,6 +41,9 @@ export class CustomTable {
   componentWillRender() {
     this.from = (this.currentPage - 1) * this.limit + 1;
     this.to = this.currentPage * this.limit;
+    {this.tableHeader.map((id: any) => {
+     console.log(id.click.clickable);
+    })}
   }
 
   render() {
@@ -101,7 +104,14 @@ export class CustomTable {
             this.tableBody.map((item: any) => (
               <tr class="hover:bg-gray-100 transition">
                 {this.tableHeader.map((id: any) => (
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item[id.alias]}</td>
+                  // <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item[id.alias]}</td>
+                  <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-900">
+                    {!id.click.clickable?item[id.alias] : 
+                    <a target='_blank' href={id.click.url + item[id.alias]} class="flex items-center py-1 px-4 text-base font-normal text-gray-900 rounded-lg bg-gray-200">
+                  <img class="h-4" src={id.click.icon} alt="icon" />
+                  <span class="px-2 ">View</span>
+                </a>}
+                  </td>
                 ))}
               </tr>
             ))}
