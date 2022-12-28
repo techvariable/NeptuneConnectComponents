@@ -114,13 +114,10 @@ export class queryLogs {
     }
 
     if (search) {
-      // const searchArr = [];
-      // search.forEach(element => {
-      //   element[colName]===searchArr;
-      // });
-      search.map(search => {
-        filterPar = filterPar + `&filter_${search.colName}=${search.searchValue}`;
-      });
+     
+      for (let key in search) {
+        filterPar = filterPar + `&filter_${key}=${search[key]}`;
+      }
     }
     // console.log(filterPar);
     // const result = await axios.get(`/api/query-logs?${filterPar}`);

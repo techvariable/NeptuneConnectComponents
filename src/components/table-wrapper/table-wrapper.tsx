@@ -23,7 +23,8 @@ export class TableWrapper {
   @State() sortId: string;
   @State() sortDir: string;
   @State() sortObj: object;
-  @State() search: object[];
+  // @State() search: object[];
+  @State() search: object;
 
   componentWillLoad() {
     this.rowPerPage = this.rowPerPage.sort((a, b) => a - b);
@@ -70,9 +71,11 @@ export class TableWrapper {
   }
 
   clearSearch(colName) {
-    if (this.search.length >= 1) {
-      const searchArr = this.search.filter((item: any) => item.colName !== colName);
-      this.search = searchArr;
+    if (Object.keys(this.search).length >= 1) {
+      let keys = Object.keys(this.search);
+      if (keys.includes(colName)) {
+        delete this.search[colName];
+      }
     }
     this.fetchData();
   }
@@ -96,15 +99,10 @@ export class TableWrapper {
 
   searchMethod(searchValue: string, colName: string) {
     if (this.search) {
-      this.search.forEach(element => {
-        if (element['colName'] === colName) {
-          element['searchValue'] = searchValue;
-        } else {
-          this.search = [...this.search, { searchValue, colName }];
-        }
-      });
+      this.search[colName] = searchValue;
     } else {
-      this.search = [{ searchValue, colName }];
+      this.search = [];
+      this.search[colName] = searchValue;
     }
     this.fetchData();
   }
