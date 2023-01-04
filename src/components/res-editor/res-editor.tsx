@@ -26,6 +26,7 @@ export class ResEditor {
   };
 
   componentDidLoad() {
+    console.log(this.doc);
     this.state = EditorState.create({
       doc: this.doc,
       extensions: [basicSetup, EditorView.editable.of(false), json()],

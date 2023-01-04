@@ -65,6 +65,10 @@ export namespace Components {
     }
     interface NavBar {
     }
+    interface PermissionEditor {
+        "doc": any;
+        "url": string;
+    }
     interface PlainButton {
         "addClass": string;
         "clickHandler": any;
@@ -198,6 +202,12 @@ declare global {
         prototype: HTMLNavBarElement;
         new (): HTMLNavBarElement;
     };
+    interface HTMLPermissionEditorElement extends Components.PermissionEditor, HTMLStencilElement {
+    }
+    var HTMLPermissionEditorElement: {
+        prototype: HTMLPermissionEditorElement;
+        new (): HTMLPermissionEditorElement;
+    };
     interface HTMLPlainButtonElement extends Components.PlainButton, HTMLStencilElement {
     }
     var HTMLPlainButtonElement: {
@@ -273,6 +283,7 @@ declare global {
         "menu-drop-down": HTMLMenuDropDownElement;
         "menu-items": HTMLMenuItemsElement;
         "nav-bar": HTMLNavBarElement;
+        "permission-editor": HTMLPermissionEditorElement;
         "plain-button": HTMLPlainButtonElement;
         "query-logs": HTMLQueryLogsElement;
         "radio-button": HTMLRadioButtonElement;
@@ -345,6 +356,10 @@ declare namespace LocalJSX {
     }
     interface NavBar {
     }
+    interface PermissionEditor {
+        "doc"?: any;
+        "url"?: string;
+    }
     interface PlainButton {
         "addClass"?: string;
         "clickHandler"?: any;
@@ -407,6 +422,7 @@ declare namespace LocalJSX {
         "menu-drop-down": MenuDropDown;
         "menu-items": MenuItems;
         "nav-bar": NavBar;
+        "permission-editor": PermissionEditor;
         "plain-button": PlainButton;
         "query-logs": QueryLogs;
         "radio-button": RadioButton;
@@ -437,6 +453,7 @@ declare module "@stencil/core" {
             "menu-drop-down": LocalJSX.MenuDropDown & JSXBase.HTMLAttributes<HTMLMenuDropDownElement>;
             "menu-items": LocalJSX.MenuItems & JSXBase.HTMLAttributes<HTMLMenuItemsElement>;
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
+            "permission-editor": LocalJSX.PermissionEditor & JSXBase.HTMLAttributes<HTMLPermissionEditorElement>;
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
             "query-logs": LocalJSX.QueryLogs & JSXBase.HTMLAttributes<HTMLQueryLogsElement>;
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
