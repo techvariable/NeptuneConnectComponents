@@ -8,7 +8,7 @@ export class SettingsNavigator {
   @Prop() navigators: any;
   render() {
     return (
-      <div class={'overflow-y-auto py-4 px-3 min-w-fit bg-gray-100 rounded-md h-96'}>
+      <div class={'overflow-y-auto py-4 px-3 bg-gray-100 rounded-md h-96'}>
         <ul class="space-y-2">
           {JSON.parse(this.navigators).map(item => {
             return item.accessFlag ? (

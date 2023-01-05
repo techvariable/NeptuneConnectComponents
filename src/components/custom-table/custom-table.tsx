@@ -41,9 +41,11 @@ export class CustomTable {
   componentWillRender() {
     this.from = (this.currentPage - 1) * this.limit + 1;
     this.to = this.currentPage * this.limit;
-    {this.tableHeader.map((id: any) => {
-     console.log(id.click.clickable);
-    })}
+    {
+      this.tableHeader.map((id: any) => {
+        console.log(id.click.clickable);
+      });
+    }
   }
 
   render() {

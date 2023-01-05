@@ -66,7 +66,6 @@ export namespace Components {
     interface NavBar {
     }
     interface PermissionEditor {
-        "doc": any;
         "url": string;
     }
     interface PlainButton {
@@ -357,7 +356,6 @@ declare namespace LocalJSX {
     interface NavBar {
     }
     interface PermissionEditor {
-        "doc"?: any;
         "url"?: string;
     }
     interface PlainButton {

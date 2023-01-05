@@ -11,17 +11,35 @@ import { isValidPermissionJson } from '../../utils/utils';
 })
 export class PermissionEditor {
   @Prop() url: string;
-  @Prop() doc: any = '\n\n\n';
+  // @Prop() doc: any = '\n\n\n';
+  @State() rowsHandler: any = function (e) {
+    this.user = e.target.value;
+    console.log(this.user);
+    // this.page = 1;
+    // this.sortObj = {};
+    // this.fetchData();
+  };
+  @State() user: String;
   @State() response: any;
   @State() responseLabel: any;
   @State() view: EditorView;
   @State() state: EditorState;
   @State() isLoading = false;
   @State() errorMessage: string = '';
+  @State() doc: any = '\n\n\n';
+  @State() options: string[] = ['admin', 'user', 'qa', 'tester'];
   @Element() element: HTMLElement;
 
+  // this.rowsHandler = (e) {
+  //   this.user = e.target.value;
+  //   this.page = 1;
+  //   this.sortObj = {};
+  //   this.fetchData();
+  // }
+
   componentWillLoad() {
-    console.log('Running...>>');
+    console.log('Running...>>', this.doc);
+    // this.doc = 'sfsf';
     axios
       .get(this.url)
       .then((res: any) => {
@@ -29,8 +47,8 @@ export class PermissionEditor {
         console.log(res.data);
         this.responseLabel = 'result';
         this.isLoading = false;
-        this.doc = 'is it working?';
-        console.log(this.doc);
+        this.doc = JSON.stringify(res.data);
+        console.log('This is data to be shown', this.doc);
       })
       .catch(err => {
         console.log(err);
@@ -66,7 +84,8 @@ export class PermissionEditor {
       this.errorMessage = '';
       this.doc = transaction.state.doc;
       // const permission = this.doc.text.join().split(',').join('\n');
-      const permission = this.doc.text;
+      const permission = this.doc.text.join('');
+      const user = this.user;
       console.log(typeof permission);
 
       console.log('Sending data====>', permission);
@@ -74,6 +93,7 @@ export class PermissionEditor {
       axios
         .post(this.url, {
           permission,
+          user,
         })
         .then((res: any) => {
           this.responseLabel = 'result';
@@ -104,19 +124,31 @@ export class PermissionEditor {
   render() {
     return (
       <Host>
-        <div class="border border-gray-300 shadow-gray-300   p-3 space-y-2">
+        <div class="border border-gray-300 shadow-gray-300  p-3 space-y-2">
+          {/* ====================== */}
+
+          {/* rows per page  */}
+          <span class="border border-gray-300 space-x-3 shadow-gray-300 p-2 m-1">
+            <span class="pb-6 text-md font-bold leading-7 text-gray-600">Select Role : </span>
+            <select
+              onChange={e => this.rowsHandler(e)}
+              class="form-select px-3 py-1.5 border-none text-inherit font-inherit text-gray-700 bg-transparent bg-clip-padding bg-no-repeat rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            >
+              {this.options.map(row => (
+                <option value={`${row}`}>{row}</option>
+              ))}
+            </select>
+          </span>
+          {/* =========================== */}
           <div id="editor" class="border border-gray-300"></div>
+          {this.errorMessage != '' ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full -mt-4 mb-6">{this.errorMessage}</p> : null}
           <button
             title="Ctrl+Shift+Enter to run"
             onClick={() => this.clickHandler()}
-            class="flex text-sm gap-2 items-center justify-center text-gray-600 border border-gray-300 px-3 py-2 hover:bg-gray-200 hover:text-gray-800"
+            class="flex text-sm gap-2 items-center justify-center text-gray-600 border border-gray-300 px-3 py-2 hover:bg-gray-200 hover:text-gray-800 "
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
-            </svg>
-            Run
+            Update
           </button>
-          {this.errorMessage != '' ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full -mt-4 mb-6">{this.errorMessage}</p> : null}
         </div>
 
         {this.isLoading && (
@@ -126,10 +158,8 @@ export class PermissionEditor {
           </div>
         )}
 
-        <div class="w-3/12">
-          <div class="py-4 text-gray-500 max-h-72 w-3/12 overflow-y-scroll">
-            <res-editor responseLabel={this.responseLabel} doc={JSON.stringify(this.doc)}></res-editor>
-          </div>
+        <div class="py-4 text-gray-500 max-h-72 w-96 overflow-x-scroll">
+          <res-editor responseLabel={this.responseLabel} doc={JSON.stringify(this.doc)}></res-editor>
         </div>
       </Host>
     );

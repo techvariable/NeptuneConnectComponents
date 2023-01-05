@@ -9,7 +9,6 @@
 
 | Property | Attribute | Description | Type     | Default     |
 | -------- | --------- | ----------- | -------- | ----------- |
-| `doc`    | `doc`     |             | `any`    | `'\n\n\n'`  |
 | `url`    | `url`     |             | `string` | `undefined` |
 
 
