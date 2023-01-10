@@ -40,6 +40,12 @@ export namespace Components {
         "clearSearch": any;
         "searchMethod": any;
     }
+    interface EditUser {
+        "ismodelopen": boolean;
+        "toggle": () => void;
+        "url": string;
+        "value": string;
+    }
     interface FluidContainer {
     }
     interface IconButton {
@@ -57,11 +63,22 @@ export namespace Components {
     }
     interface MainComponent {
     }
+    interface MenuDown {
+        "email": string;
+        "option": string[];
+        "url": string;
+        "userId": number;
+    }
     interface MenuDropDown {
         "list": number[];
         "listTitle": string;
     }
     interface MenuItems {
+    }
+    interface MultiSelect {
+        "roles": any;
+        "url": string;
+        "userId": number;
     }
     interface NavBar {
     }
@@ -115,6 +132,9 @@ export namespace Components {
         "addClass": string;
         "width": 'full' | 'auto';
     }
+    interface UsersComponent {
+        "url": any;
+    }
 }
 declare global {
     interface HTMLCheckBoxElement extends Components.CheckBox, HTMLStencilElement {
@@ -153,6 +173,12 @@ declare global {
         prototype: HTMLDropDownElement;
         new (): HTMLDropDownElement;
     };
+    interface HTMLEditUserElement extends Components.EditUser, HTMLStencilElement {
+    }
+    var HTMLEditUserElement: {
+        prototype: HTMLEditUserElement;
+        new (): HTMLEditUserElement;
+    };
     interface HTMLFluidContainerElement extends Components.FluidContainer, HTMLStencilElement {
     }
     var HTMLFluidContainerElement: {
@@ -183,6 +209,12 @@ declare global {
         prototype: HTMLMainComponentElement;
         new (): HTMLMainComponentElement;
     };
+    interface HTMLMenuDownElement extends Components.MenuDown, HTMLStencilElement {
+    }
+    var HTMLMenuDownElement: {
+        prototype: HTMLMenuDownElement;
+        new (): HTMLMenuDownElement;
+    };
     interface HTMLMenuDropDownElement extends Components.MenuDropDown, HTMLStencilElement {
     }
     var HTMLMenuDropDownElement: {
@@ -194,6 +226,12 @@ declare global {
     var HTMLMenuItemsElement: {
         prototype: HTMLMenuItemsElement;
         new (): HTMLMenuItemsElement;
+    };
+    interface HTMLMultiSelectElement extends Components.MultiSelect, HTMLStencilElement {
+    }
+    var HTMLMultiSelectElement: {
+        prototype: HTMLMultiSelectElement;
+        new (): HTMLMultiSelectElement;
     };
     interface HTMLNavBarElement extends Components.NavBar, HTMLStencilElement {
     }
@@ -267,6 +305,12 @@ declare global {
         prototype: HTMLTextFieldAreaElement;
         new (): HTMLTextFieldAreaElement;
     };
+    interface HTMLUsersComponentElement extends Components.UsersComponent, HTMLStencilElement {
+    }
+    var HTMLUsersComponentElement: {
+        prototype: HTMLUsersComponentElement;
+        new (): HTMLUsersComponentElement;
+    };
     interface HTMLElementTagNameMap {
         "check-box": HTMLCheckBoxElement;
         "code-editor": HTMLCodeEditorElement;
@@ -274,13 +318,16 @@ declare global {
         "data-table": HTMLDataTableElement;
         "dialog-component": HTMLDialogComponentElement;
         "drop-down": HTMLDropDownElement;
+        "edit-user": HTMLEditUserElement;
         "fluid-container": HTMLFluidContainerElement;
         "icon-button": HTMLIconButtonElement;
         "invite-component": HTMLInviteComponentElement;
         "loader-component": HTMLLoaderComponentElement;
         "main-component": HTMLMainComponentElement;
+        "menu-down": HTMLMenuDownElement;
         "menu-drop-down": HTMLMenuDropDownElement;
         "menu-items": HTMLMenuItemsElement;
+        "multi-select": HTMLMultiSelectElement;
         "nav-bar": HTMLNavBarElement;
         "permission-editor": HTMLPermissionEditorElement;
         "plain-button": HTMLPlainButtonElement;
@@ -293,6 +340,7 @@ declare global {
         "table-wrapper": HTMLTableWrapperElement;
         "text-field": HTMLTextFieldElement;
         "text-field-area": HTMLTextFieldAreaElement;
+        "users-component": HTMLUsersComponentElement;
     }
 }
 declare namespace LocalJSX {
@@ -330,6 +378,12 @@ declare namespace LocalJSX {
         "clearSearch"?: any;
         "searchMethod"?: any;
     }
+    interface EditUser {
+        "ismodelopen"?: boolean;
+        "toggle"?: () => void;
+        "url"?: string;
+        "value"?: string;
+    }
     interface FluidContainer {
     }
     interface IconButton {
@@ -347,11 +401,22 @@ declare namespace LocalJSX {
     }
     interface MainComponent {
     }
+    interface MenuDown {
+        "email"?: string;
+        "option"?: string[];
+        "url"?: string;
+        "userId"?: number;
+    }
     interface MenuDropDown {
         "list"?: number[];
         "listTitle"?: string;
     }
     interface MenuItems {
+    }
+    interface MultiSelect {
+        "roles"?: any;
+        "url"?: string;
+        "userId"?: number;
     }
     interface NavBar {
     }
@@ -405,6 +470,9 @@ declare namespace LocalJSX {
         "addClass"?: string;
         "width"?: 'full' | 'auto';
     }
+    interface UsersComponent {
+        "url"?: any;
+    }
     interface IntrinsicElements {
         "check-box": CheckBox;
         "code-editor": CodeEditor;
@@ -412,13 +480,16 @@ declare namespace LocalJSX {
         "data-table": DataTable;
         "dialog-component": DialogComponent;
         "drop-down": DropDown;
+        "edit-user": EditUser;
         "fluid-container": FluidContainer;
         "icon-button": IconButton;
         "invite-component": InviteComponent;
         "loader-component": LoaderComponent;
         "main-component": MainComponent;
+        "menu-down": MenuDown;
         "menu-drop-down": MenuDropDown;
         "menu-items": MenuItems;
+        "multi-select": MultiSelect;
         "nav-bar": NavBar;
         "permission-editor": PermissionEditor;
         "plain-button": PlainButton;
@@ -431,6 +502,7 @@ declare namespace LocalJSX {
         "table-wrapper": TableWrapper;
         "text-field": TextField;
         "text-field-area": TextFieldArea;
+        "users-component": UsersComponent;
     }
 }
 export { LocalJSX as JSX };
@@ -443,13 +515,16 @@ declare module "@stencil/core" {
             "data-table": LocalJSX.DataTable & JSXBase.HTMLAttributes<HTMLDataTableElement>;
             "dialog-component": LocalJSX.DialogComponent & JSXBase.HTMLAttributes<HTMLDialogComponentElement>;
             "drop-down": LocalJSX.DropDown & JSXBase.HTMLAttributes<HTMLDropDownElement>;
+            "edit-user": LocalJSX.EditUser & JSXBase.HTMLAttributes<HTMLEditUserElement>;
             "fluid-container": LocalJSX.FluidContainer & JSXBase.HTMLAttributes<HTMLFluidContainerElement>;
             "icon-button": LocalJSX.IconButton & JSXBase.HTMLAttributes<HTMLIconButtonElement>;
             "invite-component": LocalJSX.InviteComponent & JSXBase.HTMLAttributes<HTMLInviteComponentElement>;
             "loader-component": LocalJSX.LoaderComponent & JSXBase.HTMLAttributes<HTMLLoaderComponentElement>;
             "main-component": LocalJSX.MainComponent & JSXBase.HTMLAttributes<HTMLMainComponentElement>;
+            "menu-down": LocalJSX.MenuDown & JSXBase.HTMLAttributes<HTMLMenuDownElement>;
             "menu-drop-down": LocalJSX.MenuDropDown & JSXBase.HTMLAttributes<HTMLMenuDropDownElement>;
             "menu-items": LocalJSX.MenuItems & JSXBase.HTMLAttributes<HTMLMenuItemsElement>;
+            "multi-select": LocalJSX.MultiSelect & JSXBase.HTMLAttributes<HTMLMultiSelectElement>;
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
             "permission-editor": LocalJSX.PermissionEditor & JSXBase.HTMLAttributes<HTMLPermissionEditorElement>;
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
@@ -462,6 +537,7 @@ declare module "@stencil/core" {
             "table-wrapper": LocalJSX.TableWrapper & JSXBase.HTMLAttributes<HTMLTableWrapperElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
             "text-field-area": LocalJSX.TextFieldArea & JSXBase.HTMLAttributes<HTMLTextFieldAreaElement>;
+            "users-component": LocalJSX.UsersComponent & JSXBase.HTMLAttributes<HTMLUsersComponentElement>;
         }
     }
 }

@@ -36,6 +36,9 @@
     "@codemirror/view": "^0.19.42",
     "@stencil/core": "^2.13.0",
     "axios": "^0.26.0",
+    "choices.js": "^10.2.0",
+    "choicesjs-stencil": "^1.5.1",
+    "stencil-click-outside": "^1.8.0",
     "sweetalert2": "^11.4.6"
   },
   "devDependencies": {

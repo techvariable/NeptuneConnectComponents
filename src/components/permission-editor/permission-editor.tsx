@@ -15,9 +15,6 @@ export class PermissionEditor {
   @State() rowsHandler: any = function (e) {
     this.user = e.target.value;
     console.log(this.user);
-    // this.page = 1;
-    // this.sortObj = {};
-    // this.fetchData();
   };
   @State() user: String;
   @State() response: any;
@@ -127,7 +124,7 @@ export class PermissionEditor {
         <div class="border border-gray-300 shadow-gray-300  p-3 space-y-2">
           {/* ====================== */}
 
-          {/* rows per page  */}
+          {/* select users permissions  */}
           <span class="border border-gray-300 space-x-3 shadow-gray-300 p-2 m-1">
             <span class="pb-6 text-md font-bold leading-7 text-gray-600">Select Role : </span>
             <select
