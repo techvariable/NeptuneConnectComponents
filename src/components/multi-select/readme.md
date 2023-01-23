@@ -7,18 +7,19 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default     |
-| -------- | --------- | ----------- | -------- | ----------- |
-| `roles`  | `roles`   |             | `any`    | `undefined` |
-| `url`    | `url`     |             | `string` | `undefined` |
-| `userId` | `user-id` |             | `number` | `0`         |
+| Property       | Attribute      | Description | Type         | Default     |
+| -------------- | -------------- | ----------- | ------------ | ----------- |
+| `handleselect` | `handleselect` |             | `any`        | `undefined` |
+| `items`        | --             |             | `string[]`   | `undefined` |
+| `roles`        | `roles`        |             | `any`        | `undefined` |
+| `submiturl`    | `submiturl`    |             | `string`     | `""`        |
+| `toggle`       | --             |             | `() => void` | `undefined` |
+| `url`          | `url`          |             | `string`     | `undefined` |
+| `userid`       | `userid`       |             | `number`     | `undefined` |
+| `value`        | `value`        |             | `string`     | `undefined` |
 
 
 ## Dependencies
-
-### Used by
-
- - [edit-user](../edit-user)
 
 ### Depends on
 
@@ -28,7 +29,6 @@
 ```mermaid
 graph TD;
   multi-select --> choicesjs-stencil
-  edit-user --> multi-select
   style multi-select fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

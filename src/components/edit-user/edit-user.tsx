@@ -3,6 +3,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 import { ClickOutside } from 'stencil-click-outside';
+// import { MultiSelectt } from '../multi-selectt/multi-selectt';
 
 @Component({
   tag: 'edit-user',
@@ -18,7 +19,10 @@ export class EditUser {
   @Prop() ismodelopen: boolean;
   @Prop() value: string;
   @Prop() toggle: () => void;
-  @State() roles: {}[] = [];
+  @State() roles: {}[] =[];
+  @Prop() submiturl: string = 'http://localhost:3000/api/users/roles';
+  @Prop() userid: number;
+  @State() selected: string[] = ['admin'];
 
   @ClickOutside()
   someMethod() {
@@ -27,6 +31,7 @@ export class EditUser {
   }
 
   componentWillLoad() {
+    console.log("Normal url",this.url);
     console.log('This is model is edit user state', this.ismodelopen);
 
     axios
@@ -36,7 +41,7 @@ export class EditUser {
         for (let role of res.data) {
           console.log(role.roleName);
           let obj = {};
-          (obj['value'] = role.roleName), (obj['label'] = role.roleName), (obj['selected'] = false), (obj['disabled'] = false), console.log(obj);
+          (obj['value'] = role.roleName),(obj['id'] = role.id), (obj['label'] = role.roleName), (obj['selected'] = false), (obj['disabled'] = false), console.log(obj);
           this.roles.push(obj);
         }
         console.log(this.roles);
@@ -44,15 +49,30 @@ export class EditUser {
         //  this.doc = JSON.parse(res.data.permissions);
       })
       .catch(err => console.log(err));
-
   }
 
   handleSubmit(e) {
     e.preventDefault();
 
+    // @ts-ignore
+    // window.test_event = e;
+    const selectedRoles = [];
+    for(let item of e.target[1]){
+      console.log(item.selected, item.value);
+      if(item.selected === true){
+        selectedRoles.push(Number(item.value));
+      }
+    }
+    
+    
+    
+    console.log(e.target.formData);
+    
+
     axios
-      .post(this.url, {
-        email: this.value,
+      .put(this.submiturl, {
+        userId: this.userid,
+        roles: selectedRoles,
       })
       .then(res => {
         if (res.status === 200) {
@@ -82,12 +102,26 @@ export class EditUser {
     this.value = event.target.value;
   }
 
+  handleSelect(event) {
+    console.log('selected=============>');
+    console.log(event);
+    // @ts-ignore
+    window.test_event = event;
+    console.log(event.target);
+    console.log('=========>');
+    console.log(event.target.option);
+    // console.log(event.getValue)
+
+    // @ts-ignore
+    window.__event = event;
+  }
+
   render() {
     console.log({ t: this.ismodelopen });
     return (
       <Host>
         {this.ismodelopen && (
-          <form onSubmit={e => this.handleSubmit(e)} class="pt-10 space-y-3" action="/invite">
+          <form onSubmit={e => this.handleSubmit(e)} class="pt-10 space-y-3">
             <div class="fixed z-10 inset-0 overflow-y-scroll" aria-labelledby="modal-title" role="dialog" aria-modal="true">
               <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
@@ -124,7 +158,14 @@ export class EditUser {
 
                         <div class="w-48 ">
                           <p class="z-10 text-sm text-gray-500 mb-4">Select permissions</p>
-                          <multi-select url={this.url} roles={this.roles}></multi-select>
+                          <label class="block text-left">
+                            <span class="text-gray-700">Multiselect</span>
+                            <select name='role' class="form-multiselect block w-full mt-1" multiple onChange={e=>{console.log(e)}}>
+                             {this.roles.map((role:any)=>(
+                              <option value={role.id}>{role.value}</option>
+                             ))}
+                            </select>
+                          </label>
                         </div>
                       </div>
                     </div>
@@ -136,7 +177,7 @@ export class EditUser {
                         type="submit"
                         class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-600 text-base font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:ml-3 sm:w-auto sm:text-sm"
                       >
-                        Update Roles
+                        Update
                       </button>
                       <button
                         type="button"

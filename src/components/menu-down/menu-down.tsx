@@ -7,12 +7,12 @@ import { ClickOutside } from 'stencil-click-outside';
   scoped: true,
 })
 export class MenuDown {
-  @Prop() option: string[] = ['delete', 'edit'];
+  @Prop() option: string[] = ['Delete', 'Edit'];
   @Prop() userId: number = 0;
   @Prop() email: string;
   @Prop() url: string;
   @State() roles: number[] = [];
-  @State() ismodelopen: boolean;
+  @State() ismodelopen: boolean= false ;
   @State() value: string;
 
   @State() showDropdown: boolean = false;
@@ -67,17 +67,9 @@ export class MenuDown {
                 </a>
               </li>
             ))}
-            <span
-              class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-200"
-              onClick={() => {
-                this.showDropdown = false;
-              }}
-            >
-              Cancel
-            </span>
           </ul>
         </div>
-        <edit-user url={this.url} ismodelopen={this.ismodelopen} value={this.email} toggle={() => this.toggleModalState()}></edit-user>
+        <edit-user url={this.url} userid={this.userId} ismodelopen={this.ismodelopen} value={this.email} toggle={() => this.toggleModalState()}></edit-user>
       </div>
     );
   }

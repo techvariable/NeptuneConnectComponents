@@ -13,15 +13,23 @@
     <!-- <script src="choicesjs-stencil/dist/choicesjsstencil.js"></script> -->
     <!-- <script type="module" src="/build/choicesjs-stencil-example.esm.js"></script> -->
   <!-- <script nomodule src="/build/choicesjs-stencil-example.js"></script> -->
-
+  <style>
+    .top-100 {top: 100%}
+    .bottom-100 {bottom: 100%}
+    .max-h-select {
+        max-height: 300px;
+    }
+</style>
   </head>
   <body class="selection:bg-indigo-200 selection:text-violet-800">
   <fluid-container breakpoint="lg">
     <!-- <code-editor url="http://ec2-54-221-111-75.compute-1.amazonaws.com:5000/query"></code-editor> -->
     <!-- <side-bar></side-bar> -->
-   <!-- <permission-editor url="http://localhost:3000/api/roles" doc=""></permission-editor> -->
-   <users-component usersArray=[{name:sda,email:a@s.com},{name:sfss,email:e@bdvd}] url='http://localhost:3000/api/permissions/all'></users-component>
+   <!-- <permission-editor url="http://localhost:3000/api/permissions/?roleId=2" doc="" fetchrole="http://localhost:3000/api/permissions/all"></permission-editor> -->
+   <!-- <users-component usersArray=s[{name:sda,email:a@s.com},{name:sfss,email:rolese@bdvd}] url='http://localhost:3000/api/permissions/all'></users-component> -->
    <!-- <edit-user></edit-user> -->
+    <!-- <multi-selectt ></multi-selectt> -->
+    <menu-down></menu-down>
   </fluid-container>
     </div>
   </body>

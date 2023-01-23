@@ -23,8 +23,6 @@
 graph TD;
   users-component --> menu-down
   menu-down --> edit-user
-  edit-user --> multi-select
-  multi-select --> choicesjs-stencil
   style users-component fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

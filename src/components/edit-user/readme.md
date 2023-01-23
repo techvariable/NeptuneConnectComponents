@@ -7,12 +7,14 @@
 
 ## Properties
 
-| Property      | Attribute     | Description | Type         | Default     |
-| ------------- | ------------- | ----------- | ------------ | ----------- |
-| `ismodelopen` | `ismodelopen` |             | `boolean`    | `undefined` |
-| `toggle`      | --            |             | `() => void` | `undefined` |
-| `url`         | `url`         |             | `string`     | `undefined` |
-| `value`       | `value`       |             | `string`     | `undefined` |
+| Property      | Attribute     | Description | Type         | Default                                   |
+| ------------- | ------------- | ----------- | ------------ | ----------------------------------------- |
+| `ismodelopen` | `ismodelopen` |             | `boolean`    | `undefined`                               |
+| `submiturl`   | `submiturl`   |             | `string`     | `'http://localhost:3000/api/users/roles'` |
+| `toggle`      | --            |             | `() => void` | `undefined`                               |
+| `url`         | `url`         |             | `string`     | `undefined`                               |
+| `userid`      | `userid`      |             | `number`     | `undefined`                               |
+| `value`       | `value`       |             | `string`     | `undefined`                               |
 
 
 ## Dependencies
@@ -21,15 +23,9 @@
 
  - [menu-down](../menu-down)
 
-### Depends on
-
-- [multi-select](../multi-select)
-
 ### Graph
 ```mermaid
 graph TD;
-  edit-user --> multi-select
-  multi-select --> choicesjs-stencil
   menu-down --> edit-user
   style edit-user fill:#f9f,stroke:#333,stroke-width:4px
 ```

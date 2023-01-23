@@ -10,7 +10,7 @@
 | Property | Attribute | Description | Type       | Default              |
 | -------- | --------- | ----------- | ---------- | -------------------- |
 | `email`  | `email`   |             | `string`   | `undefined`          |
-| `option` | --        |             | `string[]` | `['delete', 'edit']` |
+| `option` | --        |             | `string[]` | `['Delete', 'Edit']` |
 | `url`    | `url`     |             | `string`   | `undefined`          |
 | `userId` | `user-id` |             | `number`   | `0`                  |
 
@@ -29,8 +29,6 @@
 ```mermaid
 graph TD;
   menu-down --> edit-user
-  edit-user --> multi-select
-  multi-select --> choicesjs-stencil
   users-component --> menu-down
   style menu-down fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -42,8 +42,10 @@ export namespace Components {
     }
     interface EditUser {
         "ismodelopen": boolean;
+        "submiturl": string;
         "toggle": () => void;
         "url": string;
+        "userid": number;
         "value": string;
     }
     interface FluidContainer {
@@ -76,13 +78,23 @@ export namespace Components {
     interface MenuItems {
     }
     interface MultiSelect {
+        "handleselect": any;
+        "items": string[];
         "roles": any;
+        "submiturl": string;
+        "toggle": () => void;
         "url": string;
-        "userId": number;
+        "userid": number;
+        "value": string;
+    }
+    interface MultiSelectt {
+        "roles": string[];
+        "selected": string[];
     }
     interface NavBar {
     }
     interface PermissionEditor {
+        "fetchrole": string;
         "url": string;
     }
     interface PlainButton {
@@ -233,6 +245,12 @@ declare global {
         prototype: HTMLMultiSelectElement;
         new (): HTMLMultiSelectElement;
     };
+    interface HTMLMultiSelecttElement extends Components.MultiSelectt, HTMLStencilElement {
+    }
+    var HTMLMultiSelecttElement: {
+        prototype: HTMLMultiSelecttElement;
+        new (): HTMLMultiSelecttElement;
+    };
     interface HTMLNavBarElement extends Components.NavBar, HTMLStencilElement {
     }
     var HTMLNavBarElement: {
@@ -328,6 +346,7 @@ declare global {
         "menu-drop-down": HTMLMenuDropDownElement;
         "menu-items": HTMLMenuItemsElement;
         "multi-select": HTMLMultiSelectElement;
+        "multi-selectt": HTMLMultiSelecttElement;
         "nav-bar": HTMLNavBarElement;
         "permission-editor": HTMLPermissionEditorElement;
         "plain-button": HTMLPlainButtonElement;
@@ -380,8 +399,10 @@ declare namespace LocalJSX {
     }
     interface EditUser {
         "ismodelopen"?: boolean;
+        "submiturl"?: string;
         "toggle"?: () => void;
         "url"?: string;
+        "userid"?: number;
         "value"?: string;
     }
     interface FluidContainer {
@@ -414,13 +435,23 @@ declare namespace LocalJSX {
     interface MenuItems {
     }
     interface MultiSelect {
+        "handleselect"?: any;
+        "items"?: string[];
         "roles"?: any;
+        "submiturl"?: string;
+        "toggle"?: () => void;
         "url"?: string;
-        "userId"?: number;
+        "userid"?: number;
+        "value"?: string;
+    }
+    interface MultiSelectt {
+        "roles"?: string[];
+        "selected"?: string[];
     }
     interface NavBar {
     }
     interface PermissionEditor {
+        "fetchrole"?: string;
         "url"?: string;
     }
     interface PlainButton {
@@ -490,6 +521,7 @@ declare namespace LocalJSX {
         "menu-drop-down": MenuDropDown;
         "menu-items": MenuItems;
         "multi-select": MultiSelect;
+        "multi-selectt": MultiSelectt;
         "nav-bar": NavBar;
         "permission-editor": PermissionEditor;
         "plain-button": PlainButton;
@@ -525,6 +557,7 @@ declare module "@stencil/core" {
             "menu-drop-down": LocalJSX.MenuDropDown & JSXBase.HTMLAttributes<HTMLMenuDropDownElement>;
             "menu-items": LocalJSX.MenuItems & JSXBase.HTMLAttributes<HTMLMenuItemsElement>;
             "multi-select": LocalJSX.MultiSelect & JSXBase.HTMLAttributes<HTMLMultiSelectElement>;
+            "multi-selectt": LocalJSX.MultiSelectt & JSXBase.HTMLAttributes<HTMLMultiSelecttElement>;
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
             "permission-editor": LocalJSX.PermissionEditor & JSXBase.HTMLAttributes<HTMLPermissionEditorElement>;
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;

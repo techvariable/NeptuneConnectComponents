@@ -16,6 +16,7 @@ export class PermissionEditor {
     this.user = e.target.value;
     console.log(this.user);
   };
+  @Prop () fetchrole:string; 
   @State() user: String;
   @State() response: any;
   @State() responseLabel: any;
@@ -24,7 +25,7 @@ export class PermissionEditor {
   @State() isLoading = false;
   @State() errorMessage: string = '';
   @State() doc: any = '\n\n\n';
-  @State() options: string[] = ['admin', 'user', 'qa', 'tester'];
+  @State() options: string[] = [];
   @Element() element: HTMLElement;
 
   // this.rowsHandler = (e) {
@@ -35,15 +36,32 @@ export class PermissionEditor {
   // }
 
   componentWillLoad() {
+
+    // fetching all the available roles
+    axios
+      .get(this.fetchrole)
+      .then((res: any) => {
+        // console.log('This is res================****', res.data);
+        console.log(res.data);
+        for(let obj of res.data){
+          this.options.push(obj["roleName"])
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        this.responseLabel = 'error';
+      });
     console.log('Running...>>', this.doc);
     // this.doc = 'sfsf';
+
+    // fetching all the permissions for a specific role
     axios
       .get(this.url)
       .then((res: any) => {
         console.log('This is res================****', res.data);
         console.log(res.data);
-        this.responseLabel = 'result';
-        this.isLoading = false;
+        // this.responseLabel = 'result';
+        // this.isLoading = false;
         this.doc = JSON.stringify(res.data);
         console.log('This is data to be shown', this.doc);
       })
