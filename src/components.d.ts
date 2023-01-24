@@ -146,6 +146,7 @@ export namespace Components {
     }
     interface UsersComponent {
         "url": any;
+        "users": any;
     }
 }
 declare global {
@@ -503,6 +504,7 @@ declare namespace LocalJSX {
     }
     interface UsersComponent {
         "url"?: any;
+        "users"?: any;
     }
     interface IntrinsicElements {
         "check-box": CheckBox;

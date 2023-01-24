@@ -1,26 +1,19 @@
 import { Component, h, Host, Prop, State } from '@stencil/core';
 
-// import axios from 'axios';
 
 @Component({
   tag: 'users-component',
   scoped: true,
 })
 export class UsersComponent {
-  // @Prop() users:any;
+  @Prop() users:any;
   @Prop() url;
   @State() rowsHandler: any = function (e) {
     this.option = e.target.value;
     console.log(this.user);
   };
   @State() option: string;
-  @State() users: any =
-    '[{"id":1,"name":"durga","email":"durga@tv.com","date":"1970-01-01T00:02:33.544Z"},{"id":2,"name":"phukan","email":"phukan@tv.com","date":"1970-01-01T00:26:04.354Z"},{"id":3,"name":"abc","email":"abc.tv.com","date":"1974-03-12T20:50:54.454Z"}]';
   @State() options: string[] = ['delete', 'edit'];
-
-  componentWillLoad() {
-    console.log('This is incoming data', JSON.parse(this.users));
-  }
 
 
 

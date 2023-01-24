@@ -21,8 +21,7 @@ export class EditUser {
   @State() roles: {}[] =[];
   @Prop() submiturl: string = 'http://localhost:3000/api/users/roles';
   @Prop() userid: number;
-  @State() selected: string[] = ['admin'];
-
+  @State() email: string = '';
   @ClickOutside()
   someMethod() {
     console.log('someMethod was called because user just clicked outside of MyComponent');
@@ -32,7 +31,7 @@ export class EditUser {
   componentWillLoad() {
     console.log("Normal url",this.url);
     console.log('This is model is edit user state', this.ismodelopen);
-
+    this.email = this.value;
     axios
       .get(this.url)
       .then((res: any) => {
@@ -48,14 +47,30 @@ export class EditUser {
         //  this.doc = JSON.parse(res.data.permissions);
       })
       .catch(err => console.log(err));
+
+      axios
+      .get(`http://localhost:3000/api/users/roles?userId=${this.userid}`)
+      .then((res: any) => {
+        console.log("roles for the  data is=======>",res.data);
+        for (let role of this.roles) {
+          if(res.data.includes(role["id"])){
+            role['selected'] = true;
+          }
+        }
+        console.log(this.roles);
+        //  this.responseLabel = 'result';
+        //  this.doc = JSON.parse(res.data.permissions);
+      })
+      .catch(err => console.log(err));
   }
+
 
   handleSubmit(e) {
     e.preventDefault();
 
     // @ts-ignore
     // window.test_event = e;
-    const selectedRoles = [];
+    let selectedRoles = [];
     for(let item of e.target[1]){
       console.log(item.selected, item.value);
       if(item.selected === true){
@@ -63,10 +78,13 @@ export class EditUser {
       }
     }
     
-    
-    
-    console.log(e.target.formData);
-    
+    for(let role of this.roles){
+      if(selectedRoles.includes(role["id"])){
+        role['selected'] = true;
+      }else{
+        role['selected'] = false;
+      }
+    }
 
     axios
       .put(this.submiturl, {
@@ -150,7 +168,7 @@ export class EditUser {
                             required
                             placeholder="email@example.com"
                             class="border w-full px-4 py-2 rounded-md text-sm mb-4"
-                            value={this.value}
+                            value={this.email}
                             onInput={event => this.handleChange(event)}
                           />
                         </div>
@@ -160,7 +178,7 @@ export class EditUser {
                           <label class="block text-left">
                             <select name='role' class="form-multiselect block w-full mt-1 border rounded-md" multiple onChange={e=>{console.log(e)}}>
                              {this.roles.map((role:any)=>(
-                              <option class="px-6 py-1 hover:bg-gray-200 cursor-pointer" value={role.id}>{role.value}</option>
+                              <option class="px-6 py-1 hover:bg-gray-200 cursor-pointer" selected={role.selected} value={role.id}>{role.value}</option>
                              ))}
                             </select>
                           </label>
