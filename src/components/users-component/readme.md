@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type  | Default     |
-| -------- | --------- | ----------- | ----- | ----------- |
-| `url`    | `url`     |             | `any` | `undefined` |
-| `users`  | `users`   |             | `any` | `undefined` |
+| Property | Attribute | Description | Type     | Default     |
+| -------- | --------- | ----------- | -------- | ----------- |
+| `url`    | `url`     |             | `string` | `undefined` |
+| `users`  | `users`   |             | `any`    | `undefined` |
 
 
 ## Dependencies

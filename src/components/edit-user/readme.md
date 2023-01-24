@@ -7,14 +7,14 @@
 
 ## Properties
 
-| Property      | Attribute     | Description | Type         | Default                                   |
-| ------------- | ------------- | ----------- | ------------ | ----------------------------------------- |
-| `ismodelopen` | `ismodelopen` |             | `boolean`    | `undefined`                               |
-| `submiturl`   | `submiturl`   |             | `string`     | `'http://localhost:3000/api/users/roles'` |
-| `toggle`      | --            |             | `() => void` | `undefined`                               |
-| `url`         | `url`         |             | `string`     | `undefined`                               |
-| `userid`      | `userid`      |             | `number`     | `undefined`                               |
-| `value`       | `value`       |             | `string`     | `undefined`                               |
+| Property      | Attribute     | Description | Type         | Default              |
+| ------------- | ------------- | ----------- | ------------ | -------------------- |
+| `ismodelopen` | `ismodelopen` |             | `boolean`    | `undefined`          |
+| `submiturl`   | `submiturl`   |             | `string`     | `'/api/users/roles'` |
+| `toggle`      | --            |             | `() => void` | `undefined`          |
+| `url`         | `url`         |             | `string`     | `undefined`          |
+| `userid`      | `userid`      |             | `number`     | `undefined`          |
+| `value`       | `value`       |             | `string`     | `undefined`          |
 
 
 ## Dependencies

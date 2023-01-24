@@ -11,10 +11,8 @@ export class MenuDown {
   @Prop() userId: number = 0;
   @Prop() email: string;
   @Prop() url: string;
-  @State() roles: number[] = [];
   @State() ismodelopen: boolean= false ;
   @State() value: string;
-
   @State() showDropdown: boolean = false;
   @State() clickHandler: any = function (e) {
     console.log('Value of the event', e.target.innerHTML, 'Unique id', this.userId, 'email', this.email);
@@ -26,14 +24,10 @@ export class MenuDown {
     this.ismodelopen = !this.ismodelopen;
   }
 
-  componentWillLoad() {
-    console.log('Changed');
-    console.log('This is model state in menu-down', this.ismodelopen);
-  }
 
   @ClickOutside()
   someMethod() {
-    console.log('someMethod was called because user just clicked outside of MyComponent');
+    // console.log('someMethod was called because user just clicked outside of MyComponent');
     this.showDropdown = !this.showDropdown;
   }
 
@@ -42,12 +36,10 @@ export class MenuDown {
   }
 
   render() {
-    console.log({ z: this.ismodelopen });
     return (
       <div class="relative">
         {/* Header */}
         <h2 onClick={() => this.toggleDropdown()} class="font-sans text-gray-600 hover:text-indigo-800 cursor-pointer transition text-sm capitalize flex gap-1 items-center">
-          {/* {this.listTitle} */}
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path
               stroke-linecap="round"
@@ -69,7 +61,7 @@ export class MenuDown {
             ))}
           </ul>
         </div>
-        <edit-user url={this.url} userid={this.userId} ismodelopen={this.ismodelopen} value={this.email} toggle={() => this.toggleModalState()}></edit-user>
+        <edit-user url={this.url} userid={this.userId} ismodelopen={this.ismodelopen} value={this.email} toggle={() => this.toggleModalState()} ></edit-user>
       </div>
     );
   }

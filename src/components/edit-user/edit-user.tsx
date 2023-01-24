@@ -18,9 +18,9 @@ export class EditUser {
   @Prop() ismodelopen: boolean;
   @Prop() value: string;
   @Prop() toggle: () => void;
-  @State() roles: {}[] =[];
-  @Prop() submiturl: string = 'http://localhost:3000/api/users/roles';
+  @Prop() submiturl: string = '/api/users/roles';
   @Prop() userid: number;
+  @State() rolesobj: {}[] =[];
   @State() email: string = '';
   @ClickOutside()
   someMethod() {
@@ -29,63 +29,50 @@ export class EditUser {
   }
 
   componentWillLoad() {
-    console.log("Normal url",this.url);
-    console.log('This is model is edit user state', this.ismodelopen);
     this.email = this.value;
-    axios
-      .get(this.url)
-      .then((res: any) => {
-        console.log(res.data);
-        for (let role of res.data) {
-          console.log(role.roleName);
-          let obj = {};
-          (obj['value'] = role.roleName),(obj['id'] = role.id), (obj['label'] = role.roleName), (obj['selected'] = false), (obj['disabled'] = false), console.log(obj);
-          this.roles.push(obj);
-        }
-        console.log(this.roles);
-        //  this.responseLabel = 'result';
-        //  this.doc = JSON.parse(res.data.permissions);
-      })
-      .catch(err => console.log(err));
 
+    axios
+    .get(this.url)
+    .then((res: any) => {
+      // console.log("edit user data",res.data);
+      for (let role of res.data) {
+        let obj = {};
+        (obj['value'] = role.roleName);
+        (obj['id'] = role.id);
+        (obj['label'] = role.roleName);
+        (obj['selected'] = false);
+        (obj['disabled'] = false);
+        this.rolesobj.push(obj);
+        console.log(obj);
+      }
+     
       axios
-      .get(`http://localhost:3000/api/users/roles?userId=${this.userid}`)
+      .get(`/api/users/roles?userId=${this.userid}`)
       .then((res: any) => {
-        console.log("roles for the  data is=======>",res.data);
-        for (let role of this.roles) {
+        // console.log("roles for the  data is=======>",res.data);
+        for (let role of this.rolesobj) {
           if(res.data.includes(role["id"])){
             role['selected'] = true;
+          }else{
+            role['selected'] = false;
           }
         }
-        console.log(this.roles);
-        //  this.responseLabel = 'result';
-        //  this.doc = JSON.parse(res.data.permissions);
       })
-      .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
   }
 
 
   handleSubmit(e) {
     e.preventDefault();
 
-    // @ts-ignore
-    // window.test_event = e;
     let selectedRoles = [];
     for(let item of e.target[1]){
-      console.log(item.selected, item.value);
       if(item.selected === true){
         selectedRoles.push(Number(item.value));
       }
     }
     
-    for(let role of this.roles){
-      if(selectedRoles.includes(role["id"])){
-        role['selected'] = true;
-      }else{
-        role['selected'] = false;
-      }
-    }
-
     axios
       .put(this.submiturl, {
         userId: this.userid,
@@ -100,6 +87,13 @@ export class EditUser {
             showConfirmButton: false,
             timer: 1500,
           });
+          for(let role of this.rolesobj){
+            if(selectedRoles.includes(role["id"])){
+              role['selected'] = true;
+            }else{
+              role['selected'] = false;
+            }
+          }
         }
       })
       .catch(err => {
@@ -119,22 +113,9 @@ export class EditUser {
     this.value = event.target.value;
   }
 
-  handleSelect(event) {
-    console.log('selected=============>');
-    console.log(event);
-    // @ts-ignore
-    window.test_event = event;
-    console.log(event.target);
-    console.log('=========>');
-    console.log(event.target.option);
-    // console.log(event.getValue)
-
-    // @ts-ignore
-    window.__event = event;
-  }
 
   render() {
-    console.log({ t: this.ismodelopen });
+    // console.log({ t: this.ismodelopen });
     return (
       <Host>
         {this.ismodelopen && (
@@ -177,7 +158,7 @@ export class EditUser {
                           <p class="z-10 text-md text-gray-500 mb-4">Select permissions</p>
                           <label class="block text-left">
                             <select name='role' class="form-multiselect block w-full mt-1 border rounded-md" multiple onChange={e=>{console.log(e)}}>
-                             {this.roles.map((role:any)=>(
+                             {this.rolesobj.map((role:any)=>(
                               <option class="px-6 py-1 hover:bg-gray-200 cursor-pointer" selected={role.selected} value={role.id}>{role.value}</option>
                              ))}
                             </select>

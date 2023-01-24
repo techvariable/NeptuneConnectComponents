@@ -145,7 +145,7 @@ export namespace Components {
         "width": 'full' | 'auto';
     }
     interface UsersComponent {
-        "url": any;
+        "url": string;
         "users": any;
     }
 }
@@ -503,7 +503,7 @@ declare namespace LocalJSX {
         "width"?: 'full' | 'auto';
     }
     interface UsersComponent {
-        "url"?: any;
+        "url"?: string;
         "users"?: any;
     }
     interface IntrinsicElements {

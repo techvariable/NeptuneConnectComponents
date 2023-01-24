@@ -7,7 +7,7 @@ import { Component, h, Host, Prop, State } from '@stencil/core';
 })
 export class UsersComponent {
   @Prop() users:any;
-  @Prop() url;
+  @Prop() url:string;
   @State() rowsHandler: any = function (e) {
     this.option = e.target.value;
     console.log(this.user);
@@ -33,7 +33,7 @@ export class UsersComponent {
                   </div>
                   <div class="flex-grow">
                     <div class="flex justify-end">
-                      <menu-down userId={user.id} email={user.email} url={this.url}></menu-down>
+                      <menu-down userId={user.id} email={user.email} url={this.url} ></menu-down>
                     </div>
                     <h2 class="text-gray-900 title-font font-medium">{user.name}</h2>
                     <p class="text-gray-500">{user.email}</p>
