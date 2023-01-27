@@ -18,13 +18,13 @@ export class EditUser {
   @Prop() ismodelopen: boolean;
   @Prop() value: string;
   @Prop() toggle: () => void;
-  @Prop() submiturl: string = '/api/users/roles';
+  @Prop() submiturl: string;
   @Prop() userid: number;
   @State() rolesobj: {}[] =[];
   @State() email: string = '';
   @ClickOutside()
   someMethod() {
-    console.log('someMethod was called because user just clicked outside of MyComponent');
+    // console.log('someMethod was called because user just clicked outside of MyComponent');
     this.ismodelopen = !this.ismodelopen;
   }
 
@@ -43,11 +43,11 @@ export class EditUser {
         (obj['selected'] = false);
         (obj['disabled'] = false);
         this.rolesobj.push(obj);
-        console.log(obj);
+        // console.log(obj);
       }
      
       axios
-      .get(`/api/users/roles?userId=${this.userid}`)
+      .get(`${this.submiturl}?userId=${this.userid}`)
       .then((res: any) => {
         // console.log("roles for the  data is=======>",res.data);
         for (let role of this.rolesobj) {

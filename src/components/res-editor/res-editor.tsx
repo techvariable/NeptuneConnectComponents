@@ -39,6 +39,7 @@ export class ResEditor {
   }
 
   render() {
+    console.log(this.doc)
     return (
       <Host>
         <p class={this.labelTitle[this.responseLabel].class}>{this.labelTitle[this.responseLabel].tag}</p>

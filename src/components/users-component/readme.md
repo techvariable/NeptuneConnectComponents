@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default     |
-| -------- | --------- | ----------- | -------- | ----------- |
-| `url`    | `url`     |             | `string` | `undefined` |
-| `users`  | `users`   |             | `any`    | `undefined` |
+| Property    | Attribute   | Description | Type     | Default     |
+| ----------- | ----------- | ----------- | -------- | ----------- |
+| `submiturl` | `submiturl` |             | `string` | `undefined` |
+| `url`       | `url`       |             | `string` | `undefined` |
+| `users`     | `users`     |             | `any`    | `undefined` |
 
 
 ## Dependencies

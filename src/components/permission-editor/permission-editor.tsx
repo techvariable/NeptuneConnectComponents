@@ -1,7 +1,6 @@
 import { Component, h, Element, State, Prop, Host } from '@stencil/core';
 import { EditorState, basicSetup } from '@codemirror/basic-setup';
 import { EditorView, keymap } from '@codemirror/view';
-// import { defaultKeymap } from '@codemirror/commands';
 import { json } from '@codemirror/lang-json';
 import axios from 'axios';
 import { isValidPermissionJson } from '../../utils/utils';
@@ -11,13 +10,9 @@ import { isValidPermissionJson } from '../../utils/utils';
 })
 export class PermissionEditor {
   @Prop() url: string;
-  // @Prop() doc: any = '\n\n\n';
-  @State() rowsHandler: any = function (e) {
-    this.user = e.target.value;
-    console.log(this.user);
-  };
-  @Prop () fetchrole:string; 
+  @Prop() fetchrole: string;
   @State() user: String;
+  @State() roleId: Number;
   @State() response: any;
   @State() responseLabel: any;
   @State() view: EditorView;
@@ -26,44 +21,50 @@ export class PermissionEditor {
   @State() errorMessage: string = '';
   @State() doc: any = '\n\n\n';
   @State() options: string[] = [];
+  @State() rolesObj: {}[] = [];
+  @State() resStatus:string="";
   @Element() element: HTMLElement;
-
-  // this.rowsHandler = (e) {
-  //   this.user = e.target.value;
-  //   this.page = 1;
-  //   this.sortObj = {};
-  //   this.fetchData();
-  // }
+  rowsHandler(e) {
+    this.user = e.target.value;
+    // console.log(this.user);
+    for (let obj of this.rolesObj) {
+      if (obj['roleName'] === this.user) {
+        this.roleId = obj['id'];
+      }
+    }
+    axios
+      .get(`${this.url}/?roleId=${this.roleId}`)
+      .then((res: any) => {
+        let transaction = this.view.state.update({ changes: { from: 0, insert: `${JSON.stringify(res.data)}` } });
+        console.log(transaction.state.doc.toString());
+        this.view.dispatch(transaction);
+      })
+      .catch(err => {
+        console.log(err);
+        this.responseLabel = 'error';
+      });
+  }
 
   componentWillLoad() {
-
-    // fetching all the available roles
     axios
       .get(this.fetchrole)
       .then((res: any) => {
-        // console.log('This is res================****', res.data);
-        console.log(res.data);
-        for(let obj of res.data){
-          this.options.push(obj["roleName"])
+        this.rolesObj = res.data;
+        for (let obj of res.data) {
+          this.options.push(obj['roleName']);
         }
       })
       .catch(err => {
         console.log(err);
         this.responseLabel = 'error';
       });
-    console.log('Running...>>', this.doc);
-    // this.doc = 'sfsf';
-
-    // fetching all the permissions for a specific role
     axios
-      .get(this.url)
+      .get(`${this.url}/?roleId=${'1'}`)
       .then((res: any) => {
-        console.log('This is res================****', res.data);
-        console.log(res.data);
-        // this.responseLabel = 'result';
-        // this.isLoading = false;
-        this.doc = JSON.stringify(res.data);
-        console.log('This is data to be shown', this.doc);
+        this.doc = res.data;
+        let transaction = this.view.state.update({ changes: { from: 0, insert: `${JSON.stringify(res.data)}` } });
+        console.log(transaction.state.doc.toString());
+        this.view.dispatch(transaction);
       })
       .catch(err => {
         console.log(err);
@@ -72,7 +73,6 @@ export class PermissionEditor {
   }
 
   componentDidLoad() {
-    console.log('Running...', this.doc);
     this.state = EditorState.create({
       doc: this.doc,
       extensions: [
@@ -82,7 +82,6 @@ export class PermissionEditor {
         this.dummyKeymap(),
       ],
     });
-    // console.log(typeof this.doc);
     this.view = new EditorView({
       state: this.state,
       parent: this.element.querySelector('#editor'),
@@ -93,33 +92,33 @@ export class PermissionEditor {
     let transaction = this.view.state.update();
     this.view.dispatch(transaction);
     const { isValid, error } = isValidPermissionJson(String(transaction.state.doc));
-    console.log('Is a JSON ==>', isValid, error);
+    // console.log('Is a JSON ==>', isValid, error);
     if (isValid) {
       this.isLoading = true;
       this.errorMessage = '';
       this.doc = transaction.state.doc;
       // const permission = this.doc.text.join().split(',').join('\n');
-      const permission = this.doc.text.join('');
-      const user = this.user;
-      console.log(typeof permission);
-
-      console.log('Sending data====>', permission);
+      const permissions = this.doc.text.join('');
       // axios call
       axios
-        .post(this.url, {
-          permission,
-          user,
+        .put(this.url, {
+          permissions,
+          roleId: this.roleId,
+          // user,
         })
         .then((res: any) => {
           this.responseLabel = 'result';
           this.isLoading = false;
           this.doc = JSON.parse(res.data.permissions);
+          this.resStatus=`Permissions for ${this.user} updated successfully`;
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          this.resStatus=`Permissions for ${this.user} could not be updated`;
+          console.log(err)
+        });
     } else {
-      console.log(this.errorMessage);
       this.errorMessage = error;
-      console.log(this.errorMessage);
+      // console.log(this.errorMessage);
     }
   }
 
@@ -139,9 +138,7 @@ export class PermissionEditor {
   render() {
     return (
       <Host>
-        <div class="border border-gray-300 shadow-gray-300  p-3 space-y-2">
-          {/* ====================== */}
-
+        <div class="w-auto border border-gray-300 shadow-gray-300  p-3 space-y-2">
           {/* select users permissions  */}
           <span class="border border-gray-300 space-x-3 shadow-gray-300 p-2 m-1">
             <span class="pb-6 text-md font-bold leading-7 text-gray-600">Select Role : </span>
@@ -154,7 +151,6 @@ export class PermissionEditor {
               ))}
             </select>
           </span>
-          {/* =========================== */}
           <div id="editor" class="border border-gray-300"></div>
           {this.errorMessage != '' ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full -mt-4 mb-6">{this.errorMessage}</p> : null}
           <button
@@ -172,9 +168,8 @@ export class PermissionEditor {
             <loader-component></loader-component>
           </div>
         )}
-
         <div class="py-4 text-gray-500 max-h-72 w-96 overflow-x-scroll">
-          <res-editor responseLabel={this.responseLabel} doc={JSON.stringify(this.doc)}></res-editor>
+          <res-editor responseLabel={this.responseLabel} doc={this.resStatus}></res-editor>
         </div>
       </Host>
     );

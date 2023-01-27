@@ -68,6 +68,7 @@ export namespace Components {
     interface MenuDown {
         "email": string;
         "option": string[];
+        "submiturl": string;
         "url": string;
         "userId": number;
     }
@@ -145,6 +146,7 @@ export namespace Components {
         "width": 'full' | 'auto';
     }
     interface UsersComponent {
+        "submiturl": string;
         "url": string;
         "users": any;
     }
@@ -426,6 +428,7 @@ declare namespace LocalJSX {
     interface MenuDown {
         "email"?: string;
         "option"?: string[];
+        "submiturl"?: string;
         "url"?: string;
         "userId"?: number;
     }
@@ -503,6 +506,7 @@ declare namespace LocalJSX {
         "width"?: 'full' | 'auto';
     }
     interface UsersComponent {
+        "submiturl"?: string;
         "url"?: string;
         "users"?: any;
     }

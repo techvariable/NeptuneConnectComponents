@@ -11,11 +11,11 @@ export class MenuDown {
   @Prop() userId: number = 0;
   @Prop() email: string;
   @Prop() url: string;
+  @Prop() submiturl:string;
   @State() ismodelopen: boolean= false ;
   @State() value: string;
   @State() showDropdown: boolean = false;
-  @State() clickHandler: any = function (e) {
-    console.log('Value of the event', e.target.innerHTML, 'Unique id', this.userId, 'email', this.email);
+  @State() clickHandler: any = function () {
     this.ismodelopen = !this.ismodelopen;
     this.toggleDropdown();
   };
@@ -53,7 +53,7 @@ export class MenuDown {
         <div class={this.showDropdown ? 'absolute bg-white z-2 w-28 text-sm list-none mt-2 rounded divide-y divide-gray-100 shadow ' : 'hidden'}>
           <ul class="py-1">
             {this.option?.map(item => (
-              <li onClick={e => this.clickHandler(e)}>
+              <li onClick={() => this.clickHandler()}>
                 <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-200">
                   {item}
                 </a>
@@ -61,7 +61,7 @@ export class MenuDown {
             ))}
           </ul>
         </div>
-        <edit-user url={this.url} userid={this.userId} ismodelopen={this.ismodelopen} value={this.email} toggle={() => this.toggleModalState()} ></edit-user>
+        <edit-user url={this.url} submiturl={this.submiturl} userid={this.userId} ismodelopen={this.ismodelopen} value={this.email} toggle={this.toggleModalState} ></edit-user>
       </div>
     );
   }
