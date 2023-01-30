@@ -35,7 +35,7 @@ export class PermissionEditor {
     axios
       .get(`${this.url}/?roleId=${this.roleId}`)
       .then((res: any) => {
-        let transaction = this.view.state.update({ changes: { from: 0, insert: `${JSON.stringify(res.data)}` } });
+        let transaction = this.view.state.update({ changes: { from: 0, insert: `${JSON.stringify(res.data)}` }});
         console.log(transaction.state.doc.toString());
         this.view.dispatch(transaction);
       })
@@ -138,7 +138,7 @@ export class PermissionEditor {
   render() {
     return (
       <Host>
-        <div class="w-auto border border-gray-300 shadow-gray-300  p-3 space-y-2">
+        <div class="flex-grow border border-gray-300 shadow-gray-300  p-3 space-y-2">
           {/* select users permissions  */}
           <span class="border border-gray-300 space-x-3 shadow-gray-300 p-2 m-1">
             <span class="pb-6 text-md font-bold leading-7 text-gray-600">Select Role : </span>

@@ -6,7 +6,7 @@ import { Component, h, Prop, State } from '@stencil/core';
 })
 export class MenuDropDown {
   @Prop() listTitle: string;
-  @Prop() list: number[];
+  @Prop() list: string[];
 
   @State() showDropdown: boolean = false;
 
@@ -30,7 +30,7 @@ export class MenuDropDown {
           <ul class="py-1">
             {this.list?.map(item => (
               <li>
-                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">
+                <a href="#" onClick={() => this.toggleDropdown()} class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">
                   {item}
                 </a>
               </li>

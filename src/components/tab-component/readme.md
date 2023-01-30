@@ -18,6 +18,7 @@
 ### Used by
 
  - [code-editor](../code-editor)
+ - [code-editor-updated](../code-editor-updated)
 
 ### Depends on
 
@@ -31,6 +32,7 @@ graph TD;
   tab-component --> data-table
   data-table --> plain-button
   code-editor --> tab-component
+  code-editor-updated --> tab-component
   style tab-component fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

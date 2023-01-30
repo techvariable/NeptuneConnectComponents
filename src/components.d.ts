@@ -13,6 +13,10 @@ export namespace Components {
         "doc": any;
         "url": string;
     }
+    interface CodeEditorUpdated {
+        "doc": any;
+        "url": string;
+    }
     interface CustomTable {
         "clearSearch": any;
         "currentPage": number;
@@ -73,7 +77,7 @@ export namespace Components {
         "userId": number;
     }
     interface MenuDropDown {
-        "list": number[];
+        "list": string[];
         "listTitle": string;
     }
     interface MenuItems {
@@ -93,6 +97,9 @@ export namespace Components {
         "selected": string[];
     }
     interface NavBar {
+    }
+    interface NodeItem {
+        "navigators": any;
     }
     interface PermissionEditor {
         "fetchrole": string;
@@ -163,6 +170,12 @@ declare global {
     var HTMLCodeEditorElement: {
         prototype: HTMLCodeEditorElement;
         new (): HTMLCodeEditorElement;
+    };
+    interface HTMLCodeEditorUpdatedElement extends Components.CodeEditorUpdated, HTMLStencilElement {
+    }
+    var HTMLCodeEditorUpdatedElement: {
+        prototype: HTMLCodeEditorUpdatedElement;
+        new (): HTMLCodeEditorUpdatedElement;
     };
     interface HTMLCustomTableElement extends Components.CustomTable, HTMLStencilElement {
     }
@@ -260,6 +273,12 @@ declare global {
         prototype: HTMLNavBarElement;
         new (): HTMLNavBarElement;
     };
+    interface HTMLNodeItemElement extends Components.NodeItem, HTMLStencilElement {
+    }
+    var HTMLNodeItemElement: {
+        prototype: HTMLNodeItemElement;
+        new (): HTMLNodeItemElement;
+    };
     interface HTMLPermissionEditorElement extends Components.PermissionEditor, HTMLStencilElement {
     }
     var HTMLPermissionEditorElement: {
@@ -335,6 +354,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "check-box": HTMLCheckBoxElement;
         "code-editor": HTMLCodeEditorElement;
+        "code-editor-updated": HTMLCodeEditorUpdatedElement;
         "custom-table": HTMLCustomTableElement;
         "data-table": HTMLDataTableElement;
         "dialog-component": HTMLDialogComponentElement;
@@ -351,6 +371,7 @@ declare global {
         "multi-select": HTMLMultiSelectElement;
         "multi-selectt": HTMLMultiSelecttElement;
         "nav-bar": HTMLNavBarElement;
+        "node-item": HTMLNodeItemElement;
         "permission-editor": HTMLPermissionEditorElement;
         "plain-button": HTMLPlainButtonElement;
         "query-logs": HTMLQueryLogsElement;
@@ -370,6 +391,10 @@ declare namespace LocalJSX {
         "name"?: string;
     }
     interface CodeEditor {
+        "doc"?: any;
+        "url"?: string;
+    }
+    interface CodeEditorUpdated {
         "doc"?: any;
         "url"?: string;
     }
@@ -433,7 +458,7 @@ declare namespace LocalJSX {
         "userId"?: number;
     }
     interface MenuDropDown {
-        "list"?: number[];
+        "list"?: string[];
         "listTitle"?: string;
     }
     interface MenuItems {
@@ -453,6 +478,9 @@ declare namespace LocalJSX {
         "selected"?: string[];
     }
     interface NavBar {
+    }
+    interface NodeItem {
+        "navigators"?: any;
     }
     interface PermissionEditor {
         "fetchrole"?: string;
@@ -513,6 +541,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "check-box": CheckBox;
         "code-editor": CodeEditor;
+        "code-editor-updated": CodeEditorUpdated;
         "custom-table": CustomTable;
         "data-table": DataTable;
         "dialog-component": DialogComponent;
@@ -529,6 +558,7 @@ declare namespace LocalJSX {
         "multi-select": MultiSelect;
         "multi-selectt": MultiSelectt;
         "nav-bar": NavBar;
+        "node-item": NodeItem;
         "permission-editor": PermissionEditor;
         "plain-button": PlainButton;
         "query-logs": QueryLogs;
@@ -549,6 +579,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "check-box": LocalJSX.CheckBox & JSXBase.HTMLAttributes<HTMLCheckBoxElement>;
             "code-editor": LocalJSX.CodeEditor & JSXBase.HTMLAttributes<HTMLCodeEditorElement>;
+            "code-editor-updated": LocalJSX.CodeEditorUpdated & JSXBase.HTMLAttributes<HTMLCodeEditorUpdatedElement>;
             "custom-table": LocalJSX.CustomTable & JSXBase.HTMLAttributes<HTMLCustomTableElement>;
             "data-table": LocalJSX.DataTable & JSXBase.HTMLAttributes<HTMLDataTableElement>;
             "dialog-component": LocalJSX.DialogComponent & JSXBase.HTMLAttributes<HTMLDialogComponentElement>;
@@ -565,6 +596,7 @@ declare module "@stencil/core" {
             "multi-select": LocalJSX.MultiSelect & JSXBase.HTMLAttributes<HTMLMultiSelectElement>;
             "multi-selectt": LocalJSX.MultiSelectt & JSXBase.HTMLAttributes<HTMLMultiSelecttElement>;
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
+            "node-item": LocalJSX.NodeItem & JSXBase.HTMLAttributes<HTMLNodeItemElement>;
             "permission-editor": LocalJSX.PermissionEditor & JSXBase.HTMLAttributes<HTMLPermissionEditorElement>;
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
             "query-logs": LocalJSX.QueryLogs & JSXBase.HTMLAttributes<HTMLQueryLogsElement>;
