@@ -12,123 +12,123 @@ export class CodeEditorUpdated {
   @Prop() url: string;
   @Prop() doc: any = '\n\n\n';
   @State() response: any = [
-      {
-        organizationid: '1',
-        physicianid: '364046',
-        npi_id: '1912312547',
-        chronicconditionid: 'null',
-        physicianname: 'Summer  ',
-        contactid: 'null',
-        tenantid: '1',
-        physicianlastname: 'Jordan',
-        physicianidentifier: 'null'
-      },
-      {
-        organizationid: '1',
-        physicianid: '364053',
-        npi_id: '1164423687',
-        chronicconditionid: 'null',
-        physicianname: 'Albert ',
-        contactid: 'null',
-        tenantid: '1',
-        physicianlastname: 'Mcconnell',
-        physicianidentifier: 'null'
-      },
-      {
-        organizationid: '1',
-        physicianid: '364048',
-        npi_id: '1457716268',
-        chronicconditionid: 'null',
-        physicianname: 'Lana  ',
-        contactid: 'null',
-        tenantid: '1',
-        physicianlastname: 'Boyer',
-        physicianidentifier: 'null'
-      },
-      {
-        organizationid: '1',
-        physicianid: '364059',
-        npi_id: '1326035510',
-        chronicconditionid: 'null',
-        physicianname: 'Frank ',
-        contactid: 'null',
-        tenantid: '1',
-        physicianlastname: 'Barrera',
-        physicianidentifier: 'null'
-      },
-      {
-        organizationid: '1',
-        physicianid: '364062',
-        npi_id: '1851380257',
-        chronicconditionid: 'null',
-        physicianname: 'Addyson  ',
-        contactid: 'null',
-        tenantid: '1',
-        physicianlastname: 'Pennington',
-        physicianidentifier: 'null'
-      },
-      {
-        organizationid: '1',
-        physicianid: '364052',
-        npi_id: '1962966192',
-        chronicconditionid: 'null',
-        physicianname: 'Thomas',
-        contactid: 'null',
-        tenantid: '1',
-        physicianlastname: 'Declan',
-        physicianidentifier: 'null'
-      },
-      {
-        organizationid: '1',
-        physicianid: '364047',
-        npi_id: '1871907683',
-        chronicconditionid: 'null',
-        physicianname: 'Jude  ',
-        contactid: 'null',
-        tenantid: '1',
-        physicianlastname: 'Ingram',
-        physicianidentifier: 'null'
-      },
-      {
-        organizationid: '1',
-        physicianid: '364058',
-        npi_id: '1659365245',
-        chronicconditionid: 'null',
-        physicianname: 'Blake  ',
-        contactid: 'null',
-        tenantid: '1',
-        physicianlastname: 'Scott',
-        physicianidentifier: 'null'
-      },
-      {
-        organizationid: '1',
-        physicianid: '364055',
-        npi_id: '1891788139',
-        chronicconditionid: 'null',
-        physicianname: 'Abby  ',
-        contactid: 'null',
-        tenantid: '1',
-        physicianlastname: 'Burke',
-        physicianidentifier: 'null'
-      },
-      {
-        organizationid: '1',
-        physicianid: '364060',
-        npi_id: '1760986194',
-        chronicconditionid: 'null',
-        physicianname: 'Charlotte ',
-        contactid: 'null',
-        tenantid: '1',
-        physicianlastname: 'May',
-        physicianidentifier: 'null'
-      }
-    ];
-  @State() responseLabel: any = [ 'result' ];
+    {
+      organizationid: '1',
+      physicianid: '364046',
+      npi_id: '1912312547',
+      chronicconditionid: 'null',
+      physicianname: 'Summer  ',
+      contactid: 'null',
+      tenantid: '1',
+      physicianlastname: 'Jordan',
+      physicianidentifier: 'null',
+    },
+    {
+      organizationid: '1',
+      physicianid: '364053',
+      npi_id: '1164423687',
+      chronicconditionid: 'null',
+      physicianname: 'Albert ',
+      contactid: 'null',
+      tenantid: '1',
+      physicianlastname: 'Mcconnell',
+      physicianidentifier: 'null',
+    },
+    {
+      organizationid: '1',
+      physicianid: '364048',
+      npi_id: '1457716268',
+      chronicconditionid: 'null',
+      physicianname: 'Lana  ',
+      contactid: 'null',
+      tenantid: '1',
+      physicianlastname: 'Boyer',
+      physicianidentifier: 'null',
+    },
+    {
+      organizationid: '1',
+      physicianid: '364059',
+      npi_id: '1326035510',
+      chronicconditionid: 'null',
+      physicianname: 'Frank ',
+      contactid: 'null',
+      tenantid: '1',
+      physicianlastname: 'Barrera',
+      physicianidentifier: 'null',
+    },
+    {
+      organizationid: '1',
+      physicianid: '364062',
+      npi_id: '1851380257',
+      chronicconditionid: 'null',
+      physicianname: 'Addyson  ',
+      contactid: 'null',
+      tenantid: '1',
+      physicianlastname: 'Pennington',
+      physicianidentifier: 'null',
+    },
+    {
+      organizationid: '1',
+      physicianid: '364052',
+      npi_id: '1962966192',
+      chronicconditionid: 'null',
+      physicianname: 'Thomas',
+      contactid: 'null',
+      tenantid: '1',
+      physicianlastname: 'Declan',
+      physicianidentifier: 'null',
+    },
+    {
+      organizationid: '1',
+      physicianid: '364047',
+      npi_id: '1871907683',
+      chronicconditionid: 'null',
+      physicianname: 'Jude  ',
+      contactid: 'null',
+      tenantid: '1',
+      physicianlastname: 'Ingram',
+      physicianidentifier: 'null',
+    },
+    {
+      organizationid: '1',
+      physicianid: '364058',
+      npi_id: '1659365245',
+      chronicconditionid: 'null',
+      physicianname: 'Blake  ',
+      contactid: 'null',
+      tenantid: '1',
+      physicianlastname: 'Scott',
+      physicianidentifier: 'null',
+    },
+    {
+      organizationid: '1',
+      physicianid: '364055',
+      npi_id: '1891788139',
+      chronicconditionid: 'null',
+      physicianname: 'Abby  ',
+      contactid: 'null',
+      tenantid: '1',
+      physicianlastname: 'Burke',
+      physicianidentifier: 'null',
+    },
+    {
+      organizationid: '1',
+      physicianid: '364060',
+      npi_id: '1760986194',
+      chronicconditionid: 'null',
+      physicianname: 'Charlotte ',
+      contactid: 'null',
+      tenantid: '1',
+      physicianlastname: 'May',
+      physicianidentifier: 'null',
+    },
+  ];
+  @State() responseLabel: any = ['result'];
   @State() view: EditorView;
   @State() state: EditorState;
   @State() isLoading = false;
+  @State() headerList: {}[] = [];
   @Element() element: HTMLElement;
-
 
   componentDidLoad() {
     this.state = EditorState.create({
@@ -145,6 +145,29 @@ export class CodeEditorUpdated {
       state: this.state,
       parent: this.element.querySelector('#editor'),
     });
+    // console.log('this is response label', this.responseLabel);
+    // console.log('This sis response', this.response);
+
+    let allKeys = [];
+    this.response.map(obj => {
+      let keys = Object.keys(obj);
+      allKeys = [...new Set([...allKeys, ...keys])];
+    });
+    // console.log('This is the all keys in the array of Object', allKeys);
+    allKeys.map(key=>{
+      let obj = {};
+      obj['title'] = key;
+      obj["filter"] = {
+          searchable: true,
+          sortable: true,
+      };
+      obj["alias"] = key;
+      obj["click"] = {
+          clickable: false,
+      };
+      this.headerList.push(obj);
+  })
+  // console.log(this.headerList);
   }
 
   clickHandler() {
@@ -203,8 +226,9 @@ export class CodeEditorUpdated {
             <loader-component></loader-component>
           </div>
         )}
-        {this.response && !this.isLoading && <tab-component responseLabel={this.responseLabel} doc={this.response}></tab-component>}
-       </Host>
+        {/* {this.response && !this.isLoading && <tab-component-updated responseLabel={this.responseLabel} doc={this.response}></tab-component-updated>} */}
+        {this.response && !this.isLoading && <editor-res headerList={this.headerList}></editor-res>}
+      </Host>
     );
   }
 }

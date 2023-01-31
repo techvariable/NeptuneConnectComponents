@@ -9,6 +9,9 @@ export namespace Components {
     interface CheckBox {
         "name": string;
     }
+    interface ChipsList {
+        "selected": string[];
+    }
     interface CodeEditor {
         "doc": any;
         "url": string;
@@ -36,6 +39,9 @@ export namespace Components {
     interface DataTable {
         "doc": object[];
     }
+    interface DataTableUpdated {
+        "doc": object[];
+    }
     interface DialogComponent {
         "url": string;
     }
@@ -51,6 +57,9 @@ export namespace Components {
         "url": string;
         "userid": number;
         "value": string;
+    }
+    interface EditorRes {
+        "headerList": any;
     }
     interface FluidContainer {
     }
@@ -133,7 +142,17 @@ export namespace Components {
         "doc": any;
         "responseLabel": any;
     }
+    interface TabComponentUpdated {
+        "doc": any;
+        "responseLabel": any;
+    }
     interface TableWrapper {
+        "api": any;
+        "autocompute": boolean;
+        "headerList": object[];
+        "rowPerPage": number[];
+    }
+    interface TableWrapperUpdated {
         "api": any;
         "autocompute": boolean;
         "headerList": object[];
@@ -165,6 +184,12 @@ declare global {
         prototype: HTMLCheckBoxElement;
         new (): HTMLCheckBoxElement;
     };
+    interface HTMLChipsListElement extends Components.ChipsList, HTMLStencilElement {
+    }
+    var HTMLChipsListElement: {
+        prototype: HTMLChipsListElement;
+        new (): HTMLChipsListElement;
+    };
     interface HTMLCodeEditorElement extends Components.CodeEditor, HTMLStencilElement {
     }
     var HTMLCodeEditorElement: {
@@ -189,6 +214,12 @@ declare global {
         prototype: HTMLDataTableElement;
         new (): HTMLDataTableElement;
     };
+    interface HTMLDataTableUpdatedElement extends Components.DataTableUpdated, HTMLStencilElement {
+    }
+    var HTMLDataTableUpdatedElement: {
+        prototype: HTMLDataTableUpdatedElement;
+        new (): HTMLDataTableUpdatedElement;
+    };
     interface HTMLDialogComponentElement extends Components.DialogComponent, HTMLStencilElement {
     }
     var HTMLDialogComponentElement: {
@@ -206,6 +237,12 @@ declare global {
     var HTMLEditUserElement: {
         prototype: HTMLEditUserElement;
         new (): HTMLEditUserElement;
+    };
+    interface HTMLEditorResElement extends Components.EditorRes, HTMLStencilElement {
+    }
+    var HTMLEditorResElement: {
+        prototype: HTMLEditorResElement;
+        new (): HTMLEditorResElement;
     };
     interface HTMLFluidContainerElement extends Components.FluidContainer, HTMLStencilElement {
     }
@@ -327,11 +364,23 @@ declare global {
         prototype: HTMLTabComponentElement;
         new (): HTMLTabComponentElement;
     };
+    interface HTMLTabComponentUpdatedElement extends Components.TabComponentUpdated, HTMLStencilElement {
+    }
+    var HTMLTabComponentUpdatedElement: {
+        prototype: HTMLTabComponentUpdatedElement;
+        new (): HTMLTabComponentUpdatedElement;
+    };
     interface HTMLTableWrapperElement extends Components.TableWrapper, HTMLStencilElement {
     }
     var HTMLTableWrapperElement: {
         prototype: HTMLTableWrapperElement;
         new (): HTMLTableWrapperElement;
+    };
+    interface HTMLTableWrapperUpdatedElement extends Components.TableWrapperUpdated, HTMLStencilElement {
+    }
+    var HTMLTableWrapperUpdatedElement: {
+        prototype: HTMLTableWrapperUpdatedElement;
+        new (): HTMLTableWrapperUpdatedElement;
     };
     interface HTMLTextFieldElement extends Components.TextField, HTMLStencilElement {
     }
@@ -353,13 +402,16 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "check-box": HTMLCheckBoxElement;
+        "chips-list": HTMLChipsListElement;
         "code-editor": HTMLCodeEditorElement;
         "code-editor-updated": HTMLCodeEditorUpdatedElement;
         "custom-table": HTMLCustomTableElement;
         "data-table": HTMLDataTableElement;
+        "data-table-updated": HTMLDataTableUpdatedElement;
         "dialog-component": HTMLDialogComponentElement;
         "drop-down": HTMLDropDownElement;
         "edit-user": HTMLEditUserElement;
+        "editor-res": HTMLEditorResElement;
         "fluid-container": HTMLFluidContainerElement;
         "icon-button": HTMLIconButtonElement;
         "invite-component": HTMLInviteComponentElement;
@@ -380,7 +432,9 @@ declare global {
         "settings-navigator": HTMLSettingsNavigatorElement;
         "side-bar": HTMLSideBarElement;
         "tab-component": HTMLTabComponentElement;
+        "tab-component-updated": HTMLTabComponentUpdatedElement;
         "table-wrapper": HTMLTableWrapperElement;
+        "table-wrapper-updated": HTMLTableWrapperUpdatedElement;
         "text-field": HTMLTextFieldElement;
         "text-field-area": HTMLTextFieldAreaElement;
         "users-component": HTMLUsersComponentElement;
@@ -389,6 +443,9 @@ declare global {
 declare namespace LocalJSX {
     interface CheckBox {
         "name"?: string;
+    }
+    interface ChipsList {
+        "selected"?: string[];
     }
     interface CodeEditor {
         "doc"?: any;
@@ -417,6 +474,9 @@ declare namespace LocalJSX {
     interface DataTable {
         "doc"?: object[];
     }
+    interface DataTableUpdated {
+        "doc"?: object[];
+    }
     interface DialogComponent {
         "url"?: string;
     }
@@ -432,6 +492,9 @@ declare namespace LocalJSX {
         "url"?: string;
         "userid"?: number;
         "value"?: string;
+    }
+    interface EditorRes {
+        "headerList"?: any;
     }
     interface FluidContainer {
     }
@@ -514,7 +577,17 @@ declare namespace LocalJSX {
         "doc"?: any;
         "responseLabel"?: any;
     }
+    interface TabComponentUpdated {
+        "doc"?: any;
+        "responseLabel"?: any;
+    }
     interface TableWrapper {
+        "api"?: any;
+        "autocompute"?: boolean;
+        "headerList"?: object[];
+        "rowPerPage"?: number[];
+    }
+    interface TableWrapperUpdated {
         "api"?: any;
         "autocompute"?: boolean;
         "headerList"?: object[];
@@ -540,13 +613,16 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "check-box": CheckBox;
+        "chips-list": ChipsList;
         "code-editor": CodeEditor;
         "code-editor-updated": CodeEditorUpdated;
         "custom-table": CustomTable;
         "data-table": DataTable;
+        "data-table-updated": DataTableUpdated;
         "dialog-component": DialogComponent;
         "drop-down": DropDown;
         "edit-user": EditUser;
+        "editor-res": EditorRes;
         "fluid-container": FluidContainer;
         "icon-button": IconButton;
         "invite-component": InviteComponent;
@@ -567,7 +643,9 @@ declare namespace LocalJSX {
         "settings-navigator": SettingsNavigator;
         "side-bar": SideBar;
         "tab-component": TabComponent;
+        "tab-component-updated": TabComponentUpdated;
         "table-wrapper": TableWrapper;
+        "table-wrapper-updated": TableWrapperUpdated;
         "text-field": TextField;
         "text-field-area": TextFieldArea;
         "users-component": UsersComponent;
@@ -578,13 +656,16 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "check-box": LocalJSX.CheckBox & JSXBase.HTMLAttributes<HTMLCheckBoxElement>;
+            "chips-list": LocalJSX.ChipsList & JSXBase.HTMLAttributes<HTMLChipsListElement>;
             "code-editor": LocalJSX.CodeEditor & JSXBase.HTMLAttributes<HTMLCodeEditorElement>;
             "code-editor-updated": LocalJSX.CodeEditorUpdated & JSXBase.HTMLAttributes<HTMLCodeEditorUpdatedElement>;
             "custom-table": LocalJSX.CustomTable & JSXBase.HTMLAttributes<HTMLCustomTableElement>;
             "data-table": LocalJSX.DataTable & JSXBase.HTMLAttributes<HTMLDataTableElement>;
+            "data-table-updated": LocalJSX.DataTableUpdated & JSXBase.HTMLAttributes<HTMLDataTableUpdatedElement>;
             "dialog-component": LocalJSX.DialogComponent & JSXBase.HTMLAttributes<HTMLDialogComponentElement>;
             "drop-down": LocalJSX.DropDown & JSXBase.HTMLAttributes<HTMLDropDownElement>;
             "edit-user": LocalJSX.EditUser & JSXBase.HTMLAttributes<HTMLEditUserElement>;
+            "editor-res": LocalJSX.EditorRes & JSXBase.HTMLAttributes<HTMLEditorResElement>;
             "fluid-container": LocalJSX.FluidContainer & JSXBase.HTMLAttributes<HTMLFluidContainerElement>;
             "icon-button": LocalJSX.IconButton & JSXBase.HTMLAttributes<HTMLIconButtonElement>;
             "invite-component": LocalJSX.InviteComponent & JSXBase.HTMLAttributes<HTMLInviteComponentElement>;
@@ -605,7 +686,9 @@ declare module "@stencil/core" {
             "settings-navigator": LocalJSX.SettingsNavigator & JSXBase.HTMLAttributes<HTMLSettingsNavigatorElement>;
             "side-bar": LocalJSX.SideBar & JSXBase.HTMLAttributes<HTMLSideBarElement>;
             "tab-component": LocalJSX.TabComponent & JSXBase.HTMLAttributes<HTMLTabComponentElement>;
+            "tab-component-updated": LocalJSX.TabComponentUpdated & JSXBase.HTMLAttributes<HTMLTabComponentUpdatedElement>;
             "table-wrapper": LocalJSX.TableWrapper & JSXBase.HTMLAttributes<HTMLTableWrapperElement>;
+            "table-wrapper-updated": LocalJSX.TableWrapperUpdated & JSXBase.HTMLAttributes<HTMLTableWrapperUpdatedElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
             "text-field-area": LocalJSX.TextFieldArea & JSXBase.HTMLAttributes<HTMLTextFieldAreaElement>;
             "users-component": LocalJSX.UsersComponent & JSXBase.HTMLAttributes<HTMLUsersComponentElement>;

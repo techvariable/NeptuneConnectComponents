@@ -19,12 +19,14 @@
 
  - [permission-editor](../permission-editor)
  - [tab-component](../tab-component)
+ - [tab-component-updated](../tab-component-updated)
 
 ### Graph
 ```mermaid
 graph TD;
   permission-editor --> res-editor
   tab-component --> res-editor
+  tab-component-updated --> res-editor
   style res-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

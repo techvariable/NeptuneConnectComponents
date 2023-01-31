@@ -30,6 +30,7 @@
 ### Used by
 
  - [table-wrapper](../table-wrapper)
+ - [table-wrapper-updated](../table-wrapper-updated)
 
 ### Depends on
 
@@ -44,6 +45,7 @@ graph TD;
   custom-table --> loader-component
   custom-table --> plain-button
   table-wrapper --> custom-table
+  table-wrapper-updated --> custom-table
   style custom-table fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

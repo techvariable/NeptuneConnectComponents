@@ -1,4 +1,4 @@
-# tab-component
+# tab-component-updated
 
 
 
@@ -15,23 +15,18 @@
 
 ## Dependencies
 
-### Used by
-
- - [code-editor](../code-editor)
-
 ### Depends on
 
 - [res-editor](../res-editor)
-- [data-table](../data-table)
+- [data-table-updated](../data-table-updated)
 
 ### Graph
 ```mermaid
 graph TD;
-  tab-component --> res-editor
-  tab-component --> data-table
-  data-table --> plain-button
-  code-editor --> tab-component
-  style tab-component fill:#f9f,stroke:#333,stroke-width:4px
+  tab-component-updated --> res-editor
+  tab-component-updated --> data-table-updated
+  data-table-updated --> plain-button
+  style tab-component-updated fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

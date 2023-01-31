@@ -6,7 +6,7 @@ import axios from 'axios';
   scoped: true,
 })
 export class queryLogs {
-  @State() component: boolean = false;
+  // @State() component: boolean = false;
   @State() headerList = [
     {
       title: 'id',
@@ -123,7 +123,6 @@ export class queryLogs {
     // const result = await axios.get(`/api/query-logs?${filterPar}`);
 
     const result = await axios.get(`http://localhost:3000/api/query-logs?${filterPar}`);
-
     return {
       total: result.headers['x-total-count'],
       data: result.data,

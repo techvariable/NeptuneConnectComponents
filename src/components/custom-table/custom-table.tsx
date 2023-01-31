@@ -48,6 +48,10 @@ export class CustomTable {
     }
   }
 
+  componentWillLoad(){
+    console.log("tableHeader in table",this.tableHeader);
+  }
+
   render() {
     const trList = [];
     for (let i = 1; i < this.rows[0]; i++) {
@@ -59,7 +63,7 @@ export class CustomTable {
     }
 
     return (
-      <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative">
+      <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative  overflow-scroll">
         {/* Table Head */}
         <thead class="bg-violet-50 sticky top-0">
           <tr>
@@ -103,7 +107,7 @@ export class CustomTable {
           {this.tableBody &&
             !this.isLoading &&
             !this.isLoadingError &&
-            this.tableBody.map((item: any) => (
+            (this.tableBody).map((item: any) => (
               <tr class="hover:bg-gray-100 transition">
                 {this.tableHeader.map((id: any) => (
                   // <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item[id.alias]}</td>
