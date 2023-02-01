@@ -12,7 +12,7 @@ export class PermissionEditor {
   @Prop() url: string;
   @Prop() fetchrole: string;
   @State() user: String;
-  @State() roleId: Number;
+  @State() roleId: Number =1;
   @State() response: any;
   @State() responseLabel: any;
   @State() view: EditorView;
