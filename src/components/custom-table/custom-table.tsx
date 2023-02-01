@@ -70,7 +70,6 @@ export class CustomTable {
             {this.tableHeader.map((item: any) => (
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 uppercase tracking-wider">
                 {item.title}
-
                 {item?.filter?.sortable && (
                   <button class="ml-3" onClick={() => this.toggleSortMethod(item.title)}>
                     {sort}

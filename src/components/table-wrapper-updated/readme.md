@@ -23,11 +23,13 @@
 
 ### Depends on
 
+- [chips-list](../chips-list)
 - [custom-table](../custom-table)
 
 ### Graph
 ```mermaid
 graph TD;
+  table-wrapper-updated --> chips-list
   table-wrapper-updated --> custom-table
   custom-table --> drop-down
   custom-table --> loader-component

@@ -10,7 +10,11 @@ export namespace Components {
         "name": string;
     }
     interface ChipsList {
-        "selected": string[];
+        "removeSearchChip": any;
+        "removeSortChip": any;
+        "searchChips": {};
+        "sortchips": {};
+        "togglesort": any;
     }
     interface CodeEditor {
         "doc": any;
@@ -445,7 +449,11 @@ declare namespace LocalJSX {
         "name"?: string;
     }
     interface ChipsList {
-        "selected"?: string[];
+        "removeSearchChip"?: any;
+        "removeSortChip"?: any;
+        "searchChips"?: {};
+        "sortchips"?: {};
+        "togglesort"?: any;
     }
     interface CodeEditor {
         "doc"?: any;

@@ -227,7 +227,9 @@ export class CodeEditorUpdated {
           </div>
         )}
         {/* {this.response && !this.isLoading && <tab-component-updated responseLabel={this.responseLabel} doc={this.response}></tab-component-updated>} */}
+        {/* <div style={{overflow:"scroll"}}> */}
         {this.response && !this.isLoading && <editor-res headerList={this.headerList}></editor-res>}
+        {/* </div> */}
       </Host>
     );
   }

@@ -26,6 +26,7 @@
 ```mermaid
 graph TD;
   editor-res --> table-wrapper-updated
+  table-wrapper-updated --> chips-list
   table-wrapper-updated --> custom-table
   custom-table --> drop-down
   custom-table --> loader-component
