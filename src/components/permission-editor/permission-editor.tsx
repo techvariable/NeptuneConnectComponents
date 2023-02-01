@@ -36,7 +36,7 @@ export class PermissionEditor {
       .get(`${this.url}/?roleId=${this.roleId}`)
       .then((res: any) => {
         let transaction = this.view.state.update({ changes: { from: 0, insert: `${JSON.stringify(res.data)}` }});
-        console.log(transaction.state.doc.toString());
+        // console.log(transaction.state.doc.toString());
         this.view.dispatch(transaction);
       })
       .catch(err => {
@@ -63,7 +63,7 @@ export class PermissionEditor {
       .then((res: any) => {
         this.doc = res.data;
         let transaction = this.view.state.update({ changes: { from: 0, insert: `${JSON.stringify(res.data)}` } });
-        console.log(transaction.state.doc.toString());
+        // console.log(transaction.state.doc.toString());
         this.view.dispatch(transaction);
       })
       .catch(err => {
