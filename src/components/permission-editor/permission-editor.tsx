@@ -159,8 +159,9 @@ export class PermissionEditor {
               <p>{this.resStatus}</p>
             </div>
           )}
-          <div class="mx-4">{this.isLoading && <loader-component></loader-component>}</div>
-          <div class="flex">
+
+          <div class="flex justify-between">
+            <div>
             <button
               title="Ctrl+Shift+Enter to run"
               onClick={() => this.onRoleUpdateClick()}
@@ -169,6 +170,9 @@ export class PermissionEditor {
             >
               Update
             </button>
+            </div>
+            <div class="mx-4">{this.isLoading && <loader-component></loader-component>}</div>
+            <div></div>
           </div>
         </div>
       </Host>
