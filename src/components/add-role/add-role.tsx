@@ -16,37 +16,32 @@ export class AddRole {
     this.isModalOpen = !this.isModalOpen;
   }
 
-  handleSubmit(e) {
+  async handlenewRoleSumit(e) {
     e.preventDefault();
-
-    axios
-      .post(this.url, {
+    try {
+      await axios.post(this.url, {
         roleName: this.value,
         permissions:"{\n  \"editor\":{\n    \"read\":true,\n    \"write\":true,\n    \"update\":true,\n    \"delete\":true \n  }\n}",
-      })
-      .then(res => {
-        if (res.status === 201) {
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            text: 'Added new role!',
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
-        });
       });
-    
-    this.value = '';
-    this.toggleModalState();
-    this.refresh();
+
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        text: 'Added new role!',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      this.value = '';
+      this.toggleModalState();
+      this.refresh();
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      });
+    }
   }
 
   handleChange(event) {
@@ -67,7 +62,7 @@ export class AddRole {
 
         {/* Main Modal */}
         {this.isModalOpen && (
-          <form onSubmit={e => this.handleSubmit(e)} class="pt-6 space-y-3" action="/invite">
+          <form onSubmit={e => this.handlenewRoleSumit(e)} class="pt-6 space-y-3" action="/invite">
             <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
               <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>

@@ -63,7 +63,7 @@ export class EditUser {
   }
 
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
 
     let selectedRoles = [];
@@ -72,41 +72,74 @@ export class EditUser {
         selectedRoles.push(Number(item.value));
       }
     }
-    
-    axios
+
+    try {
+      await axios
       .put(this.submiturl, {
         userId: this.userid,
         roles: selectedRoles,
-      })
-      .then(res => {
-        if (res.status === 200) {
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            text: 'Roles updated successfully!',
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          for(let role of this.rolesobj){
-            if(selectedRoles.includes(role["id"])){
-              role['selected'] = true;
-            }else{
-              role['selected'] = false;
-            }
-          }
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
-        });
       });
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        text: 'Roles updated successfully!',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      for(let role of this.rolesobj){
+        if(selectedRoles.includes(role["id"])){
+          role['selected'] = true;
+        }else{
+          role['selected'] = false;
+        }
+      }
+      this.value = '';
+      this.toggle();
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      });
+    }
+    
 
-    this.value = '';
-    this.toggle();
+
+    
+    // axios
+    //   .put(this.submiturl, {
+    //     userId: this.userid,
+    //     roles: selectedRoles,
+    //   })
+    //   .then(res => {
+    //     if (res.status === 200) {
+    //       Swal.fire({
+    //         position: 'center',
+    //         icon: 'success',
+    //         text: 'Roles updated successfully!',
+    //         showConfirmButton: false,
+    //         timer: 1500,
+    //       });
+    //       for(let role of this.rolesobj){
+    //         if(selectedRoles.includes(role["id"])){
+    //           role['selected'] = true;
+    //         }else{
+    //           role['selected'] = false;
+    //         }
+    //       }
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //     Swal.fire({
+    //       icon: 'error',
+    //       title: 'Oops...',
+    //       text: 'Something went wrong!',
+    //     });
+    //   });
+
+    // this.value = '';
+    // this.toggle();
   }
 
   handleChange(event) {
@@ -139,7 +172,7 @@ export class EditUser {
                       </div>
                       <div class="mt-3 text-center sm:mt-0 sm:ml-4 p-4 sm:text-left flex-grow">
                         <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                          Edit Permissions
+                          Edit User
                         </h3>
                         <div class="mt-2">
                           <p class="text-md text-gray-500 mb-4">Enter email of the user.</p>
