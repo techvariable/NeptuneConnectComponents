@@ -99,47 +99,11 @@ export class EditUser {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Something went wrong!',
+        text: error.response.data.message,
       });
+      this.value = '';
+      this.toggle();
     }
-    
-
-
-    
-    // axios
-    //   .put(this.submiturl, {
-    //     userId: this.userid,
-    //     roles: selectedRoles,
-    //   })
-    //   .then(res => {
-    //     if (res.status === 200) {
-    //       Swal.fire({
-    //         position: 'center',
-    //         icon: 'success',
-    //         text: 'Roles updated successfully!',
-    //         showConfirmButton: false,
-    //         timer: 1500,
-    //       });
-    //       for(let role of this.rolesobj){
-    //         if(selectedRoles.includes(role["id"])){
-    //           role['selected'] = true;
-    //         }else{
-    //           role['selected'] = false;
-    //         }
-    //       }
-    //     }
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //     Swal.fire({
-    //       icon: 'error',
-    //       title: 'Oops...',
-    //       text: 'Something went wrong!',
-    //     });
-    //   });
-
-    // this.value = '';
-    // this.toggle();
   }
 
   handleChange(event) {
