@@ -110,7 +110,7 @@ export class PermissionEditor {
         })
         .catch(err => {
           this.isLoading = false;
-          this.errorMessage = `Permissions for role id ${this.roleId} could not be updated`;
+          this.errorMessage = err.response.data.message
           console.log(err);
         });
     } else {
