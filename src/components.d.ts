@@ -6,6 +6,10 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface AddRole {
+        "refresh": any;
+        "url": string;
+    }
     interface CheckBox {
         "name": string;
     }
@@ -95,7 +99,7 @@ export namespace Components {
     interface NavBar {
     }
     interface PermissionEditor {
-        "fetchrole": string;
+        "rolesurl": string;
         "url": string;
     }
     interface PlainButton {
@@ -152,6 +156,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLAddRoleElement extends Components.AddRole, HTMLStencilElement {
+    }
+    var HTMLAddRoleElement: {
+        prototype: HTMLAddRoleElement;
+        new (): HTMLAddRoleElement;
+    };
     interface HTMLCheckBoxElement extends Components.CheckBox, HTMLStencilElement {
     }
     var HTMLCheckBoxElement: {
@@ -333,6 +343,7 @@ declare global {
         new (): HTMLUsersComponentElement;
     };
     interface HTMLElementTagNameMap {
+        "add-role": HTMLAddRoleElement;
         "check-box": HTMLCheckBoxElement;
         "code-editor": HTMLCodeEditorElement;
         "custom-table": HTMLCustomTableElement;
@@ -366,6 +377,10 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface AddRole {
+        "refresh"?: any;
+        "url"?: string;
+    }
     interface CheckBox {
         "name"?: string;
     }
@@ -455,7 +470,7 @@ declare namespace LocalJSX {
     interface NavBar {
     }
     interface PermissionEditor {
-        "fetchrole"?: string;
+        "rolesurl"?: string;
         "url"?: string;
     }
     interface PlainButton {
@@ -511,6 +526,7 @@ declare namespace LocalJSX {
         "users"?: any;
     }
     interface IntrinsicElements {
+        "add-role": AddRole;
         "check-box": CheckBox;
         "code-editor": CodeEditor;
         "custom-table": CustomTable;
@@ -547,6 +563,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "add-role": LocalJSX.AddRole & JSXBase.HTMLAttributes<HTMLAddRoleElement>;
             "check-box": LocalJSX.CheckBox & JSXBase.HTMLAttributes<HTMLCheckBoxElement>;
             "code-editor": LocalJSX.CodeEditor & JSXBase.HTMLAttributes<HTMLCodeEditorElement>;
             "custom-table": LocalJSX.CustomTable & JSXBase.HTMLAttributes<HTMLCustomTableElement>;
