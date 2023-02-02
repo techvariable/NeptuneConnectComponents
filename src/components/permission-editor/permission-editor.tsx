@@ -89,6 +89,7 @@ export class PermissionEditor {
   }
 
   onRoleUpdateClick() {
+    this.errorMessage = '';
     let transaction = this.view.state.update();
     this.view.dispatch(transaction);
     const { isValid, error } = isValidPermissionJson(String(transaction.state.doc));
@@ -110,8 +111,8 @@ export class PermissionEditor {
         })
         .catch(err => {
           this.isLoading = false;
-          this.errorMessage = err.response.data.message
-          console.log(err);
+          this.errorMessage = err.response.data.message;
+          // console.log(err);
         });
     } else {
       this.errorMessage = error;
@@ -158,17 +159,16 @@ export class PermissionEditor {
               <p>{this.resStatus}</p>
             </div>
           )}
-
+          <div class="mx-4">{this.isLoading && <loader-component></loader-component>}</div>
           <div class="flex">
             <button
               title="Ctrl+Shift+Enter to run"
               onClick={() => this.onRoleUpdateClick()}
               disabled={this.isLoading}
-              class="mr-1 flex text-sm gap-2 items-center justify-center text-gray-600 border border-gray-300 px-3 py-2 hover:bg-gray-200 hover:text-gray-800 "
+              class="mr-1 flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 hover:bg-gray-200 hover:text-gray-800 "
             >
               Update
             </button>
-            {this.isLoading && <loader-component></loader-component>}
           </div>
         </div>
       </Host>
