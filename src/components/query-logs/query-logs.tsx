@@ -122,7 +122,7 @@ export class queryLogs {
     // console.log(filterPar);
     // const result = await axios.get(`/api/query-logs?${filterPar}`);
 
-    const result = await axios.get(`http://localhost:3000/api/query-logs?${filterPar}`);
+    const result = await axios.get(`http://localhost:3000/api/query/logs?${filterPar}`);
 
     return {
       total: result.headers['x-total-count'],

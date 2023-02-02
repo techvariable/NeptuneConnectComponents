@@ -14,7 +14,7 @@ export class PermissionEditor {
   @State() user: String;
   @State() roleId: Number =1;
   @State() response: any;
-  @State() responseLabel: any;
+  @State() responseLabel: any="";
   @State() view: EditorView;
   @State() state: EditorState;
   @State() isLoading = false;
@@ -36,7 +36,7 @@ export class PermissionEditor {
       .get(`${this.url}/?roleId=${this.roleId}`)
       .then((res: any) => {
         let transaction = this.view.state.update({ changes: { from: 0, insert: `${JSON.stringify(res.data)}` } });
-        console.log(transaction.state.doc.toString());
+        // console.log(transaction.state.doc.toString());
         this.view.dispatch(transaction);
       })
       .catch(err => {
@@ -63,8 +63,9 @@ export class PermissionEditor {
       .then((res: any) => {
         this.doc = res.data;
         let transaction = this.view.state.update({ changes: { from: 0, insert: `${JSON.stringify(res.data)}` } });
-        console.log(transaction.state.doc.toString());
+        // console.log(transaction.state.doc.toString());
         this.view.dispatch(transaction);
+        this.user=this.rolesObj[0]["roleName"]
       })
       .catch(err => {
         console.log(err);
@@ -92,19 +93,16 @@ export class PermissionEditor {
     let transaction = this.view.state.update();
     this.view.dispatch(transaction);
     const { isValid, error } = isValidPermissionJson(String(transaction.state.doc));
-    // console.log('Is a JSON ==>', isValid, error);
     if (isValid) {
       this.isLoading = true;
       this.errorMessage = '';
       this.doc = transaction.state.doc;
-      // const permission = this.doc.text.join().split(',').join('\n');
       const permissions = this.doc.text.join('');
       // axios call
       axios
         .put(this.url, {
           permissions,
           roleId: this.roleId,
-          // user,
         })
         .then((res: any) => {
           this.responseLabel = 'result';
@@ -113,12 +111,14 @@ export class PermissionEditor {
           this.resStatus=`Permissions for ${this.user} updated successfully`;
         })
         .catch(err => {
+          this.responseLabel = 'error';
+          this.isLoading = false;
           this.resStatus=`Permissions for ${this.user} could not be updated`;
           console.log(err)
         });
     } else {
+      this.responseLabel = 'error';
       this.errorMessage = error;
-      // console.log(this.errorMessage);
     }
   }
 
