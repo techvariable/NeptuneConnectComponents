@@ -29,7 +29,6 @@ export class TableSearchModal {
 
   clearFields(){
     this.value="";
-    this.alias="";
     this.selectedSearchOption="";
     this.selectedTextSearchOption="";
     this.selectedNumberSearchOption="";
