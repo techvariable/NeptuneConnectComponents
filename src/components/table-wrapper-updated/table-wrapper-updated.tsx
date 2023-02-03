@@ -27,16 +27,35 @@ export class TableWrapperUpdated {
   @State() search: object;
   @State() sortchips: {} = {};
   @State() searchChips: {} = {};
+
+  clearSearch(colName) {
+    console.log("This is search object",this.search);
+    if (Object.keys(this.search).length >= 1) {
+      let keys = Object.keys(this.search);
+      if (keys.includes(colName)) {
+        const temp = {...this.search};
+        delete temp[colName];
+        // delete this.search[colName];
+        this.search=temp;
+      }
+    }
+    this.fetchData();
+  }
+
   removeSortChip =(item)=> {
     const temp = { ...this.sortchips };
     delete temp[item];
     this.sortchips = temp;
     this.clearSortMethod(item);
   }
-  removeSearchChip (item) {
+  removeSearchChip = (item) => {
+    console.log("Removing....",item);
+    console.log(this.searchChips);
     const temp = { ...this.searchChips };
     delete temp[item];
     this.searchChips = temp;
+    console.log("updated search chips",this.searchChips);
+    console.log({ad: this.searchChips})
     this.clearSearch(item);
   }
 
@@ -86,15 +105,6 @@ export class TableWrapperUpdated {
     this.fetchData();
   }
 
-  clearSearch(colName) {
-    if (Object.keys(this.search).length >= 1) {
-      let keys = Object.keys(this.search);
-      if (keys.includes(colName)) {
-        delete this.search[colName];
-      }
-    }
-    this.fetchData();
-  }
 
   nextPage() {
     ++this.page;
@@ -127,21 +137,30 @@ export class TableWrapperUpdated {
     this.fetchData();
   }
 
-  searchMethod(searchValue: string, colName: string) {
+  searchMethod(searchValue: string, colName: string, searchOption:string, textSearchOption:string, numberSearchOption:string) {
+    console.log("This is values========================> in search submit",searchValue,colName,searchOption,textSearchOption,numberSearchOption, this.searchChips);
     if (this.search) {
-      this.search[colName] = searchValue;
+      this.search[colName] = [searchValue,textSearchOption,numberSearchOption];
     } else {
-      this.search = [];
-      this.search[colName] = searchValue;
+      this.search = {};
+      this.search[colName] = [searchValue,textSearchOption,numberSearchOption];
     }
+    console.log("saerched upadted in adding==================*****>",this.search)
     this.fetchData();
     const temp = { ...this.searchChips };
-    temp[colName] = [searchValue, 'exact'];
+    console.log(this.searchChips);
+    if(searchOption==='text'){
+      temp[colName] = [searchValue, textSearchOption];
+    }else{
+      temp[colName] = [searchValue, numberSearchOption];
+    }
+    
     this.searchChips = temp;
   }
 
+
   render() {
-    console.log(this.total, this.data);
+    console.log("asdfghjkljhgfwerfghj",this.searchChips);
     return (
       <Host>
         <chips-list
@@ -165,7 +184,7 @@ export class TableWrapperUpdated {
             rows={this.rowPerPage}
             rowsHandler={e => this.rowsHandler(e)}
             toggleSortMethod={id => this.toggleSortMethod(id)}
-            searchMethod={(value, field) => this.searchMethod(value, field)}
+            searchMethod={(value, field,searchOption,textSearchOption,numberSearchOption) => this.searchMethod(value, field,searchOption,textSearchOption,numberSearchOption)}
             clearSearch={colName => this.clearSearch(colName)}
           ></custom-table>
         </div>

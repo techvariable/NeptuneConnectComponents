@@ -30,9 +30,10 @@
 ```mermaid
 graph TD;
   table-wrapper --> custom-table
-  custom-table --> drop-down
+  custom-table --> table-search-modal
   custom-table --> loader-component
   custom-table --> plain-button
+  table-search-modal --> radio-button-multiple
   main-component --> table-wrapper
   query-logs --> table-wrapper
   style table-wrapper fill:#f9f,stroke:#333,stroke-width:4px

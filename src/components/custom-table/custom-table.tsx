@@ -77,9 +77,10 @@ export class CustomTable {
                 )}
 
                 {item?.filter?.searchable && (
-                  <drop-down searchMethod={(value, field) => this.searchMethod(value, field)} alias={item.alias} clearSearch={colName => this.clearSearch(colName)}>
-                    {search}
-                  </drop-down>
+                  // <drop-down searchMethod={(value, field) => this.searchMethod(value, field)} alias={item.alias} clearSearch={colName => this.clearSearch(colName)}>
+                  //   {search}
+                  // </drop-down>
+                  <table-search-modal searchMethod={(value, field, searchoption, textsearchoption, numbersearchoption ) => this.searchMethod(value, field, searchoption, textsearchoption, numbersearchoption )} alias={item.alias} clearSearch={colName => this.clearSearch(colName)} icon={search}></table-search-modal>
                 )}
               </th>
             ))}

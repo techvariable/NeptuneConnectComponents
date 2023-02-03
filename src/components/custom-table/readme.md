@@ -34,16 +34,17 @@
 
 ### Depends on
 
-- [drop-down](../drop-down)
+- [table-search-modal](../table-search-modal)
 - [loader-component](../loader-component)
 - [plain-button](../plain-button)
 
 ### Graph
 ```mermaid
 graph TD;
-  custom-table --> drop-down
+  custom-table --> table-search-modal
   custom-table --> loader-component
   custom-table --> plain-button
+  table-search-modal --> radio-button-multiple
   table-wrapper --> custom-table
   table-wrapper-updated --> custom-table
   style custom-table fill:#f9f,stroke:#333,stroke-width:4px

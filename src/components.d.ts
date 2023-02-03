@@ -133,6 +133,12 @@ export namespace Components {
         "align": 'vertical' | 'horizontal';
         "name": string;
     }
+    interface RadioButtonMultiple {
+        "align": 'vertical' | 'horizontal';
+        "clickHandler": any;
+        "labels": string[];
+        "name": string;
+    }
     interface ResEditor {
         "doc": any;
         "responseLabel": 'result' | 'error';
@@ -149,6 +155,14 @@ export namespace Components {
     interface TabComponentUpdated {
         "doc": any;
         "responseLabel": any;
+    }
+    interface TableSearchModal {
+        "alias": string;
+        "clearSearch": any;
+        "icon": any;
+        "refresh": any;
+        "searchMethod": any;
+        "url": string;
     }
     interface TableWrapper {
         "api": any;
@@ -344,6 +358,12 @@ declare global {
         prototype: HTMLRadioButtonElement;
         new (): HTMLRadioButtonElement;
     };
+    interface HTMLRadioButtonMultipleElement extends Components.RadioButtonMultiple, HTMLStencilElement {
+    }
+    var HTMLRadioButtonMultipleElement: {
+        prototype: HTMLRadioButtonMultipleElement;
+        new (): HTMLRadioButtonMultipleElement;
+    };
     interface HTMLResEditorElement extends Components.ResEditor, HTMLStencilElement {
     }
     var HTMLResEditorElement: {
@@ -373,6 +393,12 @@ declare global {
     var HTMLTabComponentUpdatedElement: {
         prototype: HTMLTabComponentUpdatedElement;
         new (): HTMLTabComponentUpdatedElement;
+    };
+    interface HTMLTableSearchModalElement extends Components.TableSearchModal, HTMLStencilElement {
+    }
+    var HTMLTableSearchModalElement: {
+        prototype: HTMLTableSearchModalElement;
+        new (): HTMLTableSearchModalElement;
     };
     interface HTMLTableWrapperElement extends Components.TableWrapper, HTMLStencilElement {
     }
@@ -432,11 +458,13 @@ declare global {
         "plain-button": HTMLPlainButtonElement;
         "query-logs": HTMLQueryLogsElement;
         "radio-button": HTMLRadioButtonElement;
+        "radio-button-multiple": HTMLRadioButtonMultipleElement;
         "res-editor": HTMLResEditorElement;
         "settings-navigator": HTMLSettingsNavigatorElement;
         "side-bar": HTMLSideBarElement;
         "tab-component": HTMLTabComponentElement;
         "tab-component-updated": HTMLTabComponentUpdatedElement;
+        "table-search-modal": HTMLTableSearchModalElement;
         "table-wrapper": HTMLTableWrapperElement;
         "table-wrapper-updated": HTMLTableWrapperUpdatedElement;
         "text-field": HTMLTextFieldElement;
@@ -572,6 +600,12 @@ declare namespace LocalJSX {
         "align"?: 'vertical' | 'horizontal';
         "name"?: string;
     }
+    interface RadioButtonMultiple {
+        "align"?: 'vertical' | 'horizontal';
+        "clickHandler"?: any;
+        "labels"?: string[];
+        "name"?: string;
+    }
     interface ResEditor {
         "doc"?: any;
         "responseLabel"?: 'result' | 'error';
@@ -588,6 +622,14 @@ declare namespace LocalJSX {
     interface TabComponentUpdated {
         "doc"?: any;
         "responseLabel"?: any;
+    }
+    interface TableSearchModal {
+        "alias"?: string;
+        "clearSearch"?: any;
+        "icon"?: any;
+        "refresh"?: any;
+        "searchMethod"?: any;
+        "url"?: string;
     }
     interface TableWrapper {
         "api"?: any;
@@ -647,11 +689,13 @@ declare namespace LocalJSX {
         "plain-button": PlainButton;
         "query-logs": QueryLogs;
         "radio-button": RadioButton;
+        "radio-button-multiple": RadioButtonMultiple;
         "res-editor": ResEditor;
         "settings-navigator": SettingsNavigator;
         "side-bar": SideBar;
         "tab-component": TabComponent;
         "tab-component-updated": TabComponentUpdated;
+        "table-search-modal": TableSearchModal;
         "table-wrapper": TableWrapper;
         "table-wrapper-updated": TableWrapperUpdated;
         "text-field": TextField;
@@ -690,11 +734,13 @@ declare module "@stencil/core" {
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
             "query-logs": LocalJSX.QueryLogs & JSXBase.HTMLAttributes<HTMLQueryLogsElement>;
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
+            "radio-button-multiple": LocalJSX.RadioButtonMultiple & JSXBase.HTMLAttributes<HTMLRadioButtonMultipleElement>;
             "res-editor": LocalJSX.ResEditor & JSXBase.HTMLAttributes<HTMLResEditorElement>;
             "settings-navigator": LocalJSX.SettingsNavigator & JSXBase.HTMLAttributes<HTMLSettingsNavigatorElement>;
             "side-bar": LocalJSX.SideBar & JSXBase.HTMLAttributes<HTMLSideBarElement>;
             "tab-component": LocalJSX.TabComponent & JSXBase.HTMLAttributes<HTMLTabComponentElement>;
             "tab-component-updated": LocalJSX.TabComponentUpdated & JSXBase.HTMLAttributes<HTMLTabComponentUpdatedElement>;
+            "table-search-modal": LocalJSX.TableSearchModal & JSXBase.HTMLAttributes<HTMLTableSearchModalElement>;
             "table-wrapper": LocalJSX.TableWrapper & JSXBase.HTMLAttributes<HTMLTableWrapperElement>;
             "table-wrapper-updated": LocalJSX.TableWrapperUpdated & JSXBase.HTMLAttributes<HTMLTableWrapperUpdatedElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;

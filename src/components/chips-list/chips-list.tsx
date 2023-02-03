@@ -29,9 +29,6 @@ export class ChipsList {
   @Prop() removeSearchChip:any;
   @Prop() togglesort:any;
 
-  componentWillLoad(){
-    console.log(this.sortchips)
-  }
 
 
 

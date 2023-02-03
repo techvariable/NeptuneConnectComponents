@@ -31,9 +31,10 @@
 graph TD;
   table-wrapper-updated --> chips-list
   table-wrapper-updated --> custom-table
-  custom-table --> drop-down
+  custom-table --> table-search-modal
   custom-table --> loader-component
   custom-table --> plain-button
+  table-search-modal --> radio-button-multiple
   editor-res --> table-wrapper-updated
   style table-wrapper-updated fill:#f9f,stroke:#333,stroke-width:4px
 ```
