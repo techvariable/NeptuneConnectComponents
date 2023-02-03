@@ -21,14 +21,20 @@ export class TableSearchModal {
   @State() selectedSearchOption: string = '';
   @State() selectedTextSearchOption: string = '';
   @State() selectedNumberSearchOption: string = '';
+  @State() colName:string="";
+
+  componentWillLoad(){
+    this.colName=this.alias;
+  }
 
   clearHandler() {
     this.value = '';
-    this.clearSearch(this.alias);
+    this.clearSearch(this.colName);
   }
 
   clearFields(){
     this.value="";
+    this.colName="";
     this.selectedSearchOption="";
     this.selectedTextSearchOption="";
     this.selectedNumberSearchOption="";
