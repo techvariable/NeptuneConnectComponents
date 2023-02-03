@@ -123,6 +123,7 @@ export namespace Components {
     }
     interface SettingsNavigator {
         "navigators": any;
+        "permissions": any;
     }
     interface SideBar {
     }
@@ -494,6 +495,7 @@ declare namespace LocalJSX {
     }
     interface SettingsNavigator {
         "navigators"?: any;
+        "permissions"?: any;
     }
     interface SideBar {
     }

@@ -33,6 +33,36 @@ export function isValidPermissionJson(jsonData: string) {
   };
 }
 
+export function hasAccess(permissions,route){
+  console.log("permissions",permissions,"route",route);
+  if (
+    !(
+      (
+        (permissions.find((v) => '*' in v && v['*']['*']) != null) ||
+        (permissions.find((v) => '*' in v && v['*'][route.permission]) != null) ||
+        permissions.some(
+          (v) => {
+            if (!Array.isArray(route.name)) {
+              // console.log("permisssssssssss=>", route.name in v, v[route.name][route.permission]);
+              // return true;
+              return route.name in v && v[route.name][route.permission]
+            } else {
+              console.log("not array");
+              // return true;
+              return route.name.some((name) => name in v && v[name][route.permission])
+            }
+          }
+        )
+      )
+    )
+  ){
+    console.log("no access");
+    return false;
+  } 
+
+  return true;
+}
+
 export function formatJSON(json: object): string {
   return JSON.stringify(json, undefined, 4);
 } 

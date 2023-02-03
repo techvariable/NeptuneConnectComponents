@@ -1,4 +1,5 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
+import { hasAccess } from '../../utils/utils';
 
 @Component({
   tag: 'settings-navigator',
@@ -6,12 +7,20 @@ import { Component, h, Prop } from '@stencil/core';
 })
 export class SettingsNavigator {
   @Prop() navigators: any;
+  @Prop() permissions: any;
+  @State() navigatorsWithAccess: any;
+  @State() parsedPermissions: any=[];
+  componentWillLoad() {
+    console.log('permissions in settings navigator', this.permissions);
+    this.parsedPermissions = JSON.parse(this.permissions);
+  }
+
   render() {
     return (
       <div class={'overflow-y-auto py-4 px-3 bg-gray-100 rounded-md h-96'}>
         <ul class="space-y-2">
           {JSON.parse(this.navigators).map(item => {
-            return item.accessFlag ? (
+            return hasAccess(this.parsedPermissions, { name: item.route, permission: 'read' }) ? (
               <li>
                 <a href={item.link} class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg bg-gray-200 hover:scale-110">
                   <img class="h-5" src={item.svg} alt={item.name} />
