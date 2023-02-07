@@ -7,12 +7,18 @@
 
 ## Properties
 
-| Property     | Attribute    | Description | Type  | Default     |
-| ------------ | ------------ | ----------- | ----- | ----------- |
-| `navigators` | `navigators` |             | `any` | `undefined` |
+| Property          | Attribute          | Description | Type       | Default     |
+| ----------------- | ------------------ | ----------- | ---------- | ----------- |
+| `fetchData`       | `fetch-data`       |             | `any`      | `undefined` |
+| `fetchNavigators` | `fetch-navigators` |             | `any`      | `undefined` |
+| `navigators`      | --                 |             | `string[]` | `[]`        |
 
 
 ## Dependencies
+
+### Used by
+
+ - [editor-page](../editor-page)
 
 ### Depends on
 
@@ -22,6 +28,7 @@
 ```mermaid
 graph TD;
   node-item --> menu-drop-down
+  editor-page --> node-item
   style node-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

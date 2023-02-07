@@ -1,130 +1,21 @@
-import { Component, h, Element, State, Prop, Host } from '@stencil/core';
+import { Component, h, Element, State, Prop, Host, Watch } from '@stencil/core';
 import { EditorState, basicSetup } from '@codemirror/basic-setup';
 import { EditorView, keymap } from '@codemirror/view';
 import { java } from '@codemirror/lang-java';
 import { json } from '@codemirror/lang-json';
 import axios from 'axios';
-import { isValidParameterJson } from '../../utils/utils';
+
+import {formatJSON, isValidParameterJson } from '../../utils/utils';
 @Component({
   tag: 'code-editor-updated',
   scoped: true,
 })
 export class CodeEditorUpdated {
   @Prop() url: string;
-  @Prop() doc: any = '\n\n\n\n';
-  @Prop() docParameter:any='\n\n\n\n' ;
-  @State() response: any = [
-    {
-      organizationid: '1',
-      physicianid: '364046',
-      npi_id: '1912312547',
-      chronicconditionid: 'null',
-      physicianname: 'Summer  ',
-      contactid: 'null',
-      tenantid: '1',
-      physicianlastname: 'Jordan',
-      physicianidentifier: 'null',
-    },
-    {
-      organizationid: '1',
-      physicianid: '364053',
-      npi_id: '1164423687',
-      chronicconditionid: 'null',
-      physicianname: 'Albert ',
-      contactid: 'null',
-      tenantid: '1',
-      physicianlastname: 'Mcconnell',
-      physicianidentifier: 'null',
-    },
-    {
-      organizationid: '1',
-      physicianid: '364048',
-      npi_id: '1457716268',
-      chronicconditionid: 'null',
-      physicianname: 'Lana  ',
-      contactid: 'null',
-      tenantid: '1',
-      physicianlastname: 'Boyer',
-      physicianidentifier: 'null',
-    },
-    {
-      organizationid: '1',
-      physicianid: '364059',
-      npi_id: '1326035510',
-      chronicconditionid: 'null',
-      physicianname: 'Frank ',
-      contactid: 'null',
-      tenantid: '1',
-      physicianlastname: 'Barrera',
-      physicianidentifier: 'null',
-    },
-    {
-      organizationid: '1',
-      physicianid: '364062',
-      npi_id: '1851380257',
-      chronicconditionid: 'null',
-      physicianname: 'Addyson  ',
-      contactid: 'null',
-      tenantid: '1',
-      physicianlastname: 'Pennington',
-      physicianidentifier: 'null',
-    },
-    {
-      organizationid: '1',
-      physicianid: '364052',
-      npi_id: '1962966192',
-      chronicconditionid: 'null',
-      physicianname: 'Thomas',
-      contactid: 'null',
-      tenantid: '1',
-      physicianlastname: 'Declan',
-      physicianidentifier: 'null',
-    },
-    {
-      organizationid: '1',
-      physicianid: '364047',
-      npi_id: '1871907683',
-      chronicconditionid: 'null',
-      physicianname: 'Jude  ',
-      contactid: 'null',
-      tenantid: '1',
-      physicianlastname: 'Ingram',
-      physicianidentifier: 'null',
-    },
-    {
-      organizationid: '1',
-      physicianid: '364058',
-      npi_id: '1659365245',
-      chronicconditionid: 'null',
-      physicianname: 'Blake  ',
-      contactid: 'null',
-      tenantid: '1',
-      physicianlastname: 'Scott',
-      physicianidentifier: 'null',
-    },
-    {
-      organizationid: '1',
-      physicianid: '364055',
-      npi_id: '1891788139',
-      chronicconditionid: 'null',
-      physicianname: 'Abby  ',
-      contactid: 'null',
-      tenantid: '1',
-      physicianlastname: 'Burke',
-      physicianidentifier: 'null',
-    },
-    {
-      organizationid: '1',
-      physicianid: '364060',
-      npi_id: '1760986194',
-      chronicconditionid: 'null',
-      physicianname: 'Charlotte ',
-      contactid: 'null',
-      tenantid: '1',
-      physicianlastname: 'May',
-      physicianidentifier: 'null',
-    },
-  ];
+  @Prop() doc: any;
+  @Prop() docParameter:any;
+  // @Prop() nodeData:{}[];
+  @Prop() response: any;
   @State() responseLabel: any = ['result'];
   @State() viewQuery: EditorView;
   @State() stateQuery: EditorState;
@@ -133,15 +24,38 @@ export class CodeEditorUpdated {
   @State() stateParameter: EditorState;
 
   @State() isLoading = false;
-  @State() headerList: {}[] = [];
+  @Prop() headerList: {}[] = [];
   @Element() element: HTMLElement;
   @State() tabslist : {name:string,className:string}[] =[{name:"Query", className: 'editor'},{name:"Parameter",className:'parameter'}];
   @State() activeIndex: number = 0;
   @State() errorMessage: string = '';
 
+  @Watch('doc')
+  validateDateDoc(newValue, oldValue) {
+      if(newValue !== oldValue) {
+        let transactionToAdd = this.viewQuery.state.update({
+          changes: { from: 0, to: this.viewQuery.state.doc.toString().length, insert: `${formatJSON(newValue)}` },
+        });
+        this.viewQuery.dispatch(transactionToAdd);
+          // throw new Error('username is required');
+      }
+  }
+
+  @Watch('docParameter')
+  validateDateDocParameter(newValue, oldValue) {
+      if(newValue !== oldValue) {
+        let transactionToAdd = this.viewParameter.state.update({
+          changes: { from: 0, to: this.viewParameter.state.doc.toString().length, insert: `${formatJSON(newValue)}` },
+        });
+        this.viewParameter.dispatch(transactionToAdd);
+          // throw new Error('username is required');
+      }
+  }
+
   tabClickHandler=(index)=>{
     this.activeIndex = index;
   }
+
   componentDidLoad() {
     this.stateQuery = EditorState.create({
       doc: this.doc,
@@ -160,7 +74,7 @@ export class CodeEditorUpdated {
 
     this.stateParameter = EditorState.create({
       doc: this.docParameter,
-      extensions: [
+      extensions: [ 
         basicSetup,
         json(),
         // keymap.of(defaultKeymap),
@@ -175,25 +89,26 @@ export class CodeEditorUpdated {
     // console.log('this is response label', this.responseLabel);
     // console.log('This sis response', this.response);
 
-    let allKeys = [];
-    this.response.map(obj => {
-      let keys = Object.keys(obj);
-      allKeys = [...new Set([...allKeys, ...keys])];
-    });
+  //   let allKeys = [];
+  //   this.response.map(obj => {
+  //     let keys = Object.keys(obj);
+  //     allKeys = [...new Set([...allKeys, ...keys])];
+  //   });
 
-    allKeys.map(key=>{
-      let obj = {};
-      obj['title'] = key;
-      obj["filter"] = {
-          searchable: true,
-          sortable: true,
-      };
-      obj["alias"] = key;
-      obj["click"] = {
-          clickable: false,
-      };
-      this.headerList.push(obj);
-  })
+  //   allKeys.map(key=>{
+  //     let obj = {};
+  //     obj['title'] = key;
+  //     obj["filter"] = {
+  //         searchable: true,
+  //         sortable: true,
+  //     };
+  //     obj["alias"] = key;
+  //     obj["click"] = {
+  //         clickable: false,
+  //     };
+  //     this.headerList.push(obj);
+  // })
+  // console.log("HEader list",this.headerList);
   }
 
   clickHandler() {
@@ -219,6 +134,7 @@ export class CodeEditorUpdated {
       parameters,
     })
     .then((res: any) => {
+      console.log("RESSSS",res)
       this.response = Object.values(res.data)[1];
       this.responseLabel = Object.keys(res.data)[1];
       this.isLoading = false;
@@ -248,9 +164,7 @@ export class CodeEditorUpdated {
       <Host>
         <tabs-component activeIndex={this.activeIndex}  tabslist={this.tabslist} tabClickHandler={this.tabClickHandler}></tabs-component>
         <div class="border border-gray-300 shadow-gray-300   p-3">
-          {/* <div id={"editor"} class="border border-gray-300" style={{display: this.activeIndex === 1 ? "none" : "block"}}></div> */}
-          {/* <div id={"parameter"} class="border border-gray-300" style={{display: this.activeIndex === 0 ? "none" : "block"}}></div> */}
-          {this.tabslist.map(item=>(
+         {this.tabslist.map(item=>(
             item.className==='editor' ? <div id={item.className} class="border border-gray-300" style={{display: this.activeIndex === 1 ? "none" : "block"}}></div> :
             <div id={item.className} class="border border-gray-300" style={{display: this.activeIndex === 0 ? "none" : "block"}}></div>
           ))}
@@ -275,7 +189,7 @@ export class CodeEditorUpdated {
         )}
         {/* {this.response && !this.isLoading && <tab-component-updated responseLabel={this.responseLabel} doc={this.response}></tab-component-updated>} */}
         {/* <div style={{overflow:"scroll"}}> */}
-        {this.response && !this.isLoading && <editor-res headerList={this.headerList}></editor-res>}
+        {this.response && !this.isLoading && <editor-res-updated result={this.response} headerList={this.headerList}></editor-res-updated>}
         {/* </div> */}
       </Host>
     );

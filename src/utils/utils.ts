@@ -61,3 +61,7 @@ export function isValidParameterJson(jsonData: string) {
     error: null,
   };
 }
+
+export function formatJSON(json: object): string {
+  return JSON.stringify(json, undefined, 4);
+} 

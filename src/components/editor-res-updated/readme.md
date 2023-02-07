@@ -1,4 +1,4 @@
-# editor-res
+# editor-res-updated
 
 
 
@@ -10,9 +10,14 @@
 | Property     | Attribute     | Description | Type  | Default     |
 | ------------ | ------------- | ----------- | ----- | ----------- |
 | `headerList` | `header-list` |             | `any` | `undefined` |
+| `result`     | `result`      |             | `any` | `undefined` |
 
 
 ## Dependencies
+
+### Used by
+
+ - [code-editor-updated](../code-editor-updated)
 
 ### Depends on
 
@@ -21,14 +26,15 @@
 ### Graph
 ```mermaid
 graph TD;
-  editor-res --> table-wrapper-updated
+  editor-res-updated --> table-wrapper-updated
   table-wrapper-updated --> chips-list
   table-wrapper-updated --> custom-table
   custom-table --> table-search-modal
   custom-table --> loader-component
   custom-table --> plain-button
   table-search-modal --> radio-button-multiple
-  style editor-res fill:#f9f,stroke:#333,stroke-width:4px
+  code-editor-updated --> editor-res-updated
+  style editor-res-updated fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

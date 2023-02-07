@@ -23,6 +23,8 @@ export namespace Components {
     interface CodeEditorUpdated {
         "doc": any;
         "docParameter": any;
+        "headerList": {}[];
+        "response": any;
         "url": string;
     }
     interface CustomTable {
@@ -63,8 +65,16 @@ export namespace Components {
         "userid": number;
         "value": string;
     }
+    interface EditorPage {
+        "nodeurl": string;
+        "url": string;
+    }
     interface EditorRes {
         "headerList": any;
+    }
+    interface EditorResUpdated {
+        "headerList": any;
+        "result": any;
     }
     interface FluidContainer {
     }
@@ -91,6 +101,7 @@ export namespace Components {
         "userId": number;
     }
     interface MenuDropDown {
+        "fetchData": any;
         "list": string[];
         "listTitle": string;
     }
@@ -113,7 +124,9 @@ export namespace Components {
     interface NavBar {
     }
     interface NodeItem {
-        "navigators": any;
+        "fetchData": any;
+        "fetchNavigators": any;
+        "navigators": string[];
     }
     interface PermissionEditor {
         "fetchrole": string;
@@ -174,6 +187,7 @@ export namespace Components {
     interface TableWrapperUpdated {
         "api": any;
         "autocompute": boolean;
+        "data": object[];
         "headerList": object[];
         "rowPerPage": number[];
     }
@@ -262,11 +276,23 @@ declare global {
         prototype: HTMLEditUserElement;
         new (): HTMLEditUserElement;
     };
+    interface HTMLEditorPageElement extends Components.EditorPage, HTMLStencilElement {
+    }
+    var HTMLEditorPageElement: {
+        prototype: HTMLEditorPageElement;
+        new (): HTMLEditorPageElement;
+    };
     interface HTMLEditorResElement extends Components.EditorRes, HTMLStencilElement {
     }
     var HTMLEditorResElement: {
         prototype: HTMLEditorResElement;
         new (): HTMLEditorResElement;
+    };
+    interface HTMLEditorResUpdatedElement extends Components.EditorResUpdated, HTMLStencilElement {
+    }
+    var HTMLEditorResUpdatedElement: {
+        prototype: HTMLEditorResUpdatedElement;
+        new (): HTMLEditorResUpdatedElement;
     };
     interface HTMLFluidContainerElement extends Components.FluidContainer, HTMLStencilElement {
     }
@@ -453,7 +479,9 @@ declare global {
         "dialog-component": HTMLDialogComponentElement;
         "drop-down": HTMLDropDownElement;
         "edit-user": HTMLEditUserElement;
+        "editor-page": HTMLEditorPageElement;
         "editor-res": HTMLEditorResElement;
+        "editor-res-updated": HTMLEditorResUpdatedElement;
         "fluid-container": HTMLFluidContainerElement;
         "icon-button": HTMLIconButtonElement;
         "invite-component": HTMLInviteComponentElement;
@@ -503,6 +531,8 @@ declare namespace LocalJSX {
     interface CodeEditorUpdated {
         "doc"?: any;
         "docParameter"?: any;
+        "headerList"?: {}[];
+        "response"?: any;
         "url"?: string;
     }
     interface CustomTable {
@@ -543,8 +573,16 @@ declare namespace LocalJSX {
         "userid"?: number;
         "value"?: string;
     }
+    interface EditorPage {
+        "nodeurl"?: string;
+        "url"?: string;
+    }
     interface EditorRes {
         "headerList"?: any;
+    }
+    interface EditorResUpdated {
+        "headerList"?: any;
+        "result"?: any;
     }
     interface FluidContainer {
     }
@@ -571,6 +609,7 @@ declare namespace LocalJSX {
         "userId"?: number;
     }
     interface MenuDropDown {
+        "fetchData"?: any;
         "list"?: string[];
         "listTitle"?: string;
     }
@@ -593,7 +632,9 @@ declare namespace LocalJSX {
     interface NavBar {
     }
     interface NodeItem {
-        "navigators"?: any;
+        "fetchData"?: any;
+        "fetchNavigators"?: any;
+        "navigators"?: string[];
     }
     interface PermissionEditor {
         "fetchrole"?: string;
@@ -654,6 +695,7 @@ declare namespace LocalJSX {
     interface TableWrapperUpdated {
         "api"?: any;
         "autocompute"?: boolean;
+        "data"?: object[];
         "headerList"?: object[];
         "rowPerPage"?: number[];
     }
@@ -691,7 +733,9 @@ declare namespace LocalJSX {
         "dialog-component": DialogComponent;
         "drop-down": DropDown;
         "edit-user": EditUser;
+        "editor-page": EditorPage;
         "editor-res": EditorRes;
+        "editor-res-updated": EditorResUpdated;
         "fluid-container": FluidContainer;
         "icon-button": IconButton;
         "invite-component": InviteComponent;
@@ -737,7 +781,9 @@ declare module "@stencil/core" {
             "dialog-component": LocalJSX.DialogComponent & JSXBase.HTMLAttributes<HTMLDialogComponentElement>;
             "drop-down": LocalJSX.DropDown & JSXBase.HTMLAttributes<HTMLDropDownElement>;
             "edit-user": LocalJSX.EditUser & JSXBase.HTMLAttributes<HTMLEditUserElement>;
+            "editor-page": LocalJSX.EditorPage & JSXBase.HTMLAttributes<HTMLEditorPageElement>;
             "editor-res": LocalJSX.EditorRes & JSXBase.HTMLAttributes<HTMLEditorResElement>;
+            "editor-res-updated": LocalJSX.EditorResUpdated & JSXBase.HTMLAttributes<HTMLEditorResUpdatedElement>;
             "fluid-container": LocalJSX.FluidContainer & JSXBase.HTMLAttributes<HTMLFluidContainerElement>;
             "icon-button": LocalJSX.IconButton & JSXBase.HTMLAttributes<HTMLIconButtonElement>;
             "invite-component": LocalJSX.InviteComponent & JSXBase.HTMLAttributes<HTMLInviteComponentElement>;

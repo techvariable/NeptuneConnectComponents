@@ -11,6 +11,7 @@
 | ------------- | ------------- | ----------- | ---------- | ----------- |
 | `api`         | `api`         |             | `any`      | `undefined` |
 | `autocompute` | `autocompute` |             | `boolean`  | `undefined` |
+| `data`        | --            |             | `object[]` | `undefined` |
 | `headerList`  | --            |             | `object[]` | `undefined` |
 | `rowPerPage`  | --            |             | `number[]` | `undefined` |
 
@@ -20,6 +21,7 @@
 ### Used by
 
  - [editor-res](../editor-res)
+ - [editor-res-updated](../editor-res-updated)
 
 ### Depends on
 
@@ -36,6 +38,7 @@ graph TD;
   custom-table --> plain-button
   table-search-modal --> radio-button-multiple
   editor-res --> table-wrapper-updated
+  editor-res-updated --> table-wrapper-updated
   style table-wrapper-updated fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

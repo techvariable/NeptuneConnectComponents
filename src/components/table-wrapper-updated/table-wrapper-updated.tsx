@@ -12,7 +12,7 @@ export class TableWrapperUpdated {
   @Prop() headerList: object[];
   @Prop() autocompute: boolean;
 
-  @State() data: object[] = [];
+  @Prop() data: object[];
   @State() page = 1;
   @State() isLoading = false;
   @State() isLoadingError = false;
@@ -62,7 +62,7 @@ export class TableWrapperUpdated {
   componentWillLoad() {
     this.rowPerPage = this.rowPerPage.sort((a, b) => a - b);
     this.limit = this.rowPerPage.slice(0, 1).shift();
-    this.fetchData();
+    // this.fetchData();
   }
 
   fetchData() {
@@ -70,12 +70,12 @@ export class TableWrapperUpdated {
     this.isLoadingError = false;
     this.api(this.limit, this.page, this.sortObj, this.search)
       .then(res => {
-        console.log('gettingg ress=>>>>>>>>');
+        // console.log('gettingg ress=>>>>>>>>');
         this.data = res.data.result;
         this.total = res.total;
         if (this.autocompute) this.computeHeader();
         this.isLoading = false;
-        console.log('This is the data in table-wrapper', this.data);
+        // console.log('This is the data in table-wrapper', this.data);
       })
       .catch(error => {
         console.log(error);
@@ -138,14 +138,14 @@ export class TableWrapperUpdated {
   }
 
   searchMethod(searchValue: string, colName: string, searchOption:string, textSearchOption:string, numberSearchOption:string) {
-    console.log("This is values========================> in search submit",searchValue,colName,searchOption,textSearchOption,numberSearchOption, this.searchChips);
+    // console.log("This is values========================> in search submit",searchValue,colName,searchOption,textSearchOption,numberSearchOption, this.searchChips);
     if (this.search) {
       this.search[colName] = [searchValue,textSearchOption,numberSearchOption];
     } else {
       this.search = {};
       this.search[colName] = [searchValue,textSearchOption,numberSearchOption];
     }
-    console.log("saerched upadted in adding==================*****>",this.search)
+    // console.log("saerched upadted in adding==================*****>",this.search)
     this.fetchData();
     const temp = { ...this.searchChips };
     console.log(this.searchChips);
@@ -160,7 +160,6 @@ export class TableWrapperUpdated {
 
 
   render() {
-    console.log("asdfghjkljhgfwerfghj",this.searchChips);
     return (
       <Host>
         <chips-list

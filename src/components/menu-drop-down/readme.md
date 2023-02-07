@@ -9,6 +9,7 @@
 
 | Property    | Attribute    | Description | Type       | Default     |
 | ----------- | ------------ | ----------- | ---------- | ----------- |
+| `fetchData` | `fetch-data` |             | `any`      | `undefined` |
 | `list`      | --           |             | `string[]` | `undefined` |
 | `listTitle` | `list-title` |             | `string`   | `undefined` |
 
