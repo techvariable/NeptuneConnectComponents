@@ -147,7 +147,7 @@ export class CustomTable {
         )}
 
         {/* Table Footer */}
-        <tfoot class="bg-violet-50 w-full sticky bottom-0">
+        <tfoot class="bg-violet-50 w-full">
           <tr>
             <td colSpan={this.tableHeader.length} class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               <div class="flex justify-between items-center">

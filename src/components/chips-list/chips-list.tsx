@@ -42,7 +42,7 @@ export class ChipsList {
                 <div class="my-2 p-2 flex justify-between bg-white rounded svelte-1l8159u">
                   <div class="w-full gap-2 flex flex-auto py-1 flex-wrap">
                     {Object.keys(this.sortchips).map(item => (
-                      <div title={`${item} is sorted in ${this.sortchips[item]} order`} class="flex justify-center items-center m-1 font-normal py-1 px-2 rounded-full text-teal-700 border border-blue-600 bg-gray-100">
+                      <div title={`${item} is sorted in ${this.sortchips[item]} order`} class="flex justify-center items-center m-1 font-normal py-1 px-2 rounded-full text-blue-900 border border-blue-600 bg-gray-100">
                         {this.sortchips[item]==="asc" && <button onClick={()=>this.togglesort(item)}>{sortAsc}</button>}
                         {this.sortchips[item]==="desc" && <button onClick={()=>this.togglesort(item)}>{sortDesc}</button>}
                         <div class="text-xl font-normal ml-2 leading-none max-w-full flex-initial">{item}</div>
@@ -58,7 +58,7 @@ export class ChipsList {
                               stroke-width="2"
                               stroke-linecap="round"
                               stroke-linejoin="round"
-                              class="feather feather-x cursor-pointer hover:text-teal-400 rounded-full w-4 h-4 ml-2"
+                              class="feather feather-x cursor-pointer hover:text-red-500 rounded-full w-4 h-4 ml-2"
                             >
                               <line x1="18" y1="6" x2="6" y2="18"></line>
                               <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -69,7 +69,7 @@ export class ChipsList {
                     ))}
                     
                     {Object.keys(this.searchChips).map(item => (
-                      <div title={`${item} is searched by ${this.searchChips[item][0]} in  ${this.searchChips[item][1]} pattern`} class="flex justify-center items-center m-1 font-normal py-1 px-2 rounded-full text-teal-700 border border-red-500	 bg-gray-100">
+                      <div title={`${item} is searched by ${this.searchChips[item][0]} in  ${this.searchChips[item][1]} pattern`} class="flex justify-center items-center m-1 font-normal py-1 px-2 rounded-full text-slate-900 border border-red-500	 bg-gray-100">
                         {<button >{search}</button>}
                         <div class="text-xl font-normal ml-2 leading-none max-w-full flex-initial">{item}</div>
                         {<span class="ml-2"><span class='text-xs'>by</span> {this.searchChips[item][0]}</span>}
@@ -86,7 +86,7 @@ export class ChipsList {
                               stroke-width="2"
                               stroke-linecap="round"
                               stroke-linejoin="round"
-                              class="feather feather-x cursor-pointer hover:text-teal-400 rounded-full w-4 h-4 ml-2"
+                              class="feather feather-x cursor-pointer hover:text-red-500 rounded-full w-4 h-4 ml-2"
                             >
                               <line x1="18" y1="6" x2="6" y2="18"></line>
                               <line x1="6" y1="6" x2="18" y2="18"></line>

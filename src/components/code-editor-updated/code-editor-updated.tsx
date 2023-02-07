@@ -1,16 +1,18 @@
 import { Component, h, Element, State, Prop, Host } from '@stencil/core';
 import { EditorState, basicSetup } from '@codemirror/basic-setup';
 import { EditorView, keymap } from '@codemirror/view';
-// import { defaultKeymap } from '@codemirror/commands';
 import { java } from '@codemirror/lang-java';
+import { json } from '@codemirror/lang-json';
 import axios from 'axios';
+import { isValidParameterJson } from '../../utils/utils';
 @Component({
   tag: 'code-editor-updated',
   scoped: true,
 })
 export class CodeEditorUpdated {
   @Prop() url: string;
-  @Prop() doc: any = '\n\n\n';
+  @Prop() doc: any = '\n\n\n\n';
+  @Prop() docParameter:any='\n\n\n\n' ;
   @State() response: any = [
     {
       organizationid: '1',
@@ -124,14 +126,24 @@ export class CodeEditorUpdated {
     },
   ];
   @State() responseLabel: any = ['result'];
-  @State() view: EditorView;
-  @State() state: EditorState;
+  @State() viewQuery: EditorView;
+  @State() stateQuery: EditorState;
+
+  @State() viewParameter: EditorView;
+  @State() stateParameter: EditorState;
+
   @State() isLoading = false;
   @State() headerList: {}[] = [];
   @Element() element: HTMLElement;
+  @State() tabslist : {name:string,className:string}[] =[{name:"Query", className: 'editor'},{name:"Parameter",className:'parameter'}];
+  @State() activeIndex: number = 0;
+  @State() errorMessage: string = '';
 
+  tabClickHandler=(index)=>{
+    this.activeIndex = index;
+  }
   componentDidLoad() {
-    this.state = EditorState.create({
+    this.stateQuery = EditorState.create({
       doc: this.doc,
       extensions: [
         basicSetup,
@@ -141,9 +153,24 @@ export class CodeEditorUpdated {
       ],
     });
 
-    this.view = new EditorView({
-      state: this.state,
+    this.viewQuery = new EditorView({
+      state: this.stateQuery,
       parent: this.element.querySelector('#editor'),
+    });
+
+    this.stateParameter = EditorState.create({
+      doc: this.docParameter,
+      extensions: [
+        basicSetup,
+        json(),
+        // keymap.of(defaultKeymap),
+        this.dummyKeymap(),
+      ],
+    });
+
+    this.viewParameter = new EditorView({
+      state: this.stateParameter,
+      parent: this.element.querySelector('#parameter'),
     });
     // console.log('this is response label', this.responseLabel);
     // console.log('This sis response', this.response);
@@ -153,7 +180,7 @@ export class CodeEditorUpdated {
       let keys = Object.keys(obj);
       allKeys = [...new Set([...allKeys, ...keys])];
     });
-    // console.log('This is the all keys in the array of Object', allKeys);
+
     allKeys.map(key=>{
       let obj = {};
       obj['title'] = key;
@@ -167,27 +194,40 @@ export class CodeEditorUpdated {
       };
       this.headerList.push(obj);
   })
-  // console.log(this.headerList);
   }
 
   clickHandler() {
-    this.isLoading = true;
-    let transaction = this.view.state.update();
+    let transaction = this.viewQuery.state.update();
     const query = transaction.state.doc.toString().trim();
-    this.view.dispatch(transaction);
+    this.viewQuery.dispatch(transaction);
 
-    //axios call
+    let transactionParameter = this.viewParameter.state.update();
+    this.viewParameter.dispatch(transactionParameter);
+    const {isValid , error} = isValidParameterJson(String(transactionParameter.state.doc));
+
+    if(isValid){
+      this.isLoading = true;
+      this.errorMessage = '';
+      this.doc = transactionParameter.state.doc;
+      const parameters = this.docParameter.text.join('');
+      console.log("Parameters",parameters);
+      //axios call
     axios
-      .post(this.url, {
-        query,
-        apiKey: 'ETW5KJQ-PDT48MP-H0WVAC4-WQWHEK3',
-      })
-      .then((res: any) => {
-        this.response = Object.values(res.data)[1];
-        this.responseLabel = Object.keys(res.data)[1];
-        this.isLoading = false;
-      })
-      .catch(err => console.log(err));
+    .post(this.url, {
+      query,
+      apiKey: 'ETW5KJQ-PDT48MP-H0WVAC4-WQWHEK3',
+      parameters,
+    })
+    .then((res: any) => {
+      this.response = Object.values(res.data)[1];
+      this.responseLabel = Object.keys(res.data)[1];
+      this.isLoading = false;
+    })
+    .catch(err => console.log(err));
+    }else{
+      this.errorMessage = error;
+    }
+    
   }
 
   dummyKeymap() {
@@ -206,12 +246,19 @@ export class CodeEditorUpdated {
   render() {
     return (
       <Host>
-        <div class="border border-gray-300 shadow-gray-300   p-3 space-y-2">
-          <div id="editor" class="border border-gray-300"></div>
+        <tabs-component activeIndex={this.activeIndex}  tabslist={this.tabslist} tabClickHandler={this.tabClickHandler}></tabs-component>
+        <div class="border border-gray-300 shadow-gray-300   p-3">
+          {/* <div id={"editor"} class="border border-gray-300" style={{display: this.activeIndex === 1 ? "none" : "block"}}></div> */}
+          {/* <div id={"parameter"} class="border border-gray-300" style={{display: this.activeIndex === 0 ? "none" : "block"}}></div> */}
+          {this.tabslist.map(item=>(
+            item.className==='editor' ? <div id={item.className} class="border border-gray-300" style={{display: this.activeIndex === 1 ? "none" : "block"}}></div> :
+            <div id={item.className} class="border border-gray-300" style={{display: this.activeIndex === 0 ? "none" : "block"}}></div>
+          ))}
+          {this.errorMessage != '' ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full mt-4 mb-6">{this.errorMessage}</p> : null}
           <button
             title="Ctrl+Shift+Enter to run"
             onClick={() => this.clickHandler()}
-            class="flex text-sm gap-2 items-center justify-center text-gray-600 border border-gray-300 px-3 py-2 hover:bg-gray-200 hover:text-gray-800"
+            class="flex text-sm gap-2 items-center justify-center text-gray-600 border border-gray-300 px-3 mt-2 py-2 hover:bg-gray-200 hover:text-gray-800"
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />

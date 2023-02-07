@@ -22,6 +22,7 @@ export namespace Components {
     }
     interface CodeEditorUpdated {
         "doc": any;
+        "docParameter": any;
         "url": string;
     }
     interface CustomTable {
@@ -175,6 +176,11 @@ export namespace Components {
         "autocompute": boolean;
         "headerList": object[];
         "rowPerPage": number[];
+    }
+    interface TabsComponent {
+        "activeIndex": number;
+        "tabClickHandler": any;
+        "tabslist": { name: string; className: string }[];
     }
     interface TextField {
         "addClass": string;
@@ -412,6 +418,12 @@ declare global {
         prototype: HTMLTableWrapperUpdatedElement;
         new (): HTMLTableWrapperUpdatedElement;
     };
+    interface HTMLTabsComponentElement extends Components.TabsComponent, HTMLStencilElement {
+    }
+    var HTMLTabsComponentElement: {
+        prototype: HTMLTabsComponentElement;
+        new (): HTMLTabsComponentElement;
+    };
     interface HTMLTextFieldElement extends Components.TextField, HTMLStencilElement {
     }
     var HTMLTextFieldElement: {
@@ -467,6 +479,7 @@ declare global {
         "table-search-modal": HTMLTableSearchModalElement;
         "table-wrapper": HTMLTableWrapperElement;
         "table-wrapper-updated": HTMLTableWrapperUpdatedElement;
+        "tabs-component": HTMLTabsComponentElement;
         "text-field": HTMLTextFieldElement;
         "text-field-area": HTMLTextFieldAreaElement;
         "users-component": HTMLUsersComponentElement;
@@ -489,6 +502,7 @@ declare namespace LocalJSX {
     }
     interface CodeEditorUpdated {
         "doc"?: any;
+        "docParameter"?: any;
         "url"?: string;
     }
     interface CustomTable {
@@ -643,6 +657,11 @@ declare namespace LocalJSX {
         "headerList"?: object[];
         "rowPerPage"?: number[];
     }
+    interface TabsComponent {
+        "activeIndex"?: number;
+        "tabClickHandler"?: any;
+        "tabslist"?: { name: string; className: string }[];
+    }
     interface TextField {
         "addClass"?: string;
         "eye"?: boolean;
@@ -698,6 +717,7 @@ declare namespace LocalJSX {
         "table-search-modal": TableSearchModal;
         "table-wrapper": TableWrapper;
         "table-wrapper-updated": TableWrapperUpdated;
+        "tabs-component": TabsComponent;
         "text-field": TextField;
         "text-field-area": TextFieldArea;
         "users-component": UsersComponent;
@@ -743,6 +763,7 @@ declare module "@stencil/core" {
             "table-search-modal": LocalJSX.TableSearchModal & JSXBase.HTMLAttributes<HTMLTableSearchModalElement>;
             "table-wrapper": LocalJSX.TableWrapper & JSXBase.HTMLAttributes<HTMLTableWrapperElement>;
             "table-wrapper-updated": LocalJSX.TableWrapperUpdated & JSXBase.HTMLAttributes<HTMLTableWrapperUpdatedElement>;
+            "tabs-component": LocalJSX.TabsComponent & JSXBase.HTMLAttributes<HTMLTabsComponentElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
             "text-field-area": LocalJSX.TextFieldArea & JSXBase.HTMLAttributes<HTMLTextFieldAreaElement>;
             "users-component": LocalJSX.UsersComponent & JSXBase.HTMLAttributes<HTMLUsersComponentElement>;
