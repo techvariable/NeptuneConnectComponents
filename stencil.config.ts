@@ -7,6 +7,7 @@ import autoprefixer from 'autoprefixer';
 export const config: Config = {
   namespace: 'neptune',
   globalStyle: 'src/global/global.css',
+  sourceMap: true,
   outputTargets: [
     {
       type: 'dist',

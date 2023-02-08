@@ -11,8 +11,8 @@ export class TableWrapperUpdated {
   @Prop() api: any;
   @Prop() headerList: object[];
   @Prop() autocompute: boolean;
-
   @Prop() data: object[];
+  
   @State() page = 1;
   @State() isLoading = false;
   @State() isLoadingError = false;

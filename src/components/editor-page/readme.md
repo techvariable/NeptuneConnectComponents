@@ -29,9 +29,8 @@ graph TD;
   node-item --> menu-drop-down
   code-editor-updated --> tabs-component
   code-editor-updated --> loader-component
-  editor-res-updated --> table-wrapper-updated
-  table-wrapper-updated --> chips-list
-  table-wrapper-updated --> custom-table
+  editor-res-updated --> chips-list
+  editor-res-updated --> custom-table
   custom-table --> table-search-modal
   custom-table --> loader-component
   custom-table --> plain-button

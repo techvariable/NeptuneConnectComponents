@@ -29,6 +29,7 @@
 
 ### Used by
 
+ - [editor-res-updated](../editor-res-updated)
  - [table-wrapper](../table-wrapper)
  - [table-wrapper-updated](../table-wrapper-updated)
 
@@ -45,6 +46,7 @@ graph TD;
   custom-table --> loader-component
   custom-table --> plain-button
   table-search-modal --> radio-button-multiple
+  editor-res-updated --> custom-table
   table-wrapper --> custom-table
   table-wrapper-updated --> custom-table
   style custom-table fill:#f9f,stroke:#333,stroke-width:4px

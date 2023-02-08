@@ -7,10 +7,15 @@
 
 ## Properties
 
-| Property     | Attribute     | Description | Type  | Default     |
-| ------------ | ------------- | ----------- | ----- | ----------- |
-| `headerList` | `header-list` |             | `any` | `undefined` |
-| `result`     | `result`      |             | `any` | `undefined` |
+| Property           | Attribute            | Description | Type       | Default     |
+| ------------------ | -------------------- | ----------- | ---------- | ----------- |
+| `autocompute`      | `autocompute`        |             | `boolean`  | `undefined` |
+| `errorMessage`     | `error-message`      |             | `string`   | `undefined` |
+| `headerList`       | --                   |             | `object[]` | `undefined` |
+| `isLoading`        | `is-loading`         |             | `boolean`  | `undefined` |
+| `nodeData`         | --                   |             | `object[]` | `undefined` |
+| `onTableOperation` | `on-table-operation` |             | `any`      | `undefined` |
+| `rowPerPage`       | --                   |             | `number[]` | `undefined` |
 
 
 ## Dependencies
@@ -21,14 +26,14 @@
 
 ### Depends on
 
-- [table-wrapper-updated](../table-wrapper-updated)
+- [chips-list](../chips-list)
+- [custom-table](../custom-table)
 
 ### Graph
 ```mermaid
 graph TD;
-  editor-res-updated --> table-wrapper-updated
-  table-wrapper-updated --> chips-list
-  table-wrapper-updated --> custom-table
+  editor-res-updated --> chips-list
+  editor-res-updated --> custom-table
   custom-table --> table-search-modal
   custom-table --> loader-component
   custom-table --> plain-button

@@ -10,6 +10,8 @@ import { formatJSON } from '../../utils/utils';
 })
 export class EditorPage {
   @Prop() url: string;
+
+  @State() selectedNodeName: string;
   @State() nodeList: string[] = [];
   @State() queryDocument: string = "\n\n\n\n";
   @State() parameterDocument: string = "\n\n\n\n"
@@ -29,14 +31,15 @@ export class EditorPage {
       });
   };
 
-  fetchData = async (item) => {
+  fetchData = async (nodeName: string, order?: { [index: string]: "asc" | "desc" }, filter?: any) => {
     this.isLoading = true;
+    this.selectedNodeName = nodeName;
     try {
-      const res = await axios.post(`${this.url}/query/builder/${item}`, {
+      const res = await axios.post(`${this.url}/query/builder/${nodeName}`, {
         limit: 10,
         offset: 0,
-        order: {},
-        filter: {}
+        order: order ? order : {},
+        filter: filter ? filter : {}
       });
 
       this.nodeData = res.data.nodes;
@@ -70,8 +73,19 @@ export class EditorPage {
     this.isLoading = false;
   }
 
-  onClickRun(query: string, parameter: object) {
+  async onClickRun(query: string, parameter: object) {
     console.log({ query, parameter });
+  }
+
+  async onTableOperation(limit, page, sort, search) {
+    console.log("table operation...", { limit, page, sort, search });
+    const processedSort = {}
+
+    if (sort) processedSort[sort.id] = sort.dir;
+
+    console.log({ processedSort })
+
+    // await this.fetchData(this.selectedNodeName, sort)
   }
 
   render() {
@@ -92,7 +106,10 @@ export class EditorPage {
               onClickRun={this.onClickRun}
             ></code-editor-updated>
 
-            {this.nodeData && !this.isLoading && <editor-res-updated result={this.nodeData} headerList={this.nodeDataColumns}></editor-res-updated>}
+            {this.nodeData.length > 0 && !this.isLoading && <editor-res-updated
+              onTableOperation={this.onTableOperation}
+              nodeData={this.nodeData}
+              headerList={this.nodeDataColumns}></editor-res-updated>}
           </div>
         </div>
       </div>

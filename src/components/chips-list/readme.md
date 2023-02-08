@@ -20,11 +20,13 @@
 
 ### Used by
 
+ - [editor-res-updated](../editor-res-updated)
  - [table-wrapper-updated](../table-wrapper-updated)
 
 ### Graph
 ```mermaid
 graph TD;
+  editor-res-updated --> chips-list
   table-wrapper-updated --> chips-list
   style chips-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
