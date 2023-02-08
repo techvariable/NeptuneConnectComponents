@@ -66,7 +66,6 @@ export namespace Components {
         "value": string;
     }
     interface EditorPage {
-        "nodeurl": string;
         "url": string;
     }
     interface EditorRes {
@@ -574,7 +573,6 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface EditorPage {
-        "nodeurl"?: string;
         "url"?: string;
     }
     interface EditorRes {

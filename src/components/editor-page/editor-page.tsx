@@ -9,9 +9,7 @@ import { formatJSON } from '../../utils/utils';
   scoped: true,
 })
 export class EditorPage {
-  @Prop() nodeurl: string;
   @Prop() url: string;
-
   @State() nodeList: string[] = [];
   @State() queryDocument: string = "\n\n\n\n";
   @State() parameterDocument: string = "\n\n\n\n"
@@ -22,7 +20,7 @@ export class EditorPage {
 
   fetchNavigators = () => {
     axios
-      .get(this.nodeurl)
+      .get(`${this.url}/nodes`)
       .then((res: any) => {
         this.nodeList = res.data.nodes;
       })
@@ -34,7 +32,7 @@ export class EditorPage {
   fetchData = async (item) => {
     this.isLoading = true;
     try {
-      const res = await axios.post(`http://localhost:3000/api/editor/query/builder/${item}`, {
+      const res = await axios.post(`${this.url}/query/builder/${item}`, {
         limit: 10,
         offset: 0,
         order: {},
@@ -94,7 +92,7 @@ export class EditorPage {
               onClickRun={this.onClickRun}
             ></code-editor-updated>
 
-            {/* {this.response && !this.isLoading && <editor-res-updated result={this.response} headerList={this.headerList}></editor-res-updated>} */}
+            {this.nodeData && !this.isLoading && <editor-res-updated result={this.nodeData} headerList={this.nodeDataColumns}></editor-res-updated>}
           </div>
         </div>
       </div>
