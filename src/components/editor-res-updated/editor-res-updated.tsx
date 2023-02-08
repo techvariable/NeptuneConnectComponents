@@ -79,10 +79,13 @@ export class TableWrapperUpdated {
   }
 
   toggleSortMethod = (id: string) => {
+    console.log("Chips id on click",id);
     const chips = { ...this.sortChips };
+    console.log("tempchipslist",chips);
     chips[id] = chips[id] === "desc" ? 'asc' : 'desc';
+    console.log("temp updated chips",chips);
     this.sortChips = chips;
-
+    console.log(this.sortChips);
     this.fetchData();
   };
 

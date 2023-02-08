@@ -36,7 +36,10 @@ export function isValidPermissionJson(jsonData: string) {
 }
 
 
-export function isValidParameterJson(jsonData: string) {
+export function isValidParameterJson(query:string,jsonData: string) {
+  console.log(query,"\n\n\n",jsonData);
+  const quaryAry:string[] = [];
+  console.log(quaryAry);
   try {
     const data: any = JSON.parse(jsonData);
 
@@ -61,6 +64,7 @@ export function isValidParameterJson(jsonData: string) {
     error: null,
   };
 }
+isValidParameterJson("g.V().hasLabel(:paramNodeLabel).valueMap(true).range(:paramPaginationOffset, :paramPaginationLimit)","{\n    \"paramNodeLabel\": \"person\",\n    \"paramPaginationLimit\": 10,\n    \"paramPaginationOffset\": 0\n}")
 
 export function formatJSON(json: object): string {
   return JSON.stringify(json, undefined, 4);
