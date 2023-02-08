@@ -11,7 +11,7 @@
 | ----------------- | ------------------ | ----------- | ---------- | ----------- |
 | `fetchData`       | `fetch-data`       |             | `any`      | `undefined` |
 | `fetchNavigators` | `fetch-navigators` |             | `any`      | `undefined` |
-| `navigators`      | --                 |             | `string[]` | `[]`        |
+| `nodeList`        | --                 |             | `string[]` | `[]`        |
 
 
 ## Dependencies

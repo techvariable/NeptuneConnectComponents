@@ -28,14 +28,6 @@ graph TD;
   node-item --> menu-drop-down
   code-editor-updated --> tabs-component
   code-editor-updated --> loader-component
-  code-editor-updated --> editor-res-updated
-  editor-res-updated --> table-wrapper-updated
-  table-wrapper-updated --> chips-list
-  table-wrapper-updated --> custom-table
-  custom-table --> table-search-modal
-  custom-table --> loader-component
-  custom-table --> plain-button
-  table-search-modal --> radio-button-multiple
   style editor-page fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

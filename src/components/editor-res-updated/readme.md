@@ -15,10 +15,6 @@
 
 ## Dependencies
 
-### Used by
-
- - [code-editor-updated](../code-editor-updated)
-
 ### Depends on
 
 - [table-wrapper-updated](../table-wrapper-updated)
@@ -33,7 +29,6 @@ graph TD;
   custom-table --> loader-component
   custom-table --> plain-button
   table-search-modal --> radio-button-multiple
-  code-editor-updated --> editor-res-updated
   style editor-res-updated fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

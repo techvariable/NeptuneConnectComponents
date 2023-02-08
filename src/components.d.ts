@@ -21,11 +21,11 @@ export namespace Components {
         "url": string;
     }
     interface CodeEditorUpdated {
-        "doc": any;
-        "docParameter": any;
-        "headerList": {}[];
-        "response": any;
-        "url": string;
+        "errorMessage": string | null;
+        "isLoading": boolean;
+        "onClickRun": Function;
+        "parameterDocument": string;
+        "queryDocument": string;
     }
     interface CustomTable {
         "clearSearch": any;
@@ -126,7 +126,7 @@ export namespace Components {
     interface NodeItem {
         "fetchData": any;
         "fetchNavigators": any;
-        "navigators": string[];
+        "nodeList": Array<string>;
     }
     interface PermissionEditor {
         "fetchrole": string;
@@ -529,11 +529,11 @@ declare namespace LocalJSX {
         "url"?: string;
     }
     interface CodeEditorUpdated {
-        "doc"?: any;
-        "docParameter"?: any;
-        "headerList"?: {}[];
-        "response"?: any;
-        "url"?: string;
+        "errorMessage"?: string | null;
+        "isLoading"?: boolean;
+        "onClickRun"?: Function;
+        "parameterDocument"?: string;
+        "queryDocument"?: string;
     }
     interface CustomTable {
         "clearSearch"?: any;
@@ -634,7 +634,7 @@ declare namespace LocalJSX {
     interface NodeItem {
         "fetchData"?: any;
         "fetchNavigators"?: any;
-        "navigators"?: string[];
+        "nodeList"?: Array<string>;
     }
     interface PermissionEditor {
         "fetchrole"?: string;

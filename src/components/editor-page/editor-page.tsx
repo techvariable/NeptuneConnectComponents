@@ -1,5 +1,7 @@
-import { Component, h, Prop, State } from '@stencil/core';
 import axios from 'axios';
+import { Component, h, Prop, State } from '@stencil/core';
+
+import { formatJSON } from '../../utils/utils';
 
 
 @Component({
@@ -9,83 +11,93 @@ import axios from 'axios';
 export class EditorPage {
   @Prop() nodeurl: string;
   @Prop() url: string;
-  @State() navigators: string[] =[];
-  @State() nodeData:{}[]=[];
-  @State() doc:string = "\n\n\n\n";
-  @State() docParameter:string = "\n\n\n\n"
-  @State() response:{}[]=[];
-  @State() headerList: {}[] = [];
-  
 
-  fetchNavigators =() =>{
+  @State() nodeList: string[] = [];
+  @State() queryDocument: string = "\n\n\n\n";
+  @State() parameterDocument: string = "\n\n\n\n"
+  @State() nodeData: Array<{}> = [];
+  @State() nodeDataColumns: {}[] = [];
+
+  @State() isLoading: boolean = false;
+
+  fetchNavigators = () => {
     axios
-    .get(this.nodeurl)
-    .then((res: any) => {
-      this.navigators = res.data.nodes;
-    })
-    .catch(err => {
-      console.log(err);
-    });
+      .get(this.nodeurl)
+      .then((res: any) => {
+        this.nodeList = res.data.nodes;
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
-  fetchData=(item)=>{
-    axios
-    .post(`http://localhost:3000/api/editor/query/builder/${item}`,
-    {
-      "limit": 10,
-      "offset": 0,
-      "order": {},
-      "filter": {}
-    })
-    .then((res:any)=>{
-      console.log("node data fetch",res);
-      this.response=res.data.nodes;
-      this.doc=res.data.query;
-      this.docParameter = res.data.queryParameters;
+  fetchData = async (item) => {
+    this.isLoading = true;
+    try {
+      const res = await axios.post(`http://localhost:3000/api/editor/query/builder/${item}`, {
+        limit: 10,
+        offset: 0,
+        order: {},
+        filter: {}
+      });
+
+      this.nodeData = res.data.nodes;
+      this.queryDocument = res.data.query;
+      this.parameterDocument = formatJSON(res.data.queryParameters);
 
       let allKeys = [];
-      console.log("ESSSSS",this.response)
-    this.response.map(obj => {
-      let keys = Object.keys(obj);
-      allKeys = [...new Set([...allKeys, ...keys])];
-    });
-    console.log("all keys", allKeys)
-    this.headerList = [];
-    allKeys.map(key=>{
-      let obj = {};
-      obj['title'] = key;
-      obj["filter"] = {
+      console.log("ESSSSS", this.nodeData)
+      this.nodeData.map(obj => {
+        let keys = Object.keys(obj);
+        allKeys = [...new Set([...allKeys, ...keys])];
+      });
+      console.log("all keys", allKeys)
+      this.nodeDataColumns = [];
+      allKeys.map(key => {
+        let obj = {};
+        obj['title'] = key;
+        obj["filter"] = {
           searchable: true,
           sortable: true,
-      };
-      obj["alias"] = key;
-      obj["click"] = {
+        };
+        obj["alias"] = key;
+        obj["click"] = {
           clickable: false,
-      };
-      this.headerList.push(obj);
-  })
+        };
+        this.nodeDataColumns.push(obj);
+      })
+    } catch (error) {
+      console.log({ error })
+    }
+    this.isLoading = false;
+  }
 
-
-    })
-    .catch(err=>{
-      console.log(err);
-    })
+  onClickRun(query: string, parameter: object) {
+    console.log({ query, parameter });
   }
 
   render() {
-   return(
-    <div>
-    <div class="w-auto flex justify-center gap-4 mt-4">
-      <aside class="w-80" aria-label="Sidebar">
-        <h2 class="pb-6 font-mono text-lg font-bold leading-7 text-gray-600">Nodes</h2>
-        <node-item fetchNavigators={this.fetchNavigators} fetchData={this.fetchData} navigators={this.navigators}></node-item>
-      </aside>
-      <div class="w-96" style={{ width: '72.5rem' }}>
-        <h2 class="pb-3 font-mono text-lg font-bold leading-7 text-gray-600">Write your Gremlin Query Here</h2>
-        <code-editor-updated url={this.url} doc={this.doc} docParameter={this.docParameter} response={this.response} headerList={this.headerList}></code-editor-updated>
+    return (
+      <div>
+        <div class="w-auto flex justify-center gap-4 mt-4">
+          <aside class="w-80" aria-label="Sidebar">
+            <h2 class="pb-6 font-mono text-lg font-bold leading-7 text-gray-600">Nodes</h2>
+            <node-item fetchNavigators={this.fetchNavigators} fetchData={this.fetchData} nodeList={this.nodeList}></node-item>
+          </aside>
+          <div class="w-96" style={{ width: '72.5rem' }}>
+            <h2 class="pb-3 font-mono text-lg font-bold leading-7 text-gray-600">Write your Gremlin Query Here</h2>
+            <code-editor-updated
+              queryDocument={this.queryDocument}
+              parameterDocument={this.parameterDocument}
+              errorMessage={null}
+              isLoading={this.isLoading}
+              onClickRun={this.onClickRun}
+            ></code-editor-updated>
+
+            {/* {this.response && !this.isLoading && <editor-res-updated result={this.response} headerList={this.headerList}></editor-res-updated>} */}
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-   )
+    )
   }
 }
