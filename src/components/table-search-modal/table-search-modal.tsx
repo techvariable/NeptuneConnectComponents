@@ -46,11 +46,11 @@ export class TableSearchModal {
 
   submitHandler(e) {
     e.preventDefault();
-    console.log("Form submit event in the modal in table search ================>",e);
-    console.log("this is e.target.values in table search======>",e.target);
-    this.searchMethod(this.value, this.alias, this.selectedSearchOption,this.selectedTextSearchOption,this.selectedNumberSearchOption);
-    this.toggleModalState();
-    this.clearFields();
+    if(this.selectedSearchOption!==""){
+      this.searchMethod(this.value, this.alias, this.selectedSearchOption,this.selectedTextSearchOption,this.selectedNumberSearchOption);
+      this.toggleModalState();
+      this.clearFields();
+    }
   }
 
 //   async handlenewRoleSumit(e) {
@@ -192,7 +192,7 @@ export class TableSearchModal {
                   <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button
                       type="submit"
-                      class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-600 text-base font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:ml-3 sm:w-auto sm:text-sm"
+                      class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-600 text-base font-medium text-white disabled:bg-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                     >
                       Search
                     </button>
