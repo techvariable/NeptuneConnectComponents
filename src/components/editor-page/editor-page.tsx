@@ -79,11 +79,6 @@ export class EditorPage {
 
   async onTableOperation(limit, page, sort, search) {
     console.log("table operation...", { limit, page, sort, search });
-    const processedSort = {}
-
-    if (sort) processedSort[sort.id] = sort.dir;
-
-    console.log({ processedSort })
 
     // await this.fetchData(this.selectedNodeName, sort)
   }

@@ -16,57 +16,36 @@ export class TableWrapperUpdated {
   @Prop() errorMessage: string;
 
   @State() page = 1;
-  // @State() isLoading = false;
   @State() isLoadingError = false;
   @State() total: string;
   @State() limit: number;
-  @State() tBody: any;
-  @State() toggleSort = true;
-  @State() sortId: string;
-  @State() sortDir: string;
-  @State() sortObj: object;
-  // @State() search: object[];
-  @State() search: object;
-  @State() sortchips: {} = {};
+  @State() sortChips: {} = {};
   @State() searchChips: {} = {};
 
-  clearSearch(colName) {
-    if (Object.keys(this.search).length >= 1) {
-      let keys = Object.keys(this.search);
-      if (keys.includes(colName)) {
-        const temp = { ...this.search };
-        delete temp[colName];
-        // delete this.search[colName];
-        this.search = temp;
-      }
-    }
+
+  removeSortChip = (item) => {
+    const chips = { ...this.sortChips };
+    delete chips[item];
+    this.sortChips = chips;
+
     this.fetchData();
   }
 
-  removeSortChip = (item) => {
-    const temp = { ...this.sortchips };
-    delete temp[item];
-    this.sortchips = temp;
-    this.clearSortMethod(item);
-  }
   removeSearchChip = (item) => {
-    const temp = { ...this.searchChips };
-    delete temp[item];
-    this.searchChips = temp;
-    this.clearSearch(item);
+    const chips = { ...this.searchChips };
+    delete chips[item];
+    this.searchChips = chips;
+
+    this.fetchData();
   }
 
   componentWillLoad() {
-    // this.rowPerPage = this.rowPerPage.sort((a, b) => a - b);
-    // this.limit = this.rowPerPage.slice(0, 1).shift();
-    // this.fetchData();
-
     this.rowPerPage = [10, 20]
     this.limit = 10;
   }
 
   async fetchData() {
-    await this.onTableOperation(this.limit, this.page, this.sortObj, this.search);
+    await this.onTableOperation(this.limit, this.page, this.sortChips, this.searchChips);
   }
 
   computeHeader() {
@@ -86,7 +65,6 @@ export class TableWrapperUpdated {
   rowsHandler(e) {
     this.limit = e.target.value;
     this.page = 1;
-    this.sortObj = {};
     this.fetchData();
   }
 
@@ -101,38 +79,26 @@ export class TableWrapperUpdated {
   }
 
   toggleSortMethod = (id: string) => {
-    this.sortObj = { id: id, dir: this.toggleSort ? 'asc' : 'desc' };
-    this.page = 1;
-    this.toggleSort = !this.toggleSort;
+    const chips = { ...this.sortChips };
+    chips[id] = chips[id] === "desc" ? 'asc' : 'desc';
+    this.sortChips = chips;
+
     this.fetchData();
-    const temp = { ...this.sortchips };
-    temp[id] = this.sortObj['dir'];
-    this.sortchips = temp;
   };
 
-  clearSortMethod(id: string) {
-    this.toggleSort = true;
-    this.sortObj = { id: id, dir: this.toggleSort ? 'asc' : 'desc' };
-    this.page = 1;
-    this.fetchData();
-  }
-
   searchMethod(searchValue: string, colName: string, searchOption: string, textSearchOption: string, numberSearchOption: string) {
-    if (this.search) {
-      this.search[colName] = [searchValue, textSearchOption, numberSearchOption];
-    } else {
-      this.search = {};
-      this.search[colName] = [searchValue, textSearchOption, numberSearchOption];
-    }
-    this.fetchData();
-    const temp = { ...this.searchChips };
-    if (searchOption === 'text') {
-      temp[colName] = [searchValue, textSearchOption];
-    } else {
-      temp[colName] = [searchValue, numberSearchOption];
-    }
+    const chips = { ...this.searchChips }
 
-    this.searchChips = temp;
+    const searchOperation = {}
+
+    if (searchOption === "text") searchOperation[textSearchOption] = searchValue;
+    else searchOperation[numberSearchOption] = searchValue;
+
+    chips[colName] = searchOperation;
+
+    this.searchChips = chips;
+
+    this.fetchData();
   }
 
 
@@ -140,7 +106,7 @@ export class TableWrapperUpdated {
     return (
       <Host>
         <chips-list
-          sortchips={this.sortchips}
+          sortchips={this.sortChips}
           searchChips={this.searchChips}
           removeSortChip={this.removeSortChip}
           removeSearchChip={this.removeSearchChip}
@@ -161,7 +127,7 @@ export class TableWrapperUpdated {
             rowsHandler={e => this.rowsHandler(e)}
             toggleSortMethod={id => this.toggleSortMethod(id)}
             searchMethod={(value, field, searchOption, textSearchOption, numberSearchOption) => this.searchMethod(value, field, searchOption, textSearchOption, numberSearchOption)}
-            clearSearch={colName => this.clearSearch(colName)}
+            clearSearch={null}
           ></custom-table>
         </div>
       </Host>
