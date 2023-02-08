@@ -21,7 +21,7 @@ export class RadioButtonMultiple {
                 <label htmlFor={this.name} class="text-sm text-gray-700">
                   {item}
                 </label>
-                <input onClick={e=>this.clickHandler(e)} id={item} name={this.name} type="radio" value={item} class="ml-3 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
+                <input required onClick={e=>this.clickHandler(e)} id={item} name={this.name} type="radio" value={item} class="ml-3 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
               </div>
             </div>
           );
