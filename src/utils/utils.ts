@@ -38,20 +38,22 @@ export function isValidPermissionJson(jsonData: string) {
 
 export function isValidParameterJson(query:string,jsonData: string) {
   console.log(query,"\n\n\n",jsonData);
-  const quaryAry:string[] = [];
-  console.log(quaryAry);
+
+  const pattern = /(:[a-zA-Z])\w+/g;
+  const queryParameters:string[] = query.match(pattern);
+
   try {
     const data: any = JSON.parse(jsonData);
 
     const keys: string[] = Object.keys(data);
 
-    if (keys.length === 0) {
-      throw Error('No keys present in the json');
-    }
-    keys.forEach((item: string) => {
-      const permission = data[item];
-      console.log(permission);
-    });
+    queryParameters.forEach((item:string) =>{
+      let value = item.split(":").pop()
+      if(!keys.includes(value)){
+        console.log(`${value} key is not present`)
+        throw Error(`${value} key not present in the json`);
+      }
+    })
   } catch (e) {
     console.log(e);
     return {
@@ -64,7 +66,6 @@ export function isValidParameterJson(query:string,jsonData: string) {
     error: null,
   };
 }
-isValidParameterJson("g.V().hasLabel(:paramNodeLabel).valueMap(true).range(:paramPaginationOffset, :paramPaginationLimit)","{\n    \"paramNodeLabel\": \"person\",\n    \"paramPaginationLimit\": 10,\n    \"paramPaginationOffset\": 0\n}")
 
 export function formatJSON(json: object): string {
   return JSON.stringify(json, undefined, 4);
