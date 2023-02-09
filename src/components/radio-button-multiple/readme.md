@@ -10,6 +10,7 @@
 | Property       | Attribute       | Description | Type                         | Default        |
 | -------------- | --------------- | ----------- | ---------------------------- | -------------- |
 | `align`        | `align`         |             | `"horizontal" \| "vertical"` | `'horizontal'` |
+| `checked`      | `checked`       |             | `string`                     | `undefined`    |
 | `clickHandler` | `click-handler` |             | `any`                        | `undefined`    |
 | `labels`       | --              |             | `string[]`                   | `undefined`    |
 | `name`         | `name`          |             | `string`                     | `undefined`    |

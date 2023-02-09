@@ -88,7 +88,7 @@ export class TableWrapperUpdated {
 
     const searchOperation = {}
 
-    if (searchOption === "text") searchOperation[textSearchOption] = searchValue;
+    if (searchOption === "string") searchOperation[textSearchOption] = searchValue;
     else searchOperation[numberSearchOption] = searchValue;
 
     chips[colName] = searchOperation;

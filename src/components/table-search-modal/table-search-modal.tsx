@@ -16,7 +16,7 @@ export class TableSearchModal {
   @Prop() searchMethod: any;
   @Prop() clearSearch: any;
   @Prop() icon: any;
-  @State() searchOptions: string[] = ['text', 'number'];
+  @State() searchOptions: string[] = ['string', 'number'];
   @State() textSearchOptions: string[] = ['exact', 'contains'];
   @State() numberSearchOptions: string[] = ['gte', 'lte', 'exact'];
   @State() selectedSearchOption: string = '';
@@ -27,7 +27,7 @@ export class TableSearchModal {
   componentWillLoad(){
     this.colName=this.alias;
     if(this.type!== null){
-      this.searchOptions = [`${this.type}`]
+      this.selectedSearchOption = this.type;
     }
     
   }
@@ -140,6 +140,7 @@ export class TableSearchModal {
                               labels={this.searchOptions}
                               name="SearchMethod"
                               align="horizontal"
+                              checked = {this.type}
                             ></radio-button-multiple>
                           </div>
 

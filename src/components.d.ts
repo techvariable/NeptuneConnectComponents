@@ -153,6 +153,7 @@ export namespace Components {
     }
     interface RadioButtonMultiple {
         "align": 'vertical' | 'horizontal';
+        "checked": string;
         "clickHandler": any;
         "labels": string[];
         "name": string;
@@ -666,6 +667,7 @@ declare namespace LocalJSX {
     }
     interface RadioButtonMultiple {
         "align"?: 'vertical' | 'horizontal';
+        "checked"?: string;
         "clickHandler"?: any;
         "labels"?: string[];
         "name"?: string;
