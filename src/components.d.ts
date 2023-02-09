@@ -180,6 +180,7 @@ export namespace Components {
         "icon": any;
         "refresh": any;
         "searchMethod": any;
+        "type": string;
         "url": string;
     }
     interface TableWrapper {
@@ -692,6 +693,7 @@ declare namespace LocalJSX {
         "icon"?: any;
         "refresh"?: any;
         "searchMethod"?: any;
+        "type"?: string;
         "url"?: string;
     }
     interface TableWrapper {

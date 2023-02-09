@@ -66,7 +66,7 @@ export class EditorPage {
       });
       console.log("all keys", allKeys)
       this.nodeDataColumns = [];
-      allKeys.map(key => {
+      allKeys.forEach(key => {
         let obj = {};
         obj['title'] = key;
         obj["filter"] = {
@@ -78,11 +78,12 @@ export class EditorPage {
           clickable: false,
         };
         obj["type"] = null;
-        for(let i=1;i<=5;i++){
-          if(typeof(this.nodeData[Math.round(Math.random()*10)+1*i][key]) !== null){
-            obj["type"] = typeof(this.nodeData[Math.round(Math.random()*10)+1*i][key]);
-          } 
-        }
+
+        this.nodeData.slice(0,5).forEach(dataObj=>{
+          if(dataObj !== undefined && typeof(dataObj[key] !== null) ){
+            obj["type"] = typeof(dataObj[key]);
+          }
+        })
         this.nodeDataColumns.push(obj);
       })
     } catch (error) {
@@ -120,7 +121,7 @@ export class EditorPage {
             ></code-editor-updated>
 
             {this.nodeData.length > 0 && !this.isLoading && <editor-res-updated
-              onTableOperation={this.onTableOperation}
+              onTableOperation= {(limit, offset, sort , filter) => this.onTableOperation(limit, offset, sort, filter)}
               nodeData={this.nodeData}
               headerList={this.nodeDataColumns}></editor-res-updated>}
           </div>

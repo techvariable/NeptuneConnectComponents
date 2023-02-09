@@ -14,6 +14,7 @@
 | `icon`         | `icon`          |             | `any`    | `undefined` |
 | `refresh`      | `refresh`       |             | `any`    | `undefined` |
 | `searchMethod` | `search-method` |             | `any`    | `undefined` |
+| `type`         | `type`          |             | `string` | `undefined` |
 | `url`          | `url`           |             | `string` | `undefined` |
 
 

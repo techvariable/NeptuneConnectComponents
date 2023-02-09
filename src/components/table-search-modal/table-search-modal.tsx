@@ -12,6 +12,7 @@ export class TableSearchModal {
   @State() isModalOpen = false;
   @State() value: any;
   @Prop() alias: string;
+  @Prop() type: string;
   @Prop() searchMethod: any;
   @Prop() clearSearch: any;
   @Prop() icon: any;
@@ -25,6 +26,10 @@ export class TableSearchModal {
 
   componentWillLoad(){
     this.colName=this.alias;
+    if(this.type!== null){
+      this.searchOptions = [`${this.type}`]
+    }
+    
   }
 
   clearHandler() {
@@ -138,7 +143,7 @@ export class TableSearchModal {
                             ></radio-button-multiple>
                           </div>
 
-                          {this.selectedSearchOption === 'text' && (
+                          {this.selectedSearchOption === 'string' && (
                             <div>
                               <label class="block" htmlFor="searchText">
                                 Enter text to be searched.
