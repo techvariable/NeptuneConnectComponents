@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Component, h, Prop, State,Watch } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
 
 import { formatJSON } from '../../utils/utils';
 
@@ -17,22 +17,11 @@ export class EditorPage {
   @State() parameterDocument: string = "\n\n\n\n"
   @State() nodeData: Array<{}> = [];
   @State() nodeDataColumns: {}[] = [];
-  @Watch('nodeData')
-  onNodeDataUpdate(newValue: string, oldValue: string) {
-    if (newValue !== oldValue) {
-     console.log("Data for changes",newValue);
-    }
-  }
-  @Watch('nodeDataColumns')
-  onNodeDataColumnsUpdate(newValue: string, oldValue: string) {
-    if (newValue !== oldValue) {
-     console.log("HeaderList for changes",newValue);
-    }
-  }
-
+  @State() errorMessage: string | null = null;
   @State() isLoading: boolean = false;
 
   fetchNavigators = () => {
+    this.errorMessage = null;
     axios
       .get(`${this.url}/nodes`)
       .then((res: any) => {
@@ -44,6 +33,7 @@ export class EditorPage {
   };
 
   fetchData = async (nodeName: string, offset? ,order?: { [index: string]: "asc" | "desc" }, filter?: any) => {
+    this.errorMessage = null;
     this.isLoading = true;
     this.selectedNodeName = nodeName;
     try {
@@ -92,8 +82,55 @@ export class EditorPage {
     this.isLoading = false;
   }
 
-  async onClickRun(query: string, parameter: object) {
-    console.log({ query, parameter });
+  onClickRun = async (query: string, parameters: object) => {
+    // console.log("urlllllllllllll",this.url);
+    this.errorMessage = null;
+    this.isLoading = true;
+    try {
+      const res = await axios.post(`${this.url}/query`, 
+      {
+        query,
+        parameters
+      }
+      );
+
+      this.nodeData = res.data.nodes;
+      this.queryDocument = res.data.query;
+      this.parameterDocument = formatJSON(res.data.queryParameters);
+
+      let allKeys = [];
+      console.log("ESSSSS", this.nodeData)
+      this.nodeData.map(obj => {
+        let keys = Object.keys(obj);
+        allKeys = [...new Set([...allKeys, ...keys])];
+      });
+      console.log("all keys", allKeys)
+      this.nodeDataColumns = [];
+      allKeys.forEach(key => {
+        let obj = {};
+        obj['title'] = key;
+        obj["filter"] = {
+          searchable: true,
+          sortable: true,
+        };
+        obj["alias"] = key;
+        obj["click"] = {
+          clickable: false,
+        };
+        obj["type"] = null;
+
+        this.nodeData.slice(0,5).forEach(dataObj=>{
+          if(dataObj !== undefined && typeof(dataObj[key] !== null) ){
+            obj["type"] = typeof(dataObj[key]);
+          }
+        })
+        this.nodeDataColumns.push(obj);
+      })
+    } catch (error) {
+      console.log({ error })
+    }
+    this.isLoading = false;
+    
   }
 
   onTableOperation = async (limit, offset, sort, filter) => {
@@ -115,7 +152,7 @@ export class EditorPage {
             <code-editor-updated
               queryDocument={this.queryDocument}
               parameterDocument={this.parameterDocument}
-              errorMessage={null}
+              errorMessage={this.errorMessage}
               isLoading={this.isLoading}
               onClickRun={this.onClickRun}
             ></code-editor-updated>

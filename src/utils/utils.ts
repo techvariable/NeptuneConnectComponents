@@ -37,8 +37,6 @@ export function isValidPermissionJson(jsonData: string) {
 
 
 export function isValidParameterJson(query:string,jsonData: string) {
-  console.log(query,"\n\n\n",jsonData);
-
   const pattern = /(:[a-zA-Z])\w+/g;
   const queryParameters:string[] = query.match(pattern);
 
@@ -46,9 +44,8 @@ export function isValidParameterJson(query:string,jsonData: string) {
     const data: any = JSON.parse(jsonData);
 
     const keys: string[] = Object.keys(data);
-
     queryParameters.forEach((item:string) =>{
-      let value = item.split(":").pop()
+      let value = item.split(":").pop();
       if(!keys.includes(value)){
         throw Error(`${value} key not present in the json`);
       }
