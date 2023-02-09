@@ -102,7 +102,7 @@ export class CodeEditorUpdated {
             item.className === 'editor' ? <div id={item.className} class="border border-gray-300" style={{ display: this.activeIndex === 1 ? "none" : "block" }}></div> :
               <div id={item.className} class="border border-gray-300" style={{ display: this.activeIndex === 0 ? "none" : "block" }}></div>
           ))}
-          {this.errorMessage != '' ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full mt-4 mb-6">{this.errorMessage}</p> : null}
+          {this.errorMessage != null ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full mt-4 mb-6">{this.errorMessage}</p> : null}
 
           <div class="flex justify-between">
             <button
