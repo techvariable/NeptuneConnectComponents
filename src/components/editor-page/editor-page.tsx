@@ -43,13 +43,13 @@ export class EditorPage {
       });
   };
 
-  fetchData = async (nodeName: string, offset?, order?: { [index: string]: "asc" | "desc" }, filter?: any) => {
+  fetchData = async (nodeName: string, limit: number = 10, offset: number = 0, order?: { [index: string]: "asc" | "desc" }, filter?: any) => {
     this.isLoading = true;
     this.selectedNodeName = nodeName;
     try {
       const res = await axios.post(`${this.url}/query/builder/${nodeName}`, {
-        limit: 10,
-        offset: offset ? offset : 0,
+        limit,
+        offset,
         order: order ? order : {},
         filter: filter ? filter : {}
       });
@@ -94,10 +94,8 @@ export class EditorPage {
     console.log({ query, parameter });
   }
 
-  onTableOperation = async (limit, offset, sort, filter) => {
-    console.log("table operation...", { limit, offset, sort, filter });
-
-    // await this.fetchData(this.selectedNodeName,offset ,sort, filter)
+  onTableOperation = async (limit, page, sort, filter) => {
+    await this.fetchData(this.selectedNodeName, limit, (page - 1) * limit, sort, filter)
   }
 
   render() {
@@ -119,7 +117,7 @@ export class EditorPage {
             ></code-editor-updated>
 
             {this.nodeData.length > 0 && !this.isLoading && <editor-res-updated
-              onTableOperation={(limit, offset, sort, filter) => this.onTableOperation(limit, offset, sort, filter)}
+              onTableOperation={(limit, page, sort, filter) => this.onTableOperation(limit, page, sort, filter)}
               nodeData={this.nodeData}
               headerList={this.nodeDataColumns}></editor-res-updated>}
           </div>
