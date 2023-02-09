@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Component, h, Prop, State } from '@stencil/core';
+import { Component, h, Prop, State,Watch } from '@stencil/core';
 
 import { formatJSON } from '../../utils/utils';
 
@@ -17,6 +17,18 @@ export class EditorPage {
   @State() parameterDocument: string = "\n\n\n\n"
   @State() nodeData: Array<{}> = [];
   @State() nodeDataColumns: {}[] = [];
+  @Watch('nodeData')
+  onNodeDataUpdate(newValue: string, oldValue: string) {
+    if (newValue !== oldValue) {
+     console.log("Data for changes",newValue);
+    }
+  }
+  @Watch('nodeDataColumns')
+  onNodeDataColumnsUpdate(newValue: string, oldValue: string) {
+    if (newValue !== oldValue) {
+     console.log("HeaderList for changes",newValue);
+    }
+  }
 
   @State() isLoading: boolean = false;
 
@@ -65,6 +77,12 @@ export class EditorPage {
         obj["click"] = {
           clickable: false,
         };
+        obj["type"] = null;
+        for(let i=1;i<=5;i++){
+          if(typeof(this.nodeData[Math.round(Math.random()*10)+1*i][key]) !== null){
+            obj["type"] = typeof(this.nodeData[Math.round(Math.random()*10)+1*i][key]);
+          } 
+        }
         this.nodeDataColumns.push(obj);
       })
     } catch (error) {
