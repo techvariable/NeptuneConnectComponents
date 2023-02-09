@@ -31,7 +31,7 @@ export class EditorPage {
       });
   };
 
-  onDataLoad = async (nodeName: string, offset? ,order?: { [index: string]: "asc" | "desc" }, filter?: any) => {
+  fetchData = async (nodeName: string, offset? ,order?: { [index: string]: "asc" | "desc" }, filter?: any) => {
     this.isLoading = true;
     this.selectedNodeName = nodeName;
     try {
@@ -80,7 +80,7 @@ export class EditorPage {
   onTableOperation = async (limit, offset, sort, filter) => {
     console.log("table operation...", { limit, offset, sort, filter });
 
-    await this.onDataLoad(this.selectedNodeName,offset ,sort, filter)
+    // await this.fetchData(this.selectedNodeName,offset ,sort, filter)
   }
 
   render() {
@@ -89,7 +89,7 @@ export class EditorPage {
         <div class="w-auto flex justify-center gap-4 mt-4">
           <aside class="w-80" aria-label="Sidebar">
             <h2 class="pb-6 font-mono text-lg font-bold leading-7 text-gray-600">Nodes</h2>
-            <node-item fetchNavigators={this.fetchNavigators} fetchData={this.onDataLoad} nodeList={this.nodeList}></node-item>
+            <node-item fetchNavigators={this.fetchNavigators} fetchData={this.fetchData} nodeList={this.nodeList}></node-item>
           </aside>
           <div class="w-96" style={{ width: '72.5rem' }}>
             <h2 class="pb-3 font-mono text-lg font-bold leading-7 text-gray-600">Write your Gremlin Query Here</h2>
