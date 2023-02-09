@@ -27,7 +27,6 @@ export class TableWrapperUpdated {
     const chips = { ...this.sortChips };
     delete chips[item];
     this.sortChips = chips;
-    console.log("removeSortChip");
     this.fetchData();
   }
 
@@ -35,7 +34,6 @@ export class TableWrapperUpdated {
     const chips = { ...this.searchChips };
     delete chips[item];
     this.searchChips = chips;
-    console.log("removeSearchChip");
     this.fetchData();
   }
 
@@ -45,7 +43,6 @@ export class TableWrapperUpdated {
   }
 
   async fetchData() {
-    console.log("fetchData")
     await this.onTableOperation(this.limit, this.page, this.sortChips, this.searchChips);
   }
 
@@ -67,31 +64,23 @@ export class TableWrapperUpdated {
     this.limit = e.target.value;
     this.page = 1;
     this.fetchData();
-    console.log("rowsHandler")
   }
 
   nextPage() {
     ++this.page;
     this.fetchData();
-    console.log("nextPage")
   }
 
   prevPage() {
     --this.page;
     this.fetchData();
-    console.log("prevPage")
   }
 
   toggleSortMethod = (id: string) => {
-    console.log("Chips id on click",id);
     const chips = { ...this.sortChips };
-    console.log("tempchipslist",chips);
     chips[id] = chips[id] === "desc" ? 'asc' : 'desc';
-    console.log("temp updated chips",chips);
     this.sortChips = chips;
-    console.log(this.sortChips);
     this.fetchData();
-    console.log("toggleSortMethod")
   };
 
   searchMethod(searchValue: string, colName: string, searchOption: string, textSearchOption: string, numberSearchOption: string) {
