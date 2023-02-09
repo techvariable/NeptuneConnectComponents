@@ -32,14 +32,13 @@ export class EditorPage {
       });
   };
 
-  fetchData = async (nodeName: string, offset? ,order?: { [index: string]: "asc" | "desc" }, filter?: any) => {
-    this.errorMessage = null;
+  fetchData = async (nodeName: string, limit: number = 10, offset: number = 0, order?: { [index: string]: "asc" | "desc" }, filter?: any) => {
     this.isLoading = true;
     this.selectedNodeName = nodeName;
     try {
       const res = await axios.post(`${this.url}/query/builder/${nodeName}`, {
-        limit: 10,
-        offset: offset ? offset : 0,
+        limit,
+        offset,
         order: order ? order : {},
         filter: filter ? filter : {}
       });
@@ -48,33 +47,31 @@ export class EditorPage {
       this.queryDocument = res.data.query;
       this.parameterDocument = formatJSON(res.data.queryParameters);
 
-      let allKeys = [];
-      console.log("ESSSSS", this.nodeData)
-      this.nodeData.map(obj => {
-        let keys = Object.keys(obj);
-        allKeys = [...new Set([...allKeys, ...keys])];
-      });
-      console.log("all keys", allKeys)
-      this.nodeDataColumns = [];
-      allKeys.forEach(key => {
-        let obj = {};
-        obj['title'] = key;
-        obj["filter"] = {
-          searchable: true,
-          sortable: true,
-        };
-        obj["alias"] = key;
-        obj["click"] = {
-          clickable: false,
-        };
-        obj["type"] = null;
+      const keys = new Set();
 
-        this.nodeData.slice(0,5).forEach(dataObj=>{
-          if(dataObj !== undefined && typeof(dataObj[key] !== null) ){
-            obj["type"] = typeof(dataObj[key]);
-          }
+      this.nodeData.forEach(row => {
+        Object.keys(row).forEach(k => {
+          keys.add(k)
         })
-        this.nodeDataColumns.push(obj);
+      })
+
+      this.nodeDataColumns = [...keys].map((k: string) => {
+        let dataType = "string";
+
+        this.nodeData.slice(0, 5).forEach(row => {
+          dataType = typeof (row[k]);
+        })
+
+        return {
+          alias: k,
+          click: { clickable: false },
+          filter: {
+            searchable: true,
+            sortable: true
+          },
+          title: k,
+          type: dataType
+        }
       })
     } catch (error) {
       console.log({ error })
@@ -82,24 +79,20 @@ export class EditorPage {
     this.isLoading = false;
   }
 
-  onClickRun = async (query: string, parameters: object) => {
-    // console.log("urlllllllllllll",this.url);
+  onClickRun = async (query: string, parameters: string) => {
     this.errorMessage = null;
     this.isLoading = true;
     try {
-      const res = await axios.post(`${this.url}/query`, 
+      const res = await axios.post(`${this.url}/query/`, 
       {
         query,
-        parameters
+        parameters:JSON.parse(parameters)
       }
       );
 
-      this.nodeData = res.data.nodes;
-      this.queryDocument = res.data.query;
-      this.parameterDocument = formatJSON(res.data.queryParameters);
-
+      this.nodeData = res.data.result;
+      
       let allKeys = [];
-      console.log("ESSSSS", this.nodeData)
       this.nodeData.map(obj => {
         let keys = Object.keys(obj);
         allKeys = [...new Set([...allKeys, ...keys])];
@@ -133,10 +126,8 @@ export class EditorPage {
     
   }
 
-  onTableOperation = async (limit, offset, sort, filter) => {
-    console.log("table operation...", { limit, offset, sort, filter });
-
-    // await this.fetchData(this.selectedNodeName,offset ,sort, filter)
+  onTableOperation = async (limit, page, sort, filter) => {
+    await this.fetchData(this.selectedNodeName, limit, (page - 1) * limit, sort, filter)
   }
 
   render() {
@@ -158,7 +149,7 @@ export class EditorPage {
             ></code-editor-updated>
 
             {this.nodeData.length > 0 && !this.isLoading && <editor-res-updated
-              onTableOperation= {(limit, offset, sort , filter) => this.onTableOperation(limit, offset, sort, filter)}
+              onTableOperation={(limit, page, sort, filter) => this.onTableOperation(limit, page, sort, filter)}
               nodeData={this.nodeData}
               headerList={this.nodeDataColumns}></editor-res-updated>}
           </div>
