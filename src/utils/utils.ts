@@ -50,7 +50,6 @@ export function isValidParameterJson(query:string,jsonData: string) {
     queryParameters.forEach((item:string) =>{
       let value = item.split(":").pop()
       if(!keys.includes(value)){
-        console.log(`${value} key is not present`)
         throw Error(`${value} key not present in the json`);
       }
     })
