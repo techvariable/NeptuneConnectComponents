@@ -5,19 +5,6 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
-
-| Property           | Attribute            | Description | Type       | Default     |
-| ------------------ | -------------------- | ----------- | ---------- | ----------- |
-| `autocompute`      | `autocompute`        |             | `boolean`  | `undefined` |
-| `errorMessage`     | `error-message`      |             | `string`   | `undefined` |
-| `headerList`       | --                   |             | `object[]` | `undefined` |
-| `isLoading`        | `is-loading`         |             | `boolean`  | `undefined` |
-| `nodeData`         | --                   |             | `object[]` | `undefined` |
-| `onTableOperation` | `on-table-operation` |             | `any`      | `undefined` |
-| `rowPerPage`       | --                   |             | `number[]` | `undefined` |
-
-
 ## Dependencies
 
 ### Used by
