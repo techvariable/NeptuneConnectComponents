@@ -68,6 +68,7 @@ onChange('nodes', value => {
       type: dataType,
     };
   });
+  console.log("columnHeaders===========>",state.columnHeaders)
 });
 
 onChange('query', value => {
