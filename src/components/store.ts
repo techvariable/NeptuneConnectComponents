@@ -1,5 +1,7 @@
-import { createStore } from '@stencil/store';
 import axios from 'axios';
+import { formatQuery } from 'gremlint';
+import { createStore } from '@stencil/store';
+
 import { formatJSON } from '../utils/utils';
 
 const { state, onChange, reset } = createStore({
@@ -105,7 +107,7 @@ const fetchData = async (nodeName: string) => {
       });
 
       state.nodes = res.data.nodes;
-      state.query = res.data.query;
+      state.query = formatQuery(res.data.query);
       state.queryParameter = formatJSON(res.data.queryParameters);
     } catch (error) {
       state.isError = true;
