@@ -26,7 +26,6 @@ export class ResEditor {
   };
 
   componentDidLoad() {
-    console.log(this.doc);
     this.state = EditorState.create({
       doc: this.doc,
       extensions: [basicSetup, EditorView.editable.of(false), json()],
@@ -39,7 +38,6 @@ export class ResEditor {
   }
 
   render() {
-    console.log(this.doc)
     return (
       <Host>
         <p class={this.labelTitle[this.responseLabel].class}>{this.labelTitle[this.responseLabel].tag}</p>

@@ -6,6 +6,10 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface AddRole {
+        "refresh": any;
+        "url": string;
+    }
     interface CheckBox {
         "name": string;
     }
@@ -119,7 +123,7 @@ export namespace Components {
     interface NodeItem {
     }
     interface PermissionEditor {
-        "fetchrole": string;
+        "rolesurl": string;
         "url": string;
     }
     interface PlainButton {
@@ -208,6 +212,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLAddRoleElement extends Components.AddRole, HTMLStencilElement {
+    }
+    var HTMLAddRoleElement: {
+        prototype: HTMLAddRoleElement;
+        new (): HTMLAddRoleElement;
+    };
     interface HTMLCheckBoxElement extends Components.CheckBox, HTMLStencilElement {
     }
     var HTMLCheckBoxElement: {
@@ -461,6 +471,7 @@ declare global {
         new (): HTMLUsersComponentElement;
     };
     interface HTMLElementTagNameMap {
+        "add-role": HTMLAddRoleElement;
         "check-box": HTMLCheckBoxElement;
         "chips-list": HTMLChipsListElement;
         "code-editor": HTMLCodeEditorElement;
@@ -506,6 +517,10 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface AddRole {
+        "refresh"?: any;
+        "url"?: string;
+    }
     interface CheckBox {
         "name"?: string;
     }
@@ -619,7 +634,7 @@ declare namespace LocalJSX {
     interface NodeItem {
     }
     interface PermissionEditor {
-        "fetchrole"?: string;
+        "rolesurl"?: string;
         "url"?: string;
     }
     interface PlainButton {
@@ -707,6 +722,7 @@ declare namespace LocalJSX {
         "users"?: any;
     }
     interface IntrinsicElements {
+        "add-role": AddRole;
         "check-box": CheckBox;
         "chips-list": ChipsList;
         "code-editor": CodeEditor;
@@ -755,6 +771,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "add-role": LocalJSX.AddRole & JSXBase.HTMLAttributes<HTMLAddRoleElement>;
             "check-box": LocalJSX.CheckBox & JSXBase.HTMLAttributes<HTMLCheckBoxElement>;
             "chips-list": LocalJSX.ChipsList & JSXBase.HTMLAttributes<HTMLChipsListElement>;
             "code-editor": LocalJSX.CodeEditor & JSXBase.HTMLAttributes<HTMLCodeEditorElement>;

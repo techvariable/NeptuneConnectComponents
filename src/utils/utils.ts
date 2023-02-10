@@ -5,9 +5,7 @@ export function format(first: string, middle: string, last: string): string {
 
 export function isValidPermissionJson(jsonData: string) {
   try {
-    //  TODO: Need check this against the existing used roles
     const data: any = JSON.parse(jsonData);
-
     const keys: string[] = Object.keys(data);
 
     if (keys.length === 0) {
@@ -16,14 +14,15 @@ export function isValidPermissionJson(jsonData: string) {
     console.log("keys",keys);
     keys.forEach((item: string) => {
       const permission = data[item];
-      console.log(permission);
-      let allPermission = ['read', 'write', 'delete', 'update'];
-      for (let key of allPermission) {
-        if (permission[key] === undefined) throw Error(`${key} property not present in ${item}`);
+
+      if (permission["*"] == undefined) {
+        let allPermission = ['read', 'write', 'delete', 'update'];
+        for (let key of allPermission) {
+          if (permission[key] === undefined) throw Error(`${key} property not present in ${item}`);
+        }
       }
     });
   } catch (e) {
-    console.log(e);
     return {
       isValid: false,
       error: e.message,
@@ -34,7 +33,6 @@ export function isValidPermissionJson(jsonData: string) {
     error: null,
   };
 }
-
 
 export function isValidParameterJson(query:string,jsonData: string) {
   const pattern = /(:[a-zA-Z])\w+/g;
