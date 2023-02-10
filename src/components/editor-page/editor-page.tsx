@@ -84,23 +84,23 @@ export class EditorPage {
   };
 
   onClickRun = async (query: string, parameters: string) => {
-    this.errorMessage = null;
-    this.isLoading = true;
+    state.errorMessage = null;
+    state.isLoading = true;
     try {
-      const res = await axios.post(`${this.url}/query/`, {
+      const res = await axios.post(`${state.url}/query/`, {
         query,
         parameters: JSON.parse(parameters),
       });
 
-      this.nodeData = res.data.result;
+      state.nodes = res.data.result;
 
       let allKeys = [];
-      this.nodeData.map(obj => {
+      state.nodes.map(obj => {
         let keys = Object.keys(obj);
         allKeys = [...new Set([...allKeys, ...keys])];
       });
       console.log('all keys', allKeys);
-      this.nodeDataColumns = [];
+      state.columnHeaders = [];
       allKeys.forEach(key => {
         let obj = {};
         obj['title'] = key;
@@ -114,17 +114,17 @@ export class EditorPage {
         };
         obj['type'] = null;
 
-        this.nodeData.slice(0, 5).forEach(dataObj => {
+        state.nodes.slice(0, 5).forEach(dataObj => {
           if (dataObj !== undefined && typeof (dataObj[key] !== null)) {
             obj['type'] = typeof dataObj[key];
           }
         });
-        this.nodeDataColumns.push(obj);
+        state.columnHeaders.push(obj);
       });
     } catch (error) {
       console.log({ error });
     }
-    this.isLoading = false;
+    state.isLoading = false;
   };
 
   onTableOperation = async (limit, page, sort, filter) => {
@@ -143,10 +143,10 @@ export class EditorPage {
           <div class="w-96" style={{ width: '72.5rem' }}>
             <h2 class="pb-3 font-mono text-lg font-bold leading-7 text-gray-600">Write your Gremlin Query Here</h2>
             <code-editor-updated
-              queryDocument={this.queryDocument}
-              parameterDocument={this.parameterDocument}
-              errorMessage={this.errorMessage}
-              isLoading={this.isLoading}
+              // queryDocument={this.queryDocument}
+              // parameterDocument={this.parameterDocument}
+              // errorMessage={this.errorMessage}
+              // isLoading={this.isLoading}
               onClickRun={this.onClickRun}
             ></code-editor-updated>
 

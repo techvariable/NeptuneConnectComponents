@@ -25,6 +25,7 @@ const { state, onChange } = createStore({
   stateQuery: null,
   viewParameter: null,
   stateParameter: null,
+
 });
 
 onChange('selectedNodeName', value => {

@@ -17,11 +17,7 @@ const TAB_LIST = [
   scoped: true,
 })
 export class CodeEditorUpdated {
-  @Prop() queryDocument: string;
-  @Prop() parameterDocument: string;
   @Prop() onClickRun: Function;
-  @Prop() errorMessage: string | null;
-  @Prop() isLoading: boolean;
 
   @State() viewQuery: EditorView;
   @State() stateQuery: EditorState;
@@ -73,14 +69,14 @@ export class CodeEditorUpdated {
   }
 
   clickRun(viewQuery, viewParameter) {
-    this.errorMessage = null;
+    state.errorMessage = null;
     let transactionQuery = viewQuery.state.update();
     const query = transactionQuery.state.doc.toString().trim();
-    this.viewQuery.dispatch(transactionQuery);
+    state.viewQuery.dispatch(transactionQuery);
 
     let transactionParameter = viewParameter.state.update();
     const parameter = transactionParameter.state.doc.toString().trim();
-    this.viewParameter.dispatch(transactionParameter);
+    state.viewParameter.dispatch(transactionParameter);
 
     console.log('QQQQQQQQQQQQq', query, 'PPPPPPPPPP', parameter);
     const validObj = isValidParameterJson(query, parameter);
@@ -91,7 +87,7 @@ export class CodeEditorUpdated {
       this.Error = null;
     } else {
       console.log('Error', validObj.error);
-      this.errorMessage = validObj.error;
+      state.errorMessage = validObj.error;
     }
   }
 

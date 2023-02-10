@@ -7,13 +7,9 @@
 
 ## Properties
 
-| Property            | Attribute            | Description | Type       | Default     |
-| ------------------- | -------------------- | ----------- | ---------- | ----------- |
-| `errorMessage`      | `error-message`      |             | `string`   | `undefined` |
-| `isLoading`         | `is-loading`         |             | `boolean`  | `undefined` |
-| `onClickRun`        | --                   |             | `Function` | `undefined` |
-| `parameterDocument` | `parameter-document` |             | `string`   | `undefined` |
-| `queryDocument`     | `query-document`     |             | `string`   | `undefined` |
+| Property     | Attribute | Description | Type       | Default     |
+| ------------ | --------- | ----------- | ---------- | ----------- |
+| `onClickRun` | --        |             | `Function` | `undefined` |
 
 
 ## Dependencies

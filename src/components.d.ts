@@ -21,11 +21,7 @@ export namespace Components {
         "url": string;
     }
     interface CodeEditorUpdated {
-        "errorMessage": string | null;
-        "isLoading": boolean;
         "onClickRun": Function;
-        "parameterDocument": string;
-        "queryDocument": string;
     }
     interface CustomTable {
         "clearSearch": any;
@@ -532,11 +528,7 @@ declare namespace LocalJSX {
         "url"?: string;
     }
     interface CodeEditorUpdated {
-        "errorMessage"?: string | null;
-        "isLoading"?: boolean;
         "onClickRun"?: Function;
-        "parameterDocument"?: string;
-        "queryDocument"?: string;
     }
     interface CustomTable {
         "clearSearch"?: any;
