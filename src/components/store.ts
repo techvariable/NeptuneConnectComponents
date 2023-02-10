@@ -9,6 +9,7 @@ const { state, onChange } = createStore({
   selectedNodeName: null,
   limit: 10,
   offset: 0,
+  page: 1,
   order: {},
   filter: {},
 
@@ -80,26 +81,28 @@ onChange('queryParameter', value => {
 });
 
 const fetchData = async (nodeName: string) => {
-  console.log("fetchData");
-  
-  state.isLoading = true;
-  state.selectedNodeName = nodeName;
-  try {
-    const res = await axios.post(`${state.url}/query/builder/${nodeName}`, {
-      limit: state.limit,
-      offset: state.offset,
-      order: state.order,
-      filter: state.filter,
-    });
+  if (state.selectedNodeName) {
+    console.log("fetchData");
 
-    state.nodes = res.data.nodes;
-    state.query = res.data.query;
-    state.queryParameter = formatJSON(res.data.queryParameters);
-  } catch (error) {
-    state.isError = true;
-    state.errorMessage = 'Failed to fetch data from db';
+    state.isLoading = true;
+    state.selectedNodeName = nodeName;
+    try {
+      const res = await axios.post(`${state.url}/query/builder/${nodeName}`, {
+        limit: state.limit,
+        offset: state.offset,
+        order: state.order,
+        filter: state.filter,
+      });
+
+      state.nodes = res.data.nodes;
+      state.query = res.data.query;
+      state.queryParameter = formatJSON(res.data.queryParameters);
+    } catch (error) {
+      state.isError = true;
+      state.errorMessage = 'Failed to fetch data from db';
+    }
+    state.isLoading = false;
   }
-  state.isLoading = false;
 };
 
 export default state;

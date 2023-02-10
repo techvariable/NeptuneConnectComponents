@@ -150,12 +150,8 @@ export class EditorPage {
               onClickRun={this.onClickRun}
             ></code-editor-updated>
 
-            {this.nodeData.length > 0 && !this.isLoading && (
-              <editor-res-updated
-                onTableOperation={(limit, page, sort, filter) => this.onTableOperation(limit, page, sort, filter)}
-                nodeData={this.nodeData}
-                headerList={this.nodeDataColumns}
-              ></editor-res-updated>
+            {state.nodes.length > 0 && !state.isLoading && (
+              <editor-res-updated></editor-res-updated>
             )}
           </div>
         </div>

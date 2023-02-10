@@ -72,13 +72,6 @@ export namespace Components {
         "headerList": any;
     }
     interface EditorResUpdated {
-        "autocompute": boolean;
-        "errorMessage": string;
-        "headerList": object[];
-        "isLoading": boolean;
-        "nodeData": object[];
-        "onTableOperation": any;
-        "rowPerPage": number[];
     }
     interface FluidContainer {
     }
@@ -583,13 +576,6 @@ declare namespace LocalJSX {
         "headerList"?: any;
     }
     interface EditorResUpdated {
-        "autocompute"?: boolean;
-        "errorMessage"?: string;
-        "headerList"?: object[];
-        "isLoading"?: boolean;
-        "nodeData"?: object[];
-        "onTableOperation"?: any;
-        "rowPerPage"?: number[];
     }
     interface FluidContainer {
     }

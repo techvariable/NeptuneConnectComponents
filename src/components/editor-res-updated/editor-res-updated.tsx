@@ -1,90 +1,65 @@
-import { Component, h, Host, Prop, State } from '@stencil/core';
+import { Component, h, Host, State } from '@stencil/core';
+import state from '../store';
 
 // let renders = 0;
+
+const SUPPORTED_ROWS = [10, 20, 50, 100];
 
 @Component({
   tag: 'editor-res-updated',
   scoped: true,
 })
 export class TableWrapperUpdated {
-  @Prop() rowPerPage: number[];
-  @Prop() onTableOperation: any;
-  @Prop() headerList: object[];
-  @Prop() autocompute: boolean;
-  @Prop() nodeData: object[];
-  @Prop() isLoading: boolean;
-  @Prop() errorMessage: string;
-
-  @State() page = 1;
-  @State() isLoadingError = false;
   @State() total: string;
-  @State() limit: number;
-  @State() sortChips: {} = {};
-  @State() searchChips: {} = {};
 
 
   removeSortChip = (item) => {
-    const chips = { ...this.sortChips };
+    const chips = { ...state.order };
     delete chips[item];
-    this.sortChips = chips;
-    this.fetchData();
+    state.order = chips;
   }
 
   removeSearchChip = (item) => {
-    const chips = { ...this.searchChips };
+    const chips = { ...state.filter };
     delete chips[item];
-    this.searchChips = chips;
-    this.fetchData();
-  }
-
-  componentWillLoad() {
-    this.rowPerPage = [10, 20]
-    this.limit = 10;
-  }
-
-  async fetchData() {
-    await this.onTableOperation(this.limit, this.page, this.sortChips, this.searchChips);
+    state.filter = chips;
   }
 
   computeHeader() {
-    const firstObjectOfData = Object.keys(this.nodeData.slice(0, 1).shift());
-    this.headerList = firstObjectOfData.map(item => {
+    const firstObjectOfData = Object.keys(state.nodes.slice(0, 1).shift());
+    state.columnHeaders = firstObjectOfData.map(item => {
       return {
         title: item,
         alias: item,
         filter: {
-          searchable: !/^-?\d+$/.test(this.nodeData.slice(0, 1).shift()[`${item}`]),
-          sortable: /^-?\d+$/.test(this.nodeData.slice(0, 1).shift()[`${item}`]),
+          searchable: !/^-?\d+$/.test(state.nodes.slice(0, 1).shift()[`${item}`]),
+          sortable: /^-?\d+$/.test(state.nodes.slice(0, 1).shift()[`${item}`]),
         },
       };
     });
   }
 
   rowsHandler(e) {
-    this.limit = e.target.value;
-    this.page = 1;
-    this.fetchData();
+    state.limit = e.target.value;
+    state.page = 1;
   }
 
   nextPage() {
-    ++this.page;
-    this.fetchData();
+    ++state.page;
   }
 
   prevPage() {
-    --this.page;
-    this.fetchData();
+    --state.page;
   }
 
   toggleSortMethod = (id: string) => {
-    const chips = { ...this.sortChips };
+    const chips = { ...state.order };
     chips[id] = chips[id] === "desc" ? 'asc' : 'desc';
-    this.sortChips = chips;
-    this.fetchData();
+    state.order = chips;
   };
 
   searchMethod(searchValue: string, colName: string, searchOption: string, textSearchOption: string, numberSearchOption: string) {
-    const chips = { ...this.searchChips }
+    const chips = { ...state.filter }
 
     const searchOperation = {}
 
@@ -93,9 +68,7 @@ export class TableWrapperUpdated {
 
     chips[colName] = searchOperation;
 
-    this.searchChips = chips;
-
-    this.fetchData();
+    state.filter = chips;
   }
 
 
@@ -103,24 +76,24 @@ export class TableWrapperUpdated {
     return (
       <Host>
         <chips-list
-          sortchips={this.sortChips}
-          searchChips={this.searchChips}
+          sortchips={state.order}
+          searchChips={state.filter}
           removeSortChip={this.removeSortChip}
           removeSearchChip={this.removeSearchChip}
           togglesort={this.toggleSortMethod}
         ></chips-list>
         <div style={{ overflow: 'scroll' }}>
           <custom-table
-            isLoading={this.isLoading}
-            isLoadingError={this.isLoadingError}
-            tableBody={this.nodeData}
-            tableHeader={this.headerList}
-            currentPage={this.page}
+            isLoading={state.isLoading}
+            isLoadingError={state.isError}
+            tableBody={state.nodes}
+            tableHeader={state.columnHeaders}
+            currentPage={state.page}
             dataLength={this.total}
             next={() => this.nextPage()}
             prev={() => this.prevPage()}
-            limit={this.limit}
-            rows={this.rowPerPage}
+            limit={state.limit}
+            rows={SUPPORTED_ROWS}
             rowsHandler={e => this.rowsHandler(e)}
             toggleSortMethod={id => this.toggleSortMethod(id)}
             searchMethod={(value, field, searchOption, textSearchOption, numberSearchOption) => this.searchMethod(value, field, searchOption, textSearchOption, numberSearchOption)}
