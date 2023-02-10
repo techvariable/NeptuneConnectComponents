@@ -86,6 +86,8 @@ export class EditorPage {
 
   onClickRun = async () => {
     state.selectedNodeName = null;
+    state.filter = {}
+    state.order = {}
     state.isError = false;
     state.errorMessage = null;
     state.isLoading = true;

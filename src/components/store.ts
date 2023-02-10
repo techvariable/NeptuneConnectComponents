@@ -33,6 +33,14 @@ onChange('selectedNodeName', value => {
   fetchData(value);
 });
 
+onChange('order', () => {
+  fetchData(state.selectedNodeName);
+});
+
+onChange('filter', () => {
+  fetchData(state.selectedNodeName);
+});
+
 onChange('nodes', value => {
   const keys = new Set();
 
