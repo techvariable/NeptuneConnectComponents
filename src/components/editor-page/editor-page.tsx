@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Component, h, Prop, State } from '@stencil/core';
 
 import { formatJSON } from '../../utils/utils';
-
+import state from '../store';
 
 @Component({
   tag: 'editor-page',
@@ -131,6 +131,7 @@ export class EditorPage {
   }
 
   render() {
+    console.log(state);
     return (
       <div>
         <div class="w-auto flex justify-center gap-4 mt-4">
