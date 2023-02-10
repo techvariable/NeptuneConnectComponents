@@ -48,10 +48,6 @@ export class CustomTable {
     }
   }
 
-  componentWillLoad(){
-    console.log("tableHeader in table",this.tableHeader);
-  }
-
   render() {
     const trList = [];
     for (let i = 1; i < this.rows[0]; i++) {
@@ -68,17 +64,19 @@ export class CustomTable {
         <thead class="bg-violet-50 sticky top-0">
           <tr>
             {this.tableHeader.map((item: any) => (
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 uppercase tracking-wider">
-                {item.title}
-                {item?.filter?.sortable && (
-                  <button class="ml-3" onClick={() => this.toggleSortMethod(item.title)}>
-                    {sort}
-                  </button>
-                )}
+              <th scope="col" style={{ minWidth: "120px" }} class="px-6 py-3 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 uppercase tracking-wider">
+                <div style={{display: "flex"}}>
+                  {item.title}
+                  {item?.filter?.sortable && (
+                    <button class="ml-3" onClick={() => this.toggleSortMethod(item.title)}>
+                      {sort}
+                    </button>
+                  )}
 
-                {item?.filter?.searchable && (
-                  <table-search-modal searchMethod={(value, field, searchoption, textsearchoption, numbersearchoption ) => this.searchMethod(value ,field, searchoption, textsearchoption, numbersearchoption )} type={item.type} alias={item.alias} clearSearch={colName => this.clearSearch(colName)} icon={search}></table-search-modal>
-                )}
+                  {item?.filter?.searchable && (
+                    <table-search-modal searchMethod={(value, field, searchoption, textsearchoption, numbersearchoption) => this.searchMethod(value, field, searchoption, textsearchoption, numbersearchoption)} type={item.type} alias={item.alias} clearSearch={colName => this.clearSearch(colName)} icon={search}></table-search-modal>
+                  )}
+                </div>
               </th>
             ))}
             {this.isLoading && <th class="text-gray-500 ">&nbsp;</th>}
@@ -108,17 +106,17 @@ export class CustomTable {
               <tr class="hover:bg-gray-100 transition">
                 {this.tableHeader.map((id: any) => (
                   // <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item[id.alias]}</td>
-                  <td text-overflow:ellipsis max-width="50px" class="px-6 py-3 whitespace-nowrap text-sm text-gray-900">
+                  <td text-overflow:ellipsis class="px-6 py-3 whitespace-nowrap text-sm text-gray-900">
                     {!id.click.clickable ? (
-                      item[id.alias]?(
+                      item[id.alias] ? (
                         item[id.alias].length > 25 ? (
-                        item[id.alias].slice(0, 25) + '...'
-                      ) : /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/.test(item[id.alias]) ? (
-                        item[id.alias].slice(0, 16).split('T')[0] + ' at ' + item[id.alias].slice(11, 19)
-                      ) : (
-                        item[id.alias]
-                      )
-                      ):(item[id.alias])
+                          item[id.alias].slice(0, 25) + '...'
+                        ) : /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/.test(item[id.alias]) ? (
+                          item[id.alias].slice(0, 16).split('T')[0] + ' at ' + item[id.alias].slice(11, 19)
+                        ) : (
+                          item[id.alias]
+                        )
+                      ) : (item[id.alias])
                     ) : (
                       <a target="_blank" href={id.click.url + item[id.alias]} class="flex items-center py-1 px-4 text-base font-normal text-gray-900 rounded-lg bg-gray-200">
                         <img class="h-4" src={id.click.icon} alt="icon" />
