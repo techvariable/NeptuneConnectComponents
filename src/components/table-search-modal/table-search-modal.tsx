@@ -1,6 +1,4 @@
 import { Component, Host, h, State, Prop } from '@stencil/core';
-// import axios from 'axios';
-// import Swal from 'sweetalert2';
 
 @Component({
   tag: 'table-search-modal',
@@ -9,27 +7,27 @@ import { Component, Host, h, State, Prop } from '@stencil/core';
 export class TableSearchModal {
   @Prop() url: string;
   @Prop() refresh: any;
-  @State() isModalOpen = false;
-  @State() value: any;
   @Prop() alias: string;
   @Prop() type: string;
   @Prop() searchMethod: any;
   @Prop() clearSearch: any;
   @Prop() icon: any;
+
+  @State() value: any;
+  @State() isModalOpen = false;
   @State() searchOptions: string[] = ['string', 'number'];
   @State() textSearchOptions: string[] = ['exact', 'contains'];
   @State() numberSearchOptions: string[] = ['gte', 'lte', 'exact'];
   @State() selectedSearchOption: string = '';
   @State() selectedTextSearchOption: string = '';
   @State() selectedNumberSearchOption: string = '';
-  @State() colName:string="";
+  @State() colName: string = "";
 
-  componentWillLoad(){
-    this.colName=this.alias;
-    if(this.type!== null){
+  componentWillLoad() {
+    this.colName = this.alias;
+    if (this.type !== null) {
       this.selectedSearchOption = this.type;
     }
-    
   }
 
   clearHandler() {
@@ -37,12 +35,12 @@ export class TableSearchModal {
     this.clearSearch(this.colName);
   }
 
-  clearFields(){
-    this.value="";
-    this.colName="";
-    this.selectedSearchOption="";
-    this.selectedTextSearchOption="";
-    this.selectedNumberSearchOption="";
+  clearFields() {
+    this.value = "";
+    this.colName = "";
+    this.selectedSearchOption = "";
+    this.selectedTextSearchOption = "";
+    this.selectedNumberSearchOption = "";
   }
 
   toggleModalState() {
@@ -51,41 +49,12 @@ export class TableSearchModal {
 
   submitHandler(e) {
     e.preventDefault();
-    if(this.selectedSearchOption!==""){
-      this.searchMethod(this.value, this.alias, this.selectedSearchOption,this.selectedTextSearchOption,this.selectedNumberSearchOption);
+    if (this.selectedSearchOption !== "") {
+      this.searchMethod(this.value, this.alias, this.selectedSearchOption, this.selectedTextSearchOption, this.selectedNumberSearchOption);
       this.toggleModalState();
       this.clearFields();
     }
   }
-
-//   async handlenewRoleSumit(e) {
-//     e.preventDefault();
-//     try {
-//       await axios.post(this.url, {
-//         roleName: this.value,
-//         permissions: '{\n  "editor":{\n    "read":true,\n    "write":true,\n    "update":true,\n    "delete":true \n  }\n}',
-//       });
-
-//       Swal.fire({
-//         position: 'center',
-//         icon: 'success',
-//         text: 'Added new role!',
-//         showConfirmButton: false,
-//         timer: 1500,
-//       });
-
-//       this.value = '';
-//       this.toggleModalState();
-//       this.refresh();
-//     } catch (error) {
-//       Swal.fire({
-//         icon: 'error',
-//         title: 'Oops...',
-//         text: 'Something went wrong!',
-//       });
-//     }
-//   }
-
 
   handleChange(event) {
     this.value = event.target.value;
@@ -131,7 +100,7 @@ export class TableSearchModal {
                     <div class="sm:flex sm:items-start">
                       <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                         <h3 class="text-lg leading-6 font-medium text-gray-900 my-2" id="modal-title">
-                          Search Fields in {this.alias}
+                          Search in {this.alias}
                         </h3>
                         <div class="mt-2">
                           <div class="mb-2">
@@ -140,7 +109,7 @@ export class TableSearchModal {
                               labels={this.searchOptions}
                               name="SearchMethod"
                               align="horizontal"
-                              checked = {this.type}
+                              checked={this.type}
                             ></radio-button-multiple>
                           </div>
 
