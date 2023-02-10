@@ -5,27 +5,29 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
-
-| Property        | Attribute        | Description | Type  | Default     |
-| --------------- | ---------------- | ----------- | ----- | ----------- |
-| `doc`           | `doc`            |             | `any` | `undefined` |
-| `responseLabel` | `response-label` |             | `any` | `undefined` |
-
-
 ## Dependencies
+
+### Used by
+
+ - [editor-page](../editor-page)
 
 ### Depends on
 
+- [editor-res-updated](../editor-res-updated)
 - [res-editor](../res-editor)
-- [data-table-updated](../data-table-updated)
 
 ### Graph
 ```mermaid
 graph TD;
+  tab-component-updated --> editor-res-updated
   tab-component-updated --> res-editor
-  tab-component-updated --> data-table-updated
-  data-table-updated --> plain-button
+  editor-res-updated --> chips-list
+  editor-res-updated --> custom-table
+  custom-table --> table-search-modal
+  custom-table --> loader-component
+  custom-table --> plain-button
+  table-search-modal --> radio-button-multiple
+  editor-page --> tab-component-updated
   style tab-component-updated fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

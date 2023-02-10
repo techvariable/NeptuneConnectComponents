@@ -18,17 +18,19 @@
 
 - [node-item](../node-item)
 - [code-editor-updated](../code-editor-updated)
-- [editor-res-updated](../editor-res-updated)
+- [tab-component-updated](../tab-component-updated)
 
 ### Graph
 ```mermaid
 graph TD;
   editor-page --> node-item
   editor-page --> code-editor-updated
-  editor-page --> editor-res-updated
+  editor-page --> tab-component-updated
   node-item --> menu-drop-down
   code-editor-updated --> tabs-component
   code-editor-updated --> loader-component
+  tab-component-updated --> editor-res-updated
+  tab-component-updated --> res-editor
   editor-res-updated --> chips-list
   editor-res-updated --> custom-table
   custom-table --> table-search-modal

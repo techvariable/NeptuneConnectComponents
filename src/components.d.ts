@@ -162,8 +162,6 @@ export namespace Components {
         "responseLabel": any;
     }
     interface TabComponentUpdated {
-        "doc": any;
-        "responseLabel": any;
     }
     interface TableSearchModal {
         "alias": string;
@@ -673,8 +671,6 @@ declare namespace LocalJSX {
         "responseLabel"?: any;
     }
     interface TabComponentUpdated {
-        "doc"?: any;
-        "responseLabel"?: any;
     }
     interface TableSearchModal {
         "alias"?: string;

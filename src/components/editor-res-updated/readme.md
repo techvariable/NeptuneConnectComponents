@@ -9,7 +9,7 @@
 
 ### Used by
 
- - [editor-page](../editor-page)
+ - [tab-component-updated](../tab-component-updated)
 
 ### Depends on
 
@@ -25,7 +25,7 @@ graph TD;
   custom-table --> loader-component
   custom-table --> plain-button
   table-search-modal --> radio-button-multiple
-  editor-page --> editor-res-updated
+  tab-component-updated --> editor-res-updated
   style editor-res-updated fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

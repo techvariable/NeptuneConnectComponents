@@ -14,10 +14,6 @@
 
 ## Dependencies
 
-### Used by
-
- - [tab-component-updated](../tab-component-updated)
-
 ### Depends on
 
 - [plain-button](../plain-button)
@@ -26,7 +22,6 @@
 ```mermaid
 graph TD;
   data-table-updated --> plain-button
-  tab-component-updated --> data-table-updated
   style data-table-updated fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

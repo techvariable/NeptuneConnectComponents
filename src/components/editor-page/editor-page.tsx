@@ -137,7 +137,8 @@ export class EditorPage {
             <code-editor-updated onClickRun={this.onClickRun}></code-editor-updated>
 
             {state.nodes.length > 0 && !state.isLoading && (
-              <editor-res-updated></editor-res-updated>
+              <tab-component-updated></tab-component-updated>
+              // <editor-res-updated></editor-res-updated>
             )}
           </div>
         </div>
