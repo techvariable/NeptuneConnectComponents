@@ -2,7 +2,7 @@ import { createStore } from '@stencil/store';
 import axios from 'axios';
 import { formatJSON } from '../utils/utils';
 
-const { state, onChange } = createStore({
+const { state, onChange, reset } = createStore({
   url: "http://localhost:3000/api/editor",
   nodeList: [],
 
@@ -53,8 +53,8 @@ onChange('nodes', value => {
       alias: k,
       click: { clickable: false },
       filter: {
-        searchable: true,
-        sortable: true,
+        searchable: state.selectedNodeName ? true : false,
+        sortable: state.selectedNodeName ? true : false,
       },
       title: k,
       type: dataType,
@@ -107,4 +107,4 @@ const fetchData = async (nodeName: string) => {
 };
 
 export default state;
-export { fetchData }
+export { fetchData, reset }

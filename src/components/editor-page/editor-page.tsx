@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Component, h, Prop, State } from '@stencil/core';
 
-import { formatJSON } from '../../utils/utils';
+import { formatJSON, isValidParameterJson } from '../../utils/utils';
 import state from '../store';
 
 @Component({
@@ -83,52 +83,42 @@ export class EditorPage {
     this.isLoading = false;
   };
 
-  onClickRun = async (query: string, parameters: string) => {
+
+  onClickRun = async () => {
+    state.selectedNodeName = null;
+    state.isError = false;
     state.errorMessage = null;
     state.isLoading = true;
+
     try {
-      const res = await axios.post(`${state.url}/query/`, {
-        query,
-        parameters: JSON.parse(parameters),
-      });
+      let transactionQuery = state.viewQuery.state.update();
+      const query = transactionQuery.state.doc.toString().trim();
+      state.viewQuery.dispatch(transactionQuery);
 
-      state.nodes = res.data.result;
+      let transactionParameter = state.viewParameter.state.update();
+      const parameters = transactionParameter.state.doc.toString().trim();
+      state.viewParameter.dispatch(transactionParameter);
 
-      let allKeys = [];
-      state.nodes.map(obj => {
-        let keys = Object.keys(obj);
-        allKeys = [...new Set([...allKeys, ...keys])];
-      });
-      console.log('all keys', allKeys);
-      state.columnHeaders = [];
-      allKeys.forEach(key => {
-        let obj = {};
-        obj['title'] = key;
-        obj['filter'] = {
-          searchable: true,
-          sortable: true,
-        };
-        obj['alias'] = key;
-        obj['click'] = {
-          clickable: false,
-        };
-        obj['type'] = null;
+      const { isValid, error } = isValidParameterJson(query, parameters);
 
-        state.nodes.slice(0, 5).forEach(dataObj => {
-          if (dataObj !== undefined && typeof (dataObj[key] !== null)) {
-            obj['type'] = typeof dataObj[key];
-          }
+      if (isValid) {
+        const res = await axios.post(`${state.url}/query/`, {
+          query,
+          parameters: JSON.parse(parameters),
         });
-        state.columnHeaders.push(obj);
-      });
+
+        state.query = query;
+        state.queryParameter = parameters;
+        state.nodes = res.data.result;
+      } else {
+        state.isError = true;
+        state.errorMessage = error;
+      }
     } catch (error) {
-      console.log({ error });
+      state.isError = true;
+      state.errorMessage = error;
     }
     state.isLoading = false;
-  };
-
-  onTableOperation = async (limit, page, sort, filter) => {
-    await this.fetchData(this.selectedNodeName, limit, (page - 1) * limit, sort, filter);
   };
 
   render() {
@@ -142,13 +132,7 @@ export class EditorPage {
           </aside>
           <div class="w-96" style={{ width: '72.5rem' }}>
             <h2 class="pb-3 font-mono text-lg font-bold leading-7 text-gray-600">Write your Gremlin Query Here</h2>
-            <code-editor-updated
-              // queryDocument={this.queryDocument}
-              // parameterDocument={this.parameterDocument}
-              // errorMessage={this.errorMessage}
-              // isLoading={this.isLoading}
-              onClickRun={this.onClickRun}
-            ></code-editor-updated>
+            <code-editor-updated onClickRun={this.onClickRun}></code-editor-updated>
 
             {state.nodes.length > 0 && !state.isLoading && (
               <editor-res-updated></editor-res-updated>

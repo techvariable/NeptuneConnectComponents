@@ -3,7 +3,6 @@ import { EditorState, basicSetup } from '@codemirror/basic-setup';
 import { EditorView, keymap } from '@codemirror/view';
 import { java } from '@codemirror/lang-java';
 import { json } from '@codemirror/lang-json';
-import { isValidParameterJson } from '../../utils/utils';
 
 import state from '../store';
 
@@ -19,14 +18,7 @@ const TAB_LIST = [
 export class CodeEditorUpdated {
   @Prop() onClickRun: Function;
 
-  @State() viewQuery: EditorView;
-  @State() stateQuery: EditorState;
-
-  @State() viewParameter: EditorView;
-  @State() stateParameter: EditorState;
-
   @State() activeIndex: number = 0;
-  @State() Error: string | null;
 
   @Element() element: HTMLElement;
 
@@ -68,29 +60,6 @@ export class CodeEditorUpdated {
     ]);
   }
 
-  clickRun(viewQuery, viewParameter) {
-    state.errorMessage = null;
-    let transactionQuery = viewQuery.state.update();
-    const query = transactionQuery.state.doc.toString().trim();
-    state.viewQuery.dispatch(transactionQuery);
-
-    let transactionParameter = viewParameter.state.update();
-    const parameter = transactionParameter.state.doc.toString().trim();
-    state.viewParameter.dispatch(transactionParameter);
-
-    console.log('QQQQQQQQQQQQq', query, 'PPPPPPPPPP', parameter);
-    const validObj = isValidParameterJson(query, parameter);
-    console.log(validObj);
-    if (validObj.isValid) {
-      console.log('no error');
-      this.onClickRun(query, parameter);
-      this.Error = null;
-    } else {
-      console.log('Error', validObj.error);
-      state.errorMessage = validObj.error;
-    }
-  }
-
   render() {
     return (
       <Host>
@@ -108,7 +77,7 @@ export class CodeEditorUpdated {
           <div class="flex justify-between">
             <button
               title="Ctrl+Shift+Enter to run"
-              onClick={() => this.clickRun(state.viewQuery, state.viewParameter)}
+              onClick={() => this.onClickRun()}
               class="flex text-sm gap-2 items-center justify-center text-gray-600 border border-gray-300 px-3 mt-2 py-2 hover:bg-gray-200 hover:text-gray-800"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
