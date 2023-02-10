@@ -13,26 +13,30 @@ export class EditorPage {
 
   @State() selectedNodeName: string;
   @State() nodeList: string[] = [];
-  @State() queryDocument: string = "\n\n\n\n";
-  @State() parameterDocument: string = "\n\n\n\n"
+  @State() queryDocument: string = '\n\n\n\n';
+  @State() parameterDocument: string = '\n\n\n\n';
   @State() nodeData: Array<{}> = [];
   @State() nodeDataColumns: {}[] = [];
   @State() errorMessage: string | null = null;
   @State() isLoading: boolean = false;
+
+  componentWillLoad() {
+    this.fetchNavigators();
+  }
 
   fetchNavigators = () => {
     this.errorMessage = null;
     axios
       .get(`${this.url}/nodes`)
       .then((res: any) => {
-        this.nodeList = res.data.nodes;
+        state.nodeList = res.data.nodes;
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  fetchData = async (nodeName: string, limit: number = 10, offset: number = 0, order?: { [index: string]: "asc" | "desc" }, filter?: any) => {
+  fetchData = async (nodeName: string, limit: number = 10, offset: number = 0, order?: { [index: string]: 'asc' | 'desc' }, filter?: any) => {
     this.isLoading = true;
     this.selectedNodeName = nodeName;
     try {
@@ -40,7 +44,7 @@ export class EditorPage {
         limit,
         offset,
         order: order ? order : {},
-        filter: filter ? filter : {}
+        filter: filter ? filter : {},
       });
 
       this.nodeData = res.data.nodes;
@@ -51,84 +55,81 @@ export class EditorPage {
 
       this.nodeData.forEach(row => {
         Object.keys(row).forEach(k => {
-          keys.add(k)
-        })
-      })
+          keys.add(k);
+        });
+      });
 
       this.nodeDataColumns = [...keys].map((k: string) => {
-        let dataType = "string";
+        let dataType = 'string';
 
         this.nodeData.slice(0, 5).forEach(row => {
-          dataType = typeof (row[k]);
-        })
+          dataType = typeof row[k];
+        });
 
         return {
           alias: k,
           click: { clickable: false },
           filter: {
             searchable: true,
-            sortable: true
+            sortable: true,
           },
           title: k,
-          type: dataType
-        }
-      })
+          type: dataType,
+        };
+      });
     } catch (error) {
-      console.log({ error })
+      console.log({ error });
     }
     this.isLoading = false;
-  }
+  };
 
   onClickRun = async (query: string, parameters: string) => {
     this.errorMessage = null;
     this.isLoading = true;
     try {
-      const res = await axios.post(`${this.url}/query/`, 
-      {
+      const res = await axios.post(`${this.url}/query/`, {
         query,
-        parameters:JSON.parse(parameters)
-      }
-      );
+        parameters: JSON.parse(parameters),
+      });
 
       this.nodeData = res.data.result;
-      
+
       let allKeys = [];
       this.nodeData.map(obj => {
         let keys = Object.keys(obj);
         allKeys = [...new Set([...allKeys, ...keys])];
       });
-      console.log("all keys", allKeys)
+      console.log('all keys', allKeys);
       this.nodeDataColumns = [];
       allKeys.forEach(key => {
         let obj = {};
         obj['title'] = key;
-        obj["filter"] = {
+        obj['filter'] = {
           searchable: true,
           sortable: true,
         };
-        obj["alias"] = key;
-        obj["click"] = {
+        obj['alias'] = key;
+        obj['click'] = {
           clickable: false,
         };
-        obj["type"] = null;
+        obj['type'] = null;
 
-        this.nodeData.slice(0,5).forEach(dataObj=>{
-          if(dataObj !== undefined && typeof(dataObj[key] !== null) ){
-            obj["type"] = typeof(dataObj[key]);
+        this.nodeData.slice(0, 5).forEach(dataObj => {
+          if (dataObj !== undefined && typeof (dataObj[key] !== null)) {
+            obj['type'] = typeof dataObj[key];
           }
-        })
+        });
         this.nodeDataColumns.push(obj);
-      })
+      });
     } catch (error) {
-      console.log({ error })
+      console.log({ error });
     }
     this.isLoading = false;
-    
-  }
+  };
 
   onTableOperation = async (limit, page, sort, filter) => {
-    await this.fetchData(this.selectedNodeName, limit, (page - 1) * limit, sort, filter)
-  }
+    await this.fetchData(this.selectedNodeName, limit, (page - 1) * limit, sort, filter);
+  };
 
   render() {
     console.log(state);
@@ -137,7 +138,7 @@ export class EditorPage {
         <div class="w-auto flex justify-center gap-4 mt-4">
           <aside class="w-80" aria-label="Sidebar">
             <h2 class="pb-6 font-mono text-lg font-bold leading-7 text-gray-600">Nodes</h2>
-            <node-item fetchNavigators={this.fetchNavigators} fetchData={this.fetchData} nodeList={this.nodeList}></node-item>
+            <node-item></node-item>
           </aside>
           <div class="w-96" style={{ width: '72.5rem' }}>
             <h2 class="pb-3 font-mono text-lg font-bold leading-7 text-gray-600">Write your Gremlin Query Here</h2>
@@ -149,13 +150,16 @@ export class EditorPage {
               onClickRun={this.onClickRun}
             ></code-editor-updated>
 
-            {this.nodeData.length > 0 && !this.isLoading && <editor-res-updated
-              onTableOperation={(limit, page, sort, filter) => this.onTableOperation(limit, page, sort, filter)}
-              nodeData={this.nodeData}
-              headerList={this.nodeDataColumns}></editor-res-updated>}
+            {this.nodeData.length > 0 && !this.isLoading && (
+              <editor-res-updated
+                onTableOperation={(limit, page, sort, filter) => this.onTableOperation(limit, page, sort, filter)}
+                nodeData={this.nodeData}
+                headerList={this.nodeDataColumns}
+              ></editor-res-updated>
+            )}
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

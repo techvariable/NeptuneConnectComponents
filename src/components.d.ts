@@ -128,9 +128,6 @@ export namespace Components {
     interface NavBar {
     }
     interface NodeItem {
-        "fetchData": any;
-        "fetchNavigators": any;
-        "nodeList": Array<string>;
     }
     interface PermissionEditor {
         "fetchrole": string;
@@ -642,9 +639,6 @@ declare namespace LocalJSX {
     interface NavBar {
     }
     interface NodeItem {
-        "fetchData"?: any;
-        "fetchNavigators"?: any;
-        "nodeList"?: Array<string>;
     }
     interface PermissionEditor {
         "fetchrole"?: string;

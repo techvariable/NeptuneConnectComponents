@@ -5,15 +5,6 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
-
-| Property          | Attribute          | Description | Type       | Default     |
-| ----------------- | ------------------ | ----------- | ---------- | ----------- |
-| `fetchData`       | `fetch-data`       |             | `any`      | `undefined` |
-| `fetchNavigators` | `fetch-navigators` |             | `any`      | `undefined` |
-| `nodeList`        | --                 |             | `string[]` | `[]`        |
-
-
 ## Dependencies
 
 ### Used by

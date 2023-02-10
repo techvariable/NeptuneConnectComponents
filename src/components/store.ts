@@ -1,10 +1,19 @@
-import { createStore } from "@stencil/store";
-
+import { createStore } from '@stencil/store';
+import axios from 'axios';
+import { formatJSON } from '../utils/utils';
 
 const { state, onChange } = createStore({
+  url: "http://localhost:3000/api/editor",
+  nodeList: [],
+
   selectedNodeName: null,
-  query: "",
-  queryParameter: {},
+  limit: 10,
+  offset: 0,
+  order: {},
+  filter: {},
+
+  query: '',
+  queryParameter: "",
   nodes: [],
   columnHeaders: [],
   isLoading: false,
@@ -16,20 +25,44 @@ const { state, onChange } = createStore({
   stateQuery: null,
   viewParameter: null,
   stateParameter: null,
-
-  activeIndex: 0
 });
 
 onChange('selectedNodeName', value => {
-  state.columnHeaders = value;
+  fetchData(value);
 });
 
 onChange('nodes', value => {
-  state.columnHeaders = value;
+  const keys = new Set();
+
+  value.forEach(row => {
+    Object.keys(row).forEach(k => {
+      keys.add(k);
+    });
+  });
+
+  state.columnHeaders = [...keys].map((k: string) => {
+    let dataType = 'string';
+
+    value.slice(0, 5).forEach(row => {
+      dataType = typeof row[k];
+    });
+
+    return {
+      alias: k,
+      click: { clickable: false },
+      filter: {
+        searchable: true,
+        sortable: true,
+      },
+      title: k,
+      type: dataType,
+    };
+  });
 });
 
 onChange('query', value => {
   if (state.viewQuery) {
+    console.log("Updating the query state")
     let transactionToAdd = state.viewQuery.state.update({
       changes: { from: 0, to: state.viewQuery.state.doc.toString().length, insert: `${value}` },
     });
@@ -46,5 +79,28 @@ onChange('queryParameter', value => {
   }
 });
 
+const fetchData = async (nodeName: string) => {
+  console.log("fetchData");
+  
+  state.isLoading = true;
+  state.selectedNodeName = nodeName;
+  try {
+    const res = await axios.post(`${state.url}/query/builder/${nodeName}`, {
+      limit: state.limit,
+      offset: state.offset,
+      order: state.order,
+      filter: state.filter,
+    });
+
+    state.nodes = res.data.nodes;
+    state.query = res.data.query;
+    state.queryParameter = formatJSON(res.data.queryParameters);
+  } catch (error) {
+    state.isError = true;
+    state.errorMessage = 'Failed to fetch data from db';
+  }
+  state.isLoading = false;
+};
 
 export default state;
+export { fetchData }
