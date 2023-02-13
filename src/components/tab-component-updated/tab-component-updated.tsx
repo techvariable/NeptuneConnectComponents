@@ -56,7 +56,7 @@ export class TabComponentUpdated {
         </div>
 
         {/* content */}
-        <div class="border border-gray-200 pb-2 text-gray-500 max-h-72 overflow-y-scroll">
+        <div style={{"max-height":"450px"}} class="border border-gray-200 pb-2 text-gray-500 overflow-y-scroll">
           {this.setActive !== 'json' ? (
             <editor-res-updated></editor-res-updated>
           ) : (

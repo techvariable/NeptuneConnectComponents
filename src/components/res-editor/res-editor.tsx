@@ -40,7 +40,9 @@ export class ResEditor {
   render() {
     return (
       <Host>
+        <div class="bg-gray-100">
         <p class={this.labelTitle[this.responseLabel].class}>{this.labelTitle[this.responseLabel].tag}</p>
+        </div>
         <div id="res-editor"></div>
       </Host>
     );

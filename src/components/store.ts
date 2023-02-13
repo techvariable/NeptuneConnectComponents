@@ -98,6 +98,7 @@ const fetchData = async (nodeName: string) => {
 
     state.isLoading = true;
     state.selectedNodeName = nodeName;
+    console.log(state.limit,state.offset,state.order,state.filter);
     try {
       const res = await axios.post(`${state.url}/query/builder/${nodeName}`, {
         limit: state.limit,
@@ -116,6 +117,16 @@ const fetchData = async (nodeName: string) => {
     state.isLoading = false;
   }
 };
+
+onChange('page', (value) => {
+  state.offset = (state.limit*value)- state.limit;
+  console.log("this is page number",state.offset)
+  fetchData(state.selectedNodeName);
+});
+
+onChange('limit', () => {
+  fetchData(state.selectedNodeName);
+});
 
 export default state;
 export { fetchData, reset }

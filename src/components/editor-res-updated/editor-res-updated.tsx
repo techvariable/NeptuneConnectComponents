@@ -82,7 +82,7 @@ export class TableWrapperUpdated {
           removeSearchChip={this.removeSearchChip}
           togglesort={this.toggleSortMethod}
         ></chips-list>
-        <div style={{ overflow: 'scroll' }}>
+        <div>
           <custom-table
             isLoading={state.isLoading}
             isLoadingError={state.isError}
