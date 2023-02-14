@@ -88,6 +88,22 @@ export namespace Components {
     }
     interface LoaderComponent {
     }
+    interface LogsTable {
+        "clearSearch": any;
+        "currentPage": number;
+        "dataLength": string;
+        "isLoading": boolean;
+        "isLoadingError": boolean;
+        "limit": number;
+        "next": any;
+        "prev": any;
+        "rows": number[];
+        "rowsHandler": any;
+        "searchMethod": any;
+        "tableBody": object[];
+        "tableHeader": object[];
+        "toggleSortMethod": any;
+    }
     interface MainComponent {
     }
     interface MenuDown {
@@ -318,6 +334,12 @@ declare global {
         prototype: HTMLLoaderComponentElement;
         new (): HTMLLoaderComponentElement;
     };
+    interface HTMLLogsTableElement extends Components.LogsTable, HTMLStencilElement {
+    }
+    var HTMLLogsTableElement: {
+        prototype: HTMLLogsTableElement;
+        new (): HTMLLogsTableElement;
+    };
     interface HTMLMainComponentElement extends Components.MainComponent, HTMLStencilElement {
     }
     var HTMLMainComponentElement: {
@@ -487,6 +509,7 @@ declare global {
         "icon-button": HTMLIconButtonElement;
         "invite-component": HTMLInviteComponentElement;
         "loader-component": HTMLLoaderComponentElement;
+        "logs-table": HTMLLogsTableElement;
         "main-component": HTMLMainComponentElement;
         "menu-down": HTMLMenuDownElement;
         "menu-drop-down": HTMLMenuDropDownElement;
@@ -596,6 +619,22 @@ declare namespace LocalJSX {
         "url"?: string;
     }
     interface LoaderComponent {
+    }
+    interface LogsTable {
+        "clearSearch"?: any;
+        "currentPage"?: number;
+        "dataLength"?: string;
+        "isLoading"?: boolean;
+        "isLoadingError"?: boolean;
+        "limit"?: number;
+        "next"?: any;
+        "prev"?: any;
+        "rows"?: number[];
+        "rowsHandler"?: any;
+        "searchMethod"?: any;
+        "tableBody"?: object[];
+        "tableHeader"?: object[];
+        "toggleSortMethod"?: any;
     }
     interface MainComponent {
     }
@@ -736,6 +775,7 @@ declare namespace LocalJSX {
         "icon-button": IconButton;
         "invite-component": InviteComponent;
         "loader-component": LoaderComponent;
+        "logs-table": LogsTable;
         "main-component": MainComponent;
         "menu-down": MenuDown;
         "menu-drop-down": MenuDropDown;
@@ -785,6 +825,7 @@ declare module "@stencil/core" {
             "icon-button": LocalJSX.IconButton & JSXBase.HTMLAttributes<HTMLIconButtonElement>;
             "invite-component": LocalJSX.InviteComponent & JSXBase.HTMLAttributes<HTMLInviteComponentElement>;
             "loader-component": LocalJSX.LoaderComponent & JSXBase.HTMLAttributes<HTMLLoaderComponentElement>;
+            "logs-table": LocalJSX.LogsTable & JSXBase.HTMLAttributes<HTMLLogsTableElement>;
             "main-component": LocalJSX.MainComponent & JSXBase.HTMLAttributes<HTMLMainComponentElement>;
             "menu-down": LocalJSX.MenuDown & JSXBase.HTMLAttributes<HTMLMenuDownElement>;
             "menu-drop-down": LocalJSX.MenuDropDown & JSXBase.HTMLAttributes<HTMLMenuDropDownElement>;

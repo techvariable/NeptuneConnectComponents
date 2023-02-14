@@ -26,6 +26,7 @@
  - [data-table](../data-table)
  - [data-table-updated](../data-table-updated)
  - [invite-component](../invite-component)
+ - [logs-table](../logs-table)
  - [side-bar](../side-bar)
 
 ### Graph
@@ -35,6 +36,7 @@ graph TD;
   data-table --> plain-button
   data-table-updated --> plain-button
   invite-component --> plain-button
+  logs-table --> plain-button
   side-bar --> plain-button
   style plain-button fill:#f9f,stroke:#333,stroke-width:4px
 ```

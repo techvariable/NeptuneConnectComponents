@@ -1,4 +1,4 @@
-# custom-table
+# logs-table
 
 
 
@@ -29,25 +29,22 @@
 
 ### Used by
 
- - [editor-res-updated](../editor-res-updated)
- - [table-wrapper-updated](../table-wrapper-updated)
+ - [table-wrapper](../table-wrapper)
 
 ### Depends on
 
-- [table-search-modal](../table-search-modal)
+- [drop-down](../drop-down)
 - [loader-component](../loader-component)
 - [plain-button](../plain-button)
 
 ### Graph
 ```mermaid
 graph TD;
-  custom-table --> table-search-modal
-  custom-table --> loader-component
-  custom-table --> plain-button
-  table-search-modal --> radio-button-multiple
-  editor-res-updated --> custom-table
-  table-wrapper-updated --> custom-table
-  style custom-table fill:#f9f,stroke:#333,stroke-width:4px
+  logs-table --> drop-down
+  logs-table --> loader-component
+  logs-table --> plain-button
+  table-wrapper --> logs-table
+  style logs-table fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

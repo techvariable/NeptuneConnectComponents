@@ -24,16 +24,15 @@
 
 ### Depends on
 
-- [custom-table](../custom-table)
+- [logs-table](../logs-table)
 
 ### Graph
 ```mermaid
 graph TD;
-  table-wrapper --> custom-table
-  custom-table --> table-search-modal
-  custom-table --> loader-component
-  custom-table --> plain-button
-  table-search-modal --> radio-button-multiple
+  table-wrapper --> logs-table
+  logs-table --> drop-down
+  logs-table --> loader-component
+  logs-table --> plain-button
   main-component --> table-wrapper
   query-logs --> table-wrapper
   style table-wrapper fill:#f9f,stroke:#333,stroke-width:4px

@@ -15,11 +15,10 @@
 ```mermaid
 graph TD;
   main-component --> table-wrapper
-  table-wrapper --> custom-table
-  custom-table --> table-search-modal
-  custom-table --> loader-component
-  custom-table --> plain-button
-  table-search-modal --> radio-button-multiple
+  table-wrapper --> logs-table
+  logs-table --> drop-down
+  logs-table --> loader-component
+  logs-table --> plain-button
   style main-component fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
