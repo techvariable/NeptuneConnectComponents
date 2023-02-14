@@ -1,8 +1,6 @@
 import { Component, h, Host, State } from '@stencil/core';
 import state from '../store';
 
-// let renders = 0;
-
 const SUPPORTED_ROWS = [10, 20, 50];
 
 @Component({
@@ -41,7 +39,6 @@ export class TableWrapperUpdated {
 
   rowsHandler(e) {
     state.limit = e.target.value;
-    console.log("updated limit",state.limit);
     state.page = 1;
   }
 

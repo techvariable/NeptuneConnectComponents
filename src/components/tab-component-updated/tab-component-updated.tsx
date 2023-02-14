@@ -56,7 +56,7 @@ export class TabComponentUpdated {
         </div>
 
         {/* content */}
-        <div style={{"max-height":"450px"}} class="border border-gray-200 pb-2 text-gray-500">
+        <div class="border border-gray-200 pb-2 text-gray-500">
           {this.setActive !== 'json' ? (
             <editor-res-updated></editor-res-updated>
           ) : (

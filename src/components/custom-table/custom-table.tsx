@@ -42,11 +42,6 @@ export class CustomTable {
   componentWillRender() {
     this.from = (this.currentPage - 1) * this.limit + 1;
     this.to = this.currentPage * this.limit;
-    {
-      this.tableHeader.map((id: any) => {
-        console.log(id.click.clickable);
-      });
-    }
   }
 
   render() {
@@ -60,7 +55,7 @@ export class CustomTable {
     }
     return (
       <div style={{ overflowY:"auto" }} >
-        <div style={{height:"500px", overflow:"auto" }}>
+        <div style={{height:"420px", overflow:"auto" }}>
           <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative">
             {/* Table Head */}
             <thead class="bg-violet-50 sticky top-0">
@@ -189,7 +184,6 @@ export class CustomTable {
             <plain-button color="gray-500" type="text" clickHandler={() => this.prev()} disabledHandler={this.currentPage === 1} addClass="disabled:opacity-50">
               prev
             </plain-button>
-            {console.log("ZZZZZZZZZZ",parseInt(this.dataLength))}
             <plain-button color="gray-500" type="text" clickHandler={() => this.next()} disabledHandler={this.to>=state.total} addClass="disabled:opacity-50">
               next
             </plain-button>

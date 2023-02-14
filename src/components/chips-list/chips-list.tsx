@@ -12,7 +12,6 @@ export class ChipsList {
   @Prop() togglesort: any;
 
   render() {
-    console.log({ sortchips: this.sortchips });
     const isChipsOrFilter = Object.keys(this.sortchips).length > 0 || Object.keys(this.searchChips).length > 0;
     return (
       <div>

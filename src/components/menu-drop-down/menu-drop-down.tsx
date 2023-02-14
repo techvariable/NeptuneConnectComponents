@@ -16,10 +16,6 @@ export class MenuDropDown {
     this.showDropdown = !this.showDropdown;
   }
 
-  componentWillLoad() {
-    console.log('list titille', this.listTitle, 'aefgrfeas', this.list);
-  }
-
   buttonHandler(item) {
     state.page=1
     this.fetchData(item);

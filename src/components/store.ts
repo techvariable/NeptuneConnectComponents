@@ -71,12 +71,10 @@ onChange('nodes', value => {
       type: dataType,
     };
   });
-  console.log("columnHeaders===========>",state.columnHeaders)
 });
 
 onChange('query', value => {
   if (state.viewQuery) {
-    console.log("Updating the query state")
     let transactionToAdd = state.viewQuery.state.update({
       changes: { from: 0, to: state.viewQuery.state.doc.toString().length, insert: `${value}` },
     });
@@ -95,11 +93,11 @@ onChange('queryParameter', value => {
 
 const fetchData = async (nodeName: string) => {
   if (state.selectedNodeName) {
-    console.log("fetchData");
-
+    
+    state.isError = false;
+    state.errorMessage = null;
     state.isLoading = true;
     state.selectedNodeName = nodeName;
-    console.log(state.limit,state.offset,state.order,state.filter);
     try {
       const res = await axios.post(`${state.url}/query/builder/${nodeName}`, {
         limit: state.limit,
@@ -122,12 +120,10 @@ const fetchData = async (nodeName: string) => {
 
 onChange('page', (value) => {
   state.offset = (state.limit*value)- state.limit;
-  console.log("this is page number",state.page,value,"offset",state.offset)
   fetchData(state.selectedNodeName);
 });
 
-onChange('limit', (value) => {
-  console.log("VAAAAAll",value);
+onChange('limit', () => {
   fetchData(state.selectedNodeName);
 });
 
