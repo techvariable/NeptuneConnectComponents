@@ -55,12 +55,10 @@ export class PermissionEditor {
   async fetchRoles() {
     try {
       const rolesRes = await axios.get(this.rolesurl);
-
       if (rolesRes.status !== 200) throw Error('Failed to fetch roles');
 
       const roles = rolesRes.data;
       this.roleOptions = roles;
-
       await this.fetchRolePermission(roles[0].id);
     } catch (error) {
       console.log({ error });
