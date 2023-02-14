@@ -3,7 +3,7 @@ import state from '../store';
 
 // let renders = 0;
 
-const SUPPORTED_ROWS = [10, 20, 50, 100];
+const SUPPORTED_ROWS = [10, 20, 50];
 
 @Component({
   tag: 'editor-res-updated',
@@ -41,6 +41,7 @@ export class TableWrapperUpdated {
 
   rowsHandler(e) {
     state.limit = e.target.value;
+    console.log("updated limit",state.limit);
     state.page = 1;
   }
 
@@ -89,7 +90,7 @@ export class TableWrapperUpdated {
             tableBody={state.nodes}
             tableHeader={state.columnHeaders}
             currentPage={state.page}
-            dataLength={this.total}
+            dataLength={state.total.toString()}
             next={() => this.nextPage()}
             prev={() => this.prevPage()}
             limit={state.limit}

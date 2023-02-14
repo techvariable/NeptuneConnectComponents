@@ -43,7 +43,7 @@ export class ResEditor {
         <div class="bg-gray-100">
         <p class={this.labelTitle[this.responseLabel].class}>{this.labelTitle[this.responseLabel].tag}</p>
         </div>
-        <div id="res-editor"></div>
+        <div style={{overflowY:"auto", display:"inline-block",height:"450px", width:"1000px"}}  id="res-editor"></div>
       </Host>
     );
   }

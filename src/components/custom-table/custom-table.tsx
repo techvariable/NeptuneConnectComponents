@@ -1,4 +1,5 @@
 import { Component, h, Prop, State } from '@stencil/core';
+import state from '../store';
 
 const sort = (
   <svg xmlns="http://www.w3.org/2000/svg" class="inline h-4 w-4 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">
@@ -57,11 +58,10 @@ export class CustomTable {
         </tr>,
       );
     }
-
     return (
-      <div >
-        <div class="overflow-scroll">
-          <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative w-full">
+      <div style={{ overflowY:"auto" }} >
+        <div style={{height:"500px", overflow:"auto" }}>
+          <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative">
             {/* Table Head */}
             <thead class="bg-violet-50 sticky top-0">
               <tr>
@@ -168,18 +168,18 @@ export class CustomTable {
         <div class="bg-violet-50 flex justify-between items-center px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
           {/* pagination description */}
           <p class="pr-4">
-            Showing <strong>{this.from}</strong> to <strong>{this.to}</strong> of <strong>{this.dataLength}</strong> results
+            Showing <strong>{this.from}</strong> to <strong>{this.to>=state.total?state.total:this.to}</strong> results out of total <strong>{this.dataLength}</strong> results
           </p>
 
           {/* rows per page  */}
-          <div class="space-x-6">
+          <div style={{ maxWidth: '450px' }} class="space-x-6">
             <span>Rows per page</span>
             <select
               onChange={e => this.rowsHandler(e)}
               class="form-select px-3 py-1.5 border-none text-inherit font-inherit text-gray-700 bg-transparent bg-clip-padding bg-no-repeat rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
             >
               {this.rows.map(row => (
-                <option value={`${row}`}>{row}</option>
+                <option selected={state.limit == row} value={`${row}`}>{row}</option>
               ))}
             </select>
           </div>
@@ -189,7 +189,8 @@ export class CustomTable {
             <plain-button color="gray-500" type="text" clickHandler={() => this.prev()} disabledHandler={this.currentPage === 1} addClass="disabled:opacity-50">
               prev
             </plain-button>
-            <plain-button color="gray-500" type="text" clickHandler={() => this.next()} disabledHandler={parseInt(this.dataLength) === this.to} addClass="disabled:opacity-50">
+            {console.log("ZZZZZZZZZZ",parseInt(this.dataLength))}
+            <plain-button color="gray-500" type="text" clickHandler={() => this.next()} disabledHandler={this.to>=state.total} addClass="disabled:opacity-50">
               next
             </plain-button>
           </nav>

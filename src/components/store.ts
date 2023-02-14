@@ -10,10 +10,11 @@ const { state, onChange, reset } = createStore({
 
   selectedNodeName: null,
   limit: 10,
-  offset: 0,
+  offset: 0, //remove
   page: 1,
   order: {},
   filter: {},
+  total:0,
 
   query: '',
   queryParameter: "",
@@ -108,6 +109,7 @@ const fetchData = async (nodeName: string) => {
       });
 
       state.nodes = res.data.nodes;
+      state.total = res.data.count;
       state.query = formatQuery(res.data.query);
       state.queryParameter = formatJSON(res.data.queryParameters);
     } catch (error) {
@@ -120,11 +122,12 @@ const fetchData = async (nodeName: string) => {
 
 onChange('page', (value) => {
   state.offset = (state.limit*value)- state.limit;
-  console.log("this is page number",state.offset)
+  console.log("this is page number",state.page,value,"offset",state.offset)
   fetchData(state.selectedNodeName);
 });
 
-onChange('limit', () => {
+onChange('limit', (value) => {
+  console.log("VAAAAAll",value);
   fetchData(state.selectedNodeName);
 });
 

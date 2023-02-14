@@ -1,4 +1,5 @@
 import { Component, h, Prop, State } from '@stencil/core';
+import state from '../store';
 
 @Component({
   tag: 'menu-drop-down',
@@ -20,6 +21,7 @@ export class MenuDropDown {
   }
 
   buttonHandler(item) {
+    state.page=1
     this.fetchData(item);
     this.toggleDropdown();
   }
