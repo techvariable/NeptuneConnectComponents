@@ -60,7 +60,7 @@ export class TabComponentUpdated {
           {this.setActive !== 'json' ? (
             <editor-res-updated></editor-res-updated>
           ) : (
-            <res-editor responseLabel={state.isError ? 'error' : 'result'} doc={formatJSON(state.nodes)}></res-editor>
+            <res-editor-updated doc={formatJSON(state.nodes)}></res-editor-updated>
           )}
         </div>
       </div>

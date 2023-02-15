@@ -33,7 +33,6 @@ graph TD;
   table-wrapper-updated --> chips-list
   table-wrapper-updated --> custom-table
   custom-table --> table-search-modal
-  custom-table --> loader-component
   custom-table --> plain-button
   table-search-modal --> radio-button-multiple
   editor-res --> table-wrapper-updated

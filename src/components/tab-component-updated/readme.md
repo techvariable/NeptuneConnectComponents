@@ -14,17 +14,16 @@
 ### Depends on
 
 - [editor-res-updated](../editor-res-updated)
-- [res-editor](../res-editor)
+- [res-editor-updated](../res-editor-updated)
 
 ### Graph
 ```mermaid
 graph TD;
   tab-component-updated --> editor-res-updated
-  tab-component-updated --> res-editor
+  tab-component-updated --> res-editor-updated
   editor-res-updated --> chips-list
   editor-res-updated --> custom-table
   custom-table --> table-search-modal
-  custom-table --> loader-component
   custom-table --> plain-button
   table-search-modal --> radio-button-multiple
   editor-page --> tab-component-updated

@@ -82,7 +82,6 @@ export class TableWrapperUpdated {
         ></chips-list>
         <div>
           <custom-table
-            isLoading={state.isLoading}
             isLoadingError={state.isError}
             tableBody={state.nodes}
             tableHeader={state.columnHeaders}

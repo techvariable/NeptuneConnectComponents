@@ -30,11 +30,10 @@ graph TD;
   code-editor-updated --> tabs-component
   code-editor-updated --> loader-component
   tab-component-updated --> editor-res-updated
-  tab-component-updated --> res-editor
+  tab-component-updated --> res-editor-updated
   editor-res-updated --> chips-list
   editor-res-updated --> custom-table
   custom-table --> table-search-modal
-  custom-table --> loader-component
   custom-table --> plain-button
   table-search-modal --> radio-button-multiple
   style editor-page fill:#f9f,stroke:#333,stroke-width:4px

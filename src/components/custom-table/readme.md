@@ -12,7 +12,6 @@
 | `clearSearch`      | `clear-search`       |             | `any`      | `undefined` |
 | `currentPage`      | `current-page`       |             | `number`   | `undefined` |
 | `dataLength`       | `data-length`        |             | `string`   | `undefined` |
-| `isLoading`        | `is-loading`         |             | `boolean`  | `undefined` |
 | `isLoadingError`   | `is-loading-error`   |             | `boolean`  | `undefined` |
 | `limit`            | `limit`              |             | `number`   | `undefined` |
 | `next`             | `next`               |             | `any`      | `undefined` |
@@ -35,14 +34,12 @@
 ### Depends on
 
 - [table-search-modal](../table-search-modal)
-- [loader-component](../loader-component)
 - [plain-button](../plain-button)
 
 ### Graph
 ```mermaid
 graph TD;
   custom-table --> table-search-modal
-  custom-table --> loader-component
   custom-table --> plain-button
   table-search-modal --> radio-button-multiple
   editor-res-updated --> custom-table
