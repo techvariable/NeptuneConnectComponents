@@ -31,7 +31,6 @@ export namespace Components {
         "clearSearch": any;
         "currentPage": number;
         "dataLength": string;
-        "isLoading": boolean;
         "isLoadingError": boolean;
         "limit": number;
         "next": any;
@@ -574,7 +573,6 @@ declare namespace LocalJSX {
         "clearSearch"?: any;
         "currentPage"?: number;
         "dataLength"?: string;
-        "isLoading"?: boolean;
         "isLoadingError"?: boolean;
         "limit"?: number;
         "next"?: any;

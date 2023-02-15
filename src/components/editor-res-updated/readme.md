@@ -22,7 +22,6 @@ graph TD;
   editor-res-updated --> chips-list
   editor-res-updated --> custom-table
   custom-table --> table-search-modal
-  custom-table --> loader-component
   custom-table --> plain-button
   table-search-modal --> radio-button-multiple
   tab-component-updated --> editor-res-updated

@@ -171,7 +171,6 @@ export class TableWrapperUpdated {
         ></chips-list>
         <div style={{ overflow: 'scroll' }}>
           <custom-table
-            isLoading={this.isLoading}
             isLoadingError={this.isLoadingError}
             tableBody={this.data}
             tableHeader={this.headerList}

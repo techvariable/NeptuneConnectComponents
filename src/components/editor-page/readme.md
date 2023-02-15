@@ -34,7 +34,6 @@ graph TD;
   editor-res-updated --> chips-list
   editor-res-updated --> custom-table
   custom-table --> table-search-modal
-  custom-table --> loader-component
   custom-table --> plain-button
   table-search-modal --> radio-button-multiple
   style editor-page fill:#f9f,stroke:#333,stroke-width:4px

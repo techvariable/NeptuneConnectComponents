@@ -87,7 +87,7 @@ export class EditorPage {
             <h2 class="pb-3 font-mono text-lg font-bold leading-7 text-gray-600">Write your Gremlin Query Here</h2>
             <code-editor-updated onClickRun={this.onClickRun}></code-editor-updated>
 
-            {state.nodes.length > 0 && !state.isLoading && <tab-component-updated></tab-component-updated>}
+            {state.nodes.length > 0 && !state.isLoading && !state.isError && <tab-component-updated></tab-component-updated>}
           </div>
         </div>
       </div>
