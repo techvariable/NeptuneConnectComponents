@@ -1,11 +1,21 @@
 import { Component, h, Prop, State } from '@stencil/core';
+import { ClickOutside } from "stencil-click-outside";
 import state from '../store';
 
 @Component({
   tag: 'menu-drop-down',
   scoped: true,
 })
-export class MenuDropDown {
+export class MenuDropDown { 
+
+  @ClickOutside()
+  someMethod() {
+    console.log(
+      "someMethod was called because user just clicked outside of MyComponent"
+    );
+  }
+
+
   @Prop() listTitle: string;
   @Prop() list: string[];
   @Prop() fetchData: any;
@@ -41,8 +51,8 @@ export class MenuDropDown {
         </h2>
 
         {/* List */}
-        <div class={this.showDropdown ? 'absolute bg-white z-10 w-44 text-sm list-none mt-2 rounded divide-y divide-gray-100 shadow ' : 'hidden'}>
-          <ul class="py-1">
+        <div id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class={this.showDropdown ? 'absolute bg-white z-10 w-44 text-sm list-none mt-2 rounded divide-y divide-gray-100 shadow ' : 'hidden'}>
+          <ul id="dropdown" class="py-1">
             {this.list?.map(item => (
               <li>
                 <a href="#" onClick={() => this.buttonHandler(this.listTitle)} class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">

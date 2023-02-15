@@ -2,6 +2,7 @@ import { Component, Host, h, State, Prop } from '@stencil/core';
 
 @Component({
   tag: 'table-search-modal',
+  styleUrl: 'table-search-modal.css',
   scoped: true,
 })
 export class TableSearchModal {
@@ -21,8 +22,8 @@ export class TableSearchModal {
   @State() selectedSearchOption: string = '';
   @State() selectedTextSearchOption: string = '';
   @State() selectedNumberSearchOption: string = '';
-  @State() colName: string = "";
-
+  @State() colName: string = '';
+  @State()
   componentWillLoad() {
     this.colName = this.alias;
     if (this.type !== null) {
@@ -36,11 +37,11 @@ export class TableSearchModal {
   }
 
   clearFields() {
-    this.value = "";
-    this.colName = "";
-    this.selectedSearchOption = "";
-    this.selectedTextSearchOption = "";
-    this.selectedNumberSearchOption = "";
+    this.value = '';
+    this.colName = '';
+    this.selectedSearchOption = '';
+    this.selectedTextSearchOption = '';
+    this.selectedNumberSearchOption = '';
   }
 
   toggleModalState() {
@@ -49,7 +50,7 @@ export class TableSearchModal {
 
   submitHandler(e) {
     e.preventDefault();
-    if (this.selectedSearchOption !== "") {
+    if (this.selectedSearchOption !== '') {
       this.searchMethod(this.value, this.alias, this.selectedSearchOption, this.selectedTextSearchOption, this.selectedNumberSearchOption);
       this.toggleModalState();
       this.clearFields();
@@ -62,17 +63,14 @@ export class TableSearchModal {
 
   radioSearchTypeHandler = event => {
     this.selectedSearchOption = event.target.value;
-    console.log(this.selectedSearchOption);
   };
 
   radioTextSearchOptionHandler = event => {
     this.selectedTextSearchOption = event.target.value;
-    console.log(this.selectedTextSearchOption);
   };
 
   radioNumberSearchOptionHandler = event => {
     this.selectedNumberSearchOption = event.target.value;
-    console.log(this.selectedNumberSearchOption);
   };
 
   render() {
@@ -85,21 +83,21 @@ export class TableSearchModal {
 
         {/* Main Modal */}
         {this.isModalOpen && (
-          <form onSubmit={e => this.submitHandler(e)} class="pt-6 space-y-3" action="/invite">
-            <div class="fixed z-12 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+          <form onSubmit={e => this.submitHandler(e)} class="pt-6 space-y-3">
+            <div class="fixed z-12 inset-0 overflow-y-auto">
               <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
                 {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen">
                   &#8203;
                 </span>
 
                 <div class="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                   <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                      <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                        <h3 class="text-lg leading-6 font-medium text-gray-900 my-2" id="modal-title">
+                    <div>
+                      <div class="mt-3 text-center sm:mt-0 sm:text-left">
+                        <h3 class="text-lg leading-6 font-semibold text-gray-600 my-2" id="modal-title">
                           Search in {this.alias}
                         </h3>
                         <div class="mt-2">
@@ -108,22 +106,27 @@ export class TableSearchModal {
                               clickHandler={this.radioSearchTypeHandler}
                               labels={this.searchOptions}
                               name="SearchMethod"
+                              label="Data Type"
                               align="horizontal"
                               checked={this.type}
                             ></radio-button-multiple>
                           </div>
-
+                          {this.selectedSearchOption !== this.type ? (
+                            <p style={{ marginBottom: '10px' }} class="px-3 py-2 bg-yellow-200 text-gray-800 border-l-4  w-full my-2">
+                              You have overridden the auto-detected type, some functinalities may not work properly{' '}
+                            </p>
+                          ) : null}
                           {this.selectedSearchOption === 'string' && (
                             <div>
-                              <label class="block" htmlFor="searchText">
-                                Enter text to be searched.
+                              <label class="block pb-2" htmlFor="searchText">
+                                Search Key
                               </label>
                               <input
-                                type="name"
+                                type="text"
                                 name="searchText"
                                 required
-                                placeholder="india"
-                                class="border w-96  px-2 py-1 rounded-md text-sm"
+                                placeholder="Type something to search"
+                                class="mb-2 border px-2 p-2 rounded-md text-sm w-full"
                                 value={this.value}
                                 onInput={event => this.handleChange(event)}
                               />
@@ -132,6 +135,7 @@ export class TableSearchModal {
                                 clickHandler={this.radioTextSearchOptionHandler}
                                 labels={this.textSearchOptions}
                                 name="TextSearchOption"
+                                label="Search Method"
                                 align="horizontal"
                               ></radio-button-multiple>
                             </div>
@@ -139,15 +143,15 @@ export class TableSearchModal {
 
                           {this.selectedSearchOption === 'number' && (
                             <div>
-                              <label class="block" htmlFor="searchNumber">
+                              <label class="block py-2" htmlFor="searchNumber">
                                 Enter number to be searched.
                               </label>
                               <input
                                 type="number"
                                 name="searchNumber"
                                 required
-                                placeholder="123"
-                                class="border w-96 px-2 py-1 rounded-md text-sm"
+                                placeholder="Type a number to search"
+                                class="border w-full px-2 py-1 rounded-md text-sm mb-2"
                                 value={this.value}
                                 onInput={event => this.handleChange(event)}
                               />
@@ -156,6 +160,7 @@ export class TableSearchModal {
                                 clickHandler={this.radioNumberSearchOptionHandler}
                                 labels={this.numberSearchOptions}
                                 name="NumberSearchOption"
+                                label="Search Method"
                                 align="horizontal"
                               ></radio-button-multiple>
                             </div>

@@ -6,6 +6,7 @@ import { Component, h, Prop } from '@stencil/core';
 })
 export class RadioButtonMultiple {
   @Prop() name: string;
+  @Prop() label: string;
   @Prop() labels: string[];
   @Prop() align: 'vertical' | 'horizontal' = 'horizontal';
   @Prop() clickHandler:any;
@@ -14,7 +15,7 @@ export class RadioButtonMultiple {
   render() {
     return (
       <div class="py-2">
-        <p class="m-2">{this.name}</p>
+        <p class="m-2">{this.label}</p>
         {this.labels.map(item => {
           return (
             <div class={this.align === 'horizontal' ? 'inline-block mr-7' : 'block'}>
