@@ -18,13 +18,11 @@
 ### Used by
 
  - [tab-component](../tab-component)
- - [tab-component-updated](../tab-component-updated)
 
 ### Graph
 ```mermaid
 graph TD;
   tab-component --> res-editor
-  tab-component-updated --> res-editor
   style res-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

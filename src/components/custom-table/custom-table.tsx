@@ -160,7 +160,7 @@ export class CustomTable {
           </table>
         </div>
 
-        <div class="bg-violet-50 flex justify-between items-center px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        {(state.selectedNodeName !== null) && <div class="bg-violet-50 flex justify-between items-center px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
           {/* pagination description */}
           <p class="pr-4">
             Showing <strong>{this.from}</strong> to <strong>{this.to>=state.total?state.total:this.to}</strong> results out of total <strong>{this.dataLength}</strong> results
@@ -188,7 +188,7 @@ export class CustomTable {
               next
             </plain-button>
           </nav>
-        </div>
+        </div>}
       </div>
     );
   }

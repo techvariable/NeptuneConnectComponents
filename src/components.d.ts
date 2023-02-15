@@ -169,6 +169,9 @@ export namespace Components {
         "doc": any;
         "responseLabel": 'result' | 'error';
     }
+    interface ResEditorUpdated {
+        "doc": any;
+    }
     interface SettingsNavigator {
         "navigators": any;
     }
@@ -425,6 +428,12 @@ declare global {
         prototype: HTMLResEditorElement;
         new (): HTMLResEditorElement;
     };
+    interface HTMLResEditorUpdatedElement extends Components.ResEditorUpdated, HTMLStencilElement {
+    }
+    var HTMLResEditorUpdatedElement: {
+        prototype: HTMLResEditorUpdatedElement;
+        new (): HTMLResEditorUpdatedElement;
+    };
     interface HTMLSettingsNavigatorElement extends Components.SettingsNavigator, HTMLStencilElement {
     }
     var HTMLSettingsNavigatorElement: {
@@ -525,6 +534,7 @@ declare global {
         "radio-button": HTMLRadioButtonElement;
         "radio-button-multiple": HTMLRadioButtonMultipleElement;
         "res-editor": HTMLResEditorElement;
+        "res-editor-updated": HTMLResEditorUpdatedElement;
         "settings-navigator": HTMLSettingsNavigatorElement;
         "side-bar": HTMLSideBarElement;
         "tab-component": HTMLTabComponentElement;
@@ -702,6 +712,9 @@ declare namespace LocalJSX {
         "doc"?: any;
         "responseLabel"?: 'result' | 'error';
     }
+    interface ResEditorUpdated {
+        "doc"?: any;
+    }
     interface SettingsNavigator {
         "navigators"?: any;
     }
@@ -792,6 +805,7 @@ declare namespace LocalJSX {
         "radio-button": RadioButton;
         "radio-button-multiple": RadioButtonMultiple;
         "res-editor": ResEditor;
+        "res-editor-updated": ResEditorUpdated;
         "settings-navigator": SettingsNavigator;
         "side-bar": SideBar;
         "tab-component": TabComponent;
@@ -842,6 +856,7 @@ declare module "@stencil/core" {
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
             "radio-button-multiple": LocalJSX.RadioButtonMultiple & JSXBase.HTMLAttributes<HTMLRadioButtonMultipleElement>;
             "res-editor": LocalJSX.ResEditor & JSXBase.HTMLAttributes<HTMLResEditorElement>;
+            "res-editor-updated": LocalJSX.ResEditorUpdated & JSXBase.HTMLAttributes<HTMLResEditorUpdatedElement>;
             "settings-navigator": LocalJSX.SettingsNavigator & JSXBase.HTMLAttributes<HTMLSettingsNavigatorElement>;
             "side-bar": LocalJSX.SideBar & JSXBase.HTMLAttributes<HTMLSideBarElement>;
             "tab-component": LocalJSX.TabComponent & JSXBase.HTMLAttributes<HTMLTabComponentElement>;
