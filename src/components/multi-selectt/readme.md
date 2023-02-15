@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property   | Attribute | Description | Type       | Default     |
-| ---------- | --------- | ----------- | ---------- | ----------- |
-| `roles`    | --        |             | `string[]` | `undefined` |
-| `selected` | --        |             | `string[]` | `undefined` |
+| Property   | Attribute | Description | Type       | Default                 |
+| ---------- | --------- | ----------- | ---------- | ----------------------- |
+| `roles`    | --        |             | `string[]` | `['admin','user','qa']` |
+| `selected` | --        |             | `string[]` | `['admin']`             |
 
 
 ----------------------------------------------

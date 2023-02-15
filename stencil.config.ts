@@ -8,6 +8,7 @@ export const config: Config = {
   namespace: 'neptune',
   sourceMap: true,
   globalStyle: 'src/global/global.css',
+  sourceMap: true,
   outputTargets: [
     {
       type: 'dist',

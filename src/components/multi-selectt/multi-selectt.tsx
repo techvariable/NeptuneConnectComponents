@@ -6,8 +6,8 @@ import { Component, h, State, Prop } from '@stencil/core';
 })
 export class MultiSelectt {
   @State() dropDownState: boolean = false;
-  @Prop() selected: string[];
-  @Prop() roles: string[];
+  @Prop() selected: string[] = ['admin'];
+  @Prop() roles: string[] = ['admin','user','qa'];
 
   dropDownClick() {
     console.log('clicked drop down');

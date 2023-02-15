@@ -40,8 +40,10 @@ export class ResEditor {
   render() {
     return (
       <Host>
+        <div class="bg-gray-100">
         <p class={this.labelTitle[this.responseLabel].class}>{this.labelTitle[this.responseLabel].tag}</p>
-        <div id="res-editor"></div>
+        </div>
+        <div style={{overflowY:"auto", display:"inline-block",height:"450px", width:"100%"}}  id="res-editor"></div>
       </Host>
     );
   }

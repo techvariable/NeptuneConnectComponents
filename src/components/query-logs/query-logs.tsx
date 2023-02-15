@@ -6,7 +6,7 @@ import axios from 'axios';
   scoped: true,
 })
 export class queryLogs {
-  @State() component: boolean = false;
+  // @State() component: boolean = false;
   @State() headerList = [
     {
       title: 'id',

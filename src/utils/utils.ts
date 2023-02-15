@@ -11,6 +11,7 @@ export function isValidPermissionJson(jsonData: string) {
     if (keys.length === 0) {
       throw Error('No keys present in the json');
     }
+    console.log("keys",keys);
     keys.forEach((item: string) => {
       const permission = data[item];
 
@@ -22,6 +23,33 @@ export function isValidPermissionJson(jsonData: string) {
       }
     });
   } catch (e) {
+    return {
+      isValid: false,
+      error: e.message,
+    };
+  }
+  return {
+    isValid: true,
+    error: null,
+  };
+}
+
+export function isValidParameterJson(query:string,jsonData: string) {
+  const pattern = /(:[a-zA-Z])\w+/g;
+  const queryParameters:string[] = query.match(pattern);
+
+  try {
+    const data: any = JSON.parse(jsonData);
+
+    const keys: string[] = Object.keys(data);
+    queryParameters.forEach((item:string) =>{
+      let value = item.split(":").pop();
+      if(!keys.includes(value)){
+        throw Error(`${value} key not present in the json`);
+      }
+    })
+  } catch (e) {
+    console.log(e);
     return {
       isValid: false,
       error: e.message,

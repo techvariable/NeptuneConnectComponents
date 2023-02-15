@@ -15,10 +15,10 @@
 ```mermaid
 graph TD;
   query-logs --> table-wrapper
-  table-wrapper --> custom-table
-  custom-table --> drop-down
-  custom-table --> loader-component
-  custom-table --> plain-button
+  table-wrapper --> logs-table
+  logs-table --> drop-down
+  logs-table --> loader-component
+  logs-table --> plain-button
   style query-logs fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

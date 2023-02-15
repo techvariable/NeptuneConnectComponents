@@ -18,12 +18,12 @@
 
 ### Used by
 
- - [custom-table](../custom-table)
+ - [logs-table](../logs-table)
 
 ### Graph
 ```mermaid
 graph TD;
-  custom-table --> drop-down
+  logs-table --> drop-down
   style drop-down fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

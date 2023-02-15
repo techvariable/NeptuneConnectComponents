@@ -110,7 +110,7 @@ export class TableWrapper {
   render() {
     return (
       <Host>
-        <custom-table
+        <logs-table
           isLoading={this.isLoading}
           isLoadingError={this.isLoadingError}
           tableBody={this.data}
@@ -125,7 +125,7 @@ export class TableWrapper {
           toggleSortMethod={id => this.toggleSortMethod(id)}
           searchMethod={(value, field) => this.searchMethod(value, field)}
           clearSearch={colName => this.clearSearch(colName)}
-        ></custom-table>
+        ></logs-table>
       </Host>
     );
   }

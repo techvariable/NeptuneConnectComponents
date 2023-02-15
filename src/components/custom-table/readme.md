@@ -29,21 +29,24 @@
 
 ### Used by
 
- - [table-wrapper](../table-wrapper)
+ - [editor-res-updated](../editor-res-updated)
+ - [table-wrapper-updated](../table-wrapper-updated)
 
 ### Depends on
 
-- [drop-down](../drop-down)
+- [table-search-modal](../table-search-modal)
 - [loader-component](../loader-component)
 - [plain-button](../plain-button)
 
 ### Graph
 ```mermaid
 graph TD;
-  custom-table --> drop-down
+  custom-table --> table-search-modal
   custom-table --> loader-component
   custom-table --> plain-button
-  table-wrapper --> custom-table
+  table-search-modal --> radio-button-multiple
+  editor-res-updated --> custom-table
+  table-wrapper-updated --> custom-table
   style custom-table fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

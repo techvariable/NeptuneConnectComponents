@@ -38,12 +38,14 @@
     "axios": "^0.26.0",
     "choices.js": "^10.2.0",
     "choicesjs-stencil": "^1.5.1",
+    "gremlint": "^3.6.2",
     "stencil-click-outside": "^1.8.0",
     "sweetalert2": "^11.4.6"
   },
   "devDependencies": {
     "@stencil/eslint-plugin": "^0.4.0",
     "@stencil/postcss": "^2.1.0",
+    "@stencil/store": "^2.0.3",
     "@types/jest": "^27.0.3",
     "autoprefixer": "^10.4.4",
     "jest": "^27.4.5",
