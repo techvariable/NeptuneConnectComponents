@@ -13,12 +13,10 @@ export class MenuDown {
   @Prop() url: string;
   @Prop() submiturl: string;
 
-  @State() ismodelopen: boolean = false;
+  @State() isModalOpen: boolean = false;
   @State() value: string;
   @State() showDropdown: boolean = false;
   @State() clickHandler: any = function () {
-    console.log('kjh');
-
     this.ismodelopen = !this.ismodelopen;
     this.toggleDropdown();
   };
@@ -34,7 +32,6 @@ export class MenuDown {
   }
 
   render() {
-    console.log(this.ismodelopen)
     return (
       <div class="relative">
         {/* Header */}
@@ -60,7 +57,7 @@ export class MenuDown {
             ))}
           </ul>
         </div>
-        <edit-user url={this.url} submiturl={this.submiturl} userid={this.userId} ismodelopen={this.ismodelopen} value={this.email} toggle={() => this.ismodelopen = !this.ismodelopen} ></edit-user>
+        <edit-user url={this.url} submiturl={this.submiturl} userid={this.userId} ismodelopen={this.isModalOpen} value={this.email} toggle={() => this.isModalOpen = !this.isModalOpen} ></edit-user>
       </div>
     );
   }
