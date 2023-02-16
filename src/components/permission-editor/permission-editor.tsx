@@ -80,7 +80,7 @@ export class PermissionEditor {
     });
     this.view = new EditorView({
       state: this.state,
-      parent: this.element.querySelector('#editor'),
+      parent: this.element.querySelector('#permissionEditor'),
     });
   }
 
@@ -148,7 +148,7 @@ export class PermissionEditor {
             </div>
             <add-role refresh={() => this.fetchRoles()} url="http://localhost:3000/api/permissions"></add-role>
           </div>
-          <div id="editor" class="border border-gray-300"></div>
+          <div id="permissionEditor" class="border border-gray-300"></div>
 
           {this.errorMessage !== '' ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full -mt-4 mb-6">{this.errorMessage}</p> : null}
           {this.errorMessage === '' && this.resStatus !== '' && (

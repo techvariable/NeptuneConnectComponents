@@ -37,7 +37,7 @@ export class TableWrapper {
     this.isLoadingError = false;
     this.api(this.limit, this.page, this.sortObj, this.search)
       .then(res => {
-        res.data.respond.map(item=>{item.isCustomQuery===true? item["isCustomQuery"]="Custom Generated": item["isCustomQuery"]="Builder Query"});
+        res.data.respond.map(item=>{item.isCustomQuery===true? item["isCustomQuery"]="Custom Query": item["isCustomQuery"]="Builder Query"});
         this.total = res.data.total;
         this.data = res.data.respond;
         if (this.autocompute) this.computeHeader();
