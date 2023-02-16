@@ -37,7 +37,6 @@ export class TableWrapper {
     this.isLoadingError = false;
     this.api(this.limit, this.page, this.sortObj, this.search)
       .then(res => {
-        console.log("api res",res)
         this.data = res.data.respond;
         this.total = res.data.total;
         if (this.autocompute) this.computeHeader();

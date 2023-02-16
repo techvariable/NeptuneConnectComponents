@@ -23,6 +23,7 @@ export class AddRole {
         roleName: this.value,
         permissions:"{\n  \"editor\":{\n    \"read\":true,\n    \"write\":true,\n    \"update\":true,\n    \"delete\":true \n  }\n}",
       });
+      await this.refresh();
 
       Swal.fire({
         position: 'center',
@@ -34,7 +35,6 @@ export class AddRole {
 
       this.value = '';
       this.toggleModalState();
-      this.refresh();
     } catch (error) {
       Swal.fire({
         icon: 'error',
@@ -82,7 +82,7 @@ export class AddRole {
                       </div>
                       <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                         <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                          Send Invitation
+                          Add New Role
                         </h3>
                         <div class="mt-2">
                           <p class="text-sm text-gray-500 mb-4">Are you sure you want to create new role? Enter role name.</p>
@@ -90,7 +90,7 @@ export class AddRole {
                             type="name"
                             name="name"
                             required
-                            placeholder="admin"
+                            placeholder="Role Name"
                             class="border w-full px-4 py-2 rounded-md text-sm"
                             value={this.value}
                             onInput={event => this.handleChange(event)}
