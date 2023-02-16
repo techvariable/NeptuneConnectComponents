@@ -55,8 +55,6 @@ export class PermissionEditor {
   async fetchRoles() {
     try {
       const rolesRes = await axios.get(this.rolesurl);
-      if (rolesRes.status !== 200) throw Error('Failed to fetch roles');
-
       const roles = rolesRes.data;
       this.roleOptions = roles;
       await this.fetchRolePermission(roles[0].id);
@@ -82,12 +80,13 @@ export class PermissionEditor {
     });
     this.view = new EditorView({
       state: this.state,
-      parent: this.element.querySelector('#editor'),
+      parent: this.element.querySelector('#permissionEditor'),
     });
   }
 
   onRoleUpdateClick() {
     this.errorMessage = '';
+    this.resStatus = '';
     let transaction = this.view.state.update();
     this.view.dispatch(transaction);
     const { isValid, error } = isValidPermissionJson(String(transaction.state.doc));
@@ -147,9 +146,9 @@ export class PermissionEditor {
                 ))}
               </select>
             </div>
-            <add-role refresh={() => this.fetchRoles} url="http://localhost:3000/api/permissions"></add-role>
+            <add-role refresh={() => this.fetchRoles()} url="http://localhost:3000/api/permissions"></add-role>
           </div>
-          <div id="editor" class="border border-gray-300"></div>
+          <div id="permissionEditor" class="border border-gray-300"></div>
 
           {this.errorMessage !== '' ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full -mt-4 mb-6">{this.errorMessage}</p> : null}
           {this.errorMessage === '' && this.resStatus !== '' && (
@@ -160,17 +159,16 @@ export class PermissionEditor {
 
           <div class="flex justify-between">
             <div>
-            <button
-              title="Ctrl+Shift+Enter to run"
-              onClick={() => this.onRoleUpdateClick()}
-              disabled={this.isLoading}
-              class="mr-1 flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 hover:bg-gray-200 hover:text-gray-800 "
-            >
-              Update
-            </button>
+              <button
+                title="Ctrl+Shift+Enter to run"
+                onClick={() => this.onRoleUpdateClick()}
+                disabled={this.isLoading}
+                class="mr-1 flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 hover:bg-gray-200 hover:text-gray-800 "
+              >
+                Update
+              </button>
             </div>
             <div class="mx-4">{this.isLoading && <loader-component></loader-component>}</div>
-            <div></div>
           </div>
         </div>
       </Host>

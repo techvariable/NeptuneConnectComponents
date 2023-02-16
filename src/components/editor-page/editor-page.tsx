@@ -60,7 +60,6 @@ export class EditorPage {
           query,
           parameters: JSON.parse(parameters),
         });
-
         state.query = query;
         state.queryParameter = parameters;
         state.nodes = res.data.result;

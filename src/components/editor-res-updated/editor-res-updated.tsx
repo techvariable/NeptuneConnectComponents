@@ -51,8 +51,8 @@ export class TableWrapperUpdated {
   }
 
   toggleSortMethod = (id: string) => {
-    const chips = { ...state.order };
-    chips[id] = chips[id] === "desc" ? 'asc' : 'desc';
+    const chips = {};
+    chips[id] = state.order[id] === "desc" ? 'asc' : 'desc';
     state.order = chips;
   };
 
