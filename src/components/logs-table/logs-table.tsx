@@ -60,7 +60,7 @@ export class LogsTable {
 
     return (
       <div style={{ overflowY:"auto" }} >
-        <div style={{height:"580px", overflow:"auto" }}>
+        <div style={{maxHeight:"580px", overflow:"auto" }}>
       <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative">
         {/* Table Head */}
         <thead class="bg-violet-50 sticky top-0">
@@ -136,7 +136,6 @@ export class LogsTable {
             <tr>
               <td colSpan={this.tableHeader.length} rowSpan={10} class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-900">
                 <p>Error Found</p>
-                <plain-button type="text">retry</plain-button>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">&nbsp;</td>
             </tr>
@@ -151,7 +150,7 @@ export class LogsTable {
               <div class="flex justify-between items-center">
                 {/* pagination description */}
                 <p>
-                  Showing <strong>{this.from}</strong> to <strong>{this.to}</strong> of <strong>{this.dataLength}</strong> results
+                  Showing <strong>{this.from}</strong> to <strong>{this.to<=Number(this.dataLength)?this.to:this.dataLength}</strong> of <strong>{this.dataLength}</strong> results
                 </p>
 
                 {/* rows per page  */}
@@ -172,11 +171,12 @@ export class LogsTable {
                   <plain-button color="gray-500" type="text" clickHandler={() => this.prev()} disabledHandler={this.currentPage === 1} addClass="disabled:opacity-50">
                     prev
                   </plain-button>
+                  {console.log(this.dataLength)}
                   <plain-button
                     color="gray-500"
                     type="text"
                     clickHandler={() => this.next()}
-                    disabledHandler={parseInt(this.dataLength) === this.to}
+                    disabledHandler={parseInt(this.dataLength) <= this.to}
                     addClass="disabled:opacity-50"
                   >
                     next

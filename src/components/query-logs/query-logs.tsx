@@ -1,12 +1,12 @@
 import { Component, Host, h, State } from '@stencil/core';
 import axios from 'axios';
+import state from '../store';
 
 @Component({
   tag: 'query-logs',
   scoped: true,
 })
 export class queryLogs {
-  // @State() component: boolean = false;
   @State() headerList = [
     {
       title: 'id',
@@ -92,7 +92,6 @@ export class queryLogs {
   async api(limit: number, page: number, sortObj: any, search: any) {
     let filterPar = '';
 
-    console.log('Front end parameters:', limit, page, sortObj, search);
     if (limit) {
       filterPar += `limit=${limit}`;
     }
@@ -119,13 +118,10 @@ export class queryLogs {
         filterPar = filterPar + `&filter_${key}=${search[key]}`;
       }
     }
-    // console.log(filterPar);
-    // const result = await axios.get(`/api/query-logs?${filterPar}`);
-
-    const result = await axios.get(`http://localhost:3000/api/query/logs?${filterPar}`);
+    const result = await axios.get(`${state.url}/query/logs?${filterPar}`);
 
     return {
-      total: result.headers['x-total-count'],
+      total: result.data.total,
       data: result.data,
     };
   }
