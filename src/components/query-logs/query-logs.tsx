@@ -31,6 +31,17 @@ export class queryLogs {
       },
     },
     {
+      title: 'query_Type',
+      filter: {
+        searchable: false,
+        sortable: false,
+      },
+      alias: 'isCustomQuery',
+      click: {
+        clickable: false,
+      },
+    },
+    {
       title: 'query_parameter',
       filter: {
         searchable: false,
