@@ -85,7 +85,10 @@ export class CodeEditorUpdated {
               </svg>
               Run
             </button>
-            <div>{state.isLoading && <loader-component></loader-component>}</div>
+            <div>
+              {state.isLoading && <loader-component></loader-component>}
+              {state.timeTaken !== null && <p class="py-4 font-semibold text-xs text-green-700">Executed in {state.timeTaken} ms</p>}
+            </div>
           </div>
         </div>
       </Host>

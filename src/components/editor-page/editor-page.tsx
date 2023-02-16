@@ -56,6 +56,7 @@ export class EditorPage {
       const { isValid, error } = isValidParameterJson(query, parameters);
 
       if (isValid) {
+        state.timeTaken=null;
         const res = await axios.post(`${state.url}/query/`, {
           query,
           parameters: JSON.parse(parameters),
@@ -63,6 +64,7 @@ export class EditorPage {
         state.query = query;
         state.queryParameter = parameters;
         state.nodes = res.data.result;
+        state.timeTaken = res.data.timeTaken;
       } else {
         state.isError = true;
         state.errorMessage = error;
