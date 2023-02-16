@@ -223,7 +223,7 @@ export namespace Components {
     interface UsersComponent {
         "submiturl": string;
         "url": string;
-        "users": any;
+        "users": string;
     }
 }
 declare global {
@@ -756,7 +756,7 @@ declare namespace LocalJSX {
     interface UsersComponent {
         "submiturl"?: string;
         "url"?: string;
-        "users"?: any;
+        "users"?: string;
     }
     interface IntrinsicElements {
         "add-role": AddRole;

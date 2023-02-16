@@ -15,34 +15,34 @@ export class DialogComponent {
     this.isModalOpen = !this.isModalOpen;
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
-
-    axios
-      .post(this.url, {
-        email: this.value,
-      })
-      .then(res => {
-        if (res.status === 200) {
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            text: 'Invitation sent successfully!',
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
+    try {
+      const res = await axios
+        .post(this.url, {
+          email: this.value,
         });
-      });
 
-    this.value = '';
+      if (res.status === 200) {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          text: 'Invitation sent successfully!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+
+      this.value = '';
+    } catch (err) {
+      console.log(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      });
+    }
+
     this.toggleModalState();
   }
 

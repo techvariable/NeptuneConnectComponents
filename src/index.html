@@ -1,36 +1,46 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
-    <title>Neptune Connect</title>
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
-    <link rel="stylesheet" href="/build/neptune.css" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>Neptune Connect</title>
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
-    <script type="module" src="build/neptune.esm.js"></script>
-    <script nomodule src="build/neptune.js"></script>
-    <!-- <script src="choicesjs-stencil/dist/choicesjsstencil.js"></script> -->
-    <!-- <script type="module" src="/build/choicesjs-stencil-example.esm.js"></script> -->
+  <link rel="stylesheet" href="/build/neptune.css" />
+
+  <script type="module" src="build/neptune.esm.js"></script>
+  <script nomodule src="build/neptune.js"></script>
+  <!-- <script src="choicesjs-stencil/dist/choicesjsstencil.js"></script> -->
+  <!-- <script type="module" src="/build/choicesjs-stencil-example.esm.js"></script> -->
   <!-- <script nomodule src="/build/choicesjs-stencil-example.js"></script> -->
   <style>
-    .top-100 {top: 100%}
-    .bottom-100 {bottom: 100%}
-    .max-h-select {
-        max-height: 300px;
+    .top-100 {
+      top: 100%
     }
-</style>
-  </head>
-  <body class="selection:bg-indigo-200 selection:text-violet-800">
+
+    .bottom-100 {
+      bottom: 100%
+    }
+
+    .max-h-select {
+      max-height: 300px;
+    }
+  </style>
+</head>
+
+<body class="selection:bg-indigo-200 selection:text-violet-800">
   <fluid-container breakpoint="lg">
-   <!-- <node-item nodeurl="http://localhost:3000/api/editor/nodes"></node-item> -->
-   <!-- <code-editor-updated url="http://ec2-54-221-111-75.compute-1.amazonaws.com:5000/query" doc="\n\n\n"></code-editor-updated> -->
-   <!-- <chips-list></chips-list> -->
-   <!-- <editor-res></editor-res> -->
-  <!-- <permission-editor url="http://localhost:3000/api/permissions" rolesurl="http://localhost:3000/api/permissions/all"></permission-editor> -->
-  <!-- <tabs-component></tabs-component> -->
-  <editor-page url="http://localhost:3000/api/editor"></editor-page>
+    <!-- <node-item nodeurl="http://localhost:3000/api/editor/nodes"></node-item> -->
+    <!-- <code-editor-updated url="http://ec2-54-221-111-75.compute-1.amazonaws.com:5000/query" doc="\n\n\n"></code-editor-updated> -->
+    <!-- <chips-list></chips-list> -->
+    <!-- <editor-res></editor-res> -->
+    <!-- <permission-editor url="http://localhost:3000/api/permissions" rolesurl="http://localhost:3000/api/permissions/all"></permission-editor> -->
+    <!-- <tabs-component></tabs-component> -->
+    <users-component></users-component>
+    <!-- <editor-page url="http://localhost:3000/api/editor"></editor-page> -->
   </fluid-container>
-    </div>
-  </body>
+  </div>
+</body>
+
 </html>

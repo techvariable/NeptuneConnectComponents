@@ -6,24 +6,24 @@ import { Component, h, Host, Prop, State } from '@stencil/core';
   scoped: true,
 })
 export class UsersComponent {
-  @Prop() users:any;
-  @Prop() url:string;
-  @Prop() submiturl:string;
+  @Prop() users: string;
+  @Prop() url: string;
+  @Prop() submiturl: string;
   @State() rowsHandler: any = function (e) {
     this.option = e.target.value;
     // console.log(this.user);
   };
   @State() option: string;
-  @State() options: string[] = ['delete', 'edit'];
 
 
 
   render() {
+    const str = `[{"id":1,"name":"Admin User","email":"admin@techvariable.com","date":"2022-12-16T07:32:56.975Z"},{"id":2,"name":"Abhishek The Great Chatterjee","email":"abhishek@techvariable.com","date":"2022-12-16T07:32:56.975Z"}]`;
     return (
       <Host>
         <div class="mx-auto">
           <div class="flex flex-wrap -m-2">
-            {JSON.parse(this.users).map((user: any) => (
+            {JSON.parse(str).map((user: any) => (
               <div class="p-2 lg:w-1/3 md:w-1/2">
                 <div class="h-full flex items-center border-gray-200 border p-4 rounded-lg">
                   <div class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4 flex justify-center items-center">
@@ -38,7 +38,7 @@ export class UsersComponent {
                     </div>
                     <h2 class="text-gray-900 title-font font-medium">{user.name}</h2>
                     <p class="text-gray-500">{user.email}</p>
-                    <p class="text-gray-400 text-sm bold">created on {new Date(user.date).toLocaleDateString()}</p>
+                    <p class="text-gray-400 text-sm bold">Created on {new Date(user.date).toLocaleDateString()}</p>
                   </div>
                 </div>
               </div>

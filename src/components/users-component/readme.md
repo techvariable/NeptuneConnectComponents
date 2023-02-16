@@ -11,7 +11,7 @@
 | ----------- | ----------- | ----------- | -------- | ----------- |
 | `submiturl` | `submiturl` |             | `string` | `undefined` |
 | `url`       | `url`       |             | `string` | `undefined` |
-| `users`     | `users`     |             | `any`    | `undefined` |
+| `users`     | `users`     |             | `string` | `undefined` |
 
 
 ## Dependencies

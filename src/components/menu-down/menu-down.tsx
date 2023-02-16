@@ -7,23 +7,21 @@ import { ClickOutside } from 'stencil-click-outside';
   scoped: true,
 })
 export class MenuDown {
-  @Prop() option: string[] = ['Delete', 'Edit'];
+  @Prop() option: string[] = ['Edit'];
   @Prop() userId: number = 0;
   @Prop() email: string;
   @Prop() url: string;
-  @Prop() submiturl:string;
-  @State() ismodelopen: boolean= false ;
+  @Prop() submiturl: string;
+
+  @State() ismodelopen: boolean = false;
   @State() value: string;
   @State() showDropdown: boolean = false;
   @State() clickHandler: any = function () {
+    console.log('kjh');
+
     this.ismodelopen = !this.ismodelopen;
     this.toggleDropdown();
   };
-
-  toggleModalState() {
-    this.ismodelopen = !this.ismodelopen;
-  }
-
 
   @ClickOutside()
   someMethod() {
@@ -36,6 +34,7 @@ export class MenuDown {
   }
 
   render() {
+    console.log(this.ismodelopen)
     return (
       <div class="relative">
         {/* Header */}
@@ -61,7 +60,7 @@ export class MenuDown {
             ))}
           </ul>
         </div>
-        <edit-user url={this.url} submiturl={this.submiturl} userid={this.userId} ismodelopen={this.ismodelopen} value={this.email} toggle={this.toggleModalState} ></edit-user>
+        <edit-user url={this.url} submiturl={this.submiturl} userid={this.userId} ismodelopen={this.ismodelopen} value={this.email} toggle={() => this.ismodelopen = !this.ismodelopen} ></edit-user>
       </div>
     );
   }
