@@ -27,7 +27,6 @@ export class UserDropDown {
 
   @ClickOutside()
   someMethod() {
-    // console.log('someMethod was called because user just clicked outside of MyComponent');
     this.showDropdown = !this.showDropdown;
   }
 

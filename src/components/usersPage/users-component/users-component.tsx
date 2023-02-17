@@ -11,7 +11,6 @@ export class UsersComponent {
   @Prop() submiturl:string;
   @State() rowsHandler: any = function (e) {
     this.option = e.target.value;
-    // console.log(this.user);
   };
   @State() option: string;
   @State() options: string[] = ['delete', 'edit'];

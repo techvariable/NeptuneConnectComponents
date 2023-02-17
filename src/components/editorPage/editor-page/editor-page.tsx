@@ -21,6 +21,7 @@ export class EditorPage {
   @State() isLoading: boolean = false;
 
   componentWillLoad() {
+    state.url = this.url;
     this.fetchNavigators();
   }
 

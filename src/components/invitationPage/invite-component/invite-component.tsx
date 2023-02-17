@@ -16,7 +16,6 @@ export class InviteComponent {
   @State() errorMessage: string = '';
 
   comparePassword(password, rePassword) {
-    // console.log(password, rePassword);
     if (password === rePassword) {
       return true;
     }
@@ -30,7 +29,6 @@ export class InviteComponent {
     this.rePassword = data.get('confirmedPassword').toString();
 
     if (this.comparePassword(this.password, this.rePassword) === true) {
-      console.log(this.apiurl);
       axios
         .post(this.apiurl, {
           email: this.email,
@@ -38,7 +36,6 @@ export class InviteComponent {
           password: this.password,
         })
         .then(res => {
-          console.log(res);
           if (res.status === 200) {
             Swal.fire({
               position: 'center',

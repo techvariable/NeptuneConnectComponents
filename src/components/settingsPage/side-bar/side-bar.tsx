@@ -1,4 +1,4 @@
-import { Component, Host, h, State } from '@stencil/core';
+import { Component, Host, h, State, Prop } from '@stencil/core';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
@@ -10,13 +10,13 @@ export class SideBar {
   @State() api: string;
   @State() name: string;
   @State() apiExist: boolean = false;
+  @Prop() url:string;
 
   componentWillLoad() {
     // return axios.get('api/setting')
     return axios
-      .get('http://localhost:3000/api/settings')
+      .get(this.url)
       .then(res => {
-        console.log(res);
         const data = res.data;
         if (data.apiKey) {
           this.api = data.apiKey;
@@ -37,8 +37,7 @@ export class SideBar {
   async createHandler() {
     try {
       // const res = await axios.post('api/settings');
-      const res = await axios.post('http://localhost:3000/api/settings');
-      console.log(res);
+      const res = await axios.post(this.url);
       const data = res.data;
       this.api = data.apiKey;
       this.name = data.user.name;
@@ -60,10 +59,9 @@ export class SideBar {
   }
 
   async deleteHandler() {
-    console.log('deleted');
     try {
       // await axios.get('api/settings');
-      await axios.delete('http://localhost:3000/api/settings');
+      await axios.delete(this.url);
       this.apiExist = false;
       Swal.fire({
         position: 'center',

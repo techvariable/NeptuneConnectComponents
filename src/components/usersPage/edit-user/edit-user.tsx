@@ -24,7 +24,6 @@ export class EditUser {
   @State() email: string = '';
   @ClickOutside()
   someMethod() {
-    // console.log('someMethod was called because user just clicked outside of MyComponent');
     this.ismodelopen = !this.ismodelopen;
   }
 
@@ -34,7 +33,6 @@ export class EditUser {
     axios
     .get(this.url)
     .then((res: any) => {
-      // console.log("edit user data",res.data);
       for (let role of res.data) {
         let obj = {};
         (obj['value'] = role.roleName);
@@ -43,13 +41,11 @@ export class EditUser {
         (obj['selected'] = false);
         (obj['disabled'] = false);
         this.rolesobj.push(obj);
-        // console.log(obj);
       }
      
       axios
       .get(`${this.submiturl}?userId=${this.userid}`)
       .then((res: any) => {
-        // console.log("roles for the  data is=======>",res.data);
         for (let role of this.rolesobj) {
           if(res.data.includes(role["id"])){
             role['selected'] = true;
@@ -112,7 +108,6 @@ export class EditUser {
 
 
   render() {
-    // console.log({ t: this.ismodelopen });
     return (
       <Host>
         {this.ismodelopen && (
@@ -154,7 +149,7 @@ export class EditUser {
                         <div class="w-48 ">
                           <p class="z-10 text-md text-gray-500 mb-4">Select permissions</p>
                           <label class="block text-left">
-                            <select name='role' class="form-multiselect block w-full mt-1 border rounded-md" multiple onChange={e=>{console.log(e)}}>
+                            <select name='role' class="form-multiselect block w-full mt-1 border rounded-md" multiple>
                              {this.rolesobj.map((role:any)=>(
                               <option class="px-6 py-1 hover:bg-gray-200 cursor-pointer" selected={role.selected} value={role.id}>{role.value}</option>
                              ))}
@@ -176,7 +171,6 @@ export class EditUser {
                       <button
                         type="button"
                         onClick={() => {
-                          console.log('ok');
                           this.toggle();
                         }}
                         class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"

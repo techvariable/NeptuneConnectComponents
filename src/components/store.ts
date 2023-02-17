@@ -5,7 +5,7 @@ import { createStore } from '@stencil/store';
 import { formatJSON } from '../utils/utils';
 
 const { state, onChange, reset } = createStore({
-  url: "http://localhost:3000/api/editor",
+  url: "",
   nodeList: [],
 
   selectedNodeName: null,
