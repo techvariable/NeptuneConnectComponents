@@ -51,7 +51,7 @@ export class MenuDropDown {
         </h2>
 
         {/* List */}
-        <div id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class={this.showDropdown ? 'absolute bg-white z-10 w-44 text-sm list-none mt-2 rounded divide-y divide-gray-100 shadow ' : 'hidden'}>
+        <div id="dropdownDefaultButton" data-dropdown-toggle="dropdown" style={{right:"0px"}} class={this.showDropdown ? 'absolute bg-white z-10 w-44 text-sm list-none mt-2 rounded divide-y right-0 divide-gray-100 shadow ' : 'hidden'}>
           <ul id="dropdown" class="py-1">
             {this.list?.map(item => (
               <li>

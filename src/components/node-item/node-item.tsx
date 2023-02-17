@@ -11,7 +11,7 @@ const DROPDOWN_ITEMS = ['View', 'Edit'];
 export class NodeItem {
   render() {
     return (
-      <div style={{ overflow: 'visible' }} class={'overflow-y-auto py-4 px-3 bg-gray-100 rounded-md h-96'}>
+      <div style={{ overflow: 'visible' }} class={'py-4 px-3 bg-gray-100 rounded-md'}>
         <ul class="space-y-2">
           {state.nodeList.map(item => {
             return (

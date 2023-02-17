@@ -16,8 +16,8 @@ const { state, onChange, reset } = createStore({
   filter: {},
   total:0,
 
-  query: '',
-  queryParameter: "",
+  query: '\n\n\n\n\n\n\n\n\n',
+  queryParameter: "\n\n\n\n\n\n\n\n\n",
   nodes: [],
   columnHeaders: [],
   isLoading: false,
