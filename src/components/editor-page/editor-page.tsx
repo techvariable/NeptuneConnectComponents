@@ -56,6 +56,7 @@ export class EditorPage {
       const { isValid, error } = isValidParameterJson(query, parameters);
 
       if (isValid) {
+        state.timeTaken = null;
         const res = await axios.post(`${state.url}/query/`, {
           query,
           parameters: JSON.parse(parameters),
@@ -63,6 +64,7 @@ export class EditorPage {
         state.query = query;
         state.queryParameter = parameters;
         state.nodes = res.data.result;
+        state.timeTaken = res.data.timeTaken;
       } else {
         state.isError = true;
         state.errorMessage = error;
@@ -78,10 +80,14 @@ export class EditorPage {
     return (
       <div>
         <div class="w-auto flex justify-center gap-4 mt-4">
-          <aside class="w-80" aria-label="Sidebar">
-            <h2 class="pb-6 font-mono text-lg font-bold leading-7 text-gray-600">Nodes</h2>
-            <node-item></node-item>
-          </aside>
+          <div>
+            <aside  class="w-80" aria-label="Sidebar">
+              <h2 class="pb-6 font-mono text-lg font-bold leading-7 text-gray-600">Nodes</h2>
+              <div style={{ maxHeight: '43.5rem', overflowX:'visible', overflowY: 'auto'}}>
+                <node-item></node-item>
+              </div>
+            </aside>
+          </div>
           <div class="w-96" style={{ width: '72.5rem' }}>
             <h2 class="pb-3 font-mono text-lg font-bold leading-7 text-gray-600">Write your Gremlin Query Here</h2>
             <code-editor-updated onClickRun={this.onClickRun}></code-editor-updated>

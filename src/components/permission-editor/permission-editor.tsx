@@ -10,8 +10,7 @@ import { formatJSON, isValidPermissionJson } from '../../utils/utils';
 })
 export class PermissionEditor {
   @Prop() url: string;
-  @Prop() rolesurl: string;
-  @State() roleId: Number = 1;
+  @State() roleId: Number;
   @State() response: any;
   @State() view: EditorView;
   @State() state: EditorState;
@@ -22,6 +21,7 @@ export class PermissionEditor {
   @State() rolesObj: {}[] = [];
   @State() resStatus: string = '';
   @Element() element: HTMLElement;
+  @State() docInitial: any;
 
   @State() roleOptions: Array<{ roleName: string; id: number }> = [];
 
@@ -40,12 +40,26 @@ export class PermissionEditor {
   async fetchRolePermission(roleId: number) {
     try {
       const rolePermissionsResp = await axios.get(`${this.url}/?roleId=${roleId}`);
-
-      if (rolePermissionsResp.status !== 200) throw Error('Failed to fetch role permissions');
-
-      this.doc = rolePermissionsResp.data;
-      let transaction = this.view.state.update({ changes: { from: 0, insert: `${formatJSON(rolePermissionsResp.data)}` } });
-      this.view.dispatch(transaction);
+      // this.doc = rolePermissionsResp.data;
+      this.docInitial = rolePermissionsResp.data;
+      if (!this.view) {
+        this.state = EditorState.create({
+          doc: rolePermissionsResp.data,
+          extensions: [
+            basicSetup,
+            json(),
+            //   keymap.of(defaultKeymap),9
+            this.dummyKeymap(),
+          ],
+        });
+        this.view = new EditorView({
+          state: this.state,
+          parent: this.element.querySelector('#permissionEditor'),
+        });
+      } else {
+        let transaction = this.view.state.update({ changes: { from: 0, insert: `${formatJSON(rolePermissionsResp.data)}` } });
+        this.view.dispatch(transaction);
+      }
     } catch (error) {
       console.log(error);
       // handle error
@@ -54,8 +68,9 @@ export class PermissionEditor {
 
   async fetchRoles() {
     try {
-      const rolesRes = await axios.get(this.rolesurl);
+      const rolesRes = await axios.get(`${this.url}/all`);
       const roles = rolesRes.data;
+      this.roleId = roles[0].id;
       this.roleOptions = roles;
       await this.fetchRolePermission(roles[0].id);
     } catch (error) {
@@ -70,7 +85,7 @@ export class PermissionEditor {
 
   componentDidLoad() {
     this.state = EditorState.create({
-      doc: this.doc,
+      doc: this.docInitial,
       extensions: [
         basicSetup,
         json(),
@@ -133,7 +148,6 @@ export class PermissionEditor {
     return (
       <Host>
         <div class="w-auto border border-gray-300 shadow-gray-300 py-2 px-3 space-y-2">
-          {/* select users permissions  */}
           <div class="flex justify-between items-center">
             <div class="border border-gray-300 space-x-3 shadow-gray-300 p-2 m-1">
               <span class="pb-6 text-md font-bold leading-7 text-gray-600">Select Role : </span>
@@ -146,17 +160,18 @@ export class PermissionEditor {
                 ))}
               </select>
             </div>
-            <add-role refresh={() => this.fetchRoles()} url="http://localhost:3000/api/permissions"></add-role>
+            <add-role refresh={() => this.fetchRoles()} url={this.url}></add-role>
           </div>
-          <div id="permissionEditor" class="border border-gray-300"></div>
+          <div style={{ maxHeight: '40rem', overflowY: 'auto' }} class="border-2">
+            <div id="permissionEditor" class="border border-gray-300"></div>
 
-          {this.errorMessage !== '' ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full -mt-4 mb-6">{this.errorMessage}</p> : null}
-          {this.errorMessage === '' && this.resStatus !== '' && (
-            <div class="flex items-center bg-gray-500 text-white text-sm font-bold px-4 py-3" role="alert">
-              <p>{this.resStatus}</p>
-            </div>
-          )}
-
+            {this.errorMessage !== '' ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full -mt-4 mb-6">{this.errorMessage}</p> : null}
+            {this.errorMessage === '' && this.resStatus !== '' && (
+              <div class="flex items-center bg-gray-500 text-white text-sm font-bold px-4 py-3" role="alert">
+                <p>{this.resStatus}</p>
+              </div>
+            )}
+          </div>
           <div class="flex justify-between">
             <div>
               <button

@@ -55,7 +55,7 @@ export class CustomTable {
     }
     return (
       <div style={{ overflowY: 'auto' }}>
-        <div style={{ maxHeight: '420px', overflow: 'auto' }}>
+        <div style={{ maxHeight: '20rem', overflow: 'auto' }}>
           <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative">
             {/* Table Head */}
             <thead class="bg-violet-50 sticky top-0">

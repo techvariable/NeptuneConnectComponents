@@ -138,7 +138,6 @@ export namespace Components {
     interface NodeItem {
     }
     interface PermissionEditor {
-        "rolesurl": string;
         "url": string;
     }
     interface PlainButton {
@@ -680,7 +679,6 @@ declare namespace LocalJSX {
     interface NodeItem {
     }
     interface PermissionEditor {
-        "rolesurl"?: string;
         "url"?: string;
     }
     interface PlainButton {

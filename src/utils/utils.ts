@@ -7,12 +7,14 @@ export function isValidPermissionJson(jsonData: string) {
   try {
     const data: any = JSON.parse(jsonData);
     const keys: string[] = Object.keys(data);
-
+    const permissionsKeys : string[] = ['editor','settings','permissions','users','logs'] ;
     if (keys.length === 0) {
       throw Error('No keys present in the json');
     }
-    console.log("keys",keys);
     keys.forEach((item: string) => {
+      if(!permissionsKeys.includes(item)){
+        throw Error(`${item} key is not a valid permission key. Following are the valid permissions: ${permissionsKeys.join(', ')}.`);
+      }
       const permission = data[item];
 
       if (permission["*"] == undefined) {
