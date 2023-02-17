@@ -164,6 +164,7 @@ export namespace Components {
         "name": string;
     }
     interface SideBar {
+        "url": string;
     }
     interface TabComponent {
     }
@@ -650,6 +651,7 @@ declare namespace LocalJSX {
         "name"?: string;
     }
     interface SideBar {
+        "url"?: string;
     }
     interface TabComponent {
     }
