@@ -11,7 +11,6 @@ export class NavigatorsComponent {
   @State() parsedPermissions: [] = [];
   componentWillLoad() {
     this.parsedPermissions = JSON.parse(this.permissions);
-    console.log('Parsed permissions', this.parsedPermissions);
   }
   render() {
     return (
