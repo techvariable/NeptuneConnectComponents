@@ -30,6 +30,7 @@ const { state, onChange, reset } = createStore({
   viewParameter: null,
   stateParameter: null,
   timeTaken:null,
+  refresh:null,
 
 });
 
@@ -43,6 +44,12 @@ onChange('order', () => {
 
 onChange('filter', () => {
   fetchData(state.selectedNodeName);
+});
+
+onChange('refresh', () => {
+  if(state.refresh!==null)
+  fetchData(state.selectedNodeName);
+  state.refresh=null;
 });
 
 onChange('nodes', value => {

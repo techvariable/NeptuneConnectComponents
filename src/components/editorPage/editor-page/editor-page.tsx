@@ -84,7 +84,7 @@ export class EditorPage {
           <div>
             <aside  class="w-80" aria-label="Sidebar">
               <h2 class="pb-6 font-mono text-lg font-bold leading-7 text-gray-600">Nodes</h2>
-              <div style={{ maxHeight: '43.5rem', overflowX:'visible', overflowY: 'auto'}}>
+              <div style={{ maxHeight: '43.5rem', overflowX:'visible', overflowY: 'auto',minHeight:'20rem'}}>
                 <node-item></node-item>
               </div>
             </aside>
