@@ -118,7 +118,8 @@ export namespace Components {
     interface NavBar {
     }
     interface NavigatorsComponent {
-        "navigators": any;
+        "navigators": string;
+        "permissions": string;
     }
     interface NodeItem {
     }
@@ -605,7 +606,8 @@ declare namespace LocalJSX {
     interface NavBar {
     }
     interface NavigatorsComponent {
-        "navigators"?: any;
+        "navigators"?: string;
+        "permissions"?: string;
     }
     interface NodeItem {
     }

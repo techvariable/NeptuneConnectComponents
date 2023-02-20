@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property     | Attribute    | Description | Type  | Default     |
-| ------------ | ------------ | ----------- | ----- | ----------- |
-| `navigators` | `navigators` |             | `any` | `undefined` |
+| Property      | Attribute     | Description | Type     | Default     |
+| ------------- | ------------- | ----------- | -------- | ----------- |
+| `navigators`  | `navigators`  |             | `string` | `undefined` |
+| `permissions` | `permissions` |             | `string` | `undefined` |
 
 
 ----------------------------------------------
