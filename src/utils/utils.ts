@@ -66,3 +66,22 @@ export function isValidParameterJson(query:string,jsonData: string) {
 export function formatJSON(json: object): string {
   return JSON.stringify(json, undefined, 4);
 } 
+
+export function hasAccess(permissions:any[],page:string):boolean{
+  if (
+    !(
+      (
+        (permissions.find((v) => '*' in v && v['*']['*']) != null) ||
+        (permissions.find((v) => '*' in v && v['*']["read"]) != null) ||
+        permissions.some(
+          (v) => {
+            return page in v && v[page]["read"]
+          }
+        )
+      )
+    )
+  ) {
+    return false
+  }
+  return true;
+}

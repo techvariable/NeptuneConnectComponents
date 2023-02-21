@@ -21,26 +21,7 @@ export namespace Components {
         "togglesort": any;
     }
     interface CodeEditor {
-        "doc": any;
-        "url": string;
-    }
-    interface CodeEditorUpdated {
         "onClickRun": Function;
-    }
-    interface CustomTable {
-        "clearSearch": any;
-        "currentPage": number;
-        "dataLength": string;
-        "isLoadingError": boolean;
-        "limit": number;
-        "next": any;
-        "prev": any;
-        "rows": number[];
-        "rowsHandler": any;
-        "searchMethod": any;
-        "tableBody": object[];
-        "tableHeader": object[];
-        "toggleSortMethod": any;
     }
     interface DataTable {
         "doc": object[];
@@ -64,13 +45,13 @@ export namespace Components {
         "userid": number;
         "value": string;
     }
+    interface EditorJsonResponseViewer {
+        "doc": any;
+    }
     interface EditorPage {
         "url": string;
     }
     interface EditorRes {
-        "headerList": any;
-    }
-    interface EditorResUpdated {
     }
     interface FluidContainer {
     }
@@ -85,7 +66,17 @@ export namespace Components {
         "email": string;
         "url": string;
     }
+    interface JsonResponseViewer {
+        "doc": any;
+        "responseLabel": 'result' | 'error';
+    }
     interface LoaderComponent {
+    }
+    interface LogTableWrapper {
+        "api": any;
+        "autocompute": boolean;
+        "headerList": object[];
+        "rowPerPage": number[];
     }
     interface LogsTable {
         "clearSearch": any;
@@ -103,15 +94,6 @@ export namespace Components {
         "tableHeader": object[];
         "toggleSortMethod": any;
     }
-    interface MainComponent {
-    }
-    interface MenuDown {
-        "email": string;
-        "option": string[];
-        "submiturl": string;
-        "url": string;
-        "userId": number;
-    }
     interface MenuDropDown {
         "fetchData": any;
         "list": string[];
@@ -119,7 +101,7 @@ export namespace Components {
     }
     interface MenuItems {
     }
-    interface MultiSelect {
+    interface MultiSelectChoicesJs {
         "handleselect": any;
         "items": string[];
         "roles": any;
@@ -129,11 +111,15 @@ export namespace Components {
         "userid": number;
         "value": string;
     }
-    interface MultiSelectt {
+    interface MultiSelectCustom {
         "roles": string[];
         "selected": string[];
     }
     interface NavBar {
+    }
+    interface NavigatorsComponent {
+        "navigators": string;
+        "permissions": string;
     }
     interface NodeItem {
     }
@@ -151,6 +137,21 @@ export namespace Components {
     }
     interface QueryLogs {
     }
+    interface QueryResultTable {
+        "clearSearch": any;
+        "currentPage": number;
+        "dataLength": string;
+        "isLoadingError": boolean;
+        "limit": number;
+        "next": any;
+        "prev": any;
+        "rows": number[];
+        "rowsHandler": any;
+        "searchMethod": any;
+        "tableBody": object[];
+        "tableHeader": object[];
+        "toggleSortMethod": any;
+    }
     interface RadioButton {
         "align": 'vertical' | 'horizontal';
         "name": string;
@@ -163,23 +164,10 @@ export namespace Components {
         "labels": string[];
         "name": string;
     }
-    interface ResEditor {
-        "doc": any;
-        "responseLabel": 'result' | 'error';
-    }
-    interface ResEditorUpdated {
-        "doc": any;
-    }
-    interface SettingsNavigator {
-        "navigators": any;
-    }
     interface SideBar {
+        "url": string;
     }
     interface TabComponent {
-        "doc": any;
-        "responseLabel": any;
-    }
-    interface TabComponentUpdated {
     }
     interface TableSearchModal {
         "alias": string;
@@ -189,19 +177,6 @@ export namespace Components {
         "searchMethod": any;
         "type": string;
         "url": string;
-    }
-    interface TableWrapper {
-        "api": any;
-        "autocompute": boolean;
-        "headerList": object[];
-        "rowPerPage": number[];
-    }
-    interface TableWrapperUpdated {
-        "api": any;
-        "autocompute": boolean;
-        "data": object[];
-        "headerList": object[];
-        "rowPerPage": number[];
     }
     interface TabsComponent {
         "activeIndex": number;
@@ -220,6 +195,13 @@ export namespace Components {
     interface TextFieldArea {
         "addClass": string;
         "width": 'full' | 'auto';
+    }
+    interface UserDropDown {
+        "email": string;
+        "option": string[];
+        "submiturl": string;
+        "url": string;
+        "userId": number;
     }
     interface UsersComponent {
         "submiturl": string;
@@ -252,18 +234,6 @@ declare global {
         prototype: HTMLCodeEditorElement;
         new (): HTMLCodeEditorElement;
     };
-    interface HTMLCodeEditorUpdatedElement extends Components.CodeEditorUpdated, HTMLStencilElement {
-    }
-    var HTMLCodeEditorUpdatedElement: {
-        prototype: HTMLCodeEditorUpdatedElement;
-        new (): HTMLCodeEditorUpdatedElement;
-    };
-    interface HTMLCustomTableElement extends Components.CustomTable, HTMLStencilElement {
-    }
-    var HTMLCustomTableElement: {
-        prototype: HTMLCustomTableElement;
-        new (): HTMLCustomTableElement;
-    };
     interface HTMLDataTableElement extends Components.DataTable, HTMLStencilElement {
     }
     var HTMLDataTableElement: {
@@ -294,6 +264,12 @@ declare global {
         prototype: HTMLEditUserElement;
         new (): HTMLEditUserElement;
     };
+    interface HTMLEditorJsonResponseViewerElement extends Components.EditorJsonResponseViewer, HTMLStencilElement {
+    }
+    var HTMLEditorJsonResponseViewerElement: {
+        prototype: HTMLEditorJsonResponseViewerElement;
+        new (): HTMLEditorJsonResponseViewerElement;
+    };
     interface HTMLEditorPageElement extends Components.EditorPage, HTMLStencilElement {
     }
     var HTMLEditorPageElement: {
@@ -305,12 +281,6 @@ declare global {
     var HTMLEditorResElement: {
         prototype: HTMLEditorResElement;
         new (): HTMLEditorResElement;
-    };
-    interface HTMLEditorResUpdatedElement extends Components.EditorResUpdated, HTMLStencilElement {
-    }
-    var HTMLEditorResUpdatedElement: {
-        prototype: HTMLEditorResUpdatedElement;
-        new (): HTMLEditorResUpdatedElement;
     };
     interface HTMLFluidContainerElement extends Components.FluidContainer, HTMLStencilElement {
     }
@@ -330,29 +300,29 @@ declare global {
         prototype: HTMLInviteComponentElement;
         new (): HTMLInviteComponentElement;
     };
+    interface HTMLJsonResponseViewerElement extends Components.JsonResponseViewer, HTMLStencilElement {
+    }
+    var HTMLJsonResponseViewerElement: {
+        prototype: HTMLJsonResponseViewerElement;
+        new (): HTMLJsonResponseViewerElement;
+    };
     interface HTMLLoaderComponentElement extends Components.LoaderComponent, HTMLStencilElement {
     }
     var HTMLLoaderComponentElement: {
         prototype: HTMLLoaderComponentElement;
         new (): HTMLLoaderComponentElement;
     };
+    interface HTMLLogTableWrapperElement extends Components.LogTableWrapper, HTMLStencilElement {
+    }
+    var HTMLLogTableWrapperElement: {
+        prototype: HTMLLogTableWrapperElement;
+        new (): HTMLLogTableWrapperElement;
+    };
     interface HTMLLogsTableElement extends Components.LogsTable, HTMLStencilElement {
     }
     var HTMLLogsTableElement: {
         prototype: HTMLLogsTableElement;
         new (): HTMLLogsTableElement;
-    };
-    interface HTMLMainComponentElement extends Components.MainComponent, HTMLStencilElement {
-    }
-    var HTMLMainComponentElement: {
-        prototype: HTMLMainComponentElement;
-        new (): HTMLMainComponentElement;
-    };
-    interface HTMLMenuDownElement extends Components.MenuDown, HTMLStencilElement {
-    }
-    var HTMLMenuDownElement: {
-        prototype: HTMLMenuDownElement;
-        new (): HTMLMenuDownElement;
     };
     interface HTMLMenuDropDownElement extends Components.MenuDropDown, HTMLStencilElement {
     }
@@ -366,23 +336,29 @@ declare global {
         prototype: HTMLMenuItemsElement;
         new (): HTMLMenuItemsElement;
     };
-    interface HTMLMultiSelectElement extends Components.MultiSelect, HTMLStencilElement {
+    interface HTMLMultiSelectChoicesJsElement extends Components.MultiSelectChoicesJs, HTMLStencilElement {
     }
-    var HTMLMultiSelectElement: {
-        prototype: HTMLMultiSelectElement;
-        new (): HTMLMultiSelectElement;
+    var HTMLMultiSelectChoicesJsElement: {
+        prototype: HTMLMultiSelectChoicesJsElement;
+        new (): HTMLMultiSelectChoicesJsElement;
     };
-    interface HTMLMultiSelecttElement extends Components.MultiSelectt, HTMLStencilElement {
+    interface HTMLMultiSelectCustomElement extends Components.MultiSelectCustom, HTMLStencilElement {
     }
-    var HTMLMultiSelecttElement: {
-        prototype: HTMLMultiSelecttElement;
-        new (): HTMLMultiSelecttElement;
+    var HTMLMultiSelectCustomElement: {
+        prototype: HTMLMultiSelectCustomElement;
+        new (): HTMLMultiSelectCustomElement;
     };
     interface HTMLNavBarElement extends Components.NavBar, HTMLStencilElement {
     }
     var HTMLNavBarElement: {
         prototype: HTMLNavBarElement;
         new (): HTMLNavBarElement;
+    };
+    interface HTMLNavigatorsComponentElement extends Components.NavigatorsComponent, HTMLStencilElement {
+    }
+    var HTMLNavigatorsComponentElement: {
+        prototype: HTMLNavigatorsComponentElement;
+        new (): HTMLNavigatorsComponentElement;
     };
     interface HTMLNodeItemElement extends Components.NodeItem, HTMLStencilElement {
     }
@@ -408,6 +384,12 @@ declare global {
         prototype: HTMLQueryLogsElement;
         new (): HTMLQueryLogsElement;
     };
+    interface HTMLQueryResultTableElement extends Components.QueryResultTable, HTMLStencilElement {
+    }
+    var HTMLQueryResultTableElement: {
+        prototype: HTMLQueryResultTableElement;
+        new (): HTMLQueryResultTableElement;
+    };
     interface HTMLRadioButtonElement extends Components.RadioButton, HTMLStencilElement {
     }
     var HTMLRadioButtonElement: {
@@ -419,24 +401,6 @@ declare global {
     var HTMLRadioButtonMultipleElement: {
         prototype: HTMLRadioButtonMultipleElement;
         new (): HTMLRadioButtonMultipleElement;
-    };
-    interface HTMLResEditorElement extends Components.ResEditor, HTMLStencilElement {
-    }
-    var HTMLResEditorElement: {
-        prototype: HTMLResEditorElement;
-        new (): HTMLResEditorElement;
-    };
-    interface HTMLResEditorUpdatedElement extends Components.ResEditorUpdated, HTMLStencilElement {
-    }
-    var HTMLResEditorUpdatedElement: {
-        prototype: HTMLResEditorUpdatedElement;
-        new (): HTMLResEditorUpdatedElement;
-    };
-    interface HTMLSettingsNavigatorElement extends Components.SettingsNavigator, HTMLStencilElement {
-    }
-    var HTMLSettingsNavigatorElement: {
-        prototype: HTMLSettingsNavigatorElement;
-        new (): HTMLSettingsNavigatorElement;
     };
     interface HTMLSideBarElement extends Components.SideBar, HTMLStencilElement {
     }
@@ -450,29 +414,11 @@ declare global {
         prototype: HTMLTabComponentElement;
         new (): HTMLTabComponentElement;
     };
-    interface HTMLTabComponentUpdatedElement extends Components.TabComponentUpdated, HTMLStencilElement {
-    }
-    var HTMLTabComponentUpdatedElement: {
-        prototype: HTMLTabComponentUpdatedElement;
-        new (): HTMLTabComponentUpdatedElement;
-    };
     interface HTMLTableSearchModalElement extends Components.TableSearchModal, HTMLStencilElement {
     }
     var HTMLTableSearchModalElement: {
         prototype: HTMLTableSearchModalElement;
         new (): HTMLTableSearchModalElement;
-    };
-    interface HTMLTableWrapperElement extends Components.TableWrapper, HTMLStencilElement {
-    }
-    var HTMLTableWrapperElement: {
-        prototype: HTMLTableWrapperElement;
-        new (): HTMLTableWrapperElement;
-    };
-    interface HTMLTableWrapperUpdatedElement extends Components.TableWrapperUpdated, HTMLStencilElement {
-    }
-    var HTMLTableWrapperUpdatedElement: {
-        prototype: HTMLTableWrapperUpdatedElement;
-        new (): HTMLTableWrapperUpdatedElement;
     };
     interface HTMLTabsComponentElement extends Components.TabsComponent, HTMLStencilElement {
     }
@@ -492,6 +438,12 @@ declare global {
         prototype: HTMLTextFieldAreaElement;
         new (): HTMLTextFieldAreaElement;
     };
+    interface HTMLUserDropDownElement extends Components.UserDropDown, HTMLStencilElement {
+    }
+    var HTMLUserDropDownElement: {
+        prototype: HTMLUserDropDownElement;
+        new (): HTMLUserDropDownElement;
+    };
     interface HTMLUsersComponentElement extends Components.UsersComponent, HTMLStencilElement {
     }
     var HTMLUsersComponentElement: {
@@ -503,46 +455,41 @@ declare global {
         "check-box": HTMLCheckBoxElement;
         "chips-list": HTMLChipsListElement;
         "code-editor": HTMLCodeEditorElement;
-        "code-editor-updated": HTMLCodeEditorUpdatedElement;
-        "custom-table": HTMLCustomTableElement;
         "data-table": HTMLDataTableElement;
         "data-table-updated": HTMLDataTableUpdatedElement;
         "dialog-component": HTMLDialogComponentElement;
         "drop-down": HTMLDropDownElement;
         "edit-user": HTMLEditUserElement;
+        "editor-json-response-viewer": HTMLEditorJsonResponseViewerElement;
         "editor-page": HTMLEditorPageElement;
         "editor-res": HTMLEditorResElement;
-        "editor-res-updated": HTMLEditorResUpdatedElement;
         "fluid-container": HTMLFluidContainerElement;
         "icon-button": HTMLIconButtonElement;
         "invite-component": HTMLInviteComponentElement;
+        "json-response-viewer": HTMLJsonResponseViewerElement;
         "loader-component": HTMLLoaderComponentElement;
+        "log-table-wrapper": HTMLLogTableWrapperElement;
         "logs-table": HTMLLogsTableElement;
-        "main-component": HTMLMainComponentElement;
-        "menu-down": HTMLMenuDownElement;
         "menu-drop-down": HTMLMenuDropDownElement;
         "menu-items": HTMLMenuItemsElement;
-        "multi-select": HTMLMultiSelectElement;
-        "multi-selectt": HTMLMultiSelecttElement;
+        "multi-select-choices-js": HTMLMultiSelectChoicesJsElement;
+        "multi-select-custom": HTMLMultiSelectCustomElement;
         "nav-bar": HTMLNavBarElement;
+        "navigators-component": HTMLNavigatorsComponentElement;
         "node-item": HTMLNodeItemElement;
         "permission-editor": HTMLPermissionEditorElement;
         "plain-button": HTMLPlainButtonElement;
         "query-logs": HTMLQueryLogsElement;
+        "query-result-table": HTMLQueryResultTableElement;
         "radio-button": HTMLRadioButtonElement;
         "radio-button-multiple": HTMLRadioButtonMultipleElement;
-        "res-editor": HTMLResEditorElement;
-        "res-editor-updated": HTMLResEditorUpdatedElement;
-        "settings-navigator": HTMLSettingsNavigatorElement;
         "side-bar": HTMLSideBarElement;
         "tab-component": HTMLTabComponentElement;
-        "tab-component-updated": HTMLTabComponentUpdatedElement;
         "table-search-modal": HTMLTableSearchModalElement;
-        "table-wrapper": HTMLTableWrapperElement;
-        "table-wrapper-updated": HTMLTableWrapperUpdatedElement;
         "tabs-component": HTMLTabsComponentElement;
         "text-field": HTMLTextFieldElement;
         "text-field-area": HTMLTextFieldAreaElement;
+        "user-drop-down": HTMLUserDropDownElement;
         "users-component": HTMLUsersComponentElement;
     }
 }
@@ -562,26 +509,7 @@ declare namespace LocalJSX {
         "togglesort"?: any;
     }
     interface CodeEditor {
-        "doc"?: any;
-        "url"?: string;
-    }
-    interface CodeEditorUpdated {
         "onClickRun"?: Function;
-    }
-    interface CustomTable {
-        "clearSearch"?: any;
-        "currentPage"?: number;
-        "dataLength"?: string;
-        "isLoadingError"?: boolean;
-        "limit"?: number;
-        "next"?: any;
-        "prev"?: any;
-        "rows"?: number[];
-        "rowsHandler"?: any;
-        "searchMethod"?: any;
-        "tableBody"?: object[];
-        "tableHeader"?: object[];
-        "toggleSortMethod"?: any;
     }
     interface DataTable {
         "doc"?: object[];
@@ -605,13 +533,13 @@ declare namespace LocalJSX {
         "userid"?: number;
         "value"?: string;
     }
+    interface EditorJsonResponseViewer {
+        "doc"?: any;
+    }
     interface EditorPage {
         "url"?: string;
     }
     interface EditorRes {
-        "headerList"?: any;
-    }
-    interface EditorResUpdated {
     }
     interface FluidContainer {
     }
@@ -626,7 +554,17 @@ declare namespace LocalJSX {
         "email"?: string;
         "url"?: string;
     }
+    interface JsonResponseViewer {
+        "doc"?: any;
+        "responseLabel"?: 'result' | 'error';
+    }
     interface LoaderComponent {
+    }
+    interface LogTableWrapper {
+        "api"?: any;
+        "autocompute"?: boolean;
+        "headerList"?: object[];
+        "rowPerPage"?: number[];
     }
     interface LogsTable {
         "clearSearch"?: any;
@@ -644,15 +582,6 @@ declare namespace LocalJSX {
         "tableHeader"?: object[];
         "toggleSortMethod"?: any;
     }
-    interface MainComponent {
-    }
-    interface MenuDown {
-        "email"?: string;
-        "option"?: string[];
-        "submiturl"?: string;
-        "url"?: string;
-        "userId"?: number;
-    }
     interface MenuDropDown {
         "fetchData"?: any;
         "list"?: string[];
@@ -660,7 +589,7 @@ declare namespace LocalJSX {
     }
     interface MenuItems {
     }
-    interface MultiSelect {
+    interface MultiSelectChoicesJs {
         "handleselect"?: any;
         "items"?: string[];
         "roles"?: any;
@@ -670,11 +599,15 @@ declare namespace LocalJSX {
         "userid"?: number;
         "value"?: string;
     }
-    interface MultiSelectt {
+    interface MultiSelectCustom {
         "roles"?: string[];
         "selected"?: string[];
     }
     interface NavBar {
+    }
+    interface NavigatorsComponent {
+        "navigators"?: string;
+        "permissions"?: string;
     }
     interface NodeItem {
     }
@@ -692,6 +625,21 @@ declare namespace LocalJSX {
     }
     interface QueryLogs {
     }
+    interface QueryResultTable {
+        "clearSearch"?: any;
+        "currentPage"?: number;
+        "dataLength"?: string;
+        "isLoadingError"?: boolean;
+        "limit"?: number;
+        "next"?: any;
+        "prev"?: any;
+        "rows"?: number[];
+        "rowsHandler"?: any;
+        "searchMethod"?: any;
+        "tableBody"?: object[];
+        "tableHeader"?: object[];
+        "toggleSortMethod"?: any;
+    }
     interface RadioButton {
         "align"?: 'vertical' | 'horizontal';
         "name"?: string;
@@ -704,23 +652,10 @@ declare namespace LocalJSX {
         "labels"?: string[];
         "name"?: string;
     }
-    interface ResEditor {
-        "doc"?: any;
-        "responseLabel"?: 'result' | 'error';
-    }
-    interface ResEditorUpdated {
-        "doc"?: any;
-    }
-    interface SettingsNavigator {
-        "navigators"?: any;
-    }
     interface SideBar {
+        "url"?: string;
     }
     interface TabComponent {
-        "doc"?: any;
-        "responseLabel"?: any;
-    }
-    interface TabComponentUpdated {
     }
     interface TableSearchModal {
         "alias"?: string;
@@ -730,19 +665,6 @@ declare namespace LocalJSX {
         "searchMethod"?: any;
         "type"?: string;
         "url"?: string;
-    }
-    interface TableWrapper {
-        "api"?: any;
-        "autocompute"?: boolean;
-        "headerList"?: object[];
-        "rowPerPage"?: number[];
-    }
-    interface TableWrapperUpdated {
-        "api"?: any;
-        "autocompute"?: boolean;
-        "data"?: object[];
-        "headerList"?: object[];
-        "rowPerPage"?: number[];
     }
     interface TabsComponent {
         "activeIndex"?: number;
@@ -762,6 +684,13 @@ declare namespace LocalJSX {
         "addClass"?: string;
         "width"?: 'full' | 'auto';
     }
+    interface UserDropDown {
+        "email"?: string;
+        "option"?: string[];
+        "submiturl"?: string;
+        "url"?: string;
+        "userId"?: number;
+    }
     interface UsersComponent {
         "submiturl"?: string;
         "url"?: string;
@@ -772,46 +701,41 @@ declare namespace LocalJSX {
         "check-box": CheckBox;
         "chips-list": ChipsList;
         "code-editor": CodeEditor;
-        "code-editor-updated": CodeEditorUpdated;
-        "custom-table": CustomTable;
         "data-table": DataTable;
         "data-table-updated": DataTableUpdated;
         "dialog-component": DialogComponent;
         "drop-down": DropDown;
         "edit-user": EditUser;
+        "editor-json-response-viewer": EditorJsonResponseViewer;
         "editor-page": EditorPage;
         "editor-res": EditorRes;
-        "editor-res-updated": EditorResUpdated;
         "fluid-container": FluidContainer;
         "icon-button": IconButton;
         "invite-component": InviteComponent;
+        "json-response-viewer": JsonResponseViewer;
         "loader-component": LoaderComponent;
+        "log-table-wrapper": LogTableWrapper;
         "logs-table": LogsTable;
-        "main-component": MainComponent;
-        "menu-down": MenuDown;
         "menu-drop-down": MenuDropDown;
         "menu-items": MenuItems;
-        "multi-select": MultiSelect;
-        "multi-selectt": MultiSelectt;
+        "multi-select-choices-js": MultiSelectChoicesJs;
+        "multi-select-custom": MultiSelectCustom;
         "nav-bar": NavBar;
+        "navigators-component": NavigatorsComponent;
         "node-item": NodeItem;
         "permission-editor": PermissionEditor;
         "plain-button": PlainButton;
         "query-logs": QueryLogs;
+        "query-result-table": QueryResultTable;
         "radio-button": RadioButton;
         "radio-button-multiple": RadioButtonMultiple;
-        "res-editor": ResEditor;
-        "res-editor-updated": ResEditorUpdated;
-        "settings-navigator": SettingsNavigator;
         "side-bar": SideBar;
         "tab-component": TabComponent;
-        "tab-component-updated": TabComponentUpdated;
         "table-search-modal": TableSearchModal;
-        "table-wrapper": TableWrapper;
-        "table-wrapper-updated": TableWrapperUpdated;
         "tabs-component": TabsComponent;
         "text-field": TextField;
         "text-field-area": TextFieldArea;
+        "user-drop-down": UserDropDown;
         "users-component": UsersComponent;
     }
 }
@@ -823,46 +747,41 @@ declare module "@stencil/core" {
             "check-box": LocalJSX.CheckBox & JSXBase.HTMLAttributes<HTMLCheckBoxElement>;
             "chips-list": LocalJSX.ChipsList & JSXBase.HTMLAttributes<HTMLChipsListElement>;
             "code-editor": LocalJSX.CodeEditor & JSXBase.HTMLAttributes<HTMLCodeEditorElement>;
-            "code-editor-updated": LocalJSX.CodeEditorUpdated & JSXBase.HTMLAttributes<HTMLCodeEditorUpdatedElement>;
-            "custom-table": LocalJSX.CustomTable & JSXBase.HTMLAttributes<HTMLCustomTableElement>;
             "data-table": LocalJSX.DataTable & JSXBase.HTMLAttributes<HTMLDataTableElement>;
             "data-table-updated": LocalJSX.DataTableUpdated & JSXBase.HTMLAttributes<HTMLDataTableUpdatedElement>;
             "dialog-component": LocalJSX.DialogComponent & JSXBase.HTMLAttributes<HTMLDialogComponentElement>;
             "drop-down": LocalJSX.DropDown & JSXBase.HTMLAttributes<HTMLDropDownElement>;
             "edit-user": LocalJSX.EditUser & JSXBase.HTMLAttributes<HTMLEditUserElement>;
+            "editor-json-response-viewer": LocalJSX.EditorJsonResponseViewer & JSXBase.HTMLAttributes<HTMLEditorJsonResponseViewerElement>;
             "editor-page": LocalJSX.EditorPage & JSXBase.HTMLAttributes<HTMLEditorPageElement>;
             "editor-res": LocalJSX.EditorRes & JSXBase.HTMLAttributes<HTMLEditorResElement>;
-            "editor-res-updated": LocalJSX.EditorResUpdated & JSXBase.HTMLAttributes<HTMLEditorResUpdatedElement>;
             "fluid-container": LocalJSX.FluidContainer & JSXBase.HTMLAttributes<HTMLFluidContainerElement>;
             "icon-button": LocalJSX.IconButton & JSXBase.HTMLAttributes<HTMLIconButtonElement>;
             "invite-component": LocalJSX.InviteComponent & JSXBase.HTMLAttributes<HTMLInviteComponentElement>;
+            "json-response-viewer": LocalJSX.JsonResponseViewer & JSXBase.HTMLAttributes<HTMLJsonResponseViewerElement>;
             "loader-component": LocalJSX.LoaderComponent & JSXBase.HTMLAttributes<HTMLLoaderComponentElement>;
+            "log-table-wrapper": LocalJSX.LogTableWrapper & JSXBase.HTMLAttributes<HTMLLogTableWrapperElement>;
             "logs-table": LocalJSX.LogsTable & JSXBase.HTMLAttributes<HTMLLogsTableElement>;
-            "main-component": LocalJSX.MainComponent & JSXBase.HTMLAttributes<HTMLMainComponentElement>;
-            "menu-down": LocalJSX.MenuDown & JSXBase.HTMLAttributes<HTMLMenuDownElement>;
             "menu-drop-down": LocalJSX.MenuDropDown & JSXBase.HTMLAttributes<HTMLMenuDropDownElement>;
             "menu-items": LocalJSX.MenuItems & JSXBase.HTMLAttributes<HTMLMenuItemsElement>;
-            "multi-select": LocalJSX.MultiSelect & JSXBase.HTMLAttributes<HTMLMultiSelectElement>;
-            "multi-selectt": LocalJSX.MultiSelectt & JSXBase.HTMLAttributes<HTMLMultiSelecttElement>;
+            "multi-select-choices-js": LocalJSX.MultiSelectChoicesJs & JSXBase.HTMLAttributes<HTMLMultiSelectChoicesJsElement>;
+            "multi-select-custom": LocalJSX.MultiSelectCustom & JSXBase.HTMLAttributes<HTMLMultiSelectCustomElement>;
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
+            "navigators-component": LocalJSX.NavigatorsComponent & JSXBase.HTMLAttributes<HTMLNavigatorsComponentElement>;
             "node-item": LocalJSX.NodeItem & JSXBase.HTMLAttributes<HTMLNodeItemElement>;
             "permission-editor": LocalJSX.PermissionEditor & JSXBase.HTMLAttributes<HTMLPermissionEditorElement>;
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
             "query-logs": LocalJSX.QueryLogs & JSXBase.HTMLAttributes<HTMLQueryLogsElement>;
+            "query-result-table": LocalJSX.QueryResultTable & JSXBase.HTMLAttributes<HTMLQueryResultTableElement>;
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
             "radio-button-multiple": LocalJSX.RadioButtonMultiple & JSXBase.HTMLAttributes<HTMLRadioButtonMultipleElement>;
-            "res-editor": LocalJSX.ResEditor & JSXBase.HTMLAttributes<HTMLResEditorElement>;
-            "res-editor-updated": LocalJSX.ResEditorUpdated & JSXBase.HTMLAttributes<HTMLResEditorUpdatedElement>;
-            "settings-navigator": LocalJSX.SettingsNavigator & JSXBase.HTMLAttributes<HTMLSettingsNavigatorElement>;
             "side-bar": LocalJSX.SideBar & JSXBase.HTMLAttributes<HTMLSideBarElement>;
             "tab-component": LocalJSX.TabComponent & JSXBase.HTMLAttributes<HTMLTabComponentElement>;
-            "tab-component-updated": LocalJSX.TabComponentUpdated & JSXBase.HTMLAttributes<HTMLTabComponentUpdatedElement>;
             "table-search-modal": LocalJSX.TableSearchModal & JSXBase.HTMLAttributes<HTMLTableSearchModalElement>;
-            "table-wrapper": LocalJSX.TableWrapper & JSXBase.HTMLAttributes<HTMLTableWrapperElement>;
-            "table-wrapper-updated": LocalJSX.TableWrapperUpdated & JSXBase.HTMLAttributes<HTMLTableWrapperUpdatedElement>;
             "tabs-component": LocalJSX.TabsComponent & JSXBase.HTMLAttributes<HTMLTabsComponentElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
             "text-field-area": LocalJSX.TextFieldArea & JSXBase.HTMLAttributes<HTMLTextFieldAreaElement>;
+            "user-drop-down": LocalJSX.UserDropDown & JSXBase.HTMLAttributes<HTMLUserDropDownElement>;
             "users-component": LocalJSX.UsersComponent & JSXBase.HTMLAttributes<HTMLUsersComponentElement>;
         }
     }
