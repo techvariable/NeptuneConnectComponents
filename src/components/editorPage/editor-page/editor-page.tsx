@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Component, h, Prop, State } from '@stencil/core';
 
 import { isValidParameterJson } from '../../../utils/utils';
-import state from '../../store';
+import state from '../store';
 
 @Component({
   tag: 'editor-page',

@@ -1,6 +1,6 @@
 import { Component, h } from '@stencil/core';
 
-import state from '../../store';
+import state from '../store';
 
 const DROPDOWN_ITEMS = ['View', 'Edit'];
 

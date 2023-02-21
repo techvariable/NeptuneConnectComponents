@@ -1,5 +1,5 @@
 import { Component, h, Host, State } from '@stencil/core';
-import state from '../../store';
+import state from '../store';
 
 const SUPPORTED_ROWS = [10, 20, 50];
 
