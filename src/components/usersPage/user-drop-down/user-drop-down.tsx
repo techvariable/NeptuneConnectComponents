@@ -7,7 +7,7 @@ import { ClickOutside } from 'stencil-click-outside';
   scoped: true,
 })
 export class UserDropDown {
-  @Prop() option: string[] = ['Delete', 'Edit'];
+  @Prop() option: string[] = ['Edit'];
   @Prop() userId: number = 0;
   @Prop() email: string;
   @Prop() url: string;

@@ -7,13 +7,13 @@
 
 ## Properties
 
-| Property    | Attribute   | Description | Type       | Default              |
-| ----------- | ----------- | ----------- | ---------- | -------------------- |
-| `email`     | `email`     |             | `string`   | `undefined`          |
-| `option`    | --          |             | `string[]` | `['Delete', 'Edit']` |
-| `submiturl` | `submiturl` |             | `string`   | `undefined`          |
-| `url`       | `url`       |             | `string`   | `undefined`          |
-| `userId`    | `user-id`   |             | `number`   | `0`                  |
+| Property    | Attribute   | Description | Type       | Default     |
+| ----------- | ----------- | ----------- | ---------- | ----------- |
+| `email`     | `email`     |             | `string`   | `undefined` |
+| `option`    | --          |             | `string[]` | `['Edit']`  |
+| `submiturl` | `submiturl` |             | `string`   | `undefined` |
+| `url`       | `url`       |             | `string`   | `undefined` |
+| `userId`    | `user-id`   |             | `number`   | `0`         |
 
 
 ## Dependencies

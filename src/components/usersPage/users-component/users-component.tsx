@@ -13,8 +13,6 @@ export class UsersComponent {
     this.option = e.target.value;
   };
   @State() option: string;
-  @State() options: string[] = ['delete', 'edit'];
-
 
 
   render() {
