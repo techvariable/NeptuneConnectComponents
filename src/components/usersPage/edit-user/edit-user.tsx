@@ -141,6 +141,8 @@ export class EditUser {
                             required
                             placeholder="email@example.com"
                             class="border w-full px-4 py-2 rounded-md text-sm mb-4"
+                            readOnly
+                            disabled
                             value={this.email}
                             onInput={event => this.handleChange(event)}
                           />
