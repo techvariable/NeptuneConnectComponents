@@ -1,4 +1,5 @@
 import { Component, h, Host, Prop, State } from '@stencil/core';
+import { hasAccess } from '../../../utils/utils';
 
 
 @Component({
@@ -14,8 +15,12 @@ export class UsersComponent {
   };
   @State() option: string;
   @State() options: string[] = ['delete', 'edit'];
+  @Prop() permissions: string;
+  @State() parsedPermissions: [] = [];
 
-
+  componentWillLoad() {
+    this.parsedPermissions = JSON.parse(this.permissions);
+  }
 
   render() {
     return (
@@ -32,9 +37,9 @@ export class UsersComponent {
                     </svg>
                   </div>
                   <div class="flex-grow">
-                    <div class="flex justify-end">
+                  {hasAccess(this.parsedPermissions,{name:'users',permission:'update'}) &&<div class="flex justify-end">
                       <user-drop-down userId={user.id} email={user.email} url={this.url} submiturl={this.submiturl} ></user-drop-down>
-                    </div>
+                    </div>}
                     <h2 class="text-gray-900 title-font font-medium">{user.name}</h2>
                     <p class="text-gray-500">{user.email}</p>
                     <p class="text-gray-400 text-sm bold">created on {new Date(user.date).toLocaleDateString()}</p>

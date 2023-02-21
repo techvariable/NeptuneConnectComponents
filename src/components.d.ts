@@ -30,6 +30,7 @@ export namespace Components {
         "doc": object[];
     }
     interface DialogComponent {
+        "permissions": string;
         "url": string;
     }
     interface DropDown {
@@ -124,6 +125,7 @@ export namespace Components {
     interface NodeItem {
     }
     interface PermissionEditor {
+        "permissions": string;
         "url": string;
     }
     interface PlainButton {
@@ -165,6 +167,7 @@ export namespace Components {
         "name": string;
     }
     interface SideBar {
+        "permissions": string;
         "url": string;
     }
     interface TabComponent {
@@ -204,6 +207,7 @@ export namespace Components {
         "userId": number;
     }
     interface UsersComponent {
+        "permissions": string;
         "submiturl": string;
         "url": string;
         "users": any;
@@ -518,6 +522,7 @@ declare namespace LocalJSX {
         "doc"?: object[];
     }
     interface DialogComponent {
+        "permissions"?: string;
         "url"?: string;
     }
     interface DropDown {
@@ -612,6 +617,7 @@ declare namespace LocalJSX {
     interface NodeItem {
     }
     interface PermissionEditor {
+        "permissions"?: string;
         "url"?: string;
     }
     interface PlainButton {
@@ -653,6 +659,7 @@ declare namespace LocalJSX {
         "name"?: string;
     }
     interface SideBar {
+        "permissions"?: string;
         "url"?: string;
     }
     interface TabComponent {
@@ -692,6 +699,7 @@ declare namespace LocalJSX {
         "userId"?: number;
     }
     interface UsersComponent {
+        "permissions"?: string;
         "submiturl"?: string;
         "url"?: string;
         "users"?: any;

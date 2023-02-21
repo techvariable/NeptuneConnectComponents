@@ -1,6 +1,7 @@
 import { Component, Host, h, State, Prop } from '@stencil/core';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { hasAccess } from '../../../utils/utils';
 
 @Component({
   tag: 'dialog-component',
@@ -10,6 +11,12 @@ export class DialogComponent {
   @Prop() url: string;
   @State() isModalOpen = false;
   @State() value: string;
+  @Prop() permissions: string;
+  @State() parsedPermissions: [] = [];
+
+  componentWillLoad() {
+    this.parsedPermissions = JSON.parse(this.permissions);
+  }
 
   toggleModalState() {
     this.isModalOpen = !this.isModalOpen;
@@ -54,7 +61,7 @@ export class DialogComponent {
     return (
       <Host>
         {/* Modal Button */}
-        <button
+        {hasAccess(this.parsedPermissions,{name:'users',permission:'write'}) && <button
           type="button"
           onClick={() => this.toggleModalState()}
           class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -63,7 +70,7 @@ export class DialogComponent {
             <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
           </svg>
           Add new user
-        </button>
+        </button>}
 
         {/* Main Modal */}
         {this.isModalOpen && (

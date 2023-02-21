@@ -3,13 +3,15 @@ import { EditorState, basicSetup } from '@codemirror/basic-setup';
 import { EditorView, keymap } from '@codemirror/view';
 import { json } from '@codemirror/lang-json';
 import axios from 'axios';
-import { formatJSON, isValidPermissionJson } from '../../../utils/utils';
+import { formatJSON, hasAccess, isValidPermissionJson } from '../../../utils/utils';
 @Component({
   tag: 'permission-editor',
   scoped: true,
 })
 export class PermissionEditor {
   @Prop() url: string;
+  @Prop() permissions: string;
+  @State() parsedPermissions: [] = [];
   @State() roleId: Number;
   @State() response: any;
   @State() view: EditorView;
@@ -80,6 +82,7 @@ export class PermissionEditor {
   }
 
   componentWillLoad() {
+    this.parsedPermissions = JSON.parse(this.permissions);
     this.fetchRoles();
   }
 
@@ -160,7 +163,7 @@ export class PermissionEditor {
                 ))}
               </select>
             </div>
-            <add-role refresh={() => this.fetchRoles()} url={this.url}></add-role>
+            {hasAccess(this.parsedPermissions,{name:'permissions',permission:'write'}) &&<add-role refresh={() => this.fetchRoles()} url={this.url}></add-role>}
           </div>
           <div style={{ maxHeight: '40rem', overflowY: 'auto' }} class="border-2">
             <div id="permissionEditor" class="border border-gray-300"></div>
@@ -174,14 +177,14 @@ export class PermissionEditor {
           </div>
           <div class="flex justify-between">
             <div>
-              <button
+            {hasAccess(this.parsedPermissions,{name:'users',permission:'update'}) &&<button
                 title="Ctrl+Shift+Enter to run"
                 onClick={() => this.onRoleUpdateClick()}
                 disabled={this.isLoading}
                 class="mr-1 flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 hover:bg-gray-200 hover:text-gray-800 "
               >
                 Update
-              </button>
+              </button>}
             </div>
             <div class="mx-4">{this.isLoading && <loader-component></loader-component>}</div>
           </div>

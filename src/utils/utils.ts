@@ -67,15 +67,19 @@ export function formatJSON(json: object): string {
   return JSON.stringify(json, undefined, 4);
 } 
 
-export function hasAccess(permissions:any[],page:string):boolean{
+export function hasAccess(permissions:any[],route:{name:string | string[],permission:'read'|'write'|'delete'|'update'}):boolean{
   if (
     !(
       (
         (permissions.find((v) => '*' in v && v['*']['*']) != null) ||
-        (permissions.find((v) => '*' in v && v['*']["read"]) != null) ||
+        (permissions.find((v) => '*' in v && v['*'][route.permission]) != null) ||
         permissions.some(
           (v) => {
-            return page in v && v[page]["read"]
+            if (!Array.isArray(route.name)) {
+              return route.name in v && v[route.name][route.permission]
+            } else {
+              return route.name.some((name) => name in v && v[name][route.permission])
+            }
           }
         )
       )

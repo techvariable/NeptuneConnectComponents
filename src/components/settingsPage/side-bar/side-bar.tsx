@@ -1,6 +1,7 @@
 import { Component, Host, h, State, Prop } from '@stencil/core';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { hasAccess } from '../../../utils/utils';
 
 @Component({
   tag: 'side-bar',
@@ -10,10 +11,11 @@ export class SideBar {
   @State() api: string;
   @State() name: string;
   @State() apiExist: boolean = false;
-  @Prop() url:string;
-
+  @Prop() url: string;
+  @Prop() permissions: string;
+  @State() parsedPermissions: [] = [];
   componentWillLoad() {
-    // return axios.get('api/setting')
+    this.parsedPermissions = JSON.parse(this.permissions);
     return axios
       .get(this.url)
       .then(res => {
@@ -35,6 +37,7 @@ export class SideBar {
   }
 
   async createHandler() {
+    let errorMessage = '';
     try {
       // const res = await axios.post('api/settings');
       const res = await axios.post(this.url);
@@ -42,6 +45,7 @@ export class SideBar {
       this.api = data.apiKey;
       this.name = data.user.name;
       this.apiExist = true;
+      errorMessage = data.message;
       Swal.fire({
         position: 'center',
         icon: 'success',
@@ -53,14 +57,13 @@ export class SideBar {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Something went wrong!',
+        text: errorMessage,
       });
     }
   }
 
   async deleteHandler() {
     try {
-      // await axios.get('api/settings');
       await axios.delete(this.url);
       this.apiExist = false;
       Swal.fire({
@@ -133,11 +136,13 @@ export class SideBar {
                     </button>
                   </td>
 
-                  <td class="px-6 py-4 text-right">
-                    <button onClick={() => this.deleteHandler()} class="font-medium text-blue-600 hover:underline">
-                      Delete
-                    </button>
-                  </td>
+                  {hasAccess(this.parsedPermissions, { name: 'settings', permission: 'delete'}) && (
+                    <td class="px-6 py-4 text-right">
+                      <button onClick={() => this.deleteHandler()} class="font-medium text-blue-600 hover:underline">
+                        Delete
+                      </button>
+                    </td>
+                  )}
                 </tr>
               </tbody>
             </table>
@@ -151,9 +156,11 @@ export class SideBar {
               You have no API key currently
             </p>
 
-            <plain-button addClass="mt-8" clickHandler={() => this.createHandler()}>
-              Create new key
-            </plain-button>
+            {hasAccess(this.parsedPermissions,{ name: 'settings', permission: 'write'}) && (
+              <plain-button addClass="mt-8" clickHandler={() => this.createHandler()}>
+                Create new key
+              </plain-button>
+            )}
           </div>
         )}
       </Host>
