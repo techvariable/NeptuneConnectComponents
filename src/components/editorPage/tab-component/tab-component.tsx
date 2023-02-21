@@ -1,6 +1,6 @@
 import { Component, h, State } from '@stencil/core';
 import { formatJSON } from '../../../utils/utils';
-import state from '../../store';
+import state from '../store';
 
 @Component({
   tag: 'tab-component',

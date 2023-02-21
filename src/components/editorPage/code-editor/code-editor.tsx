@@ -4,7 +4,7 @@ import { EditorView, keymap } from '@codemirror/view';
 import { java } from '@codemirror/lang-java';
 import { json } from '@codemirror/lang-json';
 
-import state from '../../store';
+import state from '../store';
 
 const TAB_LIST = [
   { name: 'Query', className: 'editor' },

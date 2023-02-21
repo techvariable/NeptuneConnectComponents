@@ -1,5 +1,5 @@
 import { Component, h, Prop, State } from '@stencil/core';
-import state from '../../store';
+import state from '../store';
 
 const sort = (
   <svg xmlns="http://www.w3.org/2000/svg" class="inline h-4 w-4 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">

@@ -1,6 +1,6 @@
 import { Component, Host, h, State } from '@stencil/core';
 import axios from 'axios';
-import state from '../../store';
+import state from '../../editorPage/store';
 
 @Component({
   tag: 'query-logs',

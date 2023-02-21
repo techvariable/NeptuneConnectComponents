@@ -2,7 +2,7 @@ import axios from 'axios';
 import { formatQuery } from 'gremlint';
 import { createStore } from '@stencil/store';
 
-import { formatJSON } from '../utils/utils';
+import { formatJSON } from '../../utils/utils';
 
 const { state, onChange, reset } = createStore({
   url: "",

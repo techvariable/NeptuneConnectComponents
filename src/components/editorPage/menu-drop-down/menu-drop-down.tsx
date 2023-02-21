@@ -1,6 +1,6 @@
 import { Component, h, Prop, State } from '@stencil/core';
 import { ClickOutside } from "stencil-click-outside";
-import state from '../../store';
+import state from '../store';
 
 @Component({
   tag: 'menu-drop-down',
