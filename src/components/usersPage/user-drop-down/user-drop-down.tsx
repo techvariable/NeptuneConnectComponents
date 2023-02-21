@@ -20,11 +20,6 @@ export class UserDropDown {
     this.toggleDropdown();
   };
 
-  toggleModalState() {
-    this.ismodelopen = !this.ismodelopen;
-  }
-
-
   @ClickOutside()
   someMethod() {
     this.showDropdown = !this.showDropdown;
@@ -60,7 +55,7 @@ export class UserDropDown {
             ))}
           </ul>
         </div>
-        <edit-user url={this.url} submiturl={this.submiturl} userid={this.userId} ismodelopen={this.ismodelopen} value={this.email} toggle={this.toggleModalState} ></edit-user>
+        <edit-user url={this.url} submiturl={this.submiturl} userid={this.userId} ismodelopen={this.ismodelopen} value={this.email} toggle={() => this.ismodelopen = !this.ismodelopen} ></edit-user>
       </div>
     );
   }
