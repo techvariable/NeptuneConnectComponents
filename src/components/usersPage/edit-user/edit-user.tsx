@@ -20,7 +20,7 @@ export class EditUser {
   @Prop() toggle: () => void;
   @Prop() submiturl: string;
   @Prop() userid: number;
-  @State() rolesobj: {}[] =[];
+  @State() rolesobj: {}[] = [];
   @State() email: string = '';
   @ClickOutside()
   someMethod() {
@@ -31,31 +31,31 @@ export class EditUser {
     this.email = this.value;
 
     axios
-    .get(this.url)
-    .then((res: any) => {
-      for (let role of res.data) {
-        let obj = {};
-        (obj['value'] = role.roleName);
-        (obj['id'] = role.id);
-        (obj['label'] = role.roleName);
-        (obj['selected'] = false);
-        (obj['disabled'] = false);
-        this.rolesobj.push(obj);
-      }
-     
-      axios
-      .get(`${this.submiturl}?userId=${this.userid}`)
+      .get(this.url)
       .then((res: any) => {
-        for (let role of this.rolesobj) {
-          if(res.data.includes(role["id"])){
-            role['selected'] = true;
-          }else{
-            role['selected'] = false;
-          }
+        for (let role of res.data) {
+          let obj = {};
+          (obj['value'] = role.roleName);
+          (obj['id'] = role.id);
+          (obj['label'] = role.roleName);
+          (obj['selected'] = false);
+          (obj['disabled'] = false);
+          this.rolesobj.push(obj);
         }
+
+        axios
+          .get(`${this.submiturl}?userId=${this.userid}`)
+          .then((res: any) => {
+            for (let role of this.rolesobj) {
+              if (res.data.includes(role["id"])) {
+                role['selected'] = true;
+              } else {
+                role['selected'] = false;
+              }
+            }
+          })
       })
-    })
-    .catch(err => console.log(err));
+      .catch(err => console.log(err));
   }
 
 
@@ -63,18 +63,18 @@ export class EditUser {
     e.preventDefault();
 
     let selectedRoles = [];
-    for(let item of e.target[1]){
-      if(item.selected === true){
+    for (let item of e.target[1]) {
+      if (item.selected === true) {
         selectedRoles.push(Number(item.value));
       }
     }
 
     try {
       await axios
-      .put(this.submiturl, {
-        userId: this.userid,
-        roles: selectedRoles,
-      });
+        .put(this.submiturl, {
+          userId: this.userid,
+          roles: selectedRoles,
+        });
       Swal.fire({
         position: 'center',
         icon: 'success',
@@ -82,10 +82,10 @@ export class EditUser {
         showConfirmButton: false,
         timer: 1500,
       });
-      for(let role of this.rolesobj){
-        if(selectedRoles.includes(role["id"])){
+      for (let role of this.rolesobj) {
+        if (selectedRoles.includes(role["id"])) {
           role['selected'] = true;
-        }else{
+        } else {
           role['selected'] = false;
         }
       }
@@ -141,6 +141,8 @@ export class EditUser {
                             required
                             placeholder="email@example.com"
                             class="border w-full px-4 py-2 rounded-md text-sm mb-4"
+                            readOnly
+                            disabled
                             value={this.email}
                             onInput={event => this.handleChange(event)}
                           />
@@ -150,9 +152,9 @@ export class EditUser {
                           <p class="z-10 text-md text-gray-500 mb-4">Select permissions</p>
                           <label class="block text-left">
                             <select name='role' class="form-multiselect block w-full mt-1 border rounded-md" multiple>
-                             {this.rolesobj.map((role:any)=>(
-                              <option class="px-6 py-1 hover:bg-gray-200 cursor-pointer" selected={role.selected} value={role.id}>{role.value}</option>
-                             ))}
+                              {this.rolesobj.map((role: any) => (
+                                <option class="px-6 py-1 hover:bg-gray-200 cursor-pointer" selected={role.selected} value={role.id}>{role.value}</option>
+                              ))}
                             </select>
                           </label>
                         </div>
