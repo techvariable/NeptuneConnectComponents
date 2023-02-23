@@ -182,7 +182,7 @@ export class PermissionEditor {
                 title="Ctrl+Shift+Enter to run"
                 onClick={() => this.onRoleUpdateClick()}
                 disabled={this.isLoading && hasAccess(this.parsedPermissions,{name:'users',permission:'update'})}
-                class="mr-1 flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 disabled-custom"
+                class="mr-1 flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 disabled:opacity-75 disabled:text-gray-300 disabled:cursor-default"
               >
                 Update
               </button>

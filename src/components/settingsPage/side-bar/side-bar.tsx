@@ -141,7 +141,7 @@ export class SideBar {
                     <button
                       disabled={!hasAccess(this.parsedPermissions, { name: 'settings', permission: 'delete' })}
                       onClick={() => this.deleteHandler()}
-                      class="disabled-custom font-medium text-blue-600"
+                      class="font-medium text-blue-600 disabled:text-gray-300 disabled:cursor-default"
                     >
                       Delete
                     </button>
@@ -158,9 +158,13 @@ export class SideBar {
               </svg>
               You have no API key currently
             </p>
-            <plain-button disabledHandler={!hasAccess(this.parsedPermissions, { name: 'settings', permission: 'write' })} addClass="mt-8" clickHandler={() => this.createHandler()}>
+            <button
+              disabled={!hasAccess(this.parsedPermissions, { name: 'settings', permission: 'write' })}
+              onClick={() => this.createHandler()}
+              class="mt-8 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 capitalize disabled:text-gray-300 disabled:cursor-default disabled:bg-white disabled:border-2 disabled:border-gray-500"
+            >
               Create new key
-            </plain-button>
+            </button>
           </div>
         )}
       </Host>

@@ -27,7 +27,6 @@
  - [invite-component](../../invitationPage/invite-component)
  - [logs-table](../../logsPage/logs-table)
  - [query-result-table](../../editorPage/query-result-table)
- - [side-bar](../../settingsPage/side-bar)
 
 ### Graph
 ```mermaid
@@ -37,7 +36,6 @@ graph TD;
   invite-component --> plain-button
   logs-table --> plain-button
   query-result-table --> plain-button
-  side-bar --> plain-button
   style plain-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
