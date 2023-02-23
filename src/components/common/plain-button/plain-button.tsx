@@ -2,6 +2,7 @@ import { Component, h, Prop } from '@stencil/core';
 
 @Component({
   tag: 'plain-button',
+  styleUrl:'plain-button.css',
   scoped: true,
 })
 export class PlainButton {
@@ -27,7 +28,7 @@ export class PlainButton {
 
   render() {
     return (
-      <button class={this.btnClassType[this.type]} onClick={this.clickHandler} disabled={this.disabledHandler}>
+      <button class={`disabled-custom ${this.btnClassType[this.type]}`} onClick={this.clickHandler} disabled={this.disabledHandler}>
         <slot />
       </button>
     );

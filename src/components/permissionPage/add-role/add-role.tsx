@@ -1,14 +1,17 @@
 import { Component, Host, h, State, Prop } from '@stencil/core';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { hasAccess } from '../../../utils/utils';
 
 @Component({
   tag: 'add-role',
+  styleUrl:'add-role.css',
   scoped: true,
 })
 export class AddRole {
   @Prop() url: string;
   @Prop() refresh:any;
+  @Prop() parsedPermissions:[];
   @State() isModalOpen = false;
   @State() value: string;
 
@@ -52,9 +55,10 @@ export class AddRole {
       <Host>
         {/* Modal Button */}
         <button
+          disabled={!hasAccess(this.parsedPermissions,{name:'permissions',permission:'write'})}
           type="button"
           onClick={() => this.toggleModalState()}
-          class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled-custom disabled:opacity-75 disabled:bg-gray-500"
         >
           Add Role
         </button>

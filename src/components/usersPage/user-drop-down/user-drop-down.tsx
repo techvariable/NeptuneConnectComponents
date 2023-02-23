@@ -1,9 +1,11 @@
 import { Component, h, Prop, State } from '@stencil/core';
 
 import { ClickOutside } from 'stencil-click-outside';
+import { hasAccess } from '../../../utils/utils';
 
 @Component({
   tag: 'user-drop-down',
+  styleUrl:'user-drop-down.css',
   scoped: true,
 })
 export class UserDropDown {
@@ -12,6 +14,7 @@ export class UserDropDown {
   @Prop() email: string;
   @Prop() url: string;
   @Prop() submiturl:string;
+  @Prop() parsedPermissions:[];
   @State() ismodelopen: boolean= false ;
   @State() value: string;
   @State() showDropdown: boolean = false;
@@ -47,10 +50,12 @@ export class UserDropDown {
         <div class={this.showDropdown ? 'absolute bg-white z-2 w-28 text-sm list-none mt-2 rounded divide-y divide-gray-100 shadow ' : 'hidden'}>
           <ul class="py-1">
             {this.option?.map(item => (
-              <li onClick={() => this.clickHandler()}>
-                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-200">
+              <li>
+                <button class="disabled-custom" onClick={() => this.clickHandler()} disabled={!hasAccess(this.parsedPermissions, { name: 'users', permission: 'update' })}>
+                <a href="#" class="block py-2 px-4 text-sm text-gray-700">
                   {item}
                 </a>
+                </button>
               </li>
             ))}
           </ul>

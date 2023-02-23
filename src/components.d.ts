@@ -7,6 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface AddRole {
+        "parsedPermissions": [];
         "refresh": any;
         "url": string;
     }
@@ -202,6 +203,7 @@ export namespace Components {
     interface UserDropDown {
         "email": string;
         "option": string[];
+        "parsedPermissions": [];
         "submiturl": string;
         "url": string;
         "userId": number;
@@ -499,6 +501,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface AddRole {
+        "parsedPermissions"?: [];
         "refresh"?: any;
         "url"?: string;
     }
@@ -694,6 +697,7 @@ declare namespace LocalJSX {
     interface UserDropDown {
         "email"?: string;
         "option"?: string[];
+        "parsedPermissions"?: [];
         "submiturl"?: string;
         "url"?: string;
         "userId"?: number;

@@ -6,6 +6,7 @@ import axios from 'axios';
 import { formatJSON, hasAccess, isValidPermissionJson } from '../../../utils/utils';
 @Component({
   tag: 'permission-editor',
+  styleUrl:'permission-editor.css',
   scoped: true,
 })
 export class PermissionEditor {
@@ -163,7 +164,7 @@ export class PermissionEditor {
                 ))}
               </select>
             </div>
-            {hasAccess(this.parsedPermissions,{name:'permissions',permission:'write'}) &&<add-role refresh={() => this.fetchRoles()} url={this.url}></add-role>}
+            <add-role parsedPermissions={this.parsedPermissions} refresh={() => this.fetchRoles()} url={this.url}></add-role>
           </div>
           <div style={{ maxHeight: '40rem', overflowY: 'auto' }} class="border-2">
             <div id="permissionEditor" class="border border-gray-300"></div>
@@ -177,14 +178,14 @@ export class PermissionEditor {
           </div>
           <div class="flex justify-between">
             <div>
-            {hasAccess(this.parsedPermissions,{name:'users',permission:'update'}) &&<button
+            <button
                 title="Ctrl+Shift+Enter to run"
                 onClick={() => this.onRoleUpdateClick()}
-                disabled={this.isLoading}
-                class="mr-1 flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 hover:bg-gray-200 hover:text-gray-800 "
+                disabled={this.isLoading && hasAccess(this.parsedPermissions,{name:'users',permission:'update'})}
+                class="mr-1 flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 disabled-custom"
               >
                 Update
-              </button>}
+              </button>
             </div>
             <div class="mx-4">{this.isLoading && <loader-component></loader-component>}</div>
           </div>

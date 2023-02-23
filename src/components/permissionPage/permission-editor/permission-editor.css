@@ -1,3 +1,8 @@
 :host {
   display: block;
 }
+
+.disabled-custom:disabled{
+  opacity: 0.5;
+  background-color: rgb(176, 174, 174);
+}                                                                                                           

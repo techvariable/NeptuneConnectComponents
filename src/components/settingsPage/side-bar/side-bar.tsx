@@ -5,6 +5,7 @@ import { hasAccess } from '../../../utils/utils';
 
 @Component({
   tag: 'side-bar',
+  styleUrl:'side-bar.css',
   scoped: true,
 })
 export class SideBar {
@@ -136,13 +137,15 @@ export class SideBar {
                     </button>
                   </td>
 
-                  {hasAccess(this.parsedPermissions, { name: 'settings', permission: 'delete'}) && (
-                    <td class="px-6 py-4 text-right">
-                      <button onClick={() => this.deleteHandler()} class="font-medium text-blue-600 hover:underline">
-                        Delete
-                      </button>
-                    </td>
-                  )}
+                  <td class="px-6 py-4 text-right">
+                    <button
+                      disabled={!hasAccess(this.parsedPermissions, { name: 'settings', permission: 'delete' })}
+                      onClick={() => this.deleteHandler()}
+                      class="disabled-custom font-medium text-blue-600"
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -155,12 +158,9 @@ export class SideBar {
               </svg>
               You have no API key currently
             </p>
-
-            {hasAccess(this.parsedPermissions,{ name: 'settings', permission: 'write'}) && (
-              <plain-button addClass="mt-8" clickHandler={() => this.createHandler()}>
-                Create new key
-              </plain-button>
-            )}
+            <plain-button disabledHandler={!hasAccess(this.parsedPermissions, { name: 'settings', permission: 'write' })} addClass="mt-8" clickHandler={() => this.createHandler()}>
+              Create new key
+            </plain-button>
           </div>
         )}
       </Host>
