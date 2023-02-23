@@ -20,7 +20,7 @@ export class NavigatorsComponent {
             const route:{name:string | string[],permission:'read'|'write'|'delete'|'update'} = {name:item.pagePermission.toLowerCase(),permission:'read'};
             return hasAccess(this.parsedPermissions,route) ? (
               <li>
-                <a href={item.link} class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg bg-gray-200 hover:scale-110">
+                <a href={item.link} class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg bg-gray-200 hover:bg-gray-300">
                   <img class="h-5" src={item.svg} alt={item.name} />
                   <span class="ml-3">{item.name}</span>
                 </a>

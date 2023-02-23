@@ -7,8 +7,8 @@ import { Component, h } from '@stencil/core';
 export class NavBar {
   render() {
     return (
-      <div class="container mx-auto px-4">
-        <nav class="sticky top-0 pt-6 pb-8 bg-white border-b z-50">
+      <div class="container mx-auto">
+        <nav class="sticky top-0 pt-6 pb-8 bg-white border-b z-10">
           <div>
             <div class="flex flex-wrap justify-between items-center mx-auto bg-white">
               <a href="/" class="text-lg text-gray-800">

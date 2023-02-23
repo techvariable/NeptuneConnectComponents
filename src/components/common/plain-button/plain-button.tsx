@@ -28,7 +28,7 @@ export class PlainButton {
 
   render() {
     return (
-      <button class={`disabled-custom ${this.btnClassType[this.type]}`} onClick={this.clickHandler} disabled={this.disabledHandler}>
+      <button class={this.btnClassType[this.type]} onClick={this.clickHandler} disabled={this.disabledHandler}>
         <slot />
       </button>
     );

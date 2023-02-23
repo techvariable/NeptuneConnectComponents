@@ -59,10 +59,6 @@ export class DialogComponent {
     return (
       <Host>
         {/* Modal Button */}
-        <button disabled class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-75 disabled:bg-gray-300">
-          Button
-        </button>
-
         <button
           type="button"
           disabled={!hasAccess(this.parsedPermissions, { name: 'users', permission: 'write' })}

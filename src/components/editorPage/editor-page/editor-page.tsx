@@ -80,16 +80,16 @@ export class EditorPage {
   render() {
     return (
       <div>
-        <div class="w-auto flex justify-center gap-4 mt-4">
+        <div class="w-full md:flex  justify-center gap-4 mt-4">
           <div>
-            <aside  class="w-80" aria-label="Sidebar">
+            <aside  class="w-full md:w-80" aria-label="Sidebar">
               <h2 class="pb-6 font-mono text-lg font-bold leading-7 text-gray-600">Nodes</h2>
               <div style={{ maxHeight: '43.5rem', overflowX:'visible', overflowY: 'auto',minHeight:'20rem'}}>
                 <node-item></node-item>
               </div>
             </aside>
           </div>
-          <div class="w-96" style={{ width: '72.5rem' }}>
+          <div class="w-full md:w-3/4">
             <h2 class="pb-3 font-mono text-lg font-bold leading-7 text-gray-600">Write your Gremlin Query Here</h2>
             <code-editor onClickRun={this.onClickRun}></code-editor>
 

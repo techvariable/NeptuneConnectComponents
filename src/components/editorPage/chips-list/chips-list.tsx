@@ -16,11 +16,11 @@ export class ChipsList {
     return (
       <div>
         {isChipsOrFilter && (
-          <div class="w-full md:w-1/2 flex flex-col items-center h-64 mx-auto ">
+          <div class="w-full sm:w-full flex flex-col items-center mx-auto ">
             <div class="w-full">
               <div class="flex flex-col items-center relative">
                 <div class="w-full  svelte-1l8159u">
-                  <div class="my-2 p-2 flex justify-between bg-white rounded svelte-1l8159u">
+                  <div class="px-2 flex justify-between bg-white rounded svelte-1l8159u">
                     <div class="w-full gap-2 flex flex-auto py-1 flex-wrap">
                       {Object.keys(this.sortchips).map(item => {
                         const sortAsc = (

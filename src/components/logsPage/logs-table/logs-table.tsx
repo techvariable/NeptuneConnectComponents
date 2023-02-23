@@ -55,7 +55,7 @@ export class LogsTable {
 
     return (
       <div style={{ overflowY: 'auto' }}>
-        <div style={{ maxWidth: '72.5rem', maxHeight: '580px', overflow: 'auto' }}>
+        <div style={{ maxWidth: '75rem', maxHeight: '580px', overflow: 'auto' }}>
           <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative">
             {/* Table Head */}
             <thead class="bg-violet-50 sticky top-0">
@@ -139,7 +139,7 @@ export class LogsTable {
             )}
           </table>
         </div>
-        <div style={{maxWidth: '72.5rem'}} class="bg-violet-50 sticky bottom-0">
+        <div style={{maxWidth: '75rem'}} class="bg-violet-50 sticky bottom-0">
                 <div class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   <div class="flex justify-between items-center">
                     {/* pagination description */}

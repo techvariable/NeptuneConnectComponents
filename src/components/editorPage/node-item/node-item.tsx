@@ -16,7 +16,7 @@ export class NodeItem {
           {state.nodeList.map(item => {
             return (
               <li>
-                <div class="flex justify-between p-2 text-base font-normal text-gray-900 rounded-lg bg-gray-200 hover:scale-110">
+                <div class="flex justify-between p-2 text-base font-normal text-gray-900 rounded-lg bg-gray-200">
                   <div class="ml-3">{item}</div>
                   <menu-drop-down listTitle={item} list={DROPDOWN_ITEMS} fetchData={nodeName => (state.selectedNodeName = nodeName)}></menu-drop-down>
                 </div>
