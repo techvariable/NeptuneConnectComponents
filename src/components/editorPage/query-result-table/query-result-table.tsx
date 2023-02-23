@@ -96,7 +96,7 @@ export class QueryResultTable {
                     <tr class="hover:bg-gray-100 transition">
                       {this.tableHeader.map((id: any) => (
                         // <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item[id.alias]}</td>
-                        <td text-overflow:ellipsis class="px-6 py-3 whitespace-nowrap text-sm text-gray-900">
+                        <td title={item[id.alias]} text-overflow:ellipsis class="px-6 py-3 whitespace-nowrap text-sm text-gray-900">
                           {!id.click.clickable ? (
                             item[id.alias] ? (
                               item[id.alias].length > 25 ? (

@@ -2,7 +2,7 @@ import { Component, h } from '@stencil/core';
 
 import state from '../store';
 
-const DROPDOWN_ITEMS = ['View', 'Edit'];
+const DROPDOWN_ITEMS = ['View'];
 
 @Component({
   tag: 'node-item',
