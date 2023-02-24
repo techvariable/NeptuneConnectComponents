@@ -49,11 +49,13 @@ export class CodeEditor {
   }
 
   onCtrlShiftEnter() {
+    const runTemp = this.onClickRun;
+    
     return keymap.of([
       {
         key: 'Ctrl-Shift-Enter',
         run() {
-          this.onClickRun();
+          runTemp();
           return true;
         },
       },
@@ -66,6 +68,7 @@ export class CodeEditor {
         <div class="w-full flex content-between" style={{ justifyContent: 'space-between' }}>
           <tabs-component activeIndex={this.activeIndex} tabslist={TAB_LIST} tabClickHandler={this.tabClickHandler}></tabs-component>
           <button class="mr-2"
+            title='Refresh Query'
             onClick={() => {
               state.selectedNodeName ? state.refresh=true :this.onClickRun();
             }}
