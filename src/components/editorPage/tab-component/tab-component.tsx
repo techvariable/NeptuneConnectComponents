@@ -1,7 +1,5 @@
 import { Component, h, State } from '@stencil/core';
-import { formatJSON, jsonToCsv } from '../../../utils/utils';
-import { CsvBuilder } from 'filefy';
-import axios from 'axios';
+import { formatJSON } from '../../../utils/utils';
 
 import state from '../store';
 
@@ -17,45 +15,6 @@ export class TabComponent {
     this.setActive = id;
   }
 
-  async downloadData() {
-    try {
-      const csvData = jsonToCsv(state.nodes);
-      new CsvBuilder(`${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}.csv`)
-        .setColumns(csvData.columns)
-        .addRows([...csvData.data])
-        .exportFile();
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async downloadDataAll() {
-    try {
-      let nodes: Array<any> = [];
-      this.downloadProgress = 0;
-      const pageSize = 50;
-      const progressStep = state.total / pageSize;
-
-      for (let i = 0; i <= state.total; i += pageSize) {
-        const res = await axios.post(`${state.url}/query/`, {
-          query: state.query,
-          parameters: { ...JSON.parse(state.queryParameter), paramPaginationLimit: pageSize + i, paramPaginationOffset: i },
-        });
-        this.downloadProgress += progressStep;
-
-        nodes = nodes.concat(res.data.result);
-      }
-
-      this.downloadProgress = 100;
-      const csvData = jsonToCsv(nodes);
-      new CsvBuilder(`${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}.csv`)
-        .setColumns(csvData.columns)
-        .addRows([...csvData.data])
-        .exportFile();
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   render() {
     return (

@@ -19,6 +19,7 @@ export class CodeEditor {
   @Prop() onClickRun: Function;
 
   @State() activeIndex: number = 0;
+  @State() refreshLoading: boolean = false;
 
   @Element() element: HTMLElement;
 
@@ -48,9 +49,14 @@ export class CodeEditor {
     });
   }
 
+  btnClassType = {
+    true: `mr-4 animate-spin`,
+    false: `mr-4`,
+  };
+
   onCtrlShiftEnter() {
     const runTemp = this.onClickRun;
-    
+
     return keymap.of([
       {
         key: 'Ctrl-Shift-Enter',
@@ -67,10 +73,13 @@ export class CodeEditor {
       <Host>
         <div class="w-full flex content-between" style={{ justifyContent: 'space-between' }}>
           <tabs-component activeIndex={this.activeIndex} tabslist={TAB_LIST} tabClickHandler={this.tabClickHandler}></tabs-component>
-          <button class="mr-2"
-            title='Refresh Query'
-            onClick={() => {
-              state.selectedNodeName ? state.refresh=true :this.onClickRun();
+          <button
+            class={this.btnClassType[`${this.refreshLoading}`]}
+            title="Refresh Query"
+            onClick={async () => {
+              this.refreshLoading = true;
+              state.selectedNodeName ? (state.refresh = true) : await this.onClickRun();
+              this.refreshLoading = false;
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

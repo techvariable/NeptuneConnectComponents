@@ -34,6 +34,8 @@ export namespace Components {
         "permissions": string;
         "url": string;
     }
+    interface DownloadResultModal {
+    }
     interface DropDown {
         "alias": string;
         "clearSearch": any;
@@ -258,6 +260,12 @@ declare global {
         prototype: HTMLDialogComponentElement;
         new (): HTMLDialogComponentElement;
     };
+    interface HTMLDownloadResultModalElement extends Components.DownloadResultModal, HTMLStencilElement {
+    }
+    var HTMLDownloadResultModalElement: {
+        prototype: HTMLDownloadResultModalElement;
+        new (): HTMLDownloadResultModalElement;
+    };
     interface HTMLDropDownElement extends Components.DropDown, HTMLStencilElement {
     }
     var HTMLDropDownElement: {
@@ -464,6 +472,7 @@ declare global {
         "data-table": HTMLDataTableElement;
         "data-table-updated": HTMLDataTableUpdatedElement;
         "dialog-component": HTMLDialogComponentElement;
+        "download-result-modal": HTMLDownloadResultModalElement;
         "drop-down": HTMLDropDownElement;
         "edit-user": HTMLEditUserElement;
         "editor-json-response-viewer": HTMLEditorJsonResponseViewerElement;
@@ -527,6 +536,8 @@ declare namespace LocalJSX {
     interface DialogComponent {
         "permissions"?: string;
         "url"?: string;
+    }
+    interface DownloadResultModal {
     }
     interface DropDown {
         "alias"?: string;
@@ -716,6 +727,7 @@ declare namespace LocalJSX {
         "data-table": DataTable;
         "data-table-updated": DataTableUpdated;
         "dialog-component": DialogComponent;
+        "download-result-modal": DownloadResultModal;
         "drop-down": DropDown;
         "edit-user": EditUser;
         "editor-json-response-viewer": EditorJsonResponseViewer;
@@ -762,6 +774,7 @@ declare module "@stencil/core" {
             "data-table": LocalJSX.DataTable & JSXBase.HTMLAttributes<HTMLDataTableElement>;
             "data-table-updated": LocalJSX.DataTableUpdated & JSXBase.HTMLAttributes<HTMLDataTableUpdatedElement>;
             "dialog-component": LocalJSX.DialogComponent & JSXBase.HTMLAttributes<HTMLDialogComponentElement>;
+            "download-result-modal": LocalJSX.DownloadResultModal & JSXBase.HTMLAttributes<HTMLDownloadResultModalElement>;
             "drop-down": LocalJSX.DropDown & JSXBase.HTMLAttributes<HTMLDropDownElement>;
             "edit-user": LocalJSX.EditUser & JSXBase.HTMLAttributes<HTMLEditUserElement>;
             "editor-json-response-viewer": LocalJSX.EditorJsonResponseViewer & JSXBase.HTMLAttributes<HTMLEditorJsonResponseViewerElement>;

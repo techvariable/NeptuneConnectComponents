@@ -19,6 +19,7 @@ export class EditorPage {
   @State() nodeDataColumns: {}[] = [];
   @State() errorMessage: string | null = null;
   @State() isLoading: boolean = false;
+  @State() loadingNodes:boolean = false;
 
   componentWillLoad() {
     state.url = this.url;
@@ -26,15 +27,24 @@ export class EditorPage {
   }
 
   fetchNavigators = () => {
+    this.loadingNodes = true;
     this.errorMessage = null;
     axios
       .get(`${this.url}/nodes`)
       .then((res: any) => {
         state.nodeList = res.data.nodes;
+        this.loadingNodes = false;
       })
       .catch(err => {
         console.log(err);
       });
+  };
+
+  // animatingClass = ``
+
+  btnClassType = {
+    true: `mr-4 animate-spin`,
+    false:`mr-4`,
   };
 
   onClickRun = async () => {
@@ -86,8 +96,9 @@ export class EditorPage {
             <aside class="w-full md:w-80" aria-label="Sidebar">
               <div class="w-full flex justify-between mb-4">
                 <h2 class="font-mono text-lg font-bold leading-7 text-gray-600">Nodes</h2>
+                {console.log(this.btnClassType[`${this.isLoading}`])}
                 <button
-                  class="mr-4 hover:animate-spin	"
+                  class={this.btnClassType[`${this.loadingNodes}`]}
                   title='Refesh Nodes'
                   onClick={()=> (this.fetchNavigators())}
                 >

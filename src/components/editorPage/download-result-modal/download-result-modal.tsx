@@ -4,7 +4,6 @@ import state from '../store';
 import { CsvBuilder } from 'filefy';
 import axios from 'axios';
 
-
 @Component({
   tag: 'download-result-modal',
   styleUrl: 'download-result-modal.css',
@@ -13,23 +12,31 @@ import axios from 'axios';
 export class DownloadResultModal {
   // @Prop() refresh: any;
   // @Prop() icon: any;
-  @State() value: any;
+  @State() value: string;
   @State() isModalOpen = false;
-  @State() downloadOptions: string[] = ['all', 'current'];
+  @State() downloadOptions: string[] = ['all', 'current', 'custom'];
   @State() selectedDownloadOption: string = 'current';
   @State() node: string = '';
+  @State() isDownloading: boolean = false;
+  @State() downloadProgress: number = 0;
+  @State() startingIndex: number = 0;
+  @State() endingIndex: number = 50;
 
-  componentWillLoad(){
-    this.value = `${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}.csv`;
+  componentWillLoad() {
+    this.value = `${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}`;
   }
 
   async downloadData() {
     try {
+      this.isDownloading = true;
+      this.downloadProgress = 0;
       const csvData = jsonToCsv(state.nodes);
       new CsvBuilder(this.value)
         .setColumns(csvData.columns)
         .addRows([...csvData.data])
         .exportFile();
+      this.downloadProgress = 100;
+      this.isDownloading = false;
     } catch (error) {
       console.log(error);
     }
@@ -37,7 +44,12 @@ export class DownloadResultModal {
 
   async downloadDataAll() {
     try {
+      this.isDownloading = true;
       let nodes: Array<any> = [];
+      this.downloadProgress = 0;
+      if(this.selectedDownloadOption === 'all'){
+        const pageSize = 50;
+      const progressStep = state.total / pageSize;
 
       for (let i = 0; i <= state.total; i += 50) {
         const res = await axios.post(`${state.url}/query/`, {
@@ -46,13 +58,20 @@ export class DownloadResultModal {
         });
 
         nodes = nodes.concat(res.data.result);
-      }
 
+        if (this.downloadProgress + progressStep < 100) this.downloadProgress += progressStep;
+      }
+    }else{
+      // const progressStep = this.endingIndex - this.startingIndex /
+    }
+
+      this.downloadProgress += 100;
       const csvData = jsonToCsv(nodes);
-      new CsvBuilder(`${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}.csv`)
+      new CsvBuilder(`${this.value}.csv`)
         .setColumns(csvData.columns)
         .addRows([...csvData.data])
         .exportFile();
+      this.isDownloading = false;
     } catch (error) {
       console.log(error);
     }
@@ -63,32 +82,36 @@ export class DownloadResultModal {
   }
 
   clearFields() {
-    this.value = '';
-    this.selectedDownloadOption = '';
+    this.value = `${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}`;
+    this.selectedDownloadOption = 'current';
   }
 
   toggleModalState() {
     this.isModalOpen = !this.isModalOpen;
   }
 
-  submitHandler(e) {
+  async submitHandler(e) {
     e.preventDefault();
-    if (this.selectedDownloadOption !== '') {
-      console.log('download option',this.selectedDownloadOption,'file name',this.value);
-      if(this.selectedDownloadOption === 'all'){
-        this.downloadDataAll();
-      }
-      if(this.selectedDownloadOption === 'current'){
-        this.downloadData();
-      }
-      // this.downloadMethod();
-      this.toggleModalState();
-      this.clearFields();
+
+    if (this.selectedDownloadOption === 'all') {
+      await this.downloadDataAll();
     }
+    if (this.selectedDownloadOption === 'current') {
+      this.downloadData();
+    }
+
+    this.toggleModalState();
+    this.clearFields();
   }
 
   handleChange(event) {
-      this.value = event.target.value;
+    this.value = event.target.value;
+  }
+  handleChangeEndingIndex(event) {
+    this.endingIndex = event.target.value;
+  }
+  handleChangeStartingIndex(event) {
+    this.startingIndex = event.target.value;
   }
 
   radioSearchTypeHandler = event => {
@@ -96,6 +119,8 @@ export class DownloadResultModal {
   };
 
   render() {
+    console.log(this.downloadProgress);
+
     return (
       <Host>
         {/* Modal Button */}
@@ -108,7 +133,7 @@ export class DownloadResultModal {
         {/* Main Modal */}
         {this.isModalOpen && (
           <form onSubmit={e => this.submitHandler(e)} class="pt-6 space-y-3">
-            <div class="fixed z-12 inset-0 overflow-y-auto">
+            <div class="fixed z-10 inset-0 overflow-y-auto">
               <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
@@ -135,29 +160,74 @@ export class DownloadResultModal {
                           </div>
                           {this.selectedDownloadOption === 'all' ? (
                             <p style={{ marginBottom: '10px' }} class="px-3 py-2 bg-yellow-200 text-gray-800 border-l-4  w-full my-2">
-                              You have selected all data export, based on the amount of the data present, it may take a while !{' '}
+                              You have selected all data export, based on the amount of the data present, it may take a while!{' '}
                             </p>
                           ) : null}
-                            <div>
-                              <label class="block pb-2" htmlFor="searchText">
-                                Enter File Name
-                              </label>
-                              <input
-                                type="text"
-                                name="searchText"
-                                required
-                                placeholder="Enter file name"
-                                class="mb-2 border focus:border px-2 p-2 rounded-md text-sm w-full"
-                                value={this.value}
-                                onInput={event => this.handleChange(event)}
-                              />
-                            </div>
 
+                          {this.selectedDownloadOption === 'custom' && (
+                            <div>
+                              <div>
+                                <label class="block pb-2 font-medium text-gray-600" htmlFor="searchText">
+                                  Starting Index
+                                </label>
+                                <input
+                                  type="number"
+                                  name="startingIndex"
+                                  required
+                                  placeholder="Enter Starting Index"
+                                  class="mb-2 border active:border-2 outline-none px-2 p-2 rounded-md text-sm w-full"
+                                  value={this.startingIndex}
+                                  onInput={event => this.handleChangeStartingIndex(event)}
+                                />
+                              </div>
+                              <div>
+                                <label class="block pb-2 font-medium text-gray-600" htmlFor="searchText">
+                                  Ending Index
+                                </label>
+                                <input
+                                  type="number"
+                                  name="endingIndex"
+                                  required
+                                  placeholder="Enter Ending Index"
+                                  class="mb-2 border active:border-2 outline-none px-2 p-2 rounded-md text-sm w-full"
+                                  value={this.endingIndex}
+                                  onInput={event => this.handleChangeEndingIndex(event)}
+                                />
+                              </div>
+                            </div>
+                          )}
+
+                          <div>
+                            <label class="block pb-2 font-medium text-gray-600" htmlFor="searchText">
+                              Enter File Name
+                            </label>
+                            <input
+                              type="text"
+                              name="searchText"
+                              required
+                              placeholder="Enter file name"
+                              class="mb-2 border active:border-2 outline-none px-2 p-2 rounded-md text-sm w-full"
+                              value={this.value}
+                              onInput={event => this.handleChange(event)}
+                            />
+                          </div>
                         </div>
+
+                        {this.isDownloading && (
+                          <div>
+                            <div class="flex justify-between mb-1">
+                              <span class="text-base font-medium text-blue-700 dark:text-white">Downloading</span>
+                              <span class="text-sm font-medium text-blue-700 dark:text-white">{parseInt(this.downloadProgress.toString()) * 10}</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                              <div class="bg-gray-500 h-4 rounded-full" style={{ width: `${this.downloadProgress * 10}%` }}></div>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
-                  <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                  <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button
                       type="submit"
                       class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-600 text-base font-medium text-white disabled:bg-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
