@@ -1,8 +1,9 @@
 import { Component, h, State } from '@stencil/core';
 import { formatJSON, jsonToCsv } from '../../../utils/utils';
-import state from '../store';
 import { CsvBuilder } from 'filefy';
 import axios from 'axios';
+
+import state from '../store';
 
 @Component({
   tag: 'tab-component',
@@ -10,6 +11,7 @@ import axios from 'axios';
 })
 export class TabComponent {
   @State() setActive: string = 'table';
+  @State() downloadProgress: number = 0;
 
   activeHandler(id) {
     this.setActive = id;
@@ -30,16 +32,21 @@ export class TabComponent {
   async downloadDataAll() {
     try {
       let nodes: Array<any> = [];
+      this.downloadProgress = 0;
+      const pageSize = 50;
+      const progressStep = state.total / pageSize;
 
-      for (let i = 0; i <= state.total; i += 50) {
+      for (let i = 0; i <= state.total; i += pageSize) {
         const res = await axios.post(`${state.url}/query/`, {
           query: state.query,
-          parameters: { ...JSON.parse(state.queryParameter), paramPaginationLimit: 50 + i, paramPaginationOffset: i },
+          parameters: { ...JSON.parse(state.queryParameter), paramPaginationLimit: pageSize + i, paramPaginationOffset: i },
         });
+        this.downloadProgress += progressStep;
 
         nodes = nodes.concat(res.data.result);
       }
 
+      this.downloadProgress = 100;
       const csvData = jsonToCsv(nodes);
       new CsvBuilder(`${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}.csv`)
         .setColumns(csvData.columns)
