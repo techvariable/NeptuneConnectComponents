@@ -6,31 +6,27 @@ import axios from 'axios';
 import { formatJSON, hasAccess, isValidPermissionJson } from '../../../utils/utils';
 @Component({
   tag: 'permission-editor',
-  styleUrl:'permission-editor.css',
+  styleUrl: 'permission-editor.css',
   scoped: true,
 })
 export class PermissionEditor {
   @Prop() url: string;
   @Prop() permissions: string;
+
   @State() parsedPermissions: [] = [];
-  @State() roleId: Number;
-  @State() response: any;
+  @State() selectedRole: Number;
   @State() view: EditorView;
   @State() state: EditorState;
   @State() isLoading = false;
   @State() errorMessage: string = '';
-  @State() doc: any = '\n\n\n';
-  @State() options: string[] = [];
-  @State() rolesObj: {}[] = [];
+  @State() roles: Array<{ roleName: string; id: number }> = [];
   @State() resStatus: string = '';
-  @Element() element: HTMLElement;
-  @State() docInitial: any;
 
-  @State() roleOptions: Array<{ roleName: string; id: number }> = [];
+  @Element() element: HTMLElement;
 
   async onRoleSelect(e) {
     const selectedRole: number = e.target.value;
-    this.roleId = selectedRole;
+    this.selectedRole = selectedRole;
 
     const fetchPermissionsResp = await axios.get(`${this.url}/?roleId=${selectedRole}`);
 
@@ -43,29 +39,11 @@ export class PermissionEditor {
   async fetchRolePermission(roleId: number) {
     try {
       const rolePermissionsResp = await axios.get(`${this.url}/?roleId=${roleId}`);
-      // this.doc = rolePermissionsResp.data;
-      this.docInitial = rolePermissionsResp.data;
-      if (!this.view) {
-        this.state = EditorState.create({
-          doc: rolePermissionsResp.data,
-          extensions: [
-            basicSetup,
-            json(),
-            //   keymap.of(defaultKeymap),9
-            this.dummyKeymap(),
-          ],
-        });
-        this.view = new EditorView({
-          state: this.state,
-          parent: this.element.querySelector('#permissionEditor'),
-        });
-      } else {
-        let transaction = this.view.state.update({ changes: { from: 0, insert: `${formatJSON(rolePermissionsResp.data)}` } });
-        this.view.dispatch(transaction);
-      }
+
+      let transaction = this.view.state.update({ changes: { from: 0, insert: `${formatJSON(rolePermissionsResp.data)}` } });
+      this.view.dispatch(transaction);
     } catch (error) {
       console.log(error);
-      // handle error
     }
   }
 
@@ -73,23 +51,25 @@ export class PermissionEditor {
     try {
       const rolesRes = await axios.get(`${this.url}/all`);
       const roles = rolesRes.data;
-      this.roleId = roles[0].id;
-      this.roleOptions = roles;
-      await this.fetchRolePermission(roles[0].id);
+
+      if (roles instanceof Array && roles.length > 0) {
+        this.selectedRole = roles[0].id;
+        this.roles = roles;
+        await this.fetchRolePermission(roles[0].id);
+      }
     } catch (error) {
       console.log({ error });
-      // handle error
     }
   }
 
   componentWillLoad() {
-    this.parsedPermissions = JSON.parse(this.permissions);
+    this.parsedPermissions = JSON.parse(this.permissions || "[]");
     this.fetchRoles();
   }
 
   componentDidLoad() {
     this.state = EditorState.create({
-      doc: this.docInitial,
+      doc: "\n\n\n\n",
       extensions: [
         basicSetup,
         json(),
@@ -103,36 +83,35 @@ export class PermissionEditor {
     });
   }
 
-  onRoleUpdateClick() {
-    this.errorMessage = '';
-    this.resStatus = '';
-    let transaction = this.view.state.update();
-    this.view.dispatch(transaction);
-    const { isValid, error } = isValidPermissionJson(String(transaction.state.doc));
-    if (isValid) {
+  async onRoleUpdateClick() {
+    try {
       this.isLoading = true;
       this.errorMessage = '';
-      this.doc = transaction.state.doc;
-      const permissions = this.doc.text.join('');
-      // axios call
-      axios
-        .put(this.url, {
+      this.resStatus = '';
+      let transaction = this.view.state.update();
+      this.view.dispatch(transaction);
+      const { isValid, error } = isValidPermissionJson(String(transaction.state.doc));
+
+      if (isValid) {
+        this.isLoading = true;
+        const document = transaction.state.doc;
+        // @ts-expect-error
+        const permissions = document.text.join('');
+
+        const res = await axios.put(this.url, {
           permissions,
-          roleId: this.roleId,
+          roleId: this.selectedRole
         })
-        .then((res: any) => {
-          this.isLoading = false;
-          this.doc = JSON.parse(res.data.permissions);
-          this.resStatus = `Permissions for ${res.data.roleName} updated successfully`;
-        })
-        .catch(err => {
-          this.isLoading = false;
-          this.errorMessage = err.response.data.message;
-          // console.log(err);
-        });
-    } else {
-      this.errorMessage = error;
+
+        this.resStatus = `Permissions for ${res.data.roleName} updated successfully`;
+      } else {
+        this.errorMessage = error;
+      }
+
+    } catch (err) {
+      this.errorMessage = err.response.data.message;
     }
+    this.isLoading = false;
   }
 
   dummyKeymap() {
@@ -159,7 +138,7 @@ export class PermissionEditor {
                 onChange={e => this.onRoleSelect(e)}
                 class="form-select px-3 py-1.5 border-none text-inherit font-inherit text-gray-700 bg-transparent bg-clip-padding bg-no-repeat rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               >
-                {this.roleOptions.map(item => (
+                {this.roles.map(item => (
                   <option value={`${item.id}`}>{item.roleName}</option>
                 ))}
               </select>
@@ -178,10 +157,10 @@ export class PermissionEditor {
           </div>
           <div class="flex justify-between">
             <div>
-            <button
+              <button
                 title="Ctrl+Shift+Enter to run"
                 onClick={() => this.onRoleUpdateClick()}
-                disabled={this.isLoading && hasAccess(this.parsedPermissions,{name:'users',permission:'update'})}
+                disabled={this.isLoading && hasAccess(this.parsedPermissions, { name: 'users', permission: 'update' })}
                 class="mr-1 flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 disabled:opacity-75 disabled:text-gray-300 disabled:cursor-default"
               >
                 Update
