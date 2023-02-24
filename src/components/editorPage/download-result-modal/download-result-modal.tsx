@@ -1,4 +1,9 @@
 import { Component, Host, h, State } from '@stencil/core';
+import { jsonToCsv } from '../../../utils/utils';
+import state from '../store';
+import { CsvBuilder } from 'filefy';
+import axios from 'axios';
+
 
 @Component({
   tag: 'download-result-modal',
@@ -14,15 +19,53 @@ export class DownloadResultModal {
   @State() selectedDownloadOption: string = 'current';
   @State() node: string = '';
 
+  componentWillLoad(){
+    this.value = `${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}.csv`;
+  }
+
+  async downloadData() {
+    try {
+      const csvData = jsonToCsv(state.nodes);
+      new CsvBuilder(this.value)
+        .setColumns(csvData.columns)
+        .addRows([...csvData.data])
+        .exportFile();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async downloadDataAll() {
+    try {
+      let nodes: Array<any> = [];
+
+      for (let i = 0; i <= state.total; i += 50) {
+        const res = await axios.post(`${state.url}/query/`, {
+          query: state.query,
+          parameters: { ...JSON.parse(state.queryParameter), paramPaginationLimit: 50 + i, paramPaginationOffset: i },
+        });
+
+        nodes = nodes.concat(res.data.result);
+      }
+
+      const csvData = jsonToCsv(nodes);
+      new CsvBuilder(`${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}.csv`)
+        .setColumns(csvData.columns)
+        .addRows([...csvData.data])
+        .exportFile();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   clearHandler() {
     this.value = '';
   }
 
-  // clearFields() {
-  //   this.value = '';
-  //   // this.colName = '';
-  //   this.selectedDownloadOption = '';
-  // }
+  clearFields() {
+    this.value = '';
+    this.selectedDownloadOption = '';
+  }
 
   toggleModalState() {
     this.isModalOpen = !this.isModalOpen;
@@ -31,20 +74,21 @@ export class DownloadResultModal {
   submitHandler(e) {
     e.preventDefault();
     if (this.selectedDownloadOption !== '') {
-      console.log(e.target.values);
-      
+      console.log('download option',this.selectedDownloadOption,'file name',this.value);
+      if(this.selectedDownloadOption === 'all'){
+        this.downloadDataAll();
+      }
+      if(this.selectedDownloadOption === 'current'){
+        this.downloadData();
+      }
       // this.downloadMethod();
       this.toggleModalState();
-      // this.clearFields();
+      this.clearFields();
     }
   }
 
   handleChange(event) {
-    if (this.selectedDownloadOption === 'string') {
       this.value = event.target.value;
-    } else {
-      this.value = parseFloat(event.target.value);
-    }
   }
 
   radioSearchTypeHandler = event => {
@@ -94,39 +138,21 @@ export class DownloadResultModal {
                               You have selected all data export, based on the amount of the data present, it may take a while !{' '}
                             </p>
                           ) : null}
-                          {this.selectedDownloadOption === 'all' && (
                             <div>
                               <label class="block pb-2" htmlFor="searchText">
-                                Export all data
+                                Enter File Name
                               </label>
-                              {/* <input
+                              <input
                                 type="text"
                                 name="searchText"
                                 required
-                                placeholder="Type something to search"
-                                class="mb-2 border px-2 p-2 rounded-md text-sm w-full"
+                                placeholder="Enter file name"
+                                class="mb-2 border focus:border px-2 p-2 rounded-md text-sm w-full"
                                 value={this.value}
                                 onInput={event => this.handleChange(event)}
-                              /> */}
+                              />
                             </div>
-                          )}
 
-                          {this.selectedDownloadOption === 'current' && (
-                            <div>
-                              <label class="block py-2" htmlFor="searchNumber">
-                                Export current data
-                              </label>
-                              {/* <input
-                                type="text"
-                                name="exportFileName"
-                                required
-                                placeholder="Filename for the exported file"
-                                class="border w-full px-2 py-1 rounded-md text-sm mb-2"
-                                value={this.value}
-                                onInput={event => this.handleChange(event)}
-                              /> */}
-                            </div>
-                          )}
                         </div>
                       </div>
                     </div>
