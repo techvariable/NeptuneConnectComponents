@@ -62,11 +62,6 @@ export class PermissionEditor {
     }
   }
 
-  componentWillLoad() {
-    this.parsedPermissions = JSON.parse(this.permissions || "[]");
-    this.fetchRoles();
-  }
-
   componentDidLoad() {
     this.state = EditorState.create({
       doc: "\n\n\n\n",
@@ -81,6 +76,9 @@ export class PermissionEditor {
       state: this.state,
       parent: this.element.querySelector('#permissionEditor'),
     });
+
+    this.parsedPermissions = JSON.parse(this.permissions || "[]");
+    this.fetchRoles();
   }
 
   async onRoleUpdateClick() {
@@ -109,7 +107,7 @@ export class PermissionEditor {
       }
 
     } catch (err) {
-      this.errorMessage = err.response.data.message;
+      this.errorMessage = err?.response?.data?.message || "Failed to update the permission";
     }
     this.isLoading = false;
   }
