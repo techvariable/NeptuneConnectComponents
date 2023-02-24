@@ -66,6 +66,7 @@ export class EditorPage {
         state.queryParameter = parameters;
         state.nodes = res.data.result;
         state.timeTaken = res.data.timeTaken;
+        state.isFetchedData = true;
       } else {
         state.isError = true;
         state.errorMessage = error;
@@ -86,7 +87,7 @@ export class EditorPage {
               <div class="w-full flex justify-between mb-4">
                 <h2 class="font-mono text-lg font-bold leading-7 text-gray-600">Nodes</h2>
                 <button
-                  class="mr-4"
+                  class="mr-4 hover:animate-spin	"
                   title='Refesh Nodes'
                   onClick={()=> (this.fetchNavigators())}
                 >
@@ -107,7 +108,11 @@ export class EditorPage {
           <div class="w-full md:w-3/4">
             <h2 class="pb-3 font-mono text-lg font-bold leading-7 text-gray-600">Write your Gremlin Query Here</h2>
             <code-editor onClickRun={this.onClickRun}></code-editor>
-
+            {state.isFetchedData && state.nodes.length === 0 && !state.isLoading && !state.isError && 
+              <div class="flex items-center bg-gray-500 text-white text-sm font-bold px-4 py-3" role="alert">
+              <p>No Data Found in Database</p>
+            </div>
+            }
             {state.nodes.length > 0 && !state.isLoading && !state.isError && <tab-component></tab-component>}
           </div>
         </div>

@@ -14,7 +14,8 @@ const { state, onChange, reset } = createStore({
   page: 1,
   order: {},
   filter: {},
-  total:0,
+  total: 0,
+  isFetchedData:false,
 
   query: '\n\n\n\n\n\n\n\n\n',
   queryParameter: "{\n  \n}\n\n\n\n\n\n",
@@ -119,6 +120,7 @@ const fetchData = async (nodeName: string) => {
       state.query = formatQuery(res.data.query);
       state.queryParameter = formatJSON(res.data.queryParameters);
       state.timeTaken = res.data.timeTaken;
+      state.isFetchedData = true;
     } catch (error) {
       state.isError = true;
       state.errorMessage = 'Failed to fetch data from db';

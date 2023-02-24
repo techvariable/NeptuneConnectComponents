@@ -1,6 +1,8 @@
 import { Component, h, State } from '@stencil/core';
-import { formatJSON } from '../../../utils/utils';
+import { formatJSON, jsonToCsv } from '../../../utils/utils';
 import state from '../store';
+import { CsvBuilder } from 'filefy';
+import axios from 'axios';
 
 @Component({
   tag: 'tab-component',
@@ -13,12 +15,49 @@ export class TabComponent {
     this.setActive = id;
   }
 
+  async downloadData() {
+    try {
+      const csvData = jsonToCsv(state.nodes);
+      new CsvBuilder(`${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}.csv`)
+        .setColumns(csvData.columns)
+        .addRows([...csvData.data])
+        .exportFile();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async downloadDataAll() {
+    try {
+      let nodes: Array<any> = [];
+
+      for (let i = 0; i <= state.total; i += 50) {
+        const res = await axios.post(`${state.url}/query/`, {
+          query: state.query,
+          parameters: { ...JSON.parse(state.queryParameter), paramPaginationLimit: 50 + i, paramPaginationOffset: i },
+        });
+
+        nodes = nodes.concat(res.data.result);
+      }
+
+      const csvData = jsonToCsv(nodes);
+      new CsvBuilder(`${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}.csv`)
+        .setColumns(csvData.columns)
+        .addRows([...csvData.data])
+        .exportFile();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   render() {
     return (
       <div>
-        <p class="text-gray-400 pt-8 pb-2">Output :</p>
+        <p class="text-gray-400 pt-8 pb-2">
+          Showing results for <strong>{state.selectedNodeName !== null ? state.selectedNodeName : 'Custom Query'}</strong>
+        </p>
 
-        <div class="border-b border-gray-200 ">
+        <div class="flex justify-between border-b border-gray-200 ">
           <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500">
             <li class="mr-2">
               <button
@@ -53,15 +92,12 @@ export class TabComponent {
               </button>
             </li>
           </ul>
+          <download-result-modal ></download-result-modal>
         </div>
 
         {/* content */}
         <div class="border border-gray-200 pb-2 text-gray-500">
-          {this.setActive !== 'json' ? (
-            <editor-res></editor-res>
-          ) : (
-            <editor-json-response-viewer doc={formatJSON(state.nodes)}></editor-json-response-viewer>
-          )}
+          {this.setActive !== 'json' ? <editor-res></editor-res> : <editor-json-response-viewer doc={formatJSON(state.nodes)}></editor-json-response-viewer>}
         </div>
       </div>
     );

@@ -86,3 +86,20 @@ export function hasAccess(permissions: any[], route: { name: string | string[]; 
   }
   return true;
 }
+
+export function jsonToCsv<T extends {}>(jsonContent: Array<T>): { columns: string[]; data: Array<Array<T>> } {
+  const keys = new Set<string>();
+
+  jsonContent.forEach(row => {
+    Object.keys(row).forEach(k => {
+      keys.add(k);
+    });
+  });
+
+  return {
+    columns: [...keys],
+    data: jsonContent.map(row => {
+      return [...keys].map(k => row[k] || '');
+    }),
+  };
+}

@@ -25,6 +25,8 @@ export class PermissionEditor {
   @Element() element: HTMLElement;
 
   async onRoleSelect(e) {
+    this.errorMessage = '';
+    this.resStatus = '';
     const selectedRole: number = e.target.value;
     this.selectedRole = selectedRole;
 
@@ -64,7 +66,7 @@ export class PermissionEditor {
 
   componentDidLoad() {
     this.state = EditorState.create({
-      doc: "\n\n\n\n",
+      doc: '\n\n\n\n',
       extensions: [
         basicSetup,
         json(),
@@ -77,7 +79,7 @@ export class PermissionEditor {
       parent: this.element.querySelector('#permissionEditor'),
     });
 
-    this.parsedPermissions = JSON.parse(this.permissions || "[]");
+    this.parsedPermissions = JSON.parse(this.permissions || '[]');
     this.fetchRoles();
   }
 
@@ -88,26 +90,25 @@ export class PermissionEditor {
       this.resStatus = '';
       let transaction = this.view.state.update();
       this.view.dispatch(transaction);
+
       const { isValid, error } = isValidPermissionJson(String(transaction.state.doc));
 
       if (isValid) {
         this.isLoading = true;
-        const document = transaction.state.doc;
-        // @ts-expect-error
-        const permissions = document.text.join('');
+        const permissions = String(transaction.state.doc);
 
         const res = await axios.put(this.url, {
           permissions,
-          roleId: this.selectedRole
-        })
+          roleId: this.selectedRole,
+        });
 
         this.resStatus = `Permissions for ${res.data.roleName} updated successfully`;
       } else {
         this.errorMessage = error;
       }
-
     } catch (err) {
-      this.errorMessage = err?.response?.data?.message || "Failed to update the permission";
+      console.error(err);
+      this.errorMessage = err?.response?.data?.message || 'Failed to update the permission';
     }
     this.isLoading = false;
   }
@@ -145,14 +146,13 @@ export class PermissionEditor {
           </div>
           <div style={{ maxHeight: '40rem', overflowY: 'auto' }} class="border-2">
             <div id="permissionEditor" class="border border-gray-300"></div>
-
-            {this.errorMessage !== '' ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full -mt-4 mb-6">{this.errorMessage}</p> : null}
-            {this.errorMessage === '' && this.resStatus !== '' && (
-              <div class="flex items-center bg-gray-500 text-white text-sm font-bold px-4 py-3" role="alert">
-                <p>{this.resStatus}</p>
-              </div>
-            )}
           </div>
+          {this.errorMessage !== '' ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full -mt-4 mb-6">{this.errorMessage}</p> : null}
+          {this.errorMessage === '' && this.resStatus !== '' && (
+            <div class="flex items-center bg-gray-500 text-white text-sm font-bold px-4 py-3" role="alert">
+              <p>{this.resStatus}</p>
+            </div>
+          )}
           <div class="flex justify-between">
             <div>
               <button
