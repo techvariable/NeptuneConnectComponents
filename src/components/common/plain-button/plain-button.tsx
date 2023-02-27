@@ -2,6 +2,7 @@ import { Component, h, Prop } from '@stencil/core';
 
 @Component({
   tag: 'plain-button',
+  styleUrl:'plain-button.css',
   scoped: true,
 })
 export class PlainButton {

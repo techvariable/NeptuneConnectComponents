@@ -1,9 +1,10 @@
 import { Component, h, Prop, State } from '@stencil/core';
 
-import { ClickOutside } from 'stencil-click-outside';
+import { hasAccess } from '../../../utils/utils';
 
 @Component({
   tag: 'user-drop-down',
+  styleUrl: 'user-drop-down.css',
   scoped: true,
 })
 export class UserDropDown {
@@ -11,23 +12,24 @@ export class UserDropDown {
   @Prop() userId: number = 0;
   @Prop() email: string;
   @Prop() url: string;
-  @Prop() submiturl:string;
-  @State() ismodelopen: boolean= false ;
+  @Prop() submiturl: string;
+  @Prop() parsedPermissions: [];
+  @State() ismodelopen: boolean = false;
   @State() value: string;
   @State() showDropdown: boolean = false;
-  @State() clickHandler: any = function () {
+
+  clickHandler() {
     this.ismodelopen = !this.ismodelopen;
     this.toggleDropdown();
+  }
+
+  toggleDropdown = () => {
+    this.showDropdown = !this.showDropdown;
   };
 
-  @ClickOutside()
-  someMethod() {
-    this.showDropdown = !this.showDropdown;
-  }
-
-  toggleDropdown() {
-    this.showDropdown = !this.showDropdown;
-  }
+  backDropHandler = () => {
+    this.showDropdown = false;
+  };
 
   render() {
     return (
@@ -42,24 +44,30 @@ export class UserDropDown {
             />
           </svg>
         </h2>
-
+        <backdrop-filter showBackDrop={this.showDropdown} backDropHandler={this.backDropHandler}></backdrop-filter>
         {/* List */}
-        <div class={this.showDropdown ? 'absolute bg-white z-2 w-28 text-sm list-none mt-2 rounded divide-y divide-gray-100 shadow ' : 'hidden'}>
+        <div class={this.showDropdown === true ? 'absolute bg-white z-10 w-28 text-sm list-none mt-2 rounded divide-y divide-gray-100 shadow ' : 'hidden'}>
           <ul class="py-1">
             {this.option?.map(item => (
-              <li onClick={() => this.clickHandler()}>
-                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-200">
-                  {item}
-                </a>
+              <li>
+                <button class="disabled-custom" onClick={() => this.clickHandler()} disabled={!hasAccess(this.parsedPermissions, { name: 'users', permission: 'update' })}>
+                  <a href="#" class="block py-2 px-4 text-sm text-gray-700">
+                    {item}
+                  </a>
+                </button>
               </li>
             ))}
           </ul>
         </div>
-        <edit-user url={this.url} submiturl={this.submiturl} userid={this.userId} ismodelopen={this.ismodelopen} value={this.email} toggle={() => this.ismodelopen = !this.ismodelopen} ></edit-user>
+        <edit-user
+          url={this.url}
+          submiturl={this.submiturl}
+          userid={this.userId}
+          ismodelopen={this.ismodelopen}
+          value={this.email}
+          toggle={() => (this.ismodelopen = !this.ismodelopen)}
+        ></edit-user>
       </div>
     );
   }
 }
-
-
-

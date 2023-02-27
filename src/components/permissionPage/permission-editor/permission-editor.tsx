@@ -3,31 +3,33 @@ import { EditorState, basicSetup } from '@codemirror/basic-setup';
 import { EditorView, keymap } from '@codemirror/view';
 import { json } from '@codemirror/lang-json';
 import axios from 'axios';
-import { formatJSON, isValidPermissionJson } from '../../../utils/utils';
+import { formatJSON, hasAccess, isValidPermissionJson } from '../../../utils/utils';
 @Component({
   tag: 'permission-editor',
+  styleUrl: 'permission-editor.css',
   scoped: true,
 })
 export class PermissionEditor {
   @Prop() url: string;
-  @State() roleId: Number;
-  @State() response: any;
+  @Prop() permissions: string;
+
+  @State() parsedPermissions: [] = [];
+  @State() selectedRole: Number;
   @State() view: EditorView;
   @State() state: EditorState;
   @State() isLoading = false;
   @State() errorMessage: string = '';
-  @State() doc: any = '\n\n\n';
-  @State() options: string[] = [];
-  @State() rolesObj: {}[] = [];
+  @State() roles: Array<{ roleName: string; id: number }> = [];
   @State() resStatus: string = '';
-  @Element() element: HTMLElement;
-  @State() docInitial: any;
+  @State() syncVal: string = '';
 
-  @State() roleOptions: Array<{ roleName: string; id: number }> = [];
+  @Element() element: HTMLElement;
 
   async onRoleSelect(e) {
+    this.errorMessage = '';
+    this.resStatus = '';
     const selectedRole: number = e.target.value;
-    this.roleId = selectedRole;
+    this.selectedRole = selectedRole;
 
     const fetchPermissionsResp = await axios.get(`${this.url}/?roleId=${selectedRole}`);
 
@@ -40,29 +42,11 @@ export class PermissionEditor {
   async fetchRolePermission(roleId: number) {
     try {
       const rolePermissionsResp = await axios.get(`${this.url}/?roleId=${roleId}`);
-      // this.doc = rolePermissionsResp.data;
-      this.docInitial = rolePermissionsResp.data;
-      if (!this.view) {
-        this.state = EditorState.create({
-          doc: rolePermissionsResp.data,
-          extensions: [
-            basicSetup,
-            json(),
-            //   keymap.of(defaultKeymap),9
-            this.dummyKeymap(),
-          ],
-        });
-        this.view = new EditorView({
-          state: this.state,
-          parent: this.element.querySelector('#permissionEditor'),
-        });
-      } else {
-        let transaction = this.view.state.update({ changes: { from: 0, insert: `${formatJSON(rolePermissionsResp.data)}` } });
-        this.view.dispatch(transaction);
-      }
+
+      let transaction = this.view.state.update({ changes: { from: 0, insert: `${formatJSON(rolePermissionsResp.data)}` } });
+      this.view.dispatch(transaction);
     } catch (error) {
       console.log(error);
-      // handle error
     }
   }
 
@@ -70,26 +54,26 @@ export class PermissionEditor {
     try {
       const rolesRes = await axios.get(`${this.url}/all`);
       const roles = rolesRes.data;
-      this.roleId = roles[0].id;
-      this.roleOptions = roles;
-      await this.fetchRolePermission(roles[0].id);
+
+      if (roles instanceof Array && roles.length > 0) {
+        this.selectedRole = roles[0].id;
+        this.roles = roles;
+        await this.fetchRolePermission(roles[0].id);
+      }
     } catch (error) {
       console.log({ error });
-      // handle error
     }
-  }
-
-  componentWillLoad() {
-    this.fetchRoles();
   }
 
   componentDidLoad() {
     this.state = EditorState.create({
-      doc: this.docInitial,
+      doc: '\n\n\n\n',
       extensions: [
         basicSetup,
         json(),
-        //   keymap.of(defaultKeymap),9
+        EditorView.updateListener.of(e => {
+          this.syncVal = e.state.doc.toString().trim();
+        }),
         this.dummyKeymap(),
       ],
     });
@@ -97,47 +81,50 @@ export class PermissionEditor {
       state: this.state,
       parent: this.element.querySelector('#permissionEditor'),
     });
+
+    this.parsedPermissions = JSON.parse(this.permissions || '[]');
+    this.fetchRoles();
   }
 
-  onRoleUpdateClick() {
-    this.errorMessage = '';
-    this.resStatus = '';
-    let transaction = this.view.state.update();
-    this.view.dispatch(transaction);
-    const { isValid, error } = isValidPermissionJson(String(transaction.state.doc));
-    if (isValid) {
-      this.isLoading = true;
-      this.errorMessage = '';
-      this.doc = transaction.state.doc;
-      const permissions = this.doc.text.join('');
-      // axios call
-      axios
-        .put(this.url, {
-          permissions,
-          roleId: this.roleId,
-        })
-        .then((res: any) => {
-          this.isLoading = false;
-          this.doc = JSON.parse(res.data.permissions);
+  async onRoleUpdateClick() {
+    if (this.syncVal !== '') {
+      try {
+        this.isLoading = true;
+        this.errorMessage = '';
+        this.resStatus = '';
+        let transaction = this.view.state.update();
+        this.view.dispatch(transaction);
+
+        const { isValid, error } = isValidPermissionJson(String(transaction.state.doc));
+
+        if (isValid) {
+          this.isLoading = true;
+          const permissions = String(transaction.state.doc);
+
+          const res = await axios.put(this.url, {
+            permissions,
+            roleId: this.selectedRole,
+          });
+
           this.resStatus = `Permissions for ${res.data.roleName} updated successfully`;
-        })
-        .catch(err => {
-          this.isLoading = false;
-          this.errorMessage = err.response.data.message;
-          // console.log(err);
-        });
-    } else {
-      this.errorMessage = error;
+        } else {
+          this.errorMessage = error;
+        }
+      } catch (err) {
+        console.error(err);
+        this.errorMessage = err?.response?.data?.message || 'Failed to update the permission';
+      }
+      this.isLoading = false;
     }
   }
 
   dummyKeymap() {
-    let self = this;
+    let self = this.onRoleUpdateClick;
     return keymap.of([
       {
         key: 'Ctrl-Shift-Enter',
         run() {
-          self.onRoleUpdateClick();
+          self();
           return true;
         },
       },
@@ -155,30 +142,29 @@ export class PermissionEditor {
                 onChange={e => this.onRoleSelect(e)}
                 class="form-select px-3 py-1.5 border-none text-inherit font-inherit text-gray-700 bg-transparent bg-clip-padding bg-no-repeat rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               >
-                {this.roleOptions.map(item => (
+                {this.roles.map(item => (
                   <option value={`${item.id}`}>{item.roleName}</option>
                 ))}
               </select>
             </div>
-            <add-role refresh={() => this.fetchRoles()} url={this.url}></add-role>
+            <add-role parsedPermissions={this.parsedPermissions} refresh={() => this.fetchRoles()} url={this.url}></add-role>
           </div>
           <div style={{ maxHeight: '40rem', overflowY: 'auto' }} class="border-2">
             <div id="permissionEditor" class="border border-gray-300"></div>
-
-            {this.errorMessage !== '' ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full -mt-4 mb-6">{this.errorMessage}</p> : null}
-            {this.errorMessage === '' && this.resStatus !== '' && (
-              <div class="flex items-center bg-gray-500 text-white text-sm font-bold px-4 py-3" role="alert">
-                <p>{this.resStatus}</p>
-              </div>
-            )}
           </div>
+          {this.errorMessage !== '' ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full -mt-4 mb-6">{this.errorMessage}</p> : null}
+          {this.errorMessage === '' && this.resStatus !== '' && (
+            <div class="flex items-center bg-gray-500 text-white text-sm font-bold px-4 py-3" role="alert">
+              <p>{this.resStatus}</p>
+            </div>
+          )}
           <div class="flex justify-between">
             <div>
               <button
                 title="Ctrl+Shift+Enter to run"
                 onClick={() => this.onRoleUpdateClick()}
-                disabled={this.isLoading}
-                class="mr-1 flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 hover:bg-gray-200 hover:text-gray-800 "
+                disabled={this.syncVal === '' || !hasAccess(this.parsedPermissions, { name: 'permissions', permission: 'update' }) || this.isLoading}
+                class="mr-1 flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 disabled:opacity-75 disabled:text-gray-300 disabled:cursor-default"
               >
                 Update
               </button>

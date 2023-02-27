@@ -18,7 +18,7 @@ export class TableSearchModal {
   @State() isModalOpen = false;
   @State() searchOptions: string[] = ['string', 'number'];
   @State() textSearchOptions: string[] = ['exact', 'contains'];
-  @State() numberSearchOptions: string[] = ['gte', 'lte', 'exact'];
+  @State() numberSearchOptions: string[] = ['gte', 'lte','gt','lt','exact'];
   @State() selectedSearchOption: string = '';
   @State() selectedTextSearchOption: string = '';
   @State() selectedNumberSearchOption: string = '';
@@ -58,7 +58,11 @@ export class TableSearchModal {
   }
 
   handleChange(event) {
-    this.value = event.target.value;
+    if(this.selectedSearchOption === 'string'){
+      this.value = event.target.value;
+    }else{
+      this.value = parseFloat(event.target.value);
+    }
   }
 
   radioSearchTypeHandler = event => {
@@ -147,7 +151,7 @@ export class TableSearchModal {
                                 Enter number to be searched.
                               </label>
                               <input
-                                type="number"
+                                type="text"
                                 name="searchNumber"
                                 required
                                 placeholder="Type a number to search"

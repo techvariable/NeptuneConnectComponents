@@ -7,8 +7,13 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface AddRole {
+        "parsedPermissions": [];
         "refresh": any;
         "url": string;
+    }
+    interface BackdropFilter {
+        "backDropHandler": any;
+        "showBackDrop": boolean;
     }
     interface CheckBox {
         "name": string;
@@ -30,7 +35,10 @@ export namespace Components {
         "doc": object[];
     }
     interface DialogComponent {
+        "permissions": string;
         "url": string;
+    }
+    interface DownloadResultModal {
     }
     interface DropDown {
         "alias": string;
@@ -124,6 +132,7 @@ export namespace Components {
     interface NodeItem {
     }
     interface PermissionEditor {
+        "permissions": string;
         "url": string;
     }
     interface PlainButton {
@@ -165,6 +174,7 @@ export namespace Components {
         "name": string;
     }
     interface SideBar {
+        "permissions": string;
         "url": string;
     }
     interface TabComponent {
@@ -199,11 +209,13 @@ export namespace Components {
     interface UserDropDown {
         "email": string;
         "option": string[];
+        "parsedPermissions": [];
         "submiturl": string;
         "url": string;
         "userId": number;
     }
     interface UsersComponent {
+        "permissions": string;
         "submiturl": string;
         "url": string;
         "users": any;
@@ -215,6 +227,12 @@ declare global {
     var HTMLAddRoleElement: {
         prototype: HTMLAddRoleElement;
         new (): HTMLAddRoleElement;
+    };
+    interface HTMLBackdropFilterElement extends Components.BackdropFilter, HTMLStencilElement {
+    }
+    var HTMLBackdropFilterElement: {
+        prototype: HTMLBackdropFilterElement;
+        new (): HTMLBackdropFilterElement;
     };
     interface HTMLCheckBoxElement extends Components.CheckBox, HTMLStencilElement {
     }
@@ -251,6 +269,12 @@ declare global {
     var HTMLDialogComponentElement: {
         prototype: HTMLDialogComponentElement;
         new (): HTMLDialogComponentElement;
+    };
+    interface HTMLDownloadResultModalElement extends Components.DownloadResultModal, HTMLStencilElement {
+    }
+    var HTMLDownloadResultModalElement: {
+        prototype: HTMLDownloadResultModalElement;
+        new (): HTMLDownloadResultModalElement;
     };
     interface HTMLDropDownElement extends Components.DropDown, HTMLStencilElement {
     }
@@ -452,12 +476,14 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "add-role": HTMLAddRoleElement;
+        "backdrop-filter": HTMLBackdropFilterElement;
         "check-box": HTMLCheckBoxElement;
         "chips-list": HTMLChipsListElement;
         "code-editor": HTMLCodeEditorElement;
         "data-table": HTMLDataTableElement;
         "data-table-updated": HTMLDataTableUpdatedElement;
         "dialog-component": HTMLDialogComponentElement;
+        "download-result-modal": HTMLDownloadResultModalElement;
         "drop-down": HTMLDropDownElement;
         "edit-user": HTMLEditUserElement;
         "editor-json-response-viewer": HTMLEditorJsonResponseViewerElement;
@@ -495,8 +521,13 @@ declare global {
 }
 declare namespace LocalJSX {
     interface AddRole {
+        "parsedPermissions"?: [];
         "refresh"?: any;
         "url"?: string;
+    }
+    interface BackdropFilter {
+        "backDropHandler"?: any;
+        "showBackDrop"?: boolean;
     }
     interface CheckBox {
         "name"?: string;
@@ -518,7 +549,10 @@ declare namespace LocalJSX {
         "doc"?: object[];
     }
     interface DialogComponent {
+        "permissions"?: string;
         "url"?: string;
+    }
+    interface DownloadResultModal {
     }
     interface DropDown {
         "alias"?: string;
@@ -612,6 +646,7 @@ declare namespace LocalJSX {
     interface NodeItem {
     }
     interface PermissionEditor {
+        "permissions"?: string;
         "url"?: string;
     }
     interface PlainButton {
@@ -653,6 +688,7 @@ declare namespace LocalJSX {
         "name"?: string;
     }
     interface SideBar {
+        "permissions"?: string;
         "url"?: string;
     }
     interface TabComponent {
@@ -687,23 +723,27 @@ declare namespace LocalJSX {
     interface UserDropDown {
         "email"?: string;
         "option"?: string[];
+        "parsedPermissions"?: [];
         "submiturl"?: string;
         "url"?: string;
         "userId"?: number;
     }
     interface UsersComponent {
+        "permissions"?: string;
         "submiturl"?: string;
         "url"?: string;
         "users"?: any;
     }
     interface IntrinsicElements {
         "add-role": AddRole;
+        "backdrop-filter": BackdropFilter;
         "check-box": CheckBox;
         "chips-list": ChipsList;
         "code-editor": CodeEditor;
         "data-table": DataTable;
         "data-table-updated": DataTableUpdated;
         "dialog-component": DialogComponent;
+        "download-result-modal": DownloadResultModal;
         "drop-down": DropDown;
         "edit-user": EditUser;
         "editor-json-response-viewer": EditorJsonResponseViewer;
@@ -744,12 +784,14 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "add-role": LocalJSX.AddRole & JSXBase.HTMLAttributes<HTMLAddRoleElement>;
+            "backdrop-filter": LocalJSX.BackdropFilter & JSXBase.HTMLAttributes<HTMLBackdropFilterElement>;
             "check-box": LocalJSX.CheckBox & JSXBase.HTMLAttributes<HTMLCheckBoxElement>;
             "chips-list": LocalJSX.ChipsList & JSXBase.HTMLAttributes<HTMLChipsListElement>;
             "code-editor": LocalJSX.CodeEditor & JSXBase.HTMLAttributes<HTMLCodeEditorElement>;
             "data-table": LocalJSX.DataTable & JSXBase.HTMLAttributes<HTMLDataTableElement>;
             "data-table-updated": LocalJSX.DataTableUpdated & JSXBase.HTMLAttributes<HTMLDataTableUpdatedElement>;
             "dialog-component": LocalJSX.DialogComponent & JSXBase.HTMLAttributes<HTMLDialogComponentElement>;
+            "download-result-modal": LocalJSX.DownloadResultModal & JSXBase.HTMLAttributes<HTMLDownloadResultModalElement>;
             "drop-down": LocalJSX.DropDown & JSXBase.HTMLAttributes<HTMLDropDownElement>;
             "edit-user": LocalJSX.EditUser & JSXBase.HTMLAttributes<HTMLEditUserElement>;
             "editor-json-response-viewer": LocalJSX.EditorJsonResponseViewer & JSXBase.HTMLAttributes<HTMLEditorJsonResponseViewerElement>;

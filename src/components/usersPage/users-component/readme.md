@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property    | Attribute   | Description | Type     | Default     |
-| ----------- | ----------- | ----------- | -------- | ----------- |
-| `submiturl` | `submiturl` |             | `string` | `undefined` |
-| `url`       | `url`       |             | `string` | `undefined` |
-| `users`     | `users`     |             | `any`    | `undefined` |
+| Property      | Attribute     | Description | Type     | Default     |
+| ------------- | ------------- | ----------- | -------- | ----------- |
+| `permissions` | `permissions` |             | `string` | `undefined` |
+| `submiturl`   | `submiturl`   |             | `string` | `undefined` |
+| `url`         | `url`         |             | `string` | `undefined` |
+| `users`       | `users`       |             | `any`    | `undefined` |
 
 
 ## Dependencies
@@ -24,6 +25,7 @@
 ```mermaid
 graph TD;
   users-component --> user-drop-down
+  user-drop-down --> backdrop-filter
   user-drop-down --> edit-user
   style users-component fill:#f9f,stroke:#333,stroke-width:4px
 ```

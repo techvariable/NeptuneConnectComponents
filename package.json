@@ -20,12 +20,13 @@
   ],
   "scripts": {
     "build": "stencil build --docs",
-    "start": "stencil build --prod --watch --serve",
+    "start": "stencil build --dev --watch --serve",
     "distBuild": "stencil build --es5",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",
-    "lint": "eslint src/**/*{.ts,.tsx}"
+    "lint": "eslint src/**/*{.ts,.tsx}",
+    "cd": "./copy.sh"
   },
   "dependencies": {
     "@codemirror/basic-setup": "^0.19.1",
@@ -38,6 +39,7 @@
     "axios": "^0.26.0",
     "choices.js": "^10.2.0",
     "choicesjs-stencil": "^1.5.1",
+    "filefy": "^0.1.11",
     "gremlint": "^3.6.2",
     "stencil-click-outside": "^1.8.0",
     "sweetalert2": "^11.4.6"

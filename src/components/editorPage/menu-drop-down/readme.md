@@ -20,9 +20,14 @@
 
  - [node-item](../node-item)
 
+### Depends on
+
+- [backdrop-filter](../../common/backdrop-filter)
+
 ### Graph
 ```mermaid
 graph TD;
+  menu-drop-down --> backdrop-filter
   node-item --> menu-drop-down
   style menu-drop-down fill:#f9f,stroke:#333,stroke-width:4px
 ```

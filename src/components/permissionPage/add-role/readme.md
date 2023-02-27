@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type     | Default     |
-| --------- | --------- | ----------- | -------- | ----------- |
-| `refresh` | `refresh` |             | `any`    | `undefined` |
-| `url`     | `url`     |             | `string` | `undefined` |
+| Property            | Attribute | Description | Type     | Default     |
+| ------------------- | --------- | ----------- | -------- | ----------- |
+| `parsedPermissions` | --        |             | `[]`     | `undefined` |
+| `refresh`           | `refresh` |             | `any`    | `undefined` |
+| `url`               | `url`     |             | `string` | `undefined` |
 
 
 ## Dependencies

@@ -1,19 +1,22 @@
 import { Component, Host, h, State, Prop } from '@stencil/core';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { hasAccess } from '../../../utils/utils';
 
 @Component({
   tag: 'side-bar',
+  styleUrl:'side-bar.css',
   scoped: true,
 })
 export class SideBar {
   @State() api: string;
   @State() name: string;
   @State() apiExist: boolean = false;
-  @Prop() url:string;
-
+  @Prop() url: string;
+  @Prop() permissions: string;
+  @State() parsedPermissions: [] = [];
   componentWillLoad() {
-    // return axios.get('api/setting')
+    this.parsedPermissions = JSON.parse(this.permissions);
     return axios
       .get(this.url)
       .then(res => {
@@ -35,6 +38,7 @@ export class SideBar {
   }
 
   async createHandler() {
+    let errorMessage = '';
     try {
       // const res = await axios.post('api/settings');
       const res = await axios.post(this.url);
@@ -42,6 +46,7 @@ export class SideBar {
       this.api = data.apiKey;
       this.name = data.user.name;
       this.apiExist = true;
+      errorMessage = data.message;
       Swal.fire({
         position: 'center',
         icon: 'success',
@@ -53,14 +58,13 @@ export class SideBar {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Something went wrong!',
+        text: errorMessage,
       });
     }
   }
 
   async deleteHandler() {
     try {
-      // await axios.get('api/settings');
       await axios.delete(this.url);
       this.apiExist = false;
       Swal.fire({
@@ -134,7 +138,11 @@ export class SideBar {
                   </td>
 
                   <td class="px-6 py-4 text-right">
-                    <button onClick={() => this.deleteHandler()} class="font-medium text-blue-600 hover:underline">
+                    <button
+                      disabled={!hasAccess(this.parsedPermissions, { name: 'settings', permission: 'delete' })}
+                      onClick={() => this.deleteHandler()}
+                      class="font-medium text-blue-600 disabled:text-gray-300 disabled:cursor-default"
+                    >
                       Delete
                     </button>
                   </td>
@@ -150,10 +158,13 @@ export class SideBar {
               </svg>
               You have no API key currently
             </p>
-
-            <plain-button addClass="mt-8" clickHandler={() => this.createHandler()}>
+            <button
+              disabled={!hasAccess(this.parsedPermissions, { name: 'settings', permission: 'write' })}
+              onClick={() => this.createHandler()}
+              class="mt-8 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 capitalize disabled:text-gray-300 disabled:cursor-default disabled:bg-white disabled:border-2 disabled:border-gray-500"
+            >
               Create new key
-            </plain-button>
+            </button>
           </div>
         )}
       </Host>

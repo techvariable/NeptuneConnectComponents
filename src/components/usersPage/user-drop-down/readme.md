@@ -7,13 +7,14 @@
 
 ## Properties
 
-| Property    | Attribute   | Description | Type       | Default     |
-| ----------- | ----------- | ----------- | ---------- | ----------- |
-| `email`     | `email`     |             | `string`   | `undefined` |
-| `option`    | --          |             | `string[]` | `['Edit']`  |
-| `submiturl` | `submiturl` |             | `string`   | `undefined` |
-| `url`       | `url`       |             | `string`   | `undefined` |
-| `userId`    | `user-id`   |             | `number`   | `0`         |
+| Property            | Attribute   | Description | Type       | Default     |
+| ------------------- | ----------- | ----------- | ---------- | ----------- |
+| `email`             | `email`     |             | `string`   | `undefined` |
+| `option`            | --          |             | `string[]` | `['Edit']`  |
+| `parsedPermissions` | --          |             | `[]`       | `undefined` |
+| `submiturl`         | `submiturl` |             | `string`   | `undefined` |
+| `url`               | `url`       |             | `string`   | `undefined` |
+| `userId`            | `user-id`   |             | `number`   | `0`         |
 
 
 ## Dependencies
@@ -24,11 +25,13 @@
 
 ### Depends on
 
+- [backdrop-filter](../../common/backdrop-filter)
 - [edit-user](../edit-user)
 
 ### Graph
 ```mermaid
 graph TD;
+  user-drop-down --> backdrop-filter
   user-drop-down --> edit-user
   users-component --> user-drop-down
   style user-drop-down fill:#f9f,stroke:#333,stroke-width:4px

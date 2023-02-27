@@ -27,10 +27,13 @@ graph TD;
   editor-page --> code-editor
   editor-page --> tab-component
   node-item --> menu-drop-down
+  menu-drop-down --> backdrop-filter
   code-editor --> tabs-component
   code-editor --> loader-component
+  tab-component --> download-result-modal
   tab-component --> editor-res
   tab-component --> editor-json-response-viewer
+  download-result-modal --> radio-button-multiple
   editor-res --> chips-list
   editor-res --> query-result-table
   query-result-table --> table-search-modal
