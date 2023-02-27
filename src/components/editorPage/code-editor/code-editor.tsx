@@ -30,7 +30,14 @@ export class CodeEditor {
   componentDidLoad() {
     state.stateQuery = EditorState.create({
       doc: state.query,
-      extensions: [basicSetup, java(), this.onCtrlShiftEnter()],
+      extensions: [
+        basicSetup,
+        java(),
+        this.onCtrlShiftEnter(),
+        EditorView.updateListener.of(function (e) {
+          state.syncVal = e.state.doc.toString().trim();
+        }),
+      ],
     });
 
     state.viewQuery = new EditorView({
@@ -55,17 +62,16 @@ export class CodeEditor {
   };
 
   onCtrlShiftEnter() {
-    const runTemp = this.onClickRun;
-
-    return keymap.of([
-      {
-        key: 'Ctrl-Shift-Enter',
-        run() {
-          runTemp();
-          return true;
+    let runTemp = this.onClickRun;
+      return keymap.of([
+        {
+          key: 'Ctrl-Shift-Enter',
+          run() {
+            runTemp();
+            return true;
+          },
         },
-      },
-    ]);
+      ]);
   }
 
   render() {
@@ -103,12 +109,12 @@ export class CodeEditor {
             )}
           </div>
           {state.isError ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full mt-4 mb-6">{state.errorMessage || 'Something went wrong!!!'}</p> : null}
-
           <div class="flex justify-between">
             <button
               title="Ctrl+Shift+Enter to run"
+              disabled={state.syncVal === ''}
               onClick={() => this.onClickRun()}
-              class="flex text-sm gap-2 items-center justify-center text-gray-600 border border-gray-300 px-3 mt-2 py-2 hover:bg-gray-200 hover:text-gray-800"
+              class="flex text-sm gap-2 items-center justify-center text-gray-600 border border-gray-300 px-3 mt-2 py-2 hover:bg-gray-200 disabled:text-gray-300 disabled:cursor-default disabled:hover:text-gray-200"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />

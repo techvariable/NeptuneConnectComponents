@@ -11,6 +11,10 @@ export namespace Components {
         "refresh": any;
         "url": string;
     }
+    interface BackdropFilter {
+        "backDropHandler": any;
+        "showBackDrop": boolean;
+    }
     interface CheckBox {
         "name": string;
     }
@@ -223,6 +227,12 @@ declare global {
     var HTMLAddRoleElement: {
         prototype: HTMLAddRoleElement;
         new (): HTMLAddRoleElement;
+    };
+    interface HTMLBackdropFilterElement extends Components.BackdropFilter, HTMLStencilElement {
+    }
+    var HTMLBackdropFilterElement: {
+        prototype: HTMLBackdropFilterElement;
+        new (): HTMLBackdropFilterElement;
     };
     interface HTMLCheckBoxElement extends Components.CheckBox, HTMLStencilElement {
     }
@@ -466,6 +476,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "add-role": HTMLAddRoleElement;
+        "backdrop-filter": HTMLBackdropFilterElement;
         "check-box": HTMLCheckBoxElement;
         "chips-list": HTMLChipsListElement;
         "code-editor": HTMLCodeEditorElement;
@@ -513,6 +524,10 @@ declare namespace LocalJSX {
         "parsedPermissions"?: [];
         "refresh"?: any;
         "url"?: string;
+    }
+    interface BackdropFilter {
+        "backDropHandler"?: any;
+        "showBackDrop"?: boolean;
     }
     interface CheckBox {
         "name"?: string;
@@ -721,6 +736,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "add-role": AddRole;
+        "backdrop-filter": BackdropFilter;
         "check-box": CheckBox;
         "chips-list": ChipsList;
         "code-editor": CodeEditor;
@@ -768,6 +784,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "add-role": LocalJSX.AddRole & JSXBase.HTMLAttributes<HTMLAddRoleElement>;
+            "backdrop-filter": LocalJSX.BackdropFilter & JSXBase.HTMLAttributes<HTMLBackdropFilterElement>;
             "check-box": LocalJSX.CheckBox & JSXBase.HTMLAttributes<HTMLCheckBoxElement>;
             "chips-list": LocalJSX.ChipsList & JSXBase.HTMLAttributes<HTMLChipsListElement>;
             "code-editor": LocalJSX.CodeEditor & JSXBase.HTMLAttributes<HTMLCodeEditorElement>;

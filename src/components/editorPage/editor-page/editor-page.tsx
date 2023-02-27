@@ -19,7 +19,7 @@ export class EditorPage {
   @State() nodeDataColumns: {}[] = [];
   @State() errorMessage: string | null = null;
   @State() isLoading: boolean = false;
-  @State() loadingNodes:boolean = false;
+  @State() loadingNodes: boolean = false;
 
   componentWillLoad() {
     state.url = this.url;
@@ -44,48 +44,50 @@ export class EditorPage {
 
   btnClassType = {
     true: `mr-4 animate-spin`,
-    false:`mr-4`,
+    false: `mr-4`,
   };
 
   onClickRun = async () => {
-    state.selectedNodeName = null;
-    state.filter = {};
-    state.order = {};
-    state.isError = false;
-    state.errorMessage = null;
-    state.isLoading = true;
+    if (state.syncVal !== '') {
+      state.selectedNodeName = null;
+      state.filter = {};
+      state.order = {};
+      state.isError = false;
+      state.errorMessage = null;
+      state.isLoading = true;
 
-    try {
-      let transactionQuery = state.viewQuery.state.update();
-      const query = transactionQuery.state.doc.toString().trim();
-      state.viewQuery.dispatch(transactionQuery);
+      try {
+        let transactionQuery = state.viewQuery.state.update();
+        const query = transactionQuery.state.doc.toString().trim();
+        state.viewQuery.dispatch(transactionQuery);
 
-      let transactionParameter = state.viewParameter.state.update();
-      const parameters = transactionParameter.state.doc.toString().trim();
-      state.viewParameter.dispatch(transactionParameter);
+        let transactionParameter = state.viewParameter.state.update();
+        const parameters = transactionParameter.state.doc.toString().trim();
+        state.viewParameter.dispatch(transactionParameter);
 
-      const { isValid, error } = isValidParameterJson(query, parameters);
+        const { isValid, error } = isValidParameterJson(query, parameters);
 
-      if (isValid) {
-        state.timeTaken = null;
-        const res = await axios.post(`${state.url}/query/`, {
-          query,
-          parameters: JSON.parse(parameters),
-        });
-        state.query = query;
-        state.queryParameter = parameters;
-        state.nodes = res.data.result;
-        state.timeTaken = res.data.timeTaken;
-        state.isFetchedData = true;
-      } else {
+        if (isValid) {
+          state.timeTaken = null;
+          const res = await axios.post(`${state.url}/query/`, {
+            query,
+            parameters: JSON.parse(parameters),
+          });
+          state.query = query;
+          state.queryParameter = parameters;
+          state.nodes = res.data.result;
+          state.timeTaken = res.data.timeTaken;
+          state.isFetchedData = true;
+        } else {
+          state.isError = true;
+          state.errorMessage = error;
+        }
+      } catch (error) {
         state.isError = true;
-        state.errorMessage = error;
+        state.errorMessage = error?.response?.data?.message ? error.response.data.message : 'Failed to fetch data from db server.';
       }
-    } catch (error) {
-      state.isError = true;
-      state.errorMessage = error?.response?.data?.message ? error.response.data.message : 'Failed to fetch data from db server.';
+      state.isLoading = false;
     }
-    state.isLoading = false;
   };
 
   render() {
@@ -96,12 +98,7 @@ export class EditorPage {
             <aside class="w-full md:w-80" aria-label="Sidebar">
               <div class="w-full flex justify-between mb-4">
                 <h2 class="font-mono text-lg font-bold leading-7 text-gray-600">Nodes</h2>
-                {console.log(this.btnClassType[`${this.isLoading}`])}
-                <button
-                  class={this.btnClassType[`${this.loadingNodes}`]}
-                  title='Refesh Nodes'
-                  onClick={()=> (this.fetchNavigators())}
-                >
+                <button class={this.btnClassType[`${this.loadingNodes}`]} title="Refesh Nodes" onClick={() => this.fetchNavigators()}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path
                       stroke-linecap="round"
@@ -119,11 +116,11 @@ export class EditorPage {
           <div class="w-full md:w-3/4">
             <h2 class="pb-3 font-mono text-lg font-bold leading-7 text-gray-600">Write your Gremlin Query Here</h2>
             <code-editor onClickRun={this.onClickRun}></code-editor>
-            {state.isFetchedData && state.nodes.length === 0 && !state.isLoading && !state.isError && 
+            {state.isFetchedData && state.nodes.length === 0 && !state.isLoading && !state.isError && (
               <div class="flex items-center bg-gray-500 text-white text-sm font-bold px-4 py-3" role="alert">
-              <p>No Data Found in Database</p>
-            </div>
-            }
+                <p>No Data Found in Database</p>
+              </div>
+            )}
             {state.nodes.length > 0 && !state.isLoading && !state.isError && <tab-component></tab-component>}
           </div>
         </div>

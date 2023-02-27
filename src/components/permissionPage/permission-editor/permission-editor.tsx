@@ -21,6 +21,7 @@ export class PermissionEditor {
   @State() errorMessage: string = '';
   @State() roles: Array<{ roleName: string; id: number }> = [];
   @State() resStatus: string = '';
+  @State() syncVal: string = '';
 
   @Element() element: HTMLElement;
 
@@ -70,7 +71,9 @@ export class PermissionEditor {
       extensions: [
         basicSetup,
         json(),
-        //   keymap.of(defaultKeymap),9
+        EditorView.updateListener.of(e => {
+          this.syncVal = e.state.doc.toString().trim();
+        }),
         this.dummyKeymap(),
       ],
     });
@@ -84,42 +87,44 @@ export class PermissionEditor {
   }
 
   async onRoleUpdateClick() {
-    try {
-      this.isLoading = true;
-      this.errorMessage = '';
-      this.resStatus = '';
-      let transaction = this.view.state.update();
-      this.view.dispatch(transaction);
-
-      const { isValid, error } = isValidPermissionJson(String(transaction.state.doc));
-
-      if (isValid) {
+    if (this.syncVal !== '') {
+      try {
         this.isLoading = true;
-        const permissions = String(transaction.state.doc);
+        this.errorMessage = '';
+        this.resStatus = '';
+        let transaction = this.view.state.update();
+        this.view.dispatch(transaction);
 
-        const res = await axios.put(this.url, {
-          permissions,
-          roleId: this.selectedRole,
-        });
+        const { isValid, error } = isValidPermissionJson(String(transaction.state.doc));
 
-        this.resStatus = `Permissions for ${res.data.roleName} updated successfully`;
-      } else {
-        this.errorMessage = error;
+        if (isValid) {
+          this.isLoading = true;
+          const permissions = String(transaction.state.doc);
+
+          const res = await axios.put(this.url, {
+            permissions,
+            roleId: this.selectedRole,
+          });
+
+          this.resStatus = `Permissions for ${res.data.roleName} updated successfully`;
+        } else {
+          this.errorMessage = error;
+        }
+      } catch (err) {
+        console.error(err);
+        this.errorMessage = err?.response?.data?.message || 'Failed to update the permission';
       }
-    } catch (err) {
-      console.error(err);
-      this.errorMessage = err?.response?.data?.message || 'Failed to update the permission';
+      this.isLoading = false;
     }
-    this.isLoading = false;
   }
 
   dummyKeymap() {
-    let self = this;
+    let self = this.onRoleUpdateClick;
     return keymap.of([
       {
         key: 'Ctrl-Shift-Enter',
         run() {
-          self.onRoleUpdateClick();
+          self();
           return true;
         },
       },
@@ -158,7 +163,7 @@ export class PermissionEditor {
               <button
                 title="Ctrl+Shift+Enter to run"
                 onClick={() => this.onRoleUpdateClick()}
-                disabled={this.isLoading && hasAccess(this.parsedPermissions, { name: 'users', permission: 'update' })}
+                disabled={this.syncVal === '' || !hasAccess(this.parsedPermissions, { name: 'permissions', permission: 'update' }) || this.isLoading}
                 class="mr-1 flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 disabled:opacity-75 disabled:text-gray-300 disabled:cursor-default"
               >
                 Update

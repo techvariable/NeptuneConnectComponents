@@ -26,6 +26,7 @@ const { state, onChange, reset } = createStore({
   errorMessage: null,
 
   // editor state
+  syncVal:'',
   viewQuery: null,
   stateQuery: null,
   viewParameter: null,

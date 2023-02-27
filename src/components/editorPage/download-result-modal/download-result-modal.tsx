@@ -10,8 +10,6 @@ import axios from 'axios';
   scoped: true,
 })
 export class DownloadResultModal {
-  // @Prop() refresh: any;
-  // @Prop() icon: any;
   @State() value: string;
   @State() isModalOpen = false;
   @State() downloadOptions: string[] = ['all', 'current', 'custom'];
@@ -21,6 +19,7 @@ export class DownloadResultModal {
   @State() downloadProgress: number = 0;
   @State() startingIndex: number = 0;
   @State() endingIndex: number = 50;
+  @State() downloadError = null;
 
   componentWillLoad() {
     this.value = `${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}`;
@@ -37,6 +36,8 @@ export class DownloadResultModal {
         .exportFile();
       this.downloadProgress = 100;
       this.isDownloading = false;
+      this.toggleModalState();
+      this.clearFields();
     } catch (error) {
       console.log(error);
     }
@@ -44,35 +45,47 @@ export class DownloadResultModal {
 
   async downloadDataAll() {
     try {
-      this.isDownloading = true;
       let nodes: Array<any> = [];
-      this.downloadProgress = 0;
-      if(this.selectedDownloadOption === 'all'){
-        const pageSize = 50;
-      const progressStep = state.total / pageSize;
 
-      for (let i = 0; i <= state.total; i += 50) {
-        const res = await axios.post(`${state.url}/query/`, {
-          query: state.query,
-          parameters: { ...JSON.parse(state.queryParameter), paramPaginationLimit: 50 + i, paramPaginationOffset: i },
-        });
+      const pageSize = 50;
+      const total = this.selectedDownloadOption === 'all' ? state.total : this.endingIndex - this.startingIndex;
+      const progressStep = total / pageSize;
 
-        nodes = nodes.concat(res.data.result);
+      if (total > 0) {
+        this.isDownloading = true;
+        this.downloadProgress = 0;
+        for (let i = this.startingIndex; i < total + this.startingIndex; i += pageSize) {
+          const res = await axios.post(`${state.url}/query/`, {
+            query: state.query,
+            parameters: {
+              ...JSON.parse(state.queryParameter),
+              paramPaginationLimit: Math.min(pageSize + i, this.selectedDownloadOption === 'all' ? total : this.endingIndex),
+              paramPaginationOffset: +i,
+            },
+          });
 
-        if (this.downloadProgress + progressStep < 100) this.downloadProgress += progressStep;
+          nodes = nodes.concat(res.data.result);
+
+          if (this.downloadProgress + progressStep < 100) this.downloadProgress += 100 / progressStep;
+        }
+
+        this.downloadProgress = 100;
+
+        const csvData = jsonToCsv(nodes);
+        new CsvBuilder(`${this.value}.csv`)
+          .setColumns(csvData.columns)
+          .addRows([...csvData.data])
+          .exportFile();
+        this.isDownloading = false;
+        this.toggleModalState();
+        this.isModalOpen = false;
+        this.clearFields();
+      } else {
+        this.downloadError = 'Starting Index is Greater than End Index';
       }
-    }else{
-      // const progressStep = this.endingIndex - this.startingIndex /
-    }
-
-      this.downloadProgress += 100;
-      const csvData = jsonToCsv(nodes);
-      new CsvBuilder(`${this.value}.csv`)
-        .setColumns(csvData.columns)
-        .addRows([...csvData.data])
-        .exportFile();
-      this.isDownloading = false;
     } catch (error) {
+      this.downloadProgress = 100;
+      this.isDownloading = false;
       console.log(error);
     }
   }
@@ -84,6 +97,8 @@ export class DownloadResultModal {
   clearFields() {
     this.value = `${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}`;
     this.selectedDownloadOption = 'current';
+    this.startingIndex = 0;
+    this.endingIndex = 50;
   }
 
   toggleModalState() {
@@ -92,26 +107,25 @@ export class DownloadResultModal {
 
   async submitHandler(e) {
     e.preventDefault();
-
-    if (this.selectedDownloadOption === 'all') {
+    this.downloadError = null;
+    if (['all', 'custom'].includes(this.selectedDownloadOption)) {
       await this.downloadDataAll();
-    }
-    if (this.selectedDownloadOption === 'current') {
+    } else if (this.selectedDownloadOption === 'current') {
       this.downloadData();
     }
 
-    this.toggleModalState();
-    this.clearFields();
+    // this.toggleModalState();
+    // this.clearFields();
   }
 
   handleChange(event) {
     this.value = event.target.value;
   }
   handleChangeEndingIndex(event) {
-    this.endingIndex = event.target.value;
+    this.endingIndex = parseInt(event.target.value);
   }
   handleChangeStartingIndex(event) {
-    this.startingIndex = event.target.value;
+    this.startingIndex = parseInt(event.target.value);
   }
 
   radioSearchTypeHandler = event => {
@@ -119,8 +133,6 @@ export class DownloadResultModal {
   };
 
   render() {
-    console.log(this.downloadProgress);
-
     return (
       <Host>
         {/* Modal Button */}
@@ -212,15 +224,15 @@ export class DownloadResultModal {
                             />
                           </div>
                         </div>
-
+                        {this.downloadError ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full mt-4 mb-6">{this.downloadError}</p> : null}
                         {this.isDownloading && (
                           <div>
                             <div class="flex justify-between mb-1">
                               <span class="text-base font-medium text-blue-700 dark:text-white">Downloading</span>
-                              <span class="text-sm font-medium text-blue-700 dark:text-white">{parseInt(this.downloadProgress.toString()) * 10}</span>
+                              <span class="text-sm font-medium text-blue-700 dark:text-white">{parseInt(this.downloadProgress.toString())}%</span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                              <div class="bg-gray-500 h-4 rounded-full" style={{ width: `${this.downloadProgress * 10}%` }}></div>
+                              <div class="bg-gray-500 h-4 rounded-full" style={{ width: `${this.downloadProgress}%` }}></div>
                             </div>
                           </div>
                         )}

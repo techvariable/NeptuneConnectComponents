@@ -25,6 +25,7 @@
 ```mermaid
 graph TD;
   users-component --> user-drop-down
+  user-drop-down --> backdrop-filter
   user-drop-down --> edit-user
   style users-component fill:#f9f,stroke:#333,stroke-width:4px
 ```

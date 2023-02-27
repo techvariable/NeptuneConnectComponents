@@ -27,6 +27,7 @@ graph TD;
   editor-page --> code-editor
   editor-page --> tab-component
   node-item --> menu-drop-down
+  menu-drop-down --> backdrop-filter
   code-editor --> tabs-component
   code-editor --> loader-component
   tab-component --> download-result-modal

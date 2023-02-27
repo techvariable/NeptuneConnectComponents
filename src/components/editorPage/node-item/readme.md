@@ -19,6 +19,7 @@
 ```mermaid
 graph TD;
   node-item --> menu-drop-down
+  menu-drop-down --> backdrop-filter
   editor-page --> node-item
   style node-item fill:#f9f,stroke:#333,stroke-width:4px
 ```

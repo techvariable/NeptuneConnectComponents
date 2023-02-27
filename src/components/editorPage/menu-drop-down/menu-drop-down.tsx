@@ -1,20 +1,16 @@
 import { Component, h, Prop, State } from '@stencil/core';
-import { ClickOutside } from "stencil-click-outside";
+import { ClickOutside } from 'stencil-click-outside';
 import state from '../store';
 
 @Component({
   tag: 'menu-drop-down',
   scoped: true,
 })
-export class MenuDropDown { 
-
+export class MenuDropDown {
   @ClickOutside()
   someMethod() {
-    console.log(
-      "someMethod was called because user just clicked outside of MyComponent"
-    );
+    console.log('someMethod was called because user just clicked outside of MyComponent');
   }
-
 
   @Prop() listTitle: string;
   @Prop() list: string[];
@@ -27,10 +23,14 @@ export class MenuDropDown {
   }
 
   buttonHandler(item) {
-    state.page=1
+    state.page = 1;
     this.fetchData(item);
     this.toggleDropdown();
   }
+
+  backDropHandler = () => {
+    this.showDropdown = false;
+  };
 
   render() {
     return (
@@ -49,9 +49,14 @@ export class MenuDropDown {
             />
           </svg>
         </h2>
-
+        <backdrop-filter showBackDrop={this.showDropdown} backDropHandler={this.backDropHandler}></backdrop-filter>
         {/* List */}
-        <div id="dropdownDefaultButton" data-dropdown-toggle="dropdown" style={{right:"0px"}} class={this.showDropdown ? 'absolute bg-white z-10 w-44 text-sm list-none mt-2 rounded divide-y right-0 divide-gray-100 shadow ' : 'hidden'}>
+        <div
+          id="dropdownDefaultButton"
+          data-dropdown-toggle="dropdown"
+          style={{ right: '0px' }}
+          class={this.showDropdown ? 'absolute bg-white z-10 w-44 text-sm list-none mt-2 rounded divide-y right-0 divide-gray-100 shadow ' : 'hidden'}
+        >
           <ul id="dropdown" class="py-1">
             {this.list?.map(item => (
               <li>
