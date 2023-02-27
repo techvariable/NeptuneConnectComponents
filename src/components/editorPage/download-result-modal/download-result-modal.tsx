@@ -185,6 +185,8 @@ export class DownloadResultModal {
                                 <input
                                   type="number"
                                   name="startingIndex"
+                                  min={0}
+                                  max={state.total}
                                   required
                                   placeholder="Enter Starting Index"
                                   class="mb-2 border active:border-2 outline-none px-2 p-2 rounded-md text-sm w-full"
@@ -199,6 +201,8 @@ export class DownloadResultModal {
                                 <input
                                   type="number"
                                   name="endingIndex"
+                                  min="0"
+                                  max={`${state.total}`}
                                   required
                                   placeholder="Enter Ending Index"
                                   class="mb-2 border active:border-2 outline-none px-2 p-2 rounded-md text-sm w-full"
