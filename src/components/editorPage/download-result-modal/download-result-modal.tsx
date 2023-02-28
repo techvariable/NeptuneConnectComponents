@@ -164,6 +164,7 @@ export class DownloadResultModal {
                             <radio-button-multiple
                               clickHandler={this.radioSearchTypeHandler}
                               labels={this.downloadOptions}
+                              disabledOptions={state.selectedNodeName === null?["all","custom"]:[]}
                               name="SearchMethod"
                               label="Options"
                               align="horizontal"
@@ -186,7 +187,7 @@ export class DownloadResultModal {
                                   type="number"
                                   name="startingIndex"
                                   min={0}
-                                  max={state.total}
+                                  max={`${state.total}`}
                                   required
                                   placeholder="Enter Starting Index"
                                   class="mb-2 border active:border-2 outline-none px-2 p-2 rounded-md text-sm w-full"

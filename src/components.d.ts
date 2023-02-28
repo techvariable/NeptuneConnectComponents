@@ -169,6 +169,7 @@ export namespace Components {
         "align": 'vertical' | 'horizontal';
         "checked": string;
         "clickHandler": any;
+        "disabledOptions": string[];
         "label": string;
         "labels": string[];
         "name": string;
@@ -683,6 +684,7 @@ declare namespace LocalJSX {
         "align"?: 'vertical' | 'horizontal';
         "checked"?: string;
         "clickHandler"?: any;
+        "disabledOptions"?: string[];
         "label"?: string;
         "labels"?: string[];
         "name"?: string;

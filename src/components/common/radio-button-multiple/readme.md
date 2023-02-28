@@ -7,14 +7,15 @@
 
 ## Properties
 
-| Property       | Attribute       | Description | Type                         | Default        |
-| -------------- | --------------- | ----------- | ---------------------------- | -------------- |
-| `align`        | `align`         |             | `"horizontal" \| "vertical"` | `'horizontal'` |
-| `checked`      | `checked`       |             | `string`                     | `undefined`    |
-| `clickHandler` | `click-handler` |             | `any`                        | `undefined`    |
-| `label`        | `label`         |             | `string`                     | `undefined`    |
-| `labels`       | --              |             | `string[]`                   | `undefined`    |
-| `name`         | `name`          |             | `string`                     | `undefined`    |
+| Property          | Attribute       | Description | Type                         | Default        |
+| ----------------- | --------------- | ----------- | ---------------------------- | -------------- |
+| `align`           | `align`         |             | `"horizontal" \| "vertical"` | `'horizontal'` |
+| `checked`         | `checked`       |             | `string`                     | `undefined`    |
+| `clickHandler`    | `click-handler` |             | `any`                        | `undefined`    |
+| `disabledOptions` | --              |             | `string[]`                   | `undefined`    |
+| `label`           | `label`         |             | `string`                     | `undefined`    |
+| `labels`          | --              |             | `string[]`                   | `undefined`    |
+| `name`            | `name`          |             | `string`                     | `undefined`    |
 
 
 ## Dependencies
