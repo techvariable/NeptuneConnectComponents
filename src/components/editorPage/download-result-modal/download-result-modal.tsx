@@ -81,7 +81,7 @@ export class DownloadResultModal {
         this.isModalOpen = false;
         this.clearFields();
       } else {
-        this.downloadError = 'Starting Index is Greater than End Index';
+        this.downloadError = 'Starting Index should be smaller than End Index';
       }
     } catch (error) {
       this.downloadProgress = 100;
