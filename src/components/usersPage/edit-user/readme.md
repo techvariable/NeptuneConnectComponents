@@ -10,7 +10,6 @@
 | Property      | Attribute     | Description | Type         | Default     |
 | ------------- | ------------- | ----------- | ------------ | ----------- |
 | `ismodelopen` | `ismodelopen` |             | `boolean`    | `undefined` |
-| `submiturl`   | `submiturl`   |             | `string`     | `undefined` |
 | `toggle`      | --            |             | `() => void` | `undefined` |
 | `url`         | `url`         |             | `string`     | `undefined` |
 | `userid`      | `userid`      |             | `number`     | `undefined` |

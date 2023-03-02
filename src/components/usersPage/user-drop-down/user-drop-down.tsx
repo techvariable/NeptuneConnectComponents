@@ -1,25 +1,55 @@
 import { Component, h, Prop, State } from '@stencil/core';
-
 import { hasAccess } from '../../../utils/utils';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 @Component({
   tag: 'user-drop-down',
   styleUrl: 'user-drop-down.css',
   scoped: true,
 })
+
 export class UserDropDown {
-  @Prop() option: string[] = ['Edit'];
   @Prop() userId: number = 0;
   @Prop() email: string;
   @Prop() url: string;
-  @Prop() submiturl: string;
+  @Prop() refresh:any;
   @Prop() parsedPermissions: [];
   @State() ismodelopen: boolean = false;
   @State() value: string;
   @State() showDropdown: boolean = false;
+  @State() option: any[] = [{edit:'update'},{delete:'delete'}];
 
-  clickHandler() {
-    this.ismodelopen = !this.ismodelopen;
+  async deleteHandler(){
+    try {
+      await axios
+        .delete(`${this.url}/users/`, {
+          data:{
+            id:this.userId
+          }
+        });
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        text: 'User deleted successfully!',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      this.refresh();
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.response.data.message,
+      });
+    }
+  }
+
+  clickHandler(item) {
+    if(item === 'edit'){
+    this.ismodelopen = !this.ismodelopen;}
+    if(item === 'delete'){
+    this.deleteHandler();}
     this.toggleDropdown();
   }
 
@@ -50,9 +80,9 @@ export class UserDropDown {
           <ul class="py-1">
             {this.option?.map(item => (
               <li>
-                <button class="disabled-custom" onClick={() => this.clickHandler()} disabled={!hasAccess(this.parsedPermissions, { name: 'users', permission: 'update' })}>
+                <button class="disabled-custom" onClick={() => this.clickHandler(Object.keys(item)[0])} disabled={!hasAccess(this.parsedPermissions, { name: 'users', permission: item[Object.keys(item)[0]]})}>
                   <a href="#" class="block py-2 px-4 text-sm text-gray-700">
-                    {item}
+                    {Object.keys(item)[0]}
                   </a>
                 </button>
               </li>
@@ -61,7 +91,6 @@ export class UserDropDown {
         </div>
         <edit-user
           url={this.url}
-          submiturl={this.submiturl}
           userid={this.userId}
           ismodelopen={this.ismodelopen}
           value={this.email}

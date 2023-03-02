@@ -47,7 +47,6 @@ export namespace Components {
     }
     interface EditUser {
         "ismodelopen": boolean;
-        "submiturl": string;
         "toggle": () => void;
         "url": string;
         "userid": number;
@@ -209,15 +208,13 @@ export namespace Components {
     }
     interface UserDropDown {
         "email": string;
-        "option": string[];
         "parsedPermissions": [];
-        "submiturl": string;
+        "refresh": any;
         "url": string;
         "userId": number;
     }
     interface UsersComponent {
         "permissions": string;
-        "submiturl": string;
         "url": string;
         "users": any;
     }
@@ -562,7 +559,6 @@ declare namespace LocalJSX {
     }
     interface EditUser {
         "ismodelopen"?: boolean;
-        "submiturl"?: string;
         "toggle"?: () => void;
         "url"?: string;
         "userid"?: number;
@@ -724,15 +720,13 @@ declare namespace LocalJSX {
     }
     interface UserDropDown {
         "email"?: string;
-        "option"?: string[];
         "parsedPermissions"?: [];
-        "submiturl"?: string;
+        "refresh"?: any;
         "url"?: string;
         "userId"?: number;
     }
     interface UsersComponent {
         "permissions"?: string;
-        "submiturl"?: string;
         "url"?: string;
         "users"?: any;
     }

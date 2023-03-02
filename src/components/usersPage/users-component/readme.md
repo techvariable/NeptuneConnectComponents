@@ -10,7 +10,6 @@
 | Property      | Attribute     | Description | Type     | Default     |
 | ------------- | ------------- | ----------- | -------- | ----------- |
 | `permissions` | `permissions` |             | `string` | `undefined` |
-| `submiturl`   | `submiturl`   |             | `string` | `undefined` |
 | `url`         | `url`         |             | `string` | `undefined` |
 | `users`       | `users`       |             | `any`    | `undefined` |
 
