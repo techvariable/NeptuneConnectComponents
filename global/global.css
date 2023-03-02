@@ -1795,11 +1795,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(55 48 163 / var(--tw-text-opacity));
 }
 
-.hover\:text-gray-800:hover {
-  --tw-text-opacity: 1;
-  color: rgb(31 41 55 / var(--tw-text-opacity));
-}
-
 .hover\:text-blue-700:hover {
   --tw-text-opacity: 1;
   color: rgb(29 78 216 / var(--tw-text-opacity));
@@ -1904,11 +1899,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .disabled\:text-gray-300:disabled {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity));
-}
-
-.disabled\:text-gray-200:disabled {
-  --tw-text-opacity: 1;
-  color: rgb(229 231 235 / var(--tw-text-opacity));
 }
 
 .disabled\:opacity-50:disabled {

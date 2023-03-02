@@ -86,12 +86,12 @@ export class QueryLogs {
       },
     },
     {
-      title: 'owner_id',
+      title: 'email',
       filter: {
         searchable: true,
         sortable: false,
       },
-      alias: 'ownerId',
+      alias: 'email',
       click: {
         clickable: false,
       },
@@ -106,7 +106,7 @@ export class QueryLogs {
       click: {
         clickable: true,
         icon: 'https://i.stack.imgur.com/To3El.png',
-        url: '/public/logs/query/',
+        url: '/editor/query/logs/',
       },
     },
   ];

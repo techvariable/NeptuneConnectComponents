@@ -81,7 +81,7 @@ export class DownloadResultModal {
         this.isModalOpen = false;
         this.clearFields();
       } else {
-        this.downloadError = 'Starting Index is Greater than End Index';
+        this.downloadError = 'Starting Index should be smaller than End Index';
       }
     } catch (error) {
       this.downloadProgress = 100;
@@ -164,6 +164,7 @@ export class DownloadResultModal {
                             <radio-button-multiple
                               clickHandler={this.radioSearchTypeHandler}
                               labels={this.downloadOptions}
+                              disabledOptions={state.selectedNodeName === null?["all","custom"]:[]}
                               name="SearchMethod"
                               label="Options"
                               align="horizontal"
@@ -185,6 +186,8 @@ export class DownloadResultModal {
                                 <input
                                   type="number"
                                   name="startingIndex"
+                                  min={0}
+                                  max={`${state.total}`}
                                   required
                                   placeholder="Enter Starting Index"
                                   class="mb-2 border active:border-2 outline-none px-2 p-2 rounded-md text-sm w-full"
@@ -199,6 +202,8 @@ export class DownloadResultModal {
                                 <input
                                   type="number"
                                   name="endingIndex"
+                                  min="0"
+                                  max={`${state.total}`}
                                   required
                                   placeholder="Enter Ending Index"
                                   class="mb-2 border active:border-2 outline-none px-2 p-2 rounded-md text-sm w-full"

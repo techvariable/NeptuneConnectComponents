@@ -11,6 +11,7 @@ export class RadioButtonMultiple {
   @Prop() align: 'vertical' | 'horizontal' = 'horizontal';
   @Prop() clickHandler:any;
   @Prop() checked : string;
+  @Prop() disabledOptions:string[];
 
   render() {
     return (
@@ -23,7 +24,7 @@ export class RadioButtonMultiple {
                 <label htmlFor={this.name} class="text-lg font-medium uppercase text-gray-700 font">
                   {item}
                 </label>
-                <input required onClick={e=>this.clickHandler(e)} checked={this.checked === item} id={item} name={this.name} type="radio" value={item} class="ml-3 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
+                <input disabled={this.disabledOptions.includes(item)} required onClick={e=>this.clickHandler(e)} checked={this.checked === item} id={item} name={this.name} type="radio" value={item} class="ml-3 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
               </div>
             </div>
           );
