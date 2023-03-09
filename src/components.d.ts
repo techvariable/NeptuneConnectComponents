@@ -11,6 +11,11 @@ export namespace Components {
         "refresh": any;
         "url": string;
     }
+    interface AllUsers {
+        "permissions": string;
+        "url": string;
+        "users": string;
+    }
     interface BackdropFilter {
         "backDropHandler": any;
         "showBackDrop": boolean;
@@ -47,7 +52,6 @@ export namespace Components {
     }
     interface EditUser {
         "ismodelopen": boolean;
-        "submiturl": string;
         "toggle": () => void;
         "url": string;
         "userid": number;
@@ -78,6 +82,10 @@ export namespace Components {
         "doc": any;
         "responseLabel": 'result' | 'error';
     }
+    interface LastLogs {
+        "url": string;
+        "user": number;
+    }
     interface LoaderComponent {
     }
     interface LogTableWrapper {
@@ -102,22 +110,19 @@ export namespace Components {
         "tableHeader": object[];
         "toggleSortMethod": any;
     }
+    interface LogsTableComponent {
+        "isLoading": boolean;
+        "isLoadingError": boolean;
+        "rows": number[];
+        "tableBody": object[];
+        "tableHeader": object[];
+    }
     interface MenuDropDown {
         "fetchData": any;
         "list": string[];
         "listTitle": string;
     }
     interface MenuItems {
-    }
-    interface MultiSelectChoicesJs {
-        "handleselect": any;
-        "items": string[];
-        "roles": any;
-        "submiturl": string;
-        "toggle": () => void;
-        "url": string;
-        "userid": number;
-        "value": string;
     }
     interface MultiSelectCustom {
         "roles": string[];
@@ -130,10 +135,14 @@ export namespace Components {
         "permissions": string;
     }
     interface NodeItem {
+        "nodeError": null | string;
     }
     interface PermissionEditor {
         "permissions": string;
         "url": string;
+    }
+    interface PermissionTable {
+        "permissionstring": string;
     }
     interface PlainButton {
         "addClass": string;
@@ -143,6 +152,10 @@ export namespace Components {
         "hoverColor": string;
         "type": 'contained' | 'outlined' | 'text';
         "width": 'full' | 'auto';
+    }
+    interface ProfileComponent {
+        "stringifieduser": string;
+        "url": string;
     }
     interface QueryLogs {
     }
@@ -207,19 +220,20 @@ export namespace Components {
         "addClass": string;
         "width": 'full' | 'auto';
     }
+    interface UserDetailsComponent {
+        "stringifieduser": string;
+    }
     interface UserDropDown {
         "email": string;
-        "option": string[];
         "parsedPermissions": [];
-        "submiturl": string;
+        "refresh": any;
         "url": string;
         "userId": number;
     }
     interface UsersComponent {
-        "permissions": string;
-        "submiturl": string;
+        "parsedPermissions": [];
+        "updatedUsers": any;
         "url": string;
-        "users": any;
     }
 }
 declare global {
@@ -228,6 +242,12 @@ declare global {
     var HTMLAddRoleElement: {
         prototype: HTMLAddRoleElement;
         new (): HTMLAddRoleElement;
+    };
+    interface HTMLAllUsersElement extends Components.AllUsers, HTMLStencilElement {
+    }
+    var HTMLAllUsersElement: {
+        prototype: HTMLAllUsersElement;
+        new (): HTMLAllUsersElement;
     };
     interface HTMLBackdropFilterElement extends Components.BackdropFilter, HTMLStencilElement {
     }
@@ -331,6 +351,12 @@ declare global {
         prototype: HTMLJsonResponseViewerElement;
         new (): HTMLJsonResponseViewerElement;
     };
+    interface HTMLLastLogsElement extends Components.LastLogs, HTMLStencilElement {
+    }
+    var HTMLLastLogsElement: {
+        prototype: HTMLLastLogsElement;
+        new (): HTMLLastLogsElement;
+    };
     interface HTMLLoaderComponentElement extends Components.LoaderComponent, HTMLStencilElement {
     }
     var HTMLLoaderComponentElement: {
@@ -349,6 +375,12 @@ declare global {
         prototype: HTMLLogsTableElement;
         new (): HTMLLogsTableElement;
     };
+    interface HTMLLogsTableComponentElement extends Components.LogsTableComponent, HTMLStencilElement {
+    }
+    var HTMLLogsTableComponentElement: {
+        prototype: HTMLLogsTableComponentElement;
+        new (): HTMLLogsTableComponentElement;
+    };
     interface HTMLMenuDropDownElement extends Components.MenuDropDown, HTMLStencilElement {
     }
     var HTMLMenuDropDownElement: {
@@ -360,12 +392,6 @@ declare global {
     var HTMLMenuItemsElement: {
         prototype: HTMLMenuItemsElement;
         new (): HTMLMenuItemsElement;
-    };
-    interface HTMLMultiSelectChoicesJsElement extends Components.MultiSelectChoicesJs, HTMLStencilElement {
-    }
-    var HTMLMultiSelectChoicesJsElement: {
-        prototype: HTMLMultiSelectChoicesJsElement;
-        new (): HTMLMultiSelectChoicesJsElement;
     };
     interface HTMLMultiSelectCustomElement extends Components.MultiSelectCustom, HTMLStencilElement {
     }
@@ -397,11 +423,23 @@ declare global {
         prototype: HTMLPermissionEditorElement;
         new (): HTMLPermissionEditorElement;
     };
+    interface HTMLPermissionTableElement extends Components.PermissionTable, HTMLStencilElement {
+    }
+    var HTMLPermissionTableElement: {
+        prototype: HTMLPermissionTableElement;
+        new (): HTMLPermissionTableElement;
+    };
     interface HTMLPlainButtonElement extends Components.PlainButton, HTMLStencilElement {
     }
     var HTMLPlainButtonElement: {
         prototype: HTMLPlainButtonElement;
         new (): HTMLPlainButtonElement;
+    };
+    interface HTMLProfileComponentElement extends Components.ProfileComponent, HTMLStencilElement {
+    }
+    var HTMLProfileComponentElement: {
+        prototype: HTMLProfileComponentElement;
+        new (): HTMLProfileComponentElement;
     };
     interface HTMLQueryLogsElement extends Components.QueryLogs, HTMLStencilElement {
     }
@@ -463,6 +501,12 @@ declare global {
         prototype: HTMLTextFieldAreaElement;
         new (): HTMLTextFieldAreaElement;
     };
+    interface HTMLUserDetailsComponentElement extends Components.UserDetailsComponent, HTMLStencilElement {
+    }
+    var HTMLUserDetailsComponentElement: {
+        prototype: HTMLUserDetailsComponentElement;
+        new (): HTMLUserDetailsComponentElement;
+    };
     interface HTMLUserDropDownElement extends Components.UserDropDown, HTMLStencilElement {
     }
     var HTMLUserDropDownElement: {
@@ -477,6 +521,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "add-role": HTMLAddRoleElement;
+        "all-users": HTMLAllUsersElement;
         "backdrop-filter": HTMLBackdropFilterElement;
         "check-box": HTMLCheckBoxElement;
         "chips-list": HTMLChipsListElement;
@@ -494,18 +539,21 @@ declare global {
         "icon-button": HTMLIconButtonElement;
         "invite-component": HTMLInviteComponentElement;
         "json-response-viewer": HTMLJsonResponseViewerElement;
+        "last-logs": HTMLLastLogsElement;
         "loader-component": HTMLLoaderComponentElement;
         "log-table-wrapper": HTMLLogTableWrapperElement;
         "logs-table": HTMLLogsTableElement;
+        "logs-table-component": HTMLLogsTableComponentElement;
         "menu-drop-down": HTMLMenuDropDownElement;
         "menu-items": HTMLMenuItemsElement;
-        "multi-select-choices-js": HTMLMultiSelectChoicesJsElement;
         "multi-select-custom": HTMLMultiSelectCustomElement;
         "nav-bar": HTMLNavBarElement;
         "navigators-component": HTMLNavigatorsComponentElement;
         "node-item": HTMLNodeItemElement;
         "permission-editor": HTMLPermissionEditorElement;
+        "permission-table": HTMLPermissionTableElement;
         "plain-button": HTMLPlainButtonElement;
+        "profile-component": HTMLProfileComponentElement;
         "query-logs": HTMLQueryLogsElement;
         "query-result-table": HTMLQueryResultTableElement;
         "radio-button": HTMLRadioButtonElement;
@@ -516,6 +564,7 @@ declare global {
         "tabs-component": HTMLTabsComponentElement;
         "text-field": HTMLTextFieldElement;
         "text-field-area": HTMLTextFieldAreaElement;
+        "user-details-component": HTMLUserDetailsComponentElement;
         "user-drop-down": HTMLUserDropDownElement;
         "users-component": HTMLUsersComponentElement;
     }
@@ -525,6 +574,11 @@ declare namespace LocalJSX {
         "parsedPermissions"?: [];
         "refresh"?: any;
         "url"?: string;
+    }
+    interface AllUsers {
+        "permissions"?: string;
+        "url"?: string;
+        "users"?: string;
     }
     interface BackdropFilter {
         "backDropHandler"?: any;
@@ -562,7 +616,6 @@ declare namespace LocalJSX {
     }
     interface EditUser {
         "ismodelopen"?: boolean;
-        "submiturl"?: string;
         "toggle"?: () => void;
         "url"?: string;
         "userid"?: number;
@@ -593,6 +646,10 @@ declare namespace LocalJSX {
         "doc"?: any;
         "responseLabel"?: 'result' | 'error';
     }
+    interface LastLogs {
+        "url"?: string;
+        "user"?: number;
+    }
     interface LoaderComponent {
     }
     interface LogTableWrapper {
@@ -617,22 +674,19 @@ declare namespace LocalJSX {
         "tableHeader"?: object[];
         "toggleSortMethod"?: any;
     }
+    interface LogsTableComponent {
+        "isLoading"?: boolean;
+        "isLoadingError"?: boolean;
+        "rows"?: number[];
+        "tableBody"?: object[];
+        "tableHeader"?: object[];
+    }
     interface MenuDropDown {
         "fetchData"?: any;
         "list"?: string[];
         "listTitle"?: string;
     }
     interface MenuItems {
-    }
-    interface MultiSelectChoicesJs {
-        "handleselect"?: any;
-        "items"?: string[];
-        "roles"?: any;
-        "submiturl"?: string;
-        "toggle"?: () => void;
-        "url"?: string;
-        "userid"?: number;
-        "value"?: string;
     }
     interface MultiSelectCustom {
         "roles"?: string[];
@@ -645,10 +699,14 @@ declare namespace LocalJSX {
         "permissions"?: string;
     }
     interface NodeItem {
+        "nodeError"?: null | string;
     }
     interface PermissionEditor {
         "permissions"?: string;
         "url"?: string;
+    }
+    interface PermissionTable {
+        "permissionstring"?: string;
     }
     interface PlainButton {
         "addClass"?: string;
@@ -658,6 +716,10 @@ declare namespace LocalJSX {
         "hoverColor"?: string;
         "type"?: 'contained' | 'outlined' | 'text';
         "width"?: 'full' | 'auto';
+    }
+    interface ProfileComponent {
+        "stringifieduser"?: string;
+        "url"?: string;
     }
     interface QueryLogs {
     }
@@ -722,22 +784,24 @@ declare namespace LocalJSX {
         "addClass"?: string;
         "width"?: 'full' | 'auto';
     }
+    interface UserDetailsComponent {
+        "stringifieduser"?: string;
+    }
     interface UserDropDown {
         "email"?: string;
-        "option"?: string[];
         "parsedPermissions"?: [];
-        "submiturl"?: string;
+        "refresh"?: any;
         "url"?: string;
         "userId"?: number;
     }
     interface UsersComponent {
-        "permissions"?: string;
-        "submiturl"?: string;
+        "parsedPermissions"?: [];
+        "updatedUsers"?: any;
         "url"?: string;
-        "users"?: any;
     }
     interface IntrinsicElements {
         "add-role": AddRole;
+        "all-users": AllUsers;
         "backdrop-filter": BackdropFilter;
         "check-box": CheckBox;
         "chips-list": ChipsList;
@@ -755,18 +819,21 @@ declare namespace LocalJSX {
         "icon-button": IconButton;
         "invite-component": InviteComponent;
         "json-response-viewer": JsonResponseViewer;
+        "last-logs": LastLogs;
         "loader-component": LoaderComponent;
         "log-table-wrapper": LogTableWrapper;
         "logs-table": LogsTable;
+        "logs-table-component": LogsTableComponent;
         "menu-drop-down": MenuDropDown;
         "menu-items": MenuItems;
-        "multi-select-choices-js": MultiSelectChoicesJs;
         "multi-select-custom": MultiSelectCustom;
         "nav-bar": NavBar;
         "navigators-component": NavigatorsComponent;
         "node-item": NodeItem;
         "permission-editor": PermissionEditor;
+        "permission-table": PermissionTable;
         "plain-button": PlainButton;
+        "profile-component": ProfileComponent;
         "query-logs": QueryLogs;
         "query-result-table": QueryResultTable;
         "radio-button": RadioButton;
@@ -777,6 +844,7 @@ declare namespace LocalJSX {
         "tabs-component": TabsComponent;
         "text-field": TextField;
         "text-field-area": TextFieldArea;
+        "user-details-component": UserDetailsComponent;
         "user-drop-down": UserDropDown;
         "users-component": UsersComponent;
     }
@@ -786,6 +854,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "add-role": LocalJSX.AddRole & JSXBase.HTMLAttributes<HTMLAddRoleElement>;
+            "all-users": LocalJSX.AllUsers & JSXBase.HTMLAttributes<HTMLAllUsersElement>;
             "backdrop-filter": LocalJSX.BackdropFilter & JSXBase.HTMLAttributes<HTMLBackdropFilterElement>;
             "check-box": LocalJSX.CheckBox & JSXBase.HTMLAttributes<HTMLCheckBoxElement>;
             "chips-list": LocalJSX.ChipsList & JSXBase.HTMLAttributes<HTMLChipsListElement>;
@@ -803,18 +872,21 @@ declare module "@stencil/core" {
             "icon-button": LocalJSX.IconButton & JSXBase.HTMLAttributes<HTMLIconButtonElement>;
             "invite-component": LocalJSX.InviteComponent & JSXBase.HTMLAttributes<HTMLInviteComponentElement>;
             "json-response-viewer": LocalJSX.JsonResponseViewer & JSXBase.HTMLAttributes<HTMLJsonResponseViewerElement>;
+            "last-logs": LocalJSX.LastLogs & JSXBase.HTMLAttributes<HTMLLastLogsElement>;
             "loader-component": LocalJSX.LoaderComponent & JSXBase.HTMLAttributes<HTMLLoaderComponentElement>;
             "log-table-wrapper": LocalJSX.LogTableWrapper & JSXBase.HTMLAttributes<HTMLLogTableWrapperElement>;
             "logs-table": LocalJSX.LogsTable & JSXBase.HTMLAttributes<HTMLLogsTableElement>;
+            "logs-table-component": LocalJSX.LogsTableComponent & JSXBase.HTMLAttributes<HTMLLogsTableComponentElement>;
             "menu-drop-down": LocalJSX.MenuDropDown & JSXBase.HTMLAttributes<HTMLMenuDropDownElement>;
             "menu-items": LocalJSX.MenuItems & JSXBase.HTMLAttributes<HTMLMenuItemsElement>;
-            "multi-select-choices-js": LocalJSX.MultiSelectChoicesJs & JSXBase.HTMLAttributes<HTMLMultiSelectChoicesJsElement>;
             "multi-select-custom": LocalJSX.MultiSelectCustom & JSXBase.HTMLAttributes<HTMLMultiSelectCustomElement>;
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
             "navigators-component": LocalJSX.NavigatorsComponent & JSXBase.HTMLAttributes<HTMLNavigatorsComponentElement>;
             "node-item": LocalJSX.NodeItem & JSXBase.HTMLAttributes<HTMLNodeItemElement>;
             "permission-editor": LocalJSX.PermissionEditor & JSXBase.HTMLAttributes<HTMLPermissionEditorElement>;
+            "permission-table": LocalJSX.PermissionTable & JSXBase.HTMLAttributes<HTMLPermissionTableElement>;
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
+            "profile-component": LocalJSX.ProfileComponent & JSXBase.HTMLAttributes<HTMLProfileComponentElement>;
             "query-logs": LocalJSX.QueryLogs & JSXBase.HTMLAttributes<HTMLQueryLogsElement>;
             "query-result-table": LocalJSX.QueryResultTable & JSXBase.HTMLAttributes<HTMLQueryResultTableElement>;
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
@@ -825,6 +897,7 @@ declare module "@stencil/core" {
             "tabs-component": LocalJSX.TabsComponent & JSXBase.HTMLAttributes<HTMLTabsComponentElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
             "text-field-area": LocalJSX.TextFieldArea & JSXBase.HTMLAttributes<HTMLTextFieldAreaElement>;
+            "user-details-component": LocalJSX.UserDetailsComponent & JSXBase.HTMLAttributes<HTMLUserDetailsComponentElement>;
             "user-drop-down": LocalJSX.UserDropDown & JSXBase.HTMLAttributes<HTMLUserDropDownElement>;
             "users-component": LocalJSX.UsersComponent & JSXBase.HTMLAttributes<HTMLUsersComponentElement>;
         }

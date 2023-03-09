@@ -14,7 +14,7 @@ export class BackdropFilter {
     return (
       <Host>
         {this.showBackDrop && (
-          <div style={{ width: '100vw', height: '100vh' }} onClick={() => this.backDropHandler()} class="fixed top-0 left-0 z-10 backdrop-blur-sm bg-white/30"></div>
+          <div style={{ width: '100vw', height: '100vh' }} onClick={(e) => {e.stopPropagation(); this.backDropHandler()}} class="fixed top-0 left-0 z-10 backdrop-blur-sm bg-white/30"></div>
         )}
       </Host>
     );

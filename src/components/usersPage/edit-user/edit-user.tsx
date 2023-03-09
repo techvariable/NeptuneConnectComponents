@@ -2,7 +2,6 @@ import { Component, Host, h, Prop, State } from '@stencil/core';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-import { ClickOutside } from 'stencil-click-outside';
 
 @Component({
   tag: 'edit-user',
@@ -18,20 +17,15 @@ export class EditUser {
   @Prop() ismodelopen: boolean;
   @Prop() value: string;
   @Prop() toggle: () => void;
-  @Prop() submiturl: string;
   @Prop() userid: number;
   @State() rolesobj: {}[] = [];
   @State() email: string = '';
-  @ClickOutside()
-  someMethod() {
-    this.ismodelopen = !this.ismodelopen;
-  }
 
   componentWillLoad() {
     this.email = this.value;
 
     axios
-      .get(this.url)
+      .get(`${this.url}/permissions/all`)
       .then((res: any) => {
         for (let role of res.data) {
           let obj = {};
@@ -44,7 +38,7 @@ export class EditUser {
         }
 
         axios
-          .get(`${this.submiturl}?userId=${this.userid}`)
+          .get(`${this.url}/users/roles?userId=${this.userid}`)
           .then((res: any) => {
             for (let role of this.rolesobj) {
               if (res.data.includes(role["id"])) {
@@ -71,7 +65,7 @@ export class EditUser {
 
     try {
       await axios
-        .put(this.submiturl, {
+        .put(`${this.url}/users/roles`, {
           userId: this.userid,
           roles: selectedRoles,
         });

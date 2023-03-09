@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 
 import state from '../store';
 
@@ -9,6 +9,7 @@ const DROPDOWN_ITEMS = ['View'];
   scoped: true,
 })
 export class NodeItem {
+  @Prop() nodeError:null | string;
   render() {
     return (
       <div style={{ overflow: 'visible' }} class={'py-4 px-3 bg-gray-100 rounded-md'}>
@@ -23,6 +24,7 @@ export class NodeItem {
               </li>
             );
           })}
+          {this.nodeError && <p class="px-3 py-2  border-l-4 text-center border-gray-300 bg-gray-200 w-full mt-4 mb-6">Failed to fetch node data</p>}
         </ul>
       </div>
     );

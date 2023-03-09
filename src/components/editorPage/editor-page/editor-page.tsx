@@ -20,6 +20,7 @@ export class EditorPage {
   @State() errorMessage: string | null = null;
   @State() isLoading: boolean = false;
   @State() loadingNodes: boolean = false;
+  @State() nodeError:string|null=null;
 
   componentWillLoad() {
     state.url = this.url;
@@ -29,6 +30,7 @@ export class EditorPage {
   fetchNavigators = () => {
     this.loadingNodes = true;
     this.errorMessage = null;
+    this.nodeError = null;
     axios
       .get(`${this.url}/nodes`)
       .then((res: any) => {
@@ -36,6 +38,8 @@ export class EditorPage {
         this.loadingNodes = false;
       })
       .catch(err => {
+        this.loadingNodes = false;
+        this.nodeError = err;
         console.log(err);
       });
   };
@@ -109,7 +113,7 @@ export class EditorPage {
                 </button>
               </div>
               <div style={{ maxHeight: '43.5rem', overflowX: 'visible', overflowY: 'auto', minHeight: '20rem' }}>
-                <node-item></node-item>
+                <node-item nodeError={this.nodeError}></node-item>
               </div>
             </aside>
           </div>

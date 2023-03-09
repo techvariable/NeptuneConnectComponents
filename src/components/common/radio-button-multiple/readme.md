@@ -12,7 +12,7 @@
 | `align`           | `align`         |             | `"horizontal" \| "vertical"` | `'horizontal'` |
 | `checked`         | `checked`       |             | `string`                     | `undefined`    |
 | `clickHandler`    | `click-handler` |             | `any`                        | `undefined`    |
-| `disabledOptions` | --              |             | `string[]`                   | `undefined`    |
+| `disabledOptions` | --              |             | `string[]`                   | `[]`           |
 | `label`           | `label`         |             | `string`                     | `undefined`    |
 | `labels`          | --              |             | `string[]`                   | `undefined`    |
 | `name`            | `name`          |             | `string`                     | `undefined`    |

@@ -58,10 +58,10 @@ export class QueryResultTable {
         <div style={{ maxHeight: '20rem', overflow: 'auto' }}>
           <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative">
             {/* Table Head */}
-            <thead class="bg-violet-50 sticky top-0">
+            <thead class="bg-gray-100 sticky top-0">
               <tr>
                 {this.tableHeader.map((item: any) => (
-                  <th scope="col" style={{ minWidth: '120px' }} class="px-6 py-3 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 uppercase tracking-wider">
+                  <th scope="col" style={{ minWidth: '120px' }} class="px-6 py-4 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 uppercase tracking-wider">
                     <div style={{ display: 'flex' }}>
                       {item.title}
                       {item?.filter?.sortable && (
@@ -126,7 +126,7 @@ export class QueryResultTable {
         </div>
 
         {state.selectedNodeName !== null && (
-          <div class="bg-violet-50 flex justify-between items-center px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <div class="bg-gray-100 flex justify-between items-center px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             {/* pagination description */}
             <p class="pr-4">
               Showing <strong>{this.from}</strong> to <strong>{this.to >= state.total ? state.total : this.to}</strong> results out of total <strong>{this.dataLength}</strong>{' '}

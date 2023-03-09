@@ -1,34 +1,22 @@
 import { Component, h, Prop, State } from '@stencil/core';
 
-const sort = (
-  <svg xmlns="http://www.w3.org/2000/svg" class="inline h-4 w-4 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">
-    <path d="M5 12a1 1 0 102 0V6.414l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L5 6.414V12zM15 8a1 1 0 10-2 0v5.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L15 13.586V8z" />
-  </svg>
-);
-
-const search = (
-  <svg xmlns="http://www.w3.org/2000/svg" class="inline h-4 w-4 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">
-    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-  </svg>
-);
-
 @Component({
-  tag: 'logs-table',
+  tag: 'logs-table-component',
   scoped: true,
 })
-export class LogsTable {
+export class LogsTableComponent {
   @Prop() tableHeader: object[];
   @Prop() tableBody: object[];
-  @Prop() currentPage: number;
-  @Prop() dataLength: string;
-  @Prop() next: any;
-  @Prop() prev: any;
-  @Prop() limit: number;
+  // @Prop() currentPage: number;
+  // @Prop() dataLength: string;
+  // @Prop() next: any;
+  // @Prop() prev: any;
+  // @Prop() limit: number;
   @Prop() rows: number[];
-  @Prop() rowsHandler: any;
-  @Prop() toggleSortMethod: any;
-  @Prop() searchMethod: any;
-  @Prop() clearSearch: any;
+  // @Prop() rowsHandler: any;
+  // @Prop() toggleSortMethod: any;
+  // @Prop() searchMethod: any;
+  // @Prop() clearSearch: any;
   @Prop() isLoading: boolean;
   @Prop() isLoadingError: boolean;
 
@@ -38,10 +26,10 @@ export class LogsTable {
   @State() isSearchMenuOpen = false;
   @State() value: string;
 
-  componentWillRender() {
-    this.from = (this.currentPage - 1) * this.limit + 1;
-    this.to = this.currentPage * this.limit;
-  }
+  // componentWillRender() {
+  //   this.from = (this.currentPage - 1) * this.limit + 1;
+  //   this.to = this.currentPage * this.limit;
+  // }
 
   render() {
     const trList = [];
@@ -55,26 +43,26 @@ export class LogsTable {
 
     return (
       <div style={{ overflowY: 'auto' }}>
-        <div style={{ maxWidth: '75rem', maxHeight: '580px', overflow: 'auto' }}>
-          <table class="table-auto h-full min-w-full divide-y border border-gray-100 divide-gray-200 relative">
+        <div class="border-2 border-gray-500" style={{ maxWidth: '100rem', maxHeight: '15rem', overflow: 'auto' }}>
+          <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative">
             {/* Table Head */}
             <thead class="bg-gray-100 sticky top-0">
               <tr>
                 {this.tableHeader.map((item: any) => (
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 uppercase tracking-wider">
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-semibold bg-gray-100 text-gray-500 hover:text-gray-700 uppercase tracking-wider">
                     {item.title}
 
-                    {item?.filter?.sortable && (
+                    {/* {item?.filter?.sortable && (
                       <button class="ml-3" onClick={() => this.toggleSortMethod(item.title)}>
                         {sort}
                       </button>
-                    )}
+                    )} */}
 
-                    {item?.filter?.searchable && (
+                    {/* {item?.filter?.searchable && (
                       <drop-down searchMethod={(value, field) => this.searchMethod(value, field)} alias={item.alias} clearSearch={colName => this.clearSearch(colName)}>
                         {search}
                       </drop-down>
-                    )}
+                    )} */}
                   </th>
                 ))}
                 {this.isLoading && <th class="text-gray-500 ">&nbsp;</th>}
@@ -139,47 +127,6 @@ export class LogsTable {
             )}
           </table>
         </div>
-        <div style={{maxWidth: '75rem'}} class="bg-gray-100 sticky bottom-0">
-                <div class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  <div class="flex justify-between items-center">
-                    {/* pagination description */}
-                    <p>
-                      Showing <strong>{this.from}</strong> to <strong>{this.to <= Number(this.dataLength) ? this.to : this.dataLength}</strong> of{' '}
-                      <strong>{this.dataLength}</strong> results
-                    </p>
-
-                    {/* rows per page  */}
-                    <div class="space-x-3">
-                      <span>Rows per page</span>
-                      <select
-                        onChange={e => this.rowsHandler(e)}
-                        class="form-select px-3 py-1.5 border-none text-inherit font-inherit text-gray-700 bg-transparent bg-clip-padding bg-no-repeat rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                      >
-                        {this.rows.map(row => (
-                          <option value={`${row}`}>{row}</option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* pagination navigation menu */}
-                    <nav class="flex gap-4 items-center">
-                      <plain-button color="gray-500" type="text" clickHandler={() => this.prev()} disabledHandler={this.currentPage === 1} addClass="disabled:opacity-50">
-                        prev
-                      </plain-button>
-                      <plain-button
-                        color="gray-500"
-                        type="text"
-                        clickHandler={() => this.next()}
-                        disabledHandler={parseInt(this.dataLength) <= this.to}
-                        addClass="disabled:opacity-50"
-                      >
-                        next
-                      </plain-button>
-                    </nav>
-                  </div>
-                </div>
-                {this.isLoading && <td class="text-gray-500">&nbsp;</td>}
-            </div>
       </div>
     );
   }
