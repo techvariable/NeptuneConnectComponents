@@ -894,6 +894,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 6rem;
 }
 
+.w-72 {
+  width: 18rem;
+}
+
 .min-w-full {
   min-width: 100%;
 }
@@ -1150,6 +1154,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-bottom-width: 2px;
 }
 
+.border-t-2 {
+  border-top-width: 2px;
+}
+
 .border-none {
   border-style: none;
 }
@@ -1216,6 +1224,16 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-gray-500 {
   --tw-border-opacity: 1;
   border-color: rgb(107 114 128 / var(--tw-border-opacity));
+}
+
+.border-gray-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(156 163 175 / var(--tw-border-opacity));
+}
+
+.border-gray-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(75 85 99 / var(--tw-border-opacity));
 }
 
 .bg-white {
@@ -1289,6 +1307,16 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-indigo-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(224 231 255 / var(--tw-bg-opacity));
+}
+
+.bg-gray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}
+
+.bg-gray-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(156 163 175 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-75 {

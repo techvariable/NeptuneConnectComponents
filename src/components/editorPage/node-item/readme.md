@@ -5,6 +5,13 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property    | Attribute    | Description | Type     | Default     |
+| ----------- | ------------ | ----------- | -------- | ----------- |
+| `nodeError` | `node-error` |             | `string` | `undefined` |
+
+
 ## Dependencies
 
 ### Used by

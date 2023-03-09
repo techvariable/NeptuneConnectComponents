@@ -11,6 +11,11 @@ export namespace Components {
         "refresh": any;
         "url": string;
     }
+    interface AllUsers {
+        "permissions": string;
+        "url": string;
+        "users": string;
+    }
     interface BackdropFilter {
         "backDropHandler": any;
         "showBackDrop": boolean;
@@ -119,16 +124,6 @@ export namespace Components {
     }
     interface MenuItems {
     }
-    interface MultiSelectChoicesJs {
-        "handleselect": any;
-        "items": string[];
-        "roles": any;
-        "submiturl": string;
-        "toggle": () => void;
-        "url": string;
-        "userid": number;
-        "value": string;
-    }
     interface MultiSelectCustom {
         "roles": string[];
         "selected": string[];
@@ -140,6 +135,7 @@ export namespace Components {
         "permissions": string;
     }
     interface NodeItem {
+        "nodeError": null | string;
     }
     interface PermissionEditor {
         "permissions": string;
@@ -147,10 +143,6 @@ export namespace Components {
     }
     interface PermissionTable {
         "permissionstring": string;
-    }
-    interface PermissionViewComponent {
-        "permissions": string;
-        "url": string;
     }
     interface PlainButton {
         "addClass": string;
@@ -239,9 +231,9 @@ export namespace Components {
         "userId": number;
     }
     interface UsersComponent {
-        "permissions": string;
+        "parsedPermissions": [];
+        "updatedUsers": any;
         "url": string;
-        "users": any;
     }
 }
 declare global {
@@ -250,6 +242,12 @@ declare global {
     var HTMLAddRoleElement: {
         prototype: HTMLAddRoleElement;
         new (): HTMLAddRoleElement;
+    };
+    interface HTMLAllUsersElement extends Components.AllUsers, HTMLStencilElement {
+    }
+    var HTMLAllUsersElement: {
+        prototype: HTMLAllUsersElement;
+        new (): HTMLAllUsersElement;
     };
     interface HTMLBackdropFilterElement extends Components.BackdropFilter, HTMLStencilElement {
     }
@@ -395,12 +393,6 @@ declare global {
         prototype: HTMLMenuItemsElement;
         new (): HTMLMenuItemsElement;
     };
-    interface HTMLMultiSelectChoicesJsElement extends Components.MultiSelectChoicesJs, HTMLStencilElement {
-    }
-    var HTMLMultiSelectChoicesJsElement: {
-        prototype: HTMLMultiSelectChoicesJsElement;
-        new (): HTMLMultiSelectChoicesJsElement;
-    };
     interface HTMLMultiSelectCustomElement extends Components.MultiSelectCustom, HTMLStencilElement {
     }
     var HTMLMultiSelectCustomElement: {
@@ -436,12 +428,6 @@ declare global {
     var HTMLPermissionTableElement: {
         prototype: HTMLPermissionTableElement;
         new (): HTMLPermissionTableElement;
-    };
-    interface HTMLPermissionViewComponentElement extends Components.PermissionViewComponent, HTMLStencilElement {
-    }
-    var HTMLPermissionViewComponentElement: {
-        prototype: HTMLPermissionViewComponentElement;
-        new (): HTMLPermissionViewComponentElement;
     };
     interface HTMLPlainButtonElement extends Components.PlainButton, HTMLStencilElement {
     }
@@ -535,6 +521,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "add-role": HTMLAddRoleElement;
+        "all-users": HTMLAllUsersElement;
         "backdrop-filter": HTMLBackdropFilterElement;
         "check-box": HTMLCheckBoxElement;
         "chips-list": HTMLChipsListElement;
@@ -559,14 +546,12 @@ declare global {
         "logs-table-component": HTMLLogsTableComponentElement;
         "menu-drop-down": HTMLMenuDropDownElement;
         "menu-items": HTMLMenuItemsElement;
-        "multi-select-choices-js": HTMLMultiSelectChoicesJsElement;
         "multi-select-custom": HTMLMultiSelectCustomElement;
         "nav-bar": HTMLNavBarElement;
         "navigators-component": HTMLNavigatorsComponentElement;
         "node-item": HTMLNodeItemElement;
         "permission-editor": HTMLPermissionEditorElement;
         "permission-table": HTMLPermissionTableElement;
-        "permission-view-component": HTMLPermissionViewComponentElement;
         "plain-button": HTMLPlainButtonElement;
         "profile-component": HTMLProfileComponentElement;
         "query-logs": HTMLQueryLogsElement;
@@ -589,6 +574,11 @@ declare namespace LocalJSX {
         "parsedPermissions"?: [];
         "refresh"?: any;
         "url"?: string;
+    }
+    interface AllUsers {
+        "permissions"?: string;
+        "url"?: string;
+        "users"?: string;
     }
     interface BackdropFilter {
         "backDropHandler"?: any;
@@ -698,16 +688,6 @@ declare namespace LocalJSX {
     }
     interface MenuItems {
     }
-    interface MultiSelectChoicesJs {
-        "handleselect"?: any;
-        "items"?: string[];
-        "roles"?: any;
-        "submiturl"?: string;
-        "toggle"?: () => void;
-        "url"?: string;
-        "userid"?: number;
-        "value"?: string;
-    }
     interface MultiSelectCustom {
         "roles"?: string[];
         "selected"?: string[];
@@ -719,6 +699,7 @@ declare namespace LocalJSX {
         "permissions"?: string;
     }
     interface NodeItem {
+        "nodeError"?: null | string;
     }
     interface PermissionEditor {
         "permissions"?: string;
@@ -726,10 +707,6 @@ declare namespace LocalJSX {
     }
     interface PermissionTable {
         "permissionstring"?: string;
-    }
-    interface PermissionViewComponent {
-        "permissions"?: string;
-        "url"?: string;
     }
     interface PlainButton {
         "addClass"?: string;
@@ -818,12 +795,13 @@ declare namespace LocalJSX {
         "userId"?: number;
     }
     interface UsersComponent {
-        "permissions"?: string;
+        "parsedPermissions"?: [];
+        "updatedUsers"?: any;
         "url"?: string;
-        "users"?: any;
     }
     interface IntrinsicElements {
         "add-role": AddRole;
+        "all-users": AllUsers;
         "backdrop-filter": BackdropFilter;
         "check-box": CheckBox;
         "chips-list": ChipsList;
@@ -848,14 +826,12 @@ declare namespace LocalJSX {
         "logs-table-component": LogsTableComponent;
         "menu-drop-down": MenuDropDown;
         "menu-items": MenuItems;
-        "multi-select-choices-js": MultiSelectChoicesJs;
         "multi-select-custom": MultiSelectCustom;
         "nav-bar": NavBar;
         "navigators-component": NavigatorsComponent;
         "node-item": NodeItem;
         "permission-editor": PermissionEditor;
         "permission-table": PermissionTable;
-        "permission-view-component": PermissionViewComponent;
         "plain-button": PlainButton;
         "profile-component": ProfileComponent;
         "query-logs": QueryLogs;
@@ -878,6 +854,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "add-role": LocalJSX.AddRole & JSXBase.HTMLAttributes<HTMLAddRoleElement>;
+            "all-users": LocalJSX.AllUsers & JSXBase.HTMLAttributes<HTMLAllUsersElement>;
             "backdrop-filter": LocalJSX.BackdropFilter & JSXBase.HTMLAttributes<HTMLBackdropFilterElement>;
             "check-box": LocalJSX.CheckBox & JSXBase.HTMLAttributes<HTMLCheckBoxElement>;
             "chips-list": LocalJSX.ChipsList & JSXBase.HTMLAttributes<HTMLChipsListElement>;
@@ -902,14 +879,12 @@ declare module "@stencil/core" {
             "logs-table-component": LocalJSX.LogsTableComponent & JSXBase.HTMLAttributes<HTMLLogsTableComponentElement>;
             "menu-drop-down": LocalJSX.MenuDropDown & JSXBase.HTMLAttributes<HTMLMenuDropDownElement>;
             "menu-items": LocalJSX.MenuItems & JSXBase.HTMLAttributes<HTMLMenuItemsElement>;
-            "multi-select-choices-js": LocalJSX.MultiSelectChoicesJs & JSXBase.HTMLAttributes<HTMLMultiSelectChoicesJsElement>;
             "multi-select-custom": LocalJSX.MultiSelectCustom & JSXBase.HTMLAttributes<HTMLMultiSelectCustomElement>;
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
             "navigators-component": LocalJSX.NavigatorsComponent & JSXBase.HTMLAttributes<HTMLNavigatorsComponentElement>;
             "node-item": LocalJSX.NodeItem & JSXBase.HTMLAttributes<HTMLNodeItemElement>;
             "permission-editor": LocalJSX.PermissionEditor & JSXBase.HTMLAttributes<HTMLPermissionEditorElement>;
             "permission-table": LocalJSX.PermissionTable & JSXBase.HTMLAttributes<HTMLPermissionTableElement>;
-            "permission-view-component": LocalJSX.PermissionViewComponent & JSXBase.HTMLAttributes<HTMLPermissionViewComponentElement>;
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
             "profile-component": LocalJSX.ProfileComponent & JSXBase.HTMLAttributes<HTMLProfileComponentElement>;
             "query-logs": LocalJSX.QueryLogs & JSXBase.HTMLAttributes<HTMLQueryLogsElement>;

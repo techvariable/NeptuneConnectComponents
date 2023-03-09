@@ -8,15 +8,16 @@ import { combinePermissions } from '../../../utils/utils';
 })
 export class PermissionTable {
   @Prop() permissionstring: string;
-  @State() permissions: {}[] = [];
+  @State() permissions: {}[];
   @State() table: {}[] = [];
   @State() tableBody: {} = {};
+
+  operations: string[] = ['read', 'write', 'update', 'delete'];
   componentWillLoad() {
-    this.permissions = (JSON.parse(this.permissionstring));
+    this.permissions = JSON.parse(this.permissionstring);
     this.table = combinePermissions(this.permissions);
     const tableBody = {};
-    let operations = ['read', 'write', 'update', 'delete'];
-    operations.forEach(i => {
+    this.operations.forEach(i => {
       const property = [];
 
       Object.keys(this.table).map(item => {
@@ -30,17 +31,17 @@ export class PermissionTable {
     return (
       <Host>
         <slot>
-          <div class="flex gap-4 relative overflow-x-auto">
-            <div class="relative overflow-x-auto shadow-md">
-              <table class="border-2 border-gray-500 w-full text-sm text-center text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+          <div class="flex gap-4 border-2 border-gray-500 relative overflow-x-auto">
+            <div class="h-64 relative">
+              <table class="overflow-y-auto h-full min-w-full table-auto w-full text-sm text-center text-gray-500 dark:text-gray-400">
+                <thead class="text-xs uppercase tracking-wider sticky top-0">
                   <tr>
-                    <th scope="col" class="w-64 px-6 py-3 text-gray-800 bg-gray-200 ">
+                    <th scope="col" class="w-64 px-6 py-4 text-gray-500 bg-gray-100 hover:text-gray-700 ">
                       Property
                     </th>
-                    {Object.keys(this.table).map(item => {
+                    {this.operations.map(item => {
                       return (
-                        <th scope="col" class="w-64 px-6 py-3 text-gray-600 bg-gray-200 ">
+                        <th scope="col" class="w-80 px-6 py-4 text-gray-500 bg-gray-100 hover:text-gray-700 ">
                           {item}
                         </th>
                       );
@@ -48,16 +49,16 @@ export class PermissionTable {
                   </tr>
                 </thead>
                 <tbody>
-                  {Object.keys(this.tableBody).map(item => {
+                  {Object.keys(this.table).map(item => {
                     return (
                       <tr class="border-b border-gray-200">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
                           {item}
                         </th>
-                        {this.tableBody[item].map(value => {
+                        {Object.keys(this.table[item]).map(value => {
                           return (
                             <td class="px-6 py-4">
-                              {value === true ? (
+                              {this.table[item][value] === true ? (
                                 <div>
                                   <svg class="w-5 h-5 text-green-500 mx-auto" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                     <path

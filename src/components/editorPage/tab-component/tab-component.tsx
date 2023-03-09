@@ -62,7 +62,7 @@ export class TabComponent {
         </div>
 
         {/* content */}
-        <div class="border border-gray-200 pb-2 text-gray-500">
+        <div class="border border-gray-200 text-gray-500">
           {this.setActive !== 'json' ? <editor-res></editor-res> : <editor-json-response-viewer doc={formatJSON(state.nodes)}></editor-json-response-viewer>}
         </div>
       </div>

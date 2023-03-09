@@ -7,19 +7,13 @@ import axios from 'axios';
   scoped: true,
 })
 export class UsersComponent {
-  @Prop() users: any;
   @Prop() url: string;
-  @Prop() permissions: string;
+  @Prop() parsedPermissions: [];
+  @Prop() updatedUsers: any;
   @State() rowsHandler: any = function (e) {
     this.option = e.target.value;
   };
-  @State() parsedPermissions: [] = [];
-  @State() updatedUsers: any;
 
-  componentWillLoad() {
-    this.updatedUsers = JSON.parse(this.users);
-    this.parsedPermissions = JSON.parse(this.permissions);
-  }
   refresh = async () => {
     try {
       const response = await axios.get(`${this.url}/api/users/all`);

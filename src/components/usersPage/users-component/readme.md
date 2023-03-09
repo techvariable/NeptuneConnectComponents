@@ -7,14 +7,18 @@
 
 ## Properties
 
-| Property      | Attribute     | Description | Type     | Default     |
-| ------------- | ------------- | ----------- | -------- | ----------- |
-| `permissions` | `permissions` |             | `string` | `undefined` |
-| `url`         | `url`         |             | `string` | `undefined` |
-| `users`       | `users`       |             | `any`    | `undefined` |
+| Property            | Attribute       | Description | Type     | Default     |
+| ------------------- | --------------- | ----------- | -------- | ----------- |
+| `parsedPermissions` | --              |             | `[]`     | `undefined` |
+| `updatedUsers`      | `updated-users` |             | `any`    | `undefined` |
+| `url`               | `url`           |             | `string` | `undefined` |
 
 
 ## Dependencies
+
+### Used by
+
+ - [all-users](../all-users)
 
 ### Depends on
 
@@ -26,6 +30,7 @@ graph TD;
   users-component --> user-drop-down
   user-drop-down --> backdrop-filter
   user-drop-down --> edit-user
+  all-users --> users-component
   style users-component fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

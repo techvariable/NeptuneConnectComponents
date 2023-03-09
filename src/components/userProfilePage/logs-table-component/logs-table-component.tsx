@@ -46,10 +46,10 @@ export class LogsTableComponent {
         <div class="border-2 border-gray-500" style={{ maxWidth: '100rem', maxHeight: '15rem', overflow: 'auto' }}>
           <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative">
             {/* Table Head */}
-            <thead class="bg-violet-50 sticky top-0">
+            <thead class="bg-gray-100 sticky top-0">
               <tr>
                 {this.tableHeader.map((item: any) => (
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 uppercase tracking-wider">
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-semibold bg-gray-100 text-gray-500 hover:text-gray-700 uppercase tracking-wider">
                     {item.title}
 
                     {/* {item?.filter?.sortable && (
