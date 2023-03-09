@@ -1,5 +1,4 @@
 import { Component, h, Prop, State } from '@stencil/core';
-import { ClickOutside } from 'stencil-click-outside';
 import state from '../store';
 
 @Component({
@@ -7,10 +6,6 @@ import state from '../store';
   scoped: true,
 })
 export class MenuDropDown {
-  @ClickOutside()
-  someMethod() {
-    console.log('someMethod was called because user just clicked outside of MyComponent');
-  }
 
   @Prop() listTitle: string;
   @Prop() list: string[];

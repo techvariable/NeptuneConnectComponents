@@ -32,7 +32,6 @@ export class ProfileComponent {
     else if(!this.password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)){
       this.error = "Password does not contain any special character"
     }else{
-      console.log("Form is submitted");
       try {
         await axios
           .put(`${this.url}api/users/password`, {
