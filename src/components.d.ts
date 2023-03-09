@@ -77,6 +77,10 @@ export namespace Components {
         "doc": any;
         "responseLabel": 'result' | 'error';
     }
+    interface LastLogs {
+        "url": string;
+        "user": number;
+    }
     interface LoaderComponent {
     }
     interface LogTableWrapper {
@@ -100,6 +104,13 @@ export namespace Components {
         "tableBody": object[];
         "tableHeader": object[];
         "toggleSortMethod": any;
+    }
+    interface LogsTableComponent {
+        "isLoading": boolean;
+        "isLoadingError": boolean;
+        "rows": number[];
+        "tableBody": object[];
+        "tableHeader": object[];
     }
     interface MenuDropDown {
         "fetchData": any;
@@ -134,6 +145,13 @@ export namespace Components {
         "permissions": string;
         "url": string;
     }
+    interface PermissionTable {
+        "permissionstring": string;
+    }
+    interface PermissionViewComponent {
+        "permissions": string;
+        "url": string;
+    }
     interface PlainButton {
         "addClass": string;
         "clickHandler": any;
@@ -142,6 +160,10 @@ export namespace Components {
         "hoverColor": string;
         "type": 'contained' | 'outlined' | 'text';
         "width": 'full' | 'auto';
+    }
+    interface ProfileComponent {
+        "stringifieduser": string;
+        "url": string;
     }
     interface QueryLogs {
     }
@@ -205,6 +227,9 @@ export namespace Components {
     interface TextFieldArea {
         "addClass": string;
         "width": 'full' | 'auto';
+    }
+    interface UserDetailsComponent {
+        "stringifieduser": string;
     }
     interface UserDropDown {
         "email": string;
@@ -328,6 +353,12 @@ declare global {
         prototype: HTMLJsonResponseViewerElement;
         new (): HTMLJsonResponseViewerElement;
     };
+    interface HTMLLastLogsElement extends Components.LastLogs, HTMLStencilElement {
+    }
+    var HTMLLastLogsElement: {
+        prototype: HTMLLastLogsElement;
+        new (): HTMLLastLogsElement;
+    };
     interface HTMLLoaderComponentElement extends Components.LoaderComponent, HTMLStencilElement {
     }
     var HTMLLoaderComponentElement: {
@@ -345,6 +376,12 @@ declare global {
     var HTMLLogsTableElement: {
         prototype: HTMLLogsTableElement;
         new (): HTMLLogsTableElement;
+    };
+    interface HTMLLogsTableComponentElement extends Components.LogsTableComponent, HTMLStencilElement {
+    }
+    var HTMLLogsTableComponentElement: {
+        prototype: HTMLLogsTableComponentElement;
+        new (): HTMLLogsTableComponentElement;
     };
     interface HTMLMenuDropDownElement extends Components.MenuDropDown, HTMLStencilElement {
     }
@@ -394,11 +431,29 @@ declare global {
         prototype: HTMLPermissionEditorElement;
         new (): HTMLPermissionEditorElement;
     };
+    interface HTMLPermissionTableElement extends Components.PermissionTable, HTMLStencilElement {
+    }
+    var HTMLPermissionTableElement: {
+        prototype: HTMLPermissionTableElement;
+        new (): HTMLPermissionTableElement;
+    };
+    interface HTMLPermissionViewComponentElement extends Components.PermissionViewComponent, HTMLStencilElement {
+    }
+    var HTMLPermissionViewComponentElement: {
+        prototype: HTMLPermissionViewComponentElement;
+        new (): HTMLPermissionViewComponentElement;
+    };
     interface HTMLPlainButtonElement extends Components.PlainButton, HTMLStencilElement {
     }
     var HTMLPlainButtonElement: {
         prototype: HTMLPlainButtonElement;
         new (): HTMLPlainButtonElement;
+    };
+    interface HTMLProfileComponentElement extends Components.ProfileComponent, HTMLStencilElement {
+    }
+    var HTMLProfileComponentElement: {
+        prototype: HTMLProfileComponentElement;
+        new (): HTMLProfileComponentElement;
     };
     interface HTMLQueryLogsElement extends Components.QueryLogs, HTMLStencilElement {
     }
@@ -460,6 +515,12 @@ declare global {
         prototype: HTMLTextFieldAreaElement;
         new (): HTMLTextFieldAreaElement;
     };
+    interface HTMLUserDetailsComponentElement extends Components.UserDetailsComponent, HTMLStencilElement {
+    }
+    var HTMLUserDetailsComponentElement: {
+        prototype: HTMLUserDetailsComponentElement;
+        new (): HTMLUserDetailsComponentElement;
+    };
     interface HTMLUserDropDownElement extends Components.UserDropDown, HTMLStencilElement {
     }
     var HTMLUserDropDownElement: {
@@ -491,9 +552,11 @@ declare global {
         "icon-button": HTMLIconButtonElement;
         "invite-component": HTMLInviteComponentElement;
         "json-response-viewer": HTMLJsonResponseViewerElement;
+        "last-logs": HTMLLastLogsElement;
         "loader-component": HTMLLoaderComponentElement;
         "log-table-wrapper": HTMLLogTableWrapperElement;
         "logs-table": HTMLLogsTableElement;
+        "logs-table-component": HTMLLogsTableComponentElement;
         "menu-drop-down": HTMLMenuDropDownElement;
         "menu-items": HTMLMenuItemsElement;
         "multi-select-choices-js": HTMLMultiSelectChoicesJsElement;
@@ -502,7 +565,10 @@ declare global {
         "navigators-component": HTMLNavigatorsComponentElement;
         "node-item": HTMLNodeItemElement;
         "permission-editor": HTMLPermissionEditorElement;
+        "permission-table": HTMLPermissionTableElement;
+        "permission-view-component": HTMLPermissionViewComponentElement;
         "plain-button": HTMLPlainButtonElement;
+        "profile-component": HTMLProfileComponentElement;
         "query-logs": HTMLQueryLogsElement;
         "query-result-table": HTMLQueryResultTableElement;
         "radio-button": HTMLRadioButtonElement;
@@ -513,6 +579,7 @@ declare global {
         "tabs-component": HTMLTabsComponentElement;
         "text-field": HTMLTextFieldElement;
         "text-field-area": HTMLTextFieldAreaElement;
+        "user-details-component": HTMLUserDetailsComponentElement;
         "user-drop-down": HTMLUserDropDownElement;
         "users-component": HTMLUsersComponentElement;
     }
@@ -589,6 +656,10 @@ declare namespace LocalJSX {
         "doc"?: any;
         "responseLabel"?: 'result' | 'error';
     }
+    interface LastLogs {
+        "url"?: string;
+        "user"?: number;
+    }
     interface LoaderComponent {
     }
     interface LogTableWrapper {
@@ -612,6 +683,13 @@ declare namespace LocalJSX {
         "tableBody"?: object[];
         "tableHeader"?: object[];
         "toggleSortMethod"?: any;
+    }
+    interface LogsTableComponent {
+        "isLoading"?: boolean;
+        "isLoadingError"?: boolean;
+        "rows"?: number[];
+        "tableBody"?: object[];
+        "tableHeader"?: object[];
     }
     interface MenuDropDown {
         "fetchData"?: any;
@@ -646,6 +724,13 @@ declare namespace LocalJSX {
         "permissions"?: string;
         "url"?: string;
     }
+    interface PermissionTable {
+        "permissionstring"?: string;
+    }
+    interface PermissionViewComponent {
+        "permissions"?: string;
+        "url"?: string;
+    }
     interface PlainButton {
         "addClass"?: string;
         "clickHandler"?: any;
@@ -654,6 +739,10 @@ declare namespace LocalJSX {
         "hoverColor"?: string;
         "type"?: 'contained' | 'outlined' | 'text';
         "width"?: 'full' | 'auto';
+    }
+    interface ProfileComponent {
+        "stringifieduser"?: string;
+        "url"?: string;
     }
     interface QueryLogs {
     }
@@ -718,6 +807,9 @@ declare namespace LocalJSX {
         "addClass"?: string;
         "width"?: 'full' | 'auto';
     }
+    interface UserDetailsComponent {
+        "stringifieduser"?: string;
+    }
     interface UserDropDown {
         "email"?: string;
         "parsedPermissions"?: [];
@@ -749,9 +841,11 @@ declare namespace LocalJSX {
         "icon-button": IconButton;
         "invite-component": InviteComponent;
         "json-response-viewer": JsonResponseViewer;
+        "last-logs": LastLogs;
         "loader-component": LoaderComponent;
         "log-table-wrapper": LogTableWrapper;
         "logs-table": LogsTable;
+        "logs-table-component": LogsTableComponent;
         "menu-drop-down": MenuDropDown;
         "menu-items": MenuItems;
         "multi-select-choices-js": MultiSelectChoicesJs;
@@ -760,7 +854,10 @@ declare namespace LocalJSX {
         "navigators-component": NavigatorsComponent;
         "node-item": NodeItem;
         "permission-editor": PermissionEditor;
+        "permission-table": PermissionTable;
+        "permission-view-component": PermissionViewComponent;
         "plain-button": PlainButton;
+        "profile-component": ProfileComponent;
         "query-logs": QueryLogs;
         "query-result-table": QueryResultTable;
         "radio-button": RadioButton;
@@ -771,6 +868,7 @@ declare namespace LocalJSX {
         "tabs-component": TabsComponent;
         "text-field": TextField;
         "text-field-area": TextFieldArea;
+        "user-details-component": UserDetailsComponent;
         "user-drop-down": UserDropDown;
         "users-component": UsersComponent;
     }
@@ -797,9 +895,11 @@ declare module "@stencil/core" {
             "icon-button": LocalJSX.IconButton & JSXBase.HTMLAttributes<HTMLIconButtonElement>;
             "invite-component": LocalJSX.InviteComponent & JSXBase.HTMLAttributes<HTMLInviteComponentElement>;
             "json-response-viewer": LocalJSX.JsonResponseViewer & JSXBase.HTMLAttributes<HTMLJsonResponseViewerElement>;
+            "last-logs": LocalJSX.LastLogs & JSXBase.HTMLAttributes<HTMLLastLogsElement>;
             "loader-component": LocalJSX.LoaderComponent & JSXBase.HTMLAttributes<HTMLLoaderComponentElement>;
             "log-table-wrapper": LocalJSX.LogTableWrapper & JSXBase.HTMLAttributes<HTMLLogTableWrapperElement>;
             "logs-table": LocalJSX.LogsTable & JSXBase.HTMLAttributes<HTMLLogsTableElement>;
+            "logs-table-component": LocalJSX.LogsTableComponent & JSXBase.HTMLAttributes<HTMLLogsTableComponentElement>;
             "menu-drop-down": LocalJSX.MenuDropDown & JSXBase.HTMLAttributes<HTMLMenuDropDownElement>;
             "menu-items": LocalJSX.MenuItems & JSXBase.HTMLAttributes<HTMLMenuItemsElement>;
             "multi-select-choices-js": LocalJSX.MultiSelectChoicesJs & JSXBase.HTMLAttributes<HTMLMultiSelectChoicesJsElement>;
@@ -808,7 +908,10 @@ declare module "@stencil/core" {
             "navigators-component": LocalJSX.NavigatorsComponent & JSXBase.HTMLAttributes<HTMLNavigatorsComponentElement>;
             "node-item": LocalJSX.NodeItem & JSXBase.HTMLAttributes<HTMLNodeItemElement>;
             "permission-editor": LocalJSX.PermissionEditor & JSXBase.HTMLAttributes<HTMLPermissionEditorElement>;
+            "permission-table": LocalJSX.PermissionTable & JSXBase.HTMLAttributes<HTMLPermissionTableElement>;
+            "permission-view-component": LocalJSX.PermissionViewComponent & JSXBase.HTMLAttributes<HTMLPermissionViewComponentElement>;
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
+            "profile-component": LocalJSX.ProfileComponent & JSXBase.HTMLAttributes<HTMLProfileComponentElement>;
             "query-logs": LocalJSX.QueryLogs & JSXBase.HTMLAttributes<HTMLQueryLogsElement>;
             "query-result-table": LocalJSX.QueryResultTable & JSXBase.HTMLAttributes<HTMLQueryResultTableElement>;
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
@@ -819,6 +922,7 @@ declare module "@stencil/core" {
             "tabs-component": LocalJSX.TabsComponent & JSXBase.HTMLAttributes<HTMLTabsComponentElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
             "text-field-area": LocalJSX.TextFieldArea & JSXBase.HTMLAttributes<HTMLTextFieldAreaElement>;
+            "user-details-component": LocalJSX.UserDetailsComponent & JSXBase.HTMLAttributes<HTMLUserDetailsComponentElement>;
             "user-drop-down": LocalJSX.UserDropDown & JSXBase.HTMLAttributes<HTMLUserDropDownElement>;
             "users-component": LocalJSX.UsersComponent & JSXBase.HTMLAttributes<HTMLUsersComponentElement>;
         }

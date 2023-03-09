@@ -11,7 +11,7 @@ export class RadioButtonMultiple {
   @Prop() align: 'vertical' | 'horizontal' = 'horizontal';
   @Prop() clickHandler:any;
   @Prop() checked : string;
-  @Prop() disabledOptions:string[];
+  @Prop() disabledOptions:string[] =[];
 
   render() {
     return (

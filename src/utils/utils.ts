@@ -6,7 +6,7 @@ export function isValidPermissionJson(jsonData: string) {
   try {
     const data: any = JSON.parse(jsonData);
     const keys: string[] = Object.keys(data);
-    const permissionsKeys: string[] = ['editor', 'settings', 'permissions', 'users', 'logs'];
+    const permissionsKeys: string[] = ['editor', 'settings', 'permissions', 'users', 'logs', 'profile'];
     if (keys.length === 0) {
       throw Error('No keys present in the json');
     }
@@ -85,6 +85,23 @@ export function hasAccess(permissions: any[], route: { name: string | string[]; 
     return false;
   }
   return true;
+}
+
+export function combinePermissions(permissions: any[]):any[] {
+  const updatedPermissions = [];
+  permissions.forEach(permission => {
+    const permissionKeys = Object.keys(permission);
+    permissionKeys.forEach(key => {
+      updatedPermissions[key] = {
+        read: hasAccess(permissions, { name: key, permission: 'read' }),
+        write: hasAccess(permissions, { name: key, permission: 'write' }),
+        update: hasAccess(permissions, { name: key, permission: 'update' }),
+        delete: hasAccess(permissions, { name: key, permission: 'delete' }),
+      };
+    });
+  });
+  delete updatedPermissions['*'];
+  return updatedPermissions;
 }
 
 export function jsonToCsv<T extends {}>(jsonContent: Array<T>): { columns: string[]; data: Array<Array<T>> } {

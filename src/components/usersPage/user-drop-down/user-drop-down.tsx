@@ -61,11 +61,16 @@ export class UserDropDown {
     this.showDropdown = false;
   };
 
+  dropDownClickHandler(event){
+    event.stopPropagation();
+    this.toggleDropdown();
+  }
+
   render() {
     return (
       <div class="relative">
         {/* Header */}
-        <h2 onClick={() => this.toggleDropdown()} class="font-sans text-gray-600 hover:text-indigo-800 cursor-pointer transition text-sm capitalize flex gap-1 items-center">
+        <h2 onClick={(event) => this.dropDownClickHandler(event)} class="font-sans text-gray-600 hover:text-indigo-800 cursor-pointer transition text-sm capitalize flex gap-1 items-center">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path
               stroke-linecap="round"
@@ -76,13 +81,13 @@ export class UserDropDown {
         </h2>
         <backdrop-filter showBackDrop={this.showDropdown} backDropHandler={this.backDropHandler}></backdrop-filter>
         {/* List */}
-        <div class={this.showDropdown === true ? 'absolute bg-white z-10 w-28 text-sm list-none mt-2 rounded divide-y divide-gray-100 shadow ' : 'hidden'}>
+        <div class={this.showDropdown === true ? 'absolute bg-gray-100 z-10 w-28 text-sm list-none mt-2 rounded divide-y divide-gray-100 shadow ' : 'hidden'}>
           <ul class="py-1">
             {this.option?.map(item => (
-              <li>
-                <button class="disabled-custom" onClick={() => this.clickHandler(Object.keys(item)[0])} disabled={!hasAccess(this.parsedPermissions, { name: 'users', permission: item[Object.keys(item)[0]]})}>
-                  <a href="#" class="block py-2 px-4 text-sm text-gray-700">
-                    {Object.keys(item)[0]}
+              <li class="hover:bg-gray-300">
+                <button class="disabled-custom" onClick={(e) =>{e.stopPropagation() ;this.clickHandler(Object.keys(item)[0])}} disabled={!hasAccess(this.parsedPermissions, { name: 'users', permission: item[Object.keys(item)[0]]})}>
+                  <a href="#" class="block py-2 px-4 text-base font-sm font-medium text-gray-700">
+                    {Object.keys(item)[0].toUpperCase()}
                   </a>
                 </button>
               </li>
