@@ -23,6 +23,7 @@ graph TD;
   tab-component --> download-result-modal
   tab-component --> editor-res
   tab-component --> editor-json-response-viewer
+  download-result-modal --> toggle-button
   download-result-modal --> radio-button-multiple
   editor-res --> chips-list
   editor-res --> query-result-table

@@ -3,6 +3,7 @@ import { jsonToCsv } from '../../../utils/utils';
 import state from '../store';
 import { CsvBuilder } from 'filefy';
 import axios from 'axios';
+import * as XLSX from 'xlsx';
 
 @Component({
   tag: 'download-result-modal',
@@ -20,6 +21,17 @@ export class DownloadResultModal {
   @State() startingIndex: number = 0;
   @State() endingIndex: number = 50;
   @State() downloadError = null;
+  @State() isCsv: boolean = true;
+  @State() selectedOption: string = 'csv';
+
+  toggleButtonHandler = () => {
+    this.isCsv = !this.isCsv;
+    if (this.isCsv === true) {
+      this.selectedOption = 'csv';
+    } else {
+      this.selectedOption = 'xlsx';
+    }
+  };
 
   componentWillLoad() {
     this.value = `${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}`;
@@ -29,11 +41,22 @@ export class DownloadResultModal {
     try {
       this.isDownloading = true;
       this.downloadProgress = 0;
-      const csvData = jsonToCsv(state.nodes);
-      new CsvBuilder(this.value)
-        .setColumns(csvData.columns)
-        .addRows([...csvData.data])
-        .exportFile();
+
+      if (this.selectedOption === 'xlsx') {
+        const workbook = XLSX.utils.book_new();
+        const sheet = XLSX.utils.json_to_sheet(state.nodes, {
+          skipHeader: true,
+        });
+        XLSX.utils.book_append_sheet(workbook, sheet, this.value);
+        XLSX.writeFileXLSX(workbook, this.value, {});
+      } else {
+        const csvData = jsonToCsv(state.nodes);
+        new CsvBuilder(this.value)
+          .setColumns(csvData.columns)
+          .addRows([...csvData.data])
+          .exportFile();
+      }
+
       this.downloadProgress = 100;
       this.isDownloading = false;
       this.toggleModalState();
@@ -71,11 +94,21 @@ export class DownloadResultModal {
 
         this.downloadProgress = 100;
 
-        const csvData = jsonToCsv(nodes);
-        new CsvBuilder(`${this.value}.csv`)
-          .setColumns(csvData.columns)
-          .addRows([...csvData.data])
-          .exportFile();
+        if (this.selectedOption === 'xlsx') {
+          const workbook = XLSX.utils.book_new();
+          const sheet = XLSX.utils.json_to_sheet(nodes, {
+            skipHeader: true,
+          });
+          XLSX.utils.book_append_sheet(workbook, sheet, this.value);
+          XLSX.writeFileXLSX(workbook, this.value, {});
+        } else {
+          const csvData = jsonToCsv(nodes);
+          new CsvBuilder(`${this.value}.csv`)
+            .setColumns(csvData.columns)
+            .addRows([...csvData.data])
+            .exportFile();
+        }
+
         this.isDownloading = false;
         this.toggleModalState();
         this.isModalOpen = false;
@@ -156,15 +189,19 @@ export class DownloadResultModal {
                   <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div>
                       <div class="mt-3 text-center sm:mt-0 sm:text-left">
-                        <h3 class="text-lg leading-6 font-semibold text-gray-600 my-2" id="modal-title">
-                          Export Query Results in CSV
-                        </h3>
+                        <div class="flex justify-between">
+                          <h3 class="text-lg leading-6 font-semibold text-gray-600 my-2" id="modal-title">
+                            Export Query Results
+                          </h3>
+                          <toggle-button selectedOption={this.selectedOption} toggleButtonHandler={this.toggleButtonHandler}></toggle-button>
+                        </div>
+
                         <div class="mt-2">
                           <div class="mb-2">
                             <radio-button-multiple
                               clickHandler={this.radioSearchTypeHandler}
                               labels={this.downloadOptions}
-                              disabledOptions={state.selectedNodeName === null?["all","custom"]:[]}
+                              disabledOptions={state.selectedNodeName === null ? ['all', 'custom'] : []}
                               name="SearchMethod"
                               label="Options"
                               align="horizontal"

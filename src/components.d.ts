@@ -220,6 +220,10 @@ export namespace Components {
         "addClass": string;
         "width": 'full' | 'auto';
     }
+    interface ToggleButton {
+        "selectedOption": string;
+        "toggleButtonHandler": any;
+    }
     interface UserDetailsComponent {
         "stringifieduser": string;
     }
@@ -501,6 +505,12 @@ declare global {
         prototype: HTMLTextFieldAreaElement;
         new (): HTMLTextFieldAreaElement;
     };
+    interface HTMLToggleButtonElement extends Components.ToggleButton, HTMLStencilElement {
+    }
+    var HTMLToggleButtonElement: {
+        prototype: HTMLToggleButtonElement;
+        new (): HTMLToggleButtonElement;
+    };
     interface HTMLUserDetailsComponentElement extends Components.UserDetailsComponent, HTMLStencilElement {
     }
     var HTMLUserDetailsComponentElement: {
@@ -564,6 +574,7 @@ declare global {
         "tabs-component": HTMLTabsComponentElement;
         "text-field": HTMLTextFieldElement;
         "text-field-area": HTMLTextFieldAreaElement;
+        "toggle-button": HTMLToggleButtonElement;
         "user-details-component": HTMLUserDetailsComponentElement;
         "user-drop-down": HTMLUserDropDownElement;
         "users-component": HTMLUsersComponentElement;
@@ -784,6 +795,10 @@ declare namespace LocalJSX {
         "addClass"?: string;
         "width"?: 'full' | 'auto';
     }
+    interface ToggleButton {
+        "selectedOption"?: string;
+        "toggleButtonHandler"?: any;
+    }
     interface UserDetailsComponent {
         "stringifieduser"?: string;
     }
@@ -844,6 +859,7 @@ declare namespace LocalJSX {
         "tabs-component": TabsComponent;
         "text-field": TextField;
         "text-field-area": TextFieldArea;
+        "toggle-button": ToggleButton;
         "user-details-component": UserDetailsComponent;
         "user-drop-down": UserDropDown;
         "users-component": UsersComponent;
@@ -897,6 +913,7 @@ declare module "@stencil/core" {
             "tabs-component": LocalJSX.TabsComponent & JSXBase.HTMLAttributes<HTMLTabsComponentElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
             "text-field-area": LocalJSX.TextFieldArea & JSXBase.HTMLAttributes<HTMLTextFieldAreaElement>;
+            "toggle-button": LocalJSX.ToggleButton & JSXBase.HTMLAttributes<HTMLToggleButtonElement>;
             "user-details-component": LocalJSX.UserDetailsComponent & JSXBase.HTMLAttributes<HTMLUserDetailsComponentElement>;
             "user-drop-down": LocalJSX.UserDropDown & JSXBase.HTMLAttributes<HTMLUserDropDownElement>;
             "users-component": LocalJSX.UsersComponent & JSXBase.HTMLAttributes<HTMLUsersComponentElement>;
