@@ -118,6 +118,34 @@ export class PermissionEditor {
     }
   }
 
+  async onRoleDeleteHandler(){
+    if (this.syncVal !== '') {
+      try {
+        this.isLoading = true;
+        this.errorMessage = '';
+        this.resStatus = '';
+        let transaction = this.view.state.update();
+        this.view.dispatch(transaction);
+
+          this.isLoading = true;
+
+          const res = await axios.delete(`${this.url}/?roleId=${this.selectedRole}`);
+          console.log(res.data);
+          this.resStatus = `Permissions for ${res.data.roleName} deleted successfully`;
+        
+      } catch (err) {
+        console.error(err);
+        console.log("Error",err?.response?.data?.usersArray)
+        let users = '';
+        err?.response?.data?.usersArray.forEach(element => {
+          users += `  ${element?.email}  `
+        });
+        this.errorMessage = `${err?.response?.data?.message} ${users}` || 'Failed to update the permission';
+      }
+      this.isLoading = false;
+    }
+  }
+
   dummyKeymap() {
     let self = this.onRoleUpdateClick;
     return keymap.of([
@@ -158,15 +186,23 @@ export class PermissionEditor {
               <p>{this.resStatus}</p>
             </div>
           )}
-          <div class="flex justify-between">
-            <div>
+          <div class="flex justify-between gap-4">
+            <div class='flex'>
               <button
                 title="Ctrl+Shift+Enter to run"
                 onClick={() => this.onRoleUpdateClick()}
                 disabled={this.syncVal === '' || !hasAccess(this.parsedPermissions, { name: 'permissions', permission: 'update' }) || this.isLoading}
-                class="mr-1 flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 disabled:opacity-75 disabled:text-gray-300 disabled:cursor-default"
+                class="w-16 mr-1 flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 disabled:opacity-75 disabled:text-gray-300 disabled:cursor-default"
               >
                 Update
+              </button>
+              <button
+                title="Delete current role"
+                onClick={() => this.onRoleDeleteHandler()}
+                disabled={this.syncVal === '' || !hasAccess(this.parsedPermissions, { name: 'permissions', permission: 'delete' }) || this.isLoading}
+                class="w-16 mr-1 flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 disabled:opacity-75 disabled:text-gray-300 disabled:cursor-default"
+              >
+                Delete
               </button>
             </div>
             <div class="mx-4">{this.isLoading && <loader-component></loader-component>}</div>
