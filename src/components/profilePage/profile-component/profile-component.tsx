@@ -76,7 +76,7 @@ export class ProfileComponent {
               <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Name</label>
               <input
                 onInput={event => this.nameChangeHandler(event)}
-                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="grid-user-name"
                 type="text"
                 placeholder=""
@@ -103,7 +103,7 @@ export class ProfileComponent {
               <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Password</label>
               <input
                 onInput={e=>this.passwordHandler(e)}
-                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="grid-password"
                 type="password"
                 placeholder="******************"
