@@ -22,41 +22,51 @@ export class InviteComponent {
     return false;
   }
   handleSubmit = e => {
+    this.errorMessage = '';
     e.preventDefault();
     const data = new FormData(e.target);
     this.name = data.get('name').toString();
     this.password = data.get('password').toString();
     this.rePassword = data.get('confirmedPassword').toString();
 
-    if (this.comparePassword(this.password, this.rePassword) === true) {
-      axios
-        .post(this.apiurl, {
-          email: this.email,
-          name: this.name,
-          password: this.password,
-        })
-        .then(res => {
-          if (res.status === 200) {
-            Swal.fire({
-              position: 'center',
-              icon: 'success',
-              text: 'User added successfully!',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            axios.get(this.apiurl);
-          }
-        })
-        .catch(err => {
-          console.log(err);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-          });
-        });
+    if (this.name === '') {
+      this.errorMessage = 'User name is empty';
+    }
+    if (this.password.length < 7) {
+      this.errorMessage = 'Password length is less than 7 characters';
+    } else if (!this.password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) {
+      this.errorMessage = 'Password does not contain any special character';
     } else {
-      this.errorMessage = 'Password does not match';
+      if (this.comparePassword(this.password, this.rePassword) === true) {
+        axios
+          .post(this.apiurl, {
+            email: this.email,
+            name: this.name,
+            password: this.password,
+          })
+          .then(res => {
+            if (res.status === 200) {
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                text: 'User added successfully!',
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              window.location.assign(this.url);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+            });
+          });
+      } else {
+        this.errorMessage = 'Password does not match';
+      }
     }
   };
 
