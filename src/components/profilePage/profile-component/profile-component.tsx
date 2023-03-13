@@ -50,7 +50,7 @@ export class ProfileComponent {
           timer: 1500,
         });
         await axios.post(`${this.url}logout`)
-        location.reload();
+        window.location.reload();
       } catch (error) {
         Swal.fire({
           icon: 'error',
