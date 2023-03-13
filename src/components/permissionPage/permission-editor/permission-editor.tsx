@@ -43,7 +43,7 @@ export class PermissionEditor {
     try {
       const rolePermissionsResp = await axios.get(`${this.url}/?roleId=${roleId}`);
 
-      let transaction = this.view.state.update({ changes: { from: 0,to: this.view.state.doc.toString().length, insert: `${formatJSON(rolePermissionsResp.data)}` } });
+      let transaction = this.view.state.update({ changes: { from: 0, to: this.view.state.doc.toString().length, insert: `${formatJSON(rolePermissionsResp.data)}` } });
       this.view.dispatch(transaction);
     } catch (error) {
       console.log(error);
@@ -118,7 +118,7 @@ export class PermissionEditor {
     }
   }
 
-  async onRoleDeleteHandler(){
+  async onRoleDeleteHandler() {
     if (this.syncVal !== '') {
       try {
         this.isLoading = true;
@@ -127,18 +127,15 @@ export class PermissionEditor {
         let transaction = this.view.state.update();
         this.view.dispatch(transaction);
 
-          this.isLoading = true;
+        this.isLoading = true;
 
-          const res = await axios.delete(`${this.url}/?roleId=${this.selectedRole}`);
-          console.log(res.data);
-          this.resStatus = `Permissions for ${res.data.roleName} deleted successfully`;
-        
+        const res = await axios.delete(`${this.url}/?roleId=${this.selectedRole}`);
+        this.resStatus = `Permissions for ${res.data.roleName} deleted successfully`;
       } catch (err) {
         console.error(err);
-        console.log("Error",err?.response?.data?.usersArray)
         let users = '';
         err?.response?.data?.usersArray.forEach(element => {
-          users += `  ${element?.email}  `
+          users += `   ${element?.email}  `;
         });
         this.errorMessage = `${err?.response?.data?.message} ${users}` || 'Failed to update the permission';
       }
@@ -187,7 +184,7 @@ export class PermissionEditor {
             </div>
           )}
           <div class="flex justify-between gap-4">
-            <div class='flex'>
+            <div class="flex">
               <button
                 title="Ctrl+Shift+Enter to run"
                 onClick={() => this.onRoleUpdateClick()}

@@ -22,16 +22,8 @@ export class DownloadResultModal {
   @State() endingIndex: number = 50;
   @State() downloadError = null;
   @State() isCsv: boolean = true;
-  @State() selectedOption: string = 'csv';
-
-  toggleButtonHandler = () => {
-    this.isCsv = !this.isCsv;
-    if (this.isCsv === true) {
-      this.selectedOption = 'csv';
-    } else {
-      this.selectedOption = 'xlsx';
-    }
-  };
+  @State() fileOptions: string[] = ['csv', 'xlsx'];
+  @State() selectedFileOption: string = 'csv';
 
   componentWillLoad() {
     this.value = `${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}`;
@@ -42,13 +34,13 @@ export class DownloadResultModal {
       this.isDownloading = true;
       this.downloadProgress = 0;
 
-      if (this.selectedOption === 'xlsx') {
+      if (this.selectedFileOption === 'xlsx') {
         const workbook = XLSX.utils.book_new();
         const sheet = XLSX.utils.json_to_sheet(state.nodes, {
-          skipHeader: true,
+          skipHeader: false,
         });
-        XLSX.utils.book_append_sheet(workbook, sheet, this.value);
-        XLSX.writeFileXLSX(workbook, this.value, {});
+        XLSX.utils.book_append_sheet(workbook, sheet, `${this.value}.xlsx`);
+        XLSX.writeFileXLSX(workbook, `${this.value}.xlsx`, {});
       } else {
         const csvData = jsonToCsv(state.nodes);
         new CsvBuilder(this.value)
@@ -94,13 +86,13 @@ export class DownloadResultModal {
 
         this.downloadProgress = 100;
 
-        if (this.selectedOption === 'xlsx') {
+        if (this.selectedFileOption === 'xlsx') {
           const workbook = XLSX.utils.book_new();
           const sheet = XLSX.utils.json_to_sheet(nodes, {
-            skipHeader: true,
+            skipHeader: false,
           });
-          XLSX.utils.book_append_sheet(workbook, sheet, this.value);
-          XLSX.writeFileXLSX(workbook, this.value, {});
+          XLSX.utils.book_append_sheet(workbook, sheet, `${this.value}.xlsx`);
+          XLSX.writeFileXLSX(workbook, `${this.value}.xlsx`, {});
         } else {
           const csvData = jsonToCsv(nodes);
           new CsvBuilder(`${this.value}.csv`)
@@ -130,6 +122,7 @@ export class DownloadResultModal {
   clearFields() {
     this.value = `${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}`;
     this.selectedDownloadOption = 'current';
+    this.selectedFileOption = 'csv';
     this.startingIndex = 0;
     this.endingIndex = 50;
   }
@@ -146,9 +139,6 @@ export class DownloadResultModal {
     } else if (this.selectedDownloadOption === 'current') {
       this.downloadData();
     }
-
-    // this.toggleModalState();
-    // this.clearFields();
   }
 
   handleChange(event) {
@@ -163,6 +153,9 @@ export class DownloadResultModal {
 
   radioSearchTypeHandler = event => {
     this.selectedDownloadOption = event.target.value;
+  };
+  radioFileTypeHandler = event => {
+    this.selectedFileOption = event.target.value;
   };
 
   render() {
@@ -193,10 +186,20 @@ export class DownloadResultModal {
                           <h3 class="text-lg leading-6 font-semibold text-gray-600 my-2" id="modal-title">
                             Export Query Results
                           </h3>
-                          <toggle-button selectedOption={this.selectedOption} toggleButtonHandler={this.toggleButtonHandler}></toggle-button>
                         </div>
 
                         <div class="mt-2">
+                          <div class="mb-2">
+                            <radio-button-multiple
+                              clickHandler={this.radioFileTypeHandler}
+                              labels={this.fileOptions}
+                              disabledOptions={[]}
+                              name="FileMethod"
+                              label="File Type"
+                              align="horizontal"
+                              checked={this.selectedFileOption}
+                            ></radio-button-multiple>
+                          </div>
                           <div class="mb-2">
                             <radio-button-multiple
                               clickHandler={this.radioSearchTypeHandler}

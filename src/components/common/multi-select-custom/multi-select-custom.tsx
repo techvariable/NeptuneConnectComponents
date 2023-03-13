@@ -10,26 +10,21 @@ export class MultiSelectCustom {
   @Prop() roles: string[];
 
   dropDownClick() {
-    console.log('clicked drop down');
     this.dropDownState = !this.dropDownState;
-    console.log(this.dropDownState);
   }
   removeChip(e) {
     const removeValue = e.target.parentElement.parentElement.parentElement.innerText;
     this.selected = this.selected.filter(value => removeValue !== value);
   }
-  itemOnClick(e){
-    console.log(e.target.innerText);
-    if(!this.selected.includes(e.target.innerText)){
+  itemOnClick(e) {
+    if (!this.selected.includes(e.target.innerText)) {
       this.selected.push(e.target.innerText);
     }
-    this.dropDownState=false;
-    console.log(this.selected);
+    this.dropDownState = false;
   }
-  searchValue(e){
-    // console.log(e.target.value);
+  searchValue(e) {
     const searchText = e.target.value;
-    const arr = this.roles.filter(value=>value.includes(searchText));
+    const arr = this.roles.filter(value => value.includes(searchText));
     console.log(arr);
   }
 
@@ -70,7 +65,13 @@ export class MultiSelectCustom {
 
                     {/* input for select */}
                     <div class="">
-                      <input onKeyDown={e=>{this.searchValue(e)}} placeholder="Enter values to search" class="bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800" />
+                      <input
+                        onKeyDown={e => {
+                          this.searchValue(e);
+                        }}
+                        placeholder="Enter values to search"
+                        class="bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800"
+                      />
                     </div>
                   </div>
                   {/* drop down button */}
@@ -99,7 +100,7 @@ export class MultiSelectCustom {
                 <div class="absolute shadow top-100 bg-white z-400 w-full lef-0 rounded max-h-select overflow-y-auto svelte-5uyqqj">
                   <div class="w-full">
                     {this.roles.map(item => (
-                      <div onClick={e=>this.itemOnClick(e)} class="cursor-pointer w-full border-gray-100 border-b hover:bg-teal-100">
+                      <div onClick={e => this.itemOnClick(e)} class="cursor-pointer w-full border-gray-100 border-b hover:bg-teal-100">
                         <div class="flex w-full items-center p-2 px-4 border-transparent border-l-2 relative border-teal-600">
                           <div class="w-full items-center flex">
                             <div class="mx-2 px-2 leading-6  ">{item}</div>
