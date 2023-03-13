@@ -53,7 +53,7 @@ export class InviteComponent {
                 showConfirmButton: false,
                 timer: 1500,
               });
-              window.location.assign(this.apiurl);
+              window.location.assign(this.url);
             }
           })
           .catch(err => {
