@@ -3,6 +3,7 @@ import { jsonToCsv } from '../../../utils/utils';
 import state from '../store';
 import { CsvBuilder } from 'filefy';
 import axios from 'axios';
+import * as XLSX from 'xlsx';
 
 @Component({
   tag: 'download-result-modal',
@@ -20,6 +21,9 @@ export class DownloadResultModal {
   @State() startingIndex: number = 0;
   @State() endingIndex: number = 50;
   @State() downloadError = null;
+  @State() isCsv: boolean = true;
+  @State() fileOptions: string[] = ['csv', 'xlsx'];
+  @State() selectedFileOption: string = 'csv';
 
   componentWillLoad() {
     this.value = `${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}`;
@@ -29,11 +33,22 @@ export class DownloadResultModal {
     try {
       this.isDownloading = true;
       this.downloadProgress = 0;
-      const csvData = jsonToCsv(state.nodes);
-      new CsvBuilder(this.value)
-        .setColumns(csvData.columns)
-        .addRows([...csvData.data])
-        .exportFile();
+
+      if (this.selectedFileOption === 'xlsx') {
+        const workbook = XLSX.utils.book_new();
+        const sheet = XLSX.utils.json_to_sheet(state.nodes, {
+          skipHeader: false,
+        });
+        XLSX.utils.book_append_sheet(workbook, sheet, `${this.value}.xlsx`);
+        XLSX.writeFileXLSX(workbook, `${this.value}.xlsx`, {});
+      } else {
+        const csvData = jsonToCsv(state.nodes);
+        new CsvBuilder(this.value)
+          .setColumns(csvData.columns)
+          .addRows([...csvData.data])
+          .exportFile();
+      }
+
       this.downloadProgress = 100;
       this.isDownloading = false;
       this.toggleModalState();
@@ -71,11 +86,21 @@ export class DownloadResultModal {
 
         this.downloadProgress = 100;
 
-        const csvData = jsonToCsv(nodes);
-        new CsvBuilder(`${this.value}.csv`)
-          .setColumns(csvData.columns)
-          .addRows([...csvData.data])
-          .exportFile();
+        if (this.selectedFileOption === 'xlsx') {
+          const workbook = XLSX.utils.book_new();
+          const sheet = XLSX.utils.json_to_sheet(nodes, {
+            skipHeader: false,
+          });
+          XLSX.utils.book_append_sheet(workbook, sheet, `${this.value}.xlsx`);
+          XLSX.writeFileXLSX(workbook, `${this.value}.xlsx`, {});
+        } else {
+          const csvData = jsonToCsv(nodes);
+          new CsvBuilder(`${this.value}.csv`)
+            .setColumns(csvData.columns)
+            .addRows([...csvData.data])
+            .exportFile();
+        }
+
         this.isDownloading = false;
         this.toggleModalState();
         this.isModalOpen = false;
@@ -97,6 +122,7 @@ export class DownloadResultModal {
   clearFields() {
     this.value = `${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}`;
     this.selectedDownloadOption = 'current';
+    this.selectedFileOption = 'csv';
     this.startingIndex = 0;
     this.endingIndex = 50;
   }
@@ -113,9 +139,6 @@ export class DownloadResultModal {
     } else if (this.selectedDownloadOption === 'current') {
       this.downloadData();
     }
-
-    // this.toggleModalState();
-    // this.clearFields();
   }
 
   handleChange(event) {
@@ -130,6 +153,9 @@ export class DownloadResultModal {
 
   radioSearchTypeHandler = event => {
     this.selectedDownloadOption = event.target.value;
+  };
+  radioFileTypeHandler = event => {
+    this.selectedFileOption = event.target.value;
   };
 
   render() {
@@ -156,15 +182,29 @@ export class DownloadResultModal {
                   <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div>
                       <div class="mt-3 text-center sm:mt-0 sm:text-left">
-                        <h3 class="text-lg leading-6 font-semibold text-gray-600 my-2" id="modal-title">
-                          Export Query Results in CSV
-                        </h3>
+                        <div class="flex justify-between">
+                          <h3 class="text-lg leading-6 font-semibold text-gray-600 my-2" id="modal-title">
+                            Export Query Results
+                          </h3>
+                        </div>
+
                         <div class="mt-2">
+                          <div class="mb-2">
+                            <radio-button-multiple
+                              clickHandler={this.radioFileTypeHandler}
+                              labels={this.fileOptions}
+                              disabledOptions={[]}
+                              name="FileMethod"
+                              label="File Type"
+                              align="horizontal"
+                              checked={this.selectedFileOption}
+                            ></radio-button-multiple>
+                          </div>
                           <div class="mb-2">
                             <radio-button-multiple
                               clickHandler={this.radioSearchTypeHandler}
                               labels={this.downloadOptions}
-                              disabledOptions={state.selectedNodeName === null?["all","custom"]:[]}
+                              disabledOptions={state.selectedNodeName === null ? ['all', 'custom'] : []}
                               name="SearchMethod"
                               label="Options"
                               align="horizontal"
