@@ -43,7 +43,7 @@ export class PermissionEditor {
     try {
       const rolePermissionsResp = await axios.get(`${this.url}/?roleId=${roleId}`);
 
-      let transaction = this.view.state.update({ changes: { from: 0, insert: `${formatJSON(rolePermissionsResp.data)}` } });
+      let transaction = this.view.state.update({ changes: { from: 0,to: this.view.state.doc.toString().length, insert: `${formatJSON(rolePermissionsResp.data)}` } });
       this.view.dispatch(transaction);
     } catch (error) {
       console.log(error);
