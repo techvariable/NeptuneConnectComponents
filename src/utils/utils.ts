@@ -1,3 +1,5 @@
+export const permissionsKeys: string[] = ['editor', 'settings', 'permissions', 'users', 'logs', 'profile', '*'];
+
 export function format(first: string, middle: string, last: string): string {
   return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
 }
@@ -6,7 +8,6 @@ export function isValidPermissionJson(jsonData: string) {
   try {
     const data: any = JSON.parse(jsonData);
     const keys: string[] = Object.keys(data);
-    const permissionsKeys: string[] = ['editor', 'settings', 'permissions', 'users', 'logs', 'profile'];
     if (keys.length === 0) {
       throw Error('No keys present in the json');
     }
@@ -67,7 +68,6 @@ export function isValidParameterJson(query: string, jsonData: string) {
 export function formatJSON(json: object): string {
   return JSON.stringify(json, undefined, 4);
 }
-
 export function hasAccess(permissions: any[], route: { name: string | string[]; permission: 'read' | 'write' | 'delete' | 'update' }): boolean {
   if (
     !(
@@ -87,20 +87,61 @@ export function hasAccess(permissions: any[], route: { name: string | string[]; 
   return true;
 }
 
-export function combinePermissions(permissions: any[]):any[] {
-  const updatedPermissions = [];
+export function combinePermissions(permissions: any[]): any[] {
+  const supportedKeys: string[] = ['editor', 'settings', 'permissions', 'users', 'logs', 'profile', '*'];
+  const updatedPermissions = {};
+
+  supportedKeys.forEach(k => {
+    updatedPermissions[k] = {
+      read: false,
+      write: false,
+      delete: false,
+      update: false,
+    };
+  });
+
   permissions.forEach(permission => {
     const permissionKeys = Object.keys(permission);
     permissionKeys.forEach(key => {
-      updatedPermissions[key] = {
-        read: hasAccess(permissions, { name: key, permission: 'read' }),
-        write: hasAccess(permissions, { name: key, permission: 'write' }),
-        update: hasAccess(permissions, { name: key, permission: 'update' }),
-        delete: hasAccess(permissions, { name: key, permission: 'delete' }),
-      };
+      if (key === '*') {
+        supportedKeys.forEach(k => {
+          if (permission[key]['*'] !== undefined) {
+            updatedPermissions[k] = {
+              read: permission[key]['*'],
+              write: permission[key]['*'],
+              update: permission[key]['*'],
+              delete: permission[key]['*'],
+            };
+          } else {
+            updatedPermissions[k] = {
+              read: hasAccess(permissions, { name: key, permission: 'read' }),
+              write: hasAccess(permissions, { name: key, permission: 'write' }),
+              update: hasAccess(permissions, { name: key, permission: 'update' }),
+              delete: hasAccess(permissions, { name: key, permission: 'delete' }),
+            };
+          }
+        });
+      } else {
+        if (permission[key]['*'] !== undefined) {
+          updatedPermissions[key] = {
+            read: permission[key]['*'],
+            write: permission[key]['*'],
+            update: permission[key]['*'],
+            delete: permission[key]['*'],
+          };
+        } else {
+          updatedPermissions[key] = {
+            read: hasAccess(permissions, { name: key, permission: 'read' }),
+            write: hasAccess(permissions, { name: key, permission: 'write' }),
+            update: hasAccess(permissions, { name: key, permission: 'update' }),
+            delete: hasAccess(permissions, { name: key, permission: 'delete' }),
+          };
+        }
+      }
     });
   });
   delete updatedPermissions['*'];
+  // @ts-expect-error
   return updatedPermissions;
 }
 
