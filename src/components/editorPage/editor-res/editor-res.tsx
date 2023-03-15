@@ -15,12 +15,14 @@ export class EditorRes {
     const chips = { ...state.order };
     delete chips[item];
     state.order = chips;
+    state.refreshData();
   }
 
   removeSearchChip = (item) => {
     const chips = { ...state.filter };
     delete chips[item];
     state.filter = chips;
+    state.refreshData();
   }
 
   computeHeader() {
@@ -40,20 +42,27 @@ export class EditorRes {
   rowsHandler(e) {
     state.limit = e.target.value;
     state.page = 1;
+    state.offset = (state.limit*state.page)- state.limit;
+    state.refreshData();
   }
 
   nextPage() {
     ++state.page;
+    state.offset = (state.limit*state.page)- state.limit;
+    state.refreshData();
   }
 
   prevPage() {
     --state.page;
+    state.offset = (state.limit*state.page)- state.limit;
+    state.refreshData();
   }
 
   toggleSortMethod = (id: string) => {
     const chips = {};
     chips[id] = state.order[id] === "desc" ? 'asc' : 'desc';
     state.order = chips;
+    state.refreshData();
   };
 
   searchMethod(searchValue: string, colName: string, searchOption: string, textSearchOption: string, numberSearchOption: string) {
@@ -67,6 +76,7 @@ export class EditorRes {
     chips[colName] = searchOperation;
 
     state.filter = chips;
+    state.refreshData();
   }
 
 
