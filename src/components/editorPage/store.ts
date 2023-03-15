@@ -34,18 +34,9 @@ const { state, onChange, reset } = createStore({
   timeTaken:null,
   refresh:null,
 
-});
-
-onChange('selectedNodeName', value => {
-  fetchData(value);
-});
-
-onChange('order', () => {
-  fetchData(state.selectedNodeName);
-});
-
-onChange('filter', () => {
-  fetchData(state.selectedNodeName);
+  refreshData: async () => {
+    await fetchData(state.selectedNodeName)
+  }
 });
 
 onChange('refresh', () => {
@@ -129,15 +120,6 @@ const fetchData = async (nodeName: string) => {
     state.isLoading = false;
   }
 };
-
-onChange('page', (value) => {
-  state.offset = (state.limit*value)- state.limit;
-  fetchData(state.selectedNodeName);
-});
-
-onChange('limit', () => {
-  fetchData(state.selectedNodeName);
-});
 
 export default state;
 export { fetchData, reset }

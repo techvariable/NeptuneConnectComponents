@@ -30,7 +30,6 @@ export class QueryResultTable {
   @Prop() toggleSortMethod: any;
   @Prop() searchMethod: any;
   @Prop() clearSearch: any;
-  // @Prop() isLoading: boolean;
   @Prop() isLoadingError: boolean;
 
   @State() data: any;
@@ -42,6 +41,21 @@ export class QueryResultTable {
   componentWillRender() {
     this.from = (this.currentPage - 1) * this.limit + 1;
     this.to = this.currentPage * this.limit;
+  }
+  dataFormatter(rawData) {
+    let data: any  = rawData;
+    if(typeof(data) !== 'string' && typeof(data) !== 'number'){
+      data = JSON.stringify(data);
+    }
+    if (data.length > 25) {
+      return data.slice(0, 25) + '...';
+    } else {
+      if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/.test(data)) {
+        return data.slice(0, 16).split('T')[0] + ' at ' + data.slice(11, 19);
+      } else {
+        return data;
+      }
+    }
   }
 
   render() {
@@ -95,17 +109,10 @@ export class QueryResultTable {
                   this.tableBody.map((item: any) => (
                     <tr class="hover:bg-gray-100 transition">
                       {this.tableHeader.map((id: any) => (
-                        // <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item[id.alias]}</td>
                         <td title={item[id.alias]} text-overflow:ellipsis class="px-6 py-3 whitespace-nowrap text-sm text-gray-900">
                           {!id.click.clickable ? (
                             item[id.alias] ? (
-                              item[id.alias].length > 25 ? (
-                                item[id.alias].slice(0, 25) + '...'
-                              ) : /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/.test(item[id.alias]) ? (
-                                item[id.alias].slice(0, 16).split('T')[0] + ' at ' + item[id.alias].slice(11, 19)
-                              ) : (
-                                item[id.alias]
-                              )
+                              this.dataFormatter(item[id.alias])
                             ) : (
                               item[id.alias]
                             )
