@@ -11,16 +11,6 @@ export class TabsComponent {
   @Prop() tabslist: { name: string; className: string }[];
   @Prop() activeIndex: number;
   @Prop() tabClickHandler: any;
-  //   tabClickHandler(item){
-  //     this.tabslist.map(obj=>{
-  //         obj.active=false;
-  //         if(obj.name === item.name){
-  //             obj.active=true;
-  //         }
-  //     })
-  //     const updatedTabs = [...this.tabslist]
-  //     this.tabslist= updatedTabs;
-  //   }
   render() {
     return (
       <div>
