@@ -57,6 +57,12 @@ export class QueryResultTable {
       }
     }
   }
+  dataTypeDetector(data){
+    if(typeof(data) !== 'string' && typeof(data) !== 'number'){
+      return false;
+    }
+    return true
+  }
 
   render() {
     const trList = [];
@@ -78,13 +84,13 @@ export class QueryResultTable {
                   <th scope="col" style={{ minWidth: '120px' }} class="px-6 py-4 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 uppercase tracking-wider">
                     <div style={{ display: 'flex' }}>
                       {item.title}
-                      {item?.filter?.sortable && (
+                      {item?.filter?.sortable && this.dataTypeDetector(this.tableBody[0][item.title]) &&(
                         <button class="ml-3" onClick={() => this.toggleSortMethod(item.title)}>
                           {sort}
                         </button>
                       )}
 
-                      {item?.filter?.searchable && (
+                      {item?.filter?.searchable  && this.dataTypeDetector(this.tableBody[0][item.title]) && (
                         <table-search-modal
                           searchMethod={(value, field, searchoption, textsearchoption, numbersearchoption) =>
                             this.searchMethod(value, field, searchoption, textsearchoption, numbersearchoption)
