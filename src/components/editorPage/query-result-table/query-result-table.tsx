@@ -43,8 +43,8 @@ export class QueryResultTable {
     this.to = this.currentPage * this.limit;
   }
   dataFormatter(rawData) {
-    let data: any  = rawData;
-    if(typeof(data) !== 'string' && typeof(data) !== 'number'){
+    let data: any = rawData;
+    if (typeof data !== 'string' && typeof data !== 'number') {
       data = JSON.stringify(data);
     }
     if (data.length > 25) {
@@ -57,11 +57,11 @@ export class QueryResultTable {
       }
     }
   }
-  dataTypeDetector(data){
-    if(typeof(data) !== 'string' && typeof(data) !== 'number'){
+  dataTypeDetector(data) {
+    if (typeof data !== 'string' && typeof data !== 'number') {
       return false;
     }
-    return true
+    return true;
   }
 
   render() {
@@ -84,13 +84,13 @@ export class QueryResultTable {
                   <th scope="col" style={{ minWidth: '120px' }} class="px-6 py-4 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 uppercase tracking-wider">
                     <div style={{ display: 'flex' }}>
                       {item.title}
-                      {item?.filter?.sortable && this.dataTypeDetector(this.tableBody[0][item.title]) &&(
+                      {item?.filter?.sortable && this.dataTypeDetector(this.tableBody[0][item.title]) && (
                         <button class="ml-3" onClick={() => this.toggleSortMethod(item.title)}>
                           {sort}
                         </button>
                       )}
 
-                      {item?.filter?.searchable  && this.dataTypeDetector(this.tableBody[0][item.title]) && (
+                      {item?.filter?.searchable && this.dataTypeDetector(this.tableBody[0][item.title]) && (
                         <table-search-modal
                           searchMethod={(value, field, searchoption, textsearchoption, numbersearchoption) =>
                             this.searchMethod(value, field, searchoption, textsearchoption, numbersearchoption)
@@ -116,25 +116,13 @@ export class QueryResultTable {
                     <tr class="hover:bg-gray-100 transition">
                       {this.tableHeader.map((id: any) => (
                         <td title={item[id.alias]} text-overflow:ellipsis class="px-6 py-3 whitespace-nowrap text-sm text-gray-900">
-                          {!id.click.clickable ? (
-                            item[id.alias] ? (
-                              this.dataFormatter(item[id.alias])
-                            ) : (
-                              item[id.alias]
-                            )
-                          ) : (
-                            <a target="_blank" href={id.click.url + item[id.alias]} class="flex items-center py-1 px-4 text-base font-normal text-gray-900 rounded-lg bg-gray-200">
-                              <img class="h-4" src={id.click.icon} alt="icon" />
-                              <span class="px-2 ">View</span>
-                            </a>
-                          )}
+                          <table-data item={item} dataId={id} dataFormatter={this.dataFormatter}></table-data>
                         </td>
                       ))}
                     </tr>
                   ))}
               </tbody>
             )}
-
           </table>
         </div>
 

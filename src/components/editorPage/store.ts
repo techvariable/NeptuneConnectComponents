@@ -63,7 +63,6 @@ onChange('nodes', value => {
 
     return {
       alias: k,
-      click: { clickable: false },
       filter: {
         searchable: state.selectedNodeName ? true : false,
         sortable: state.selectedNodeName ? true : false,

@@ -193,6 +193,11 @@ export namespace Components {
     }
     interface TabComponent {
     }
+    interface TableData {
+        "dataFormatter": any;
+        "dataId": any;
+        "item": {};
+    }
     interface TableSearchModal {
         "alias": string;
         "clearSearch": any;
@@ -481,6 +486,12 @@ declare global {
         prototype: HTMLTabComponentElement;
         new (): HTMLTabComponentElement;
     };
+    interface HTMLTableDataElement extends Components.TableData, HTMLStencilElement {
+    }
+    var HTMLTableDataElement: {
+        prototype: HTMLTableDataElement;
+        new (): HTMLTableDataElement;
+    };
     interface HTMLTableSearchModalElement extends Components.TableSearchModal, HTMLStencilElement {
     }
     var HTMLTableSearchModalElement: {
@@ -570,6 +581,7 @@ declare global {
         "radio-button-multiple": HTMLRadioButtonMultipleElement;
         "side-bar": HTMLSideBarElement;
         "tab-component": HTMLTabComponentElement;
+        "table-data": HTMLTableDataElement;
         "table-search-modal": HTMLTableSearchModalElement;
         "tabs-component": HTMLTabsComponentElement;
         "text-field": HTMLTextFieldElement;
@@ -768,6 +780,11 @@ declare namespace LocalJSX {
     }
     interface TabComponent {
     }
+    interface TableData {
+        "dataFormatter"?: any;
+        "dataId"?: any;
+        "item"?: {};
+    }
     interface TableSearchModal {
         "alias"?: string;
         "clearSearch"?: any;
@@ -855,6 +872,7 @@ declare namespace LocalJSX {
         "radio-button-multiple": RadioButtonMultiple;
         "side-bar": SideBar;
         "tab-component": TabComponent;
+        "table-data": TableData;
         "table-search-modal": TableSearchModal;
         "tabs-component": TabsComponent;
         "text-field": TextField;
@@ -909,6 +927,7 @@ declare module "@stencil/core" {
             "radio-button-multiple": LocalJSX.RadioButtonMultiple & JSXBase.HTMLAttributes<HTMLRadioButtonMultipleElement>;
             "side-bar": LocalJSX.SideBar & JSXBase.HTMLAttributes<HTMLSideBarElement>;
             "tab-component": LocalJSX.TabComponent & JSXBase.HTMLAttributes<HTMLTabComponentElement>;
+            "table-data": LocalJSX.TableData & JSXBase.HTMLAttributes<HTMLTableDataElement>;
             "table-search-modal": LocalJSX.TableSearchModal & JSXBase.HTMLAttributes<HTMLTableSearchModalElement>;
             "tabs-component": LocalJSX.TabsComponent & JSXBase.HTMLAttributes<HTMLTabsComponentElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
