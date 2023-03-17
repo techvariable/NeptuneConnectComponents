@@ -26,7 +26,6 @@ export class AddRole {
         roleName: this.value,
       });
       await this.refresh();
-
       Swal.fire({
         position: 'center',
         icon: 'success',
@@ -34,14 +33,13 @@ export class AddRole {
         showConfirmButton: false,
         timer: 1500,
       });
-
       this.value = '';
       this.toggleModalState();
     } catch (error) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Something went wrong!',
+        text: error?.response?.data || "Failed to create a new role",
       });
     }
   }

@@ -12,6 +12,7 @@ export class ProfileComponent {
   @Prop() url : string;
   @State() user: any;
   @State() password : string= "";
+  @State() repassword : string= "";
   @State() name : string = "";
   @State() error:any = null;
 
@@ -26,12 +27,16 @@ export class ProfileComponent {
     if(this.name === ""){
       this.error = "User name is empty"
     }
-    if(this.password.length < 7){
+    else if(this.password.length < 7){
       this.error = "Password length is less than 7 characters"
     }
     else if(!this.password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)){
       this.error = "Password does not contain any special character"
-    }else{
+    }
+    else if(this.password !== this.repassword){
+      this.error = "Password does not match with re-entered password"
+    }
+    else{
       try {
         await axios
           .put(`${this.url}api/users/password`, {
@@ -62,6 +67,9 @@ export class ProfileComponent {
   }
   passwordHandler(e){
     this.password = e.target.value;
+  }
+  repasswordHandler(e){
+    this.repassword = e.target.value;
   }
   nameChangeHandler(e){
     this.name = e.target.value;
@@ -110,6 +118,20 @@ export class ProfileComponent {
                 value={this.password}
               />
               <p class="text-gray-600 text-xs italic">Enter updated password</p>
+            </div>
+          </div>
+          <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full px-3">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Re-enter Password</label>
+              <input
+                onInput={e=>this.repasswordHandler(e)}
+                class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="grid-password"
+                type="password"
+                placeholder="******************"
+                value={this.repassword}
+              />
+              <p class="text-gray-600 text-xs italic">Re-enter the password</p>
             </div>
           </div>
           <div class="flex flex-row-reverse -mx-3 mb-6 ">
