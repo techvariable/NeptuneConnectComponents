@@ -10,7 +10,7 @@
 | Property | Attribute | Description | Type     | Default     |
 | -------- | --------- | ----------- | -------- | ----------- |
 | `url`    | `url`     |             | `string` | `undefined` |
-| `user`   | `user`    |             | `number` | `undefined` |
+| `user`   | `user`    |             | `string` | `undefined` |
 
 
 ## Dependencies

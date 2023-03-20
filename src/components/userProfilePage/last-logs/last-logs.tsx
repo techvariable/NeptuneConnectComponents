@@ -7,7 +7,7 @@ import axios from 'axios';
 })
 export class LastLogs {
   @Prop() url:string;
-  @Prop() user:number;
+  @Prop() user:string;
   @State() isLoading = false;
   @State() isLoadingError = false;
   @State() total:any = null;
@@ -109,7 +109,7 @@ export class LastLogs {
     this.isLoading = true;
     this.isLoadingError = false;
     try {
-      const response =await axios.get(`${this.url}api/editor/query/logs?limit=49&offset=0&filter_ownerId=${this.user}&order=desc`)
+      const response =await axios.get(`${this.url}api/editor/query/logs?limit=49&offset=0&filter_email=${this.user}&order=desc`)
       response.data.respond.map(item=>{item.isCustomQuery===true? item["isCustomQuery"]="Custom Query": item["isCustomQuery"]="Builder Query"});
       this.total = response.data.total;
       this.total = response.data.total;
