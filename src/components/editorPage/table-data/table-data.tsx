@@ -10,9 +10,11 @@ export class TableData {
   @Prop() dataId: any;
   @Prop() dataFormatter: any;
   @State() disabledEdit: boolean = true;
+  @State() disableInputState:boolean = true;
 
   componentWillLoad() {
-    console.log('item', this.item, 'dataId', this.dataId, 'dataFormatter', this.dataFormatter);
+    this.disableInputState = typeof this.item[this.dataId.alias] !== 'string' && typeof this.item[this.dataId.alias] !== 'number' && this.disabledEdit;
+    console.log("This is the state:=====================>",this.disableInputState);
   }
 
   render() {
@@ -21,12 +23,13 @@ export class TableData {
         <input
           onClick={() => (this.disabledEdit = false)}
           onBlur={() => (this.disabledEdit = true)}
-          class="appearance-none block w-full text-gray-700 focus:border-2 py-1 px-2 rounded leading-tight focus:outline- focus:bg-white focus:border-gray-400"
+          style={{outlineColor: "#e9e9e9"}}
+          class="appearance-none block w-full text-gray-700 focus:border-2 py-1 px-2 rounded leading-tight focus:outline outline-gray-200 focus:bg-white focus:border-gray-400"
           id="table-data"
           type="text"
           placeholder="Enter data"
-          disabled={typeof this.item[this.dataId.alias] !== 'string' && typeof this.item[this.dataId.alias] !== 'number'}
-          value={this.item[this.dataId.alias] ? this.dataFormatter(this.item[this.dataId.alias]) : this.item[this.dataId.alias]}
+          disabled={this.disableInputState}
+          value={this.item[this.dataId.alias] ? (this.disableInputState === true ?this.dataFormatter(this.item[this.dataId.alias]):this.item[this.dataId.alias]) : this.item[this.dataId.alias]}
         />
       </Host>
     );

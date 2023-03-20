@@ -33,16 +33,17 @@
 ### Depends on
 
 - [table-search-modal](../table-search-modal)
-- [table-data](../table-data)
+- [table-data-rows](../table-data-rows)
 - [plain-button](../../common/plain-button)
 
 ### Graph
 ```mermaid
 graph TD;
   query-result-table --> table-search-modal
-  query-result-table --> table-data
+  query-result-table --> table-data-rows
   query-result-table --> plain-button
   table-search-modal --> radio-button-multiple
+  table-data-rows --> table-data
   editor-res --> query-result-table
   style query-result-table fill:#f9f,stroke:#333,stroke-width:4px
 ```

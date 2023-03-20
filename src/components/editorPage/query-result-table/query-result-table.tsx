@@ -63,6 +63,25 @@ export class QueryResultTable {
     }
     return true;
   }
+  // toggleButtonHandler(){
+  //   if(this.selectedOption === 'readOnly'){
+  //     this.selectedOption = 'edit';
+  //   }else{
+  //     this.selectedOption = 'readOnly';
+  //   }
+  // }
+  // tableRowFunction(item){
+  //   return(
+  //     <tr>
+  //         <td>hi</td>
+  //         {this.tableHeader.map((id: any) => (
+  //           <td title={item[id.alias]} text-overflow:ellipsis class="hover:bg-gray-100 px-6 py-3 whitespace-nowrap text-sm text-gray-900">
+  //             <table-data item={item} dataId={id} dataFormatter={this.dataFormatter}></table-data>
+  //           </td>
+  //         ))}
+  //     </tr>
+  //   )
+  // }
 
   render() {
     const trList = [];
@@ -80,6 +99,9 @@ export class QueryResultTable {
             {/* Table Head */}
             <thead class="bg-gray-100 sticky top-0">
               <tr>
+                <th scope="col" style={{ minWidth: '120px' }} class="px-6 py-4 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 uppercase tracking-wider">
+                  Operations
+                </th>
                 {this.tableHeader.map((item: any) => (
                   <th scope="col" style={{ minWidth: '120px' }} class="px-6 py-4 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 uppercase tracking-wider">
                     <div style={{ display: 'flex' }}>
@@ -113,13 +135,22 @@ export class QueryResultTable {
                 {this.tableBody &&
                   !this.isLoadingError &&
                   this.tableBody.map((item: any) => (
-                    <tr class="hover:bg-gray-100 transition">
-                      {this.tableHeader.map((id: any) => (
-                        <td title={item[id.alias]} text-overflow:ellipsis class="px-6 py-3 whitespace-nowrap text-sm text-gray-900">
-                          <table-data item={item} dataId={id} dataFormatter={this.dataFormatter}></table-data>
-                        </td>
-                      ))}
+                    // this.tableRowFunction(item)
+
+                    <tr>
+                        <table-data-rows tableHeader={this.tableHeader} item={item} dataFormatter={this.dataFormatter}></table-data-rows>
                     </tr>
+
+                    // <tr class="transition">
+                    //   <td>
+                    //     hi
+                    //   </td>
+                    //   {this.tableHeader.map((id: any) => (
+                    //     <td title={item[id.alias]} text-overflow:ellipsis class="hover:bg-gray-100 px-6 py-3 whitespace-nowrap text-sm text-gray-900">
+                    //       <table-data item={item} dataId={id} dataFormatter={this.dataFormatter}></table-data>
+                    //     </td>
+                    //   ))}
+                    // </tr>
                   ))}
               </tbody>
             )}

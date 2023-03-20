@@ -1,4 +1,4 @@
-# table-data
+# table-data-rows
 
 
 
@@ -10,21 +10,26 @@
 | Property        | Attribute        | Description | Type  | Default     |
 | --------------- | ---------------- | ----------- | ----- | ----------- |
 | `dataFormatter` | `data-formatter` |             | `any` | `undefined` |
-| `dataId`        | `data-id`        |             | `any` | `undefined` |
-| `item`          | --               |             | `{}`  | `undefined` |
+| `item`          | `item`           |             | `any` | `undefined` |
+| `tableHeader`   | `table-header`   |             | `any` | `undefined` |
 
 
 ## Dependencies
 
 ### Used by
 
- - [table-data-rows](../table-data-rows)
+ - [query-result-table](../query-result-table)
+
+### Depends on
+
+- [table-data](../table-data)
 
 ### Graph
 ```mermaid
 graph TD;
   table-data-rows --> table-data
-  style table-data fill:#f9f,stroke:#333,stroke-width:4px
+  query-result-table --> table-data-rows
+  style table-data-rows fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
