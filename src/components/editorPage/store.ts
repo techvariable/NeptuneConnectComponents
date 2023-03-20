@@ -75,6 +75,7 @@ onChange('nodes', value => {
 });
 
 onChange('query', value => {
+  console.log("l;kasjdkjashkdkjashdkk")
   if (state.viewQuery) {
     let transactionToAdd = state.viewQuery.state.update({
       changes: { from: 0, to: state.viewQuery.state.doc.toString().length, insert: `${value}` },
@@ -111,6 +112,15 @@ const fetchData = async (nodeName: string) => {
       state.total = res.data.count;
       state.query = formatQuery(res.data.query);
       state.queryParameter = formatJSON(res.data.queryParameters);
+      let transactionToAddQuery = state.viewQuery.state.update({
+        changes: { from: 0, to: state.viewQuery.state.doc.toString().length, insert: state.query },
+      });
+      state.viewQuery.dispatch(transactionToAddQuery);
+
+      let transactionToAddParameter = state.viewParameter.state.update({
+        changes: { from: 0, to: state.viewParameter.state.doc.toString().length, insert: state.queryParameter },
+      });
+      state.viewParameter.dispatch(transactionToAddParameter);
       state.timeTaken = res.data.timeTaken;
       state.isFetchedData = true;
     } catch (error) {

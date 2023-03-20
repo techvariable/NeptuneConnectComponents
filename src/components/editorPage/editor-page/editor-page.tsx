@@ -87,14 +87,16 @@ export class EditorPage {
           state.errorMessage = error;
         }
       } catch (error) {
+        console.log({ error })
         state.isError = true;
-        state.errorMessage = error?.response?.data?.message ? error.response.data.message : 'Failed to fetch data from db server.';
+        state.errorMessage = error?.response?.data?.error ? error.response.data.error : 'Failed to fetch data from db server.';
       }
       state.isLoading = false;
     }
   };
 
   render() {
+    console.debug({state})
     return (
       <div>
         <div class="w-full md:flex  justify-center gap-4 mt-4">
