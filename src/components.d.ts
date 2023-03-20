@@ -196,6 +196,7 @@ export namespace Components {
     interface TableData {
         "dataFormatter": any;
         "dataId": any;
+        "editMode": boolean;
         "item": {};
     }
     interface TableDataRows {
@@ -795,6 +796,7 @@ declare namespace LocalJSX {
     interface TableData {
         "dataFormatter"?: any;
         "dataId"?: any;
+        "editMode"?: boolean;
         "item"?: {};
     }
     interface TableDataRows {

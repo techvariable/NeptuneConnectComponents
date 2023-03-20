@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property        | Attribute        | Description | Type  | Default     |
-| --------------- | ---------------- | ----------- | ----- | ----------- |
-| `dataFormatter` | `data-formatter` |             | `any` | `undefined` |
-| `dataId`        | `data-id`        |             | `any` | `undefined` |
-| `item`          | --               |             | `{}`  | `undefined` |
+| Property        | Attribute        | Description | Type      | Default     |
+| --------------- | ---------------- | ----------- | --------- | ----------- |
+| `dataFormatter` | `data-formatter` |             | `any`     | `undefined` |
+| `dataId`        | `data-id`        |             | `any`     | `undefined` |
+| `editMode`      | `edit-mode`      |             | `boolean` | `undefined` |
+| `item`          | --               |             | `{}`      | `undefined` |
 
 
 ## Dependencies

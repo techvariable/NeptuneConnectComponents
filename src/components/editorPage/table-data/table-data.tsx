@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State } from '@stencil/core';
+import { Component, Host, h, Prop, State,Watch } from '@stencil/core';
 
 @Component({
   tag: 'table-data',
@@ -9,11 +9,20 @@ export class TableData {
   @Prop() item: {};
   @Prop() dataId: any;
   @Prop() dataFormatter: any;
+  @Prop() editMode:boolean;
   @State() disabledEdit: boolean = true;
   @State() disableInputState:boolean = true;
+  @Watch('editMode')
+  validateDate(newValue, oldValue) {
+      if(newValue !== oldValue) {
+        console.log("Edit mode",this.editMode);
+      this.disableInputState = typeof this.item[this.dataId.alias] !== 'string' && typeof this.item[this.dataId.alias] !== 'number' && this.disabledEdit || !this.editMode;
+      console.log("This is the state:=====================>",this.disableInputState);
+      }
+  }
 
   componentWillLoad() {
-    this.disableInputState = typeof this.item[this.dataId.alias] !== 'string' && typeof this.item[this.dataId.alias] !== 'number' && this.disabledEdit;
+    this.disableInputState = typeof this.item[this.dataId.alias] !== 'string' && typeof this.item[this.dataId.alias] !== 'number' && this.disabledEdit && !this.editMode;
     console.log("This is the state:=====================>",this.disableInputState);
   }
 

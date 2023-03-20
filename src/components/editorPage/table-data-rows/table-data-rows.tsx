@@ -36,18 +36,18 @@ export class TableDataRows {
               </button>
             </div>
           ) : (
-            <button onClick={() => (this.editMode = false)}>
-              <div class="flex justify-center" >
+            <div class="flex justify-center">
+              <button onClick={() => (this.editMode = false)}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-              </div>
-            </button>
+              </button>
+            </div>
           )}
         </td>
         {this.tableHeader.map((id: any) => (
           <td title={this.item[id.alias]} text-overflow:ellipsis class="hover:bg-gray-50 px-6 py-3 whitespace-nowrap text-sm text-gray-900">
-            <table-data item={this.item} dataId={id} dataFormatter={this.dataFormatter}></table-data>
+            <table-data editMode={this.editMode} item={this.item} dataId={id} dataFormatter={this.dataFormatter}></table-data>
           </td>
         ))}
       </Host>
