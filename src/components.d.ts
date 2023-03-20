@@ -84,7 +84,7 @@ export namespace Components {
     }
     interface LastLogs {
         "url": string;
-        "user": number;
+        "user": string;
     }
     interface LoaderComponent {
     }
@@ -683,7 +683,7 @@ declare namespace LocalJSX {
     }
     interface LastLogs {
         "url"?: string;
-        "user"?: number;
+        "user"?: string;
     }
     interface LoaderComponent {
     }

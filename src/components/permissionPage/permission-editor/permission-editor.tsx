@@ -137,10 +137,12 @@ export class PermissionEditor {
         }
         
       } catch (err) {
-        console.error(err);
         if(err.response.data.isDeleted === false){
           this.isLoading = false;
           this.errorMessage = `${err.response.data.deletedPermissionName} is assigned to  ${err.response.data.usersWithAssignedRole.length} user with email \n\n ${err.response.data.usersWithAssignedRole.join(',')}`;  
+        }else if(err.response.data.message){
+          this.isLoading = false;
+          this.errorMessage = `${err.response.data.message}`
         }
       }
       this.isLoading = false;
