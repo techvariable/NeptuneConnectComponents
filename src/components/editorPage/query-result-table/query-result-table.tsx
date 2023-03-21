@@ -37,6 +37,11 @@ export class QueryResultTable {
   @State() to: number;
   @State() isSearchMenuOpen = false;
   @State() value: string;
+  @State() isModalOpen:boolean = false;
+
+  toggleModalState = ()=> {
+    this.isModalOpen = !this.isModalOpen;
+  }
 
   componentWillRender() {
     this.from = (this.currentPage - 1) * this.limit + 1;
@@ -63,25 +68,6 @@ export class QueryResultTable {
     }
     return true;
   }
-  // toggleButtonHandler(){
-  //   if(this.selectedOption === 'readOnly'){
-  //     this.selectedOption = 'edit';
-  //   }else{
-  //     this.selectedOption = 'readOnly';
-  //   }
-  // }
-  // tableRowFunction(item){
-  //   return(
-  //     <tr>
-  //         <td>hi</td>
-  //         {this.tableHeader.map((id: any) => (
-  //           <td title={item[id.alias]} text-overflow:ellipsis class="hover:bg-gray-100 px-6 py-3 whitespace-nowrap text-sm text-gray-900">
-  //             <table-data item={item} dataId={id} dataFormatter={this.dataFormatter}></table-data>
-  //           </td>
-  //         ))}
-  //     </tr>
-  //   )
-  // }
 
   render() {
     const trList = [];
@@ -94,10 +80,14 @@ export class QueryResultTable {
     }
     return (
       <div style={{ overflowY: 'auto' }}>
+        <div class="z-30">
+        <edit-table-modal isModalOpen={this.isModalOpen} toggleModalState={this.toggleModalState}></edit-table-modal>
+        </div>
         <div style={{ maxHeight: '20rem', overflow: 'auto' }}>
           <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative">
             {/* Table Head */}
-            <thead class="bg-gray-100 sticky top-0">
+            <thead class="bg-gray-100 sticky top-0 z-10">
+            <edit-table-modal isModalOpen={this.isModalOpen} toggleModalState={this.toggleModalState}></edit-table-modal>
               <tr>
                 <th scope="col" style={{ minWidth: '120px' }} class="px-6 py-4 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 uppercase tracking-wider">
                   Operations
@@ -134,23 +124,10 @@ export class QueryResultTable {
                 {/* loaded body */}
                 {this.tableBody &&
                   !this.isLoadingError &&
-                  this.tableBody.map((item: any) => (
-                    // this.tableRowFunction(item)
-
+                  this.tableBody.map((item: any, index: number) => (
                     <tr>
-                        <table-data-rows tableHeader={this.tableHeader} item={item} dataFormatter={this.dataFormatter}></table-data-rows>
+                        <table-data-rows rowId={index} tableHeader={this.tableHeader} item={item} dataFormatter={this.dataFormatter} isModalOpen={this.isModalOpen} toggleModalState={this.toggleModalState}></table-data-rows>
                     </tr>
-
-                    // <tr class="transition">
-                    //   <td>
-                    //     hi
-                    //   </td>
-                    //   {this.tableHeader.map((id: any) => (
-                    //     <td title={item[id.alias]} text-overflow:ellipsis class="hover:bg-gray-100 px-6 py-3 whitespace-nowrap text-sm text-gray-900">
-                    //       <table-data item={item} dataId={id} dataFormatter={this.dataFormatter}></table-data>
-                    //     </td>
-                    //   ))}
-                    // </tr>
                   ))}
               </tbody>
             )}

@@ -50,6 +50,10 @@ export namespace Components {
         "clearSearch": any;
         "searchMethod": any;
     }
+    interface EditTableModal {
+        "isModalOpen": boolean;
+        "toggleModalState": any;
+    }
     interface EditUser {
         "ismodelopen": boolean;
         "toggle": () => void;
@@ -197,12 +201,17 @@ export namespace Components {
         "dataFormatter": any;
         "dataId": any;
         "editMode": boolean;
+        "fieldName": string;
         "item": {};
+        "rowId": number;
     }
     interface TableDataRows {
         "dataFormatter": any;
+        "isModalOpen": boolean;
         "item": any;
+        "rowId": number;
         "tableHeader": any;
+        "toggleModalState": any;
     }
     interface TableSearchModal {
         "alias": string;
@@ -317,6 +326,12 @@ declare global {
     var HTMLDropDownElement: {
         prototype: HTMLDropDownElement;
         new (): HTMLDropDownElement;
+    };
+    interface HTMLEditTableModalElement extends Components.EditTableModal, HTMLStencilElement {
+    }
+    var HTMLEditTableModalElement: {
+        prototype: HTMLEditTableModalElement;
+        new (): HTMLEditTableModalElement;
     };
     interface HTMLEditUserElement extends Components.EditUser, HTMLStencilElement {
     }
@@ -564,6 +579,7 @@ declare global {
         "dialog-component": HTMLDialogComponentElement;
         "download-result-modal": HTMLDownloadResultModalElement;
         "drop-down": HTMLDropDownElement;
+        "edit-table-modal": HTMLEditTableModalElement;
         "edit-user": HTMLEditUserElement;
         "editor-json-response-viewer": HTMLEditorJsonResponseViewerElement;
         "editor-page": HTMLEditorPageElement;
@@ -649,6 +665,10 @@ declare namespace LocalJSX {
         "alias"?: string;
         "clearSearch"?: any;
         "searchMethod"?: any;
+    }
+    interface EditTableModal {
+        "isModalOpen"?: boolean;
+        "toggleModalState"?: any;
     }
     interface EditUser {
         "ismodelopen"?: boolean;
@@ -797,12 +817,17 @@ declare namespace LocalJSX {
         "dataFormatter"?: any;
         "dataId"?: any;
         "editMode"?: boolean;
+        "fieldName"?: string;
         "item"?: {};
+        "rowId"?: number;
     }
     interface TableDataRows {
         "dataFormatter"?: any;
+        "isModalOpen"?: boolean;
         "item"?: any;
+        "rowId"?: number;
         "tableHeader"?: any;
+        "toggleModalState"?: any;
     }
     interface TableSearchModal {
         "alias"?: string;
@@ -862,6 +887,7 @@ declare namespace LocalJSX {
         "dialog-component": DialogComponent;
         "download-result-modal": DownloadResultModal;
         "drop-down": DropDown;
+        "edit-table-modal": EditTableModal;
         "edit-user": EditUser;
         "editor-json-response-viewer": EditorJsonResponseViewer;
         "editor-page": EditorPage;
@@ -918,6 +944,7 @@ declare module "@stencil/core" {
             "dialog-component": LocalJSX.DialogComponent & JSXBase.HTMLAttributes<HTMLDialogComponentElement>;
             "download-result-modal": LocalJSX.DownloadResultModal & JSXBase.HTMLAttributes<HTMLDownloadResultModalElement>;
             "drop-down": LocalJSX.DropDown & JSXBase.HTMLAttributes<HTMLDropDownElement>;
+            "edit-table-modal": LocalJSX.EditTableModal & JSXBase.HTMLAttributes<HTMLEditTableModalElement>;
             "edit-user": LocalJSX.EditUser & JSXBase.HTMLAttributes<HTMLEditUserElement>;
             "editor-json-response-viewer": LocalJSX.EditorJsonResponseViewer & JSXBase.HTMLAttributes<HTMLEditorJsonResponseViewerElement>;
             "editor-page": LocalJSX.EditorPage & JSXBase.HTMLAttributes<HTMLEditorPageElement>;

@@ -21,6 +21,7 @@
 graph TD;
   editor-res --> chips-list
   editor-res --> query-result-table
+  query-result-table --> edit-table-modal
   query-result-table --> table-search-modal
   query-result-table --> table-data-rows
   query-result-table --> plain-button

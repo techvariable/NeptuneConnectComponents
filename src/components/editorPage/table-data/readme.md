@@ -12,7 +12,9 @@
 | `dataFormatter` | `data-formatter` |             | `any`     | `undefined` |
 | `dataId`        | `data-id`        |             | `any`     | `undefined` |
 | `editMode`      | `edit-mode`      |             | `boolean` | `undefined` |
+| `fieldName`     | `field-name`     |             | `string`  | `undefined` |
 | `item`          | --               |             | `{}`      | `undefined` |
+| `rowId`         | `row-id`         |             | `number`  | `undefined` |
 
 
 ## Dependencies

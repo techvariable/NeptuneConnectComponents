@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
+import state from '../store';
 
 @Component({
   tag: 'table-data-rows',
@@ -9,14 +10,41 @@ export class TableDataRows {
   @Prop() tableHeader: any;
   @Prop() item: any;
   @Prop() dataFormatter: any;
+  @Prop() rowId:number;
   @State() editMode: boolean = false;
+  @Prop() isModalOpen:boolean;
+  @Prop() toggleModalState:any;
+
+  // toggleModalState = ()=> {
+  //   this.isModalOpen = !this.isModalOpen;
+  // }
+
+  editModeEnabler(){
+    if(state.tableEditMode === true){
+      state.tableEditMode = false;
+      this.editMode = true
+      state.changedFieldValues = [];
+    } 
+  }
+  editSubmitter(){
+    state.tableEditMode = true;
+    this.editMode = false
+    console.log("This is store values for a row",state.changedFieldValues);
+    this.toggleModalState();
+  }
+  editModeCancel(){
+    state.tableEditMode = true
+    this.editMode = false
+    state.changedFieldValues = [];
+  }
+
   render() {
     return (
       <Host>
-        <td class="hover:bg-gray-50 px-6 py-3 whitespace-nowrap text-sm text-gray-900">
+        <td class="hover:bg-gray-50 px-3 py-3 whitespace-nowrap text-sm text-gray-900">
           {this.editMode === false ? (
             <div class="flex" style={{ justifyContent: 'space-evenly' }}>
-              <button onClick={() => (this.editMode = true)}>
+              <button class="disabled:opacity-50" disabled={state.tableEditMode === false} onClick={() => this.editModeEnabler()} title='Edit'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                   <path
                     stroke-linecap="round"
@@ -25,7 +53,7 @@ export class TableDataRows {
                   />
                 </svg>
               </button>
-              <button>
+              <button class="disabled:opacity-50" disabled={state.tableEditMode === false} title='Delete'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                   <path
                     stroke-linecap="round"
@@ -36,18 +64,24 @@ export class TableDataRows {
               </button>
             </div>
           ) : (
-            <div class="flex justify-center">
-              <button onClick={() => (this.editMode = false)}>
+            <div class="flex" style={{ justifyContent: 'space-evenly' }}>
+              <button title='Save' onClick={() => this.editSubmitter()}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </button>
+              <button title='Cancel' onClick={() => this.editModeCancel()}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
           )}
         </td>
         {this.tableHeader.map((id: any) => (
-          <td title={this.item[id.alias]} text-overflow:ellipsis class="hover:bg-gray-50 px-6 py-3 whitespace-nowrap text-sm text-gray-900">
-            <table-data editMode={this.editMode} item={this.item} dataId={id} dataFormatter={this.dataFormatter}></table-data>
+          <td title={this.item[id.alias]} text-overflow:ellipsis class="hover:bg-gray-50 px-3 py-3 whitespace-nowrap text-sm text-gray-900">
+            {/* {console.log("Row id:",this.rowId,"Field name",this.item[id.alias])} */}
+            <table-data rowId={this.rowId} fieldName={id.alias} editMode={this.editMode} item={this.item} dataId={id} dataFormatter={this.dataFormatter}></table-data>
           </td>
         ))}
       </Host>

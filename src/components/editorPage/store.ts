@@ -34,6 +34,10 @@ const { state, onChange, reset } = createStore({
   timeTaken:null,
   refresh:null,
 
+  // table state
+  tableEditMode: true,
+  changedFieldValues:[],
+
   refreshData: async () => {
     await fetchData(state.selectedNodeName)
   }

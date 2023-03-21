@@ -32,6 +32,7 @@
 
 ### Depends on
 
+- [edit-table-modal](../edit-table-modal)
 - [table-search-modal](../table-search-modal)
 - [table-data-rows](../table-data-rows)
 - [plain-button](../../common/plain-button)
@@ -39,6 +40,7 @@
 ### Graph
 ```mermaid
 graph TD;
+  query-result-table --> edit-table-modal
   query-result-table --> table-search-modal
   query-result-table --> table-data-rows
   query-result-table --> plain-button
