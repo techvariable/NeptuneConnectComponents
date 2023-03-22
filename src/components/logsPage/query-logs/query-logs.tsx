@@ -9,17 +9,6 @@ import state from '../../editorPage/store';
 export class QueryLogs {
   @State() headerList = [
     {
-      title: 'id',
-      filter: {
-        searchable: false,
-        sortable: false,
-      },
-      alias: 'id',
-      click: {
-        clickable: false,
-      },
-    },
-    {
       title: 'query_text',
       filter: {
         searchable: false,
@@ -130,6 +119,8 @@ export class QueryLogs {
       }
     }
     const result = await axios.get(`${state.url}/api/editor/query/logs?${filterPar}`);
+
+    // const result = await axios.get(`http://localhost:3000/api/editor/query/logs?${filterPar}`);
 
     return {
       total: result.data.total,
