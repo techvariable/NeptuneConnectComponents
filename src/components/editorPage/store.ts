@@ -75,7 +75,6 @@ onChange('nodes', value => {
 });
 
 onChange('query', value => {
-  console.log("l;kasjdkjashkdkjashdkk")
   if (state.viewQuery) {
     let transactionToAdd = state.viewQuery.state.update({
       changes: { from: 0, to: state.viewQuery.state.doc.toString().length, insert: `${value}` },
