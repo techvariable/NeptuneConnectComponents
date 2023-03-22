@@ -49,7 +49,6 @@ export class LogsTable {
           return item[id.alias].slice(0, 25) + '...';
         } else {
           if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/.test(item[id.alias])) {
-            console.log(new Date(item[id.alias]).toString())
             return new Date(item[id.alias]).toString().split('(')[0]
           } else {
             if (id.alias === 'timeTaken') {

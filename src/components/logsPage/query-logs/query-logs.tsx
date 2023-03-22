@@ -120,9 +120,6 @@ export class QueryLogs {
       }
     }
     const result = await axios.get(`${state.url}/api/editor/query/logs?${filterPar}`);
-
-    // const result = await axios.get(`http://localhost:3000/api/editor/query/logs?${filterPar}`);
-
     return {
       total: result.data.total,
       data: result.data,
