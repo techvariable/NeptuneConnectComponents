@@ -3,6 +3,8 @@ import { Component, h, Prop, State } from '@stencil/core';
 
 import { isValidParameterJson } from '../../../utils/utils';
 import state from '../store';
+import { formatQuery } from 'gremlint';
+import { formatJSON } from '../../../utils/utils';
 
 @Component({
   tag: 'editor-page',
@@ -44,12 +46,28 @@ export class EditorPage {
       });
   };
 
-  // animatingClass = ``
-
   btnClassType = {
     true: `mr-4 animate-spin`,
     false: `mr-4`,
   };
+
+  formatter = () => {
+    let transactionQuery = state.viewQuery.state.update();
+    const query = transactionQuery.state.doc.toString().trim();
+
+    let transactionToFormatQuery = state.viewQuery.state.update({
+      changes: { from: 0, to: state.viewQuery.state.doc.toString().length, insert: `${formatQuery(query)}` },
+    }); 
+    state.viewQuery.dispatch(transactionToFormatQuery);
+
+    let transactionParameter = state.viewParameter.state.update();
+    const parameter = transactionParameter.state.doc.toString().trim();
+
+    let transactionToFormatParameter = state.viewParameter.state.update({
+      changes: { from: 0, to: state.viewParameter.state.doc.toString().length, insert: `${formatJSON(JSON.parse(parameter))}` },
+    });
+    state.viewParameter.dispatch(transactionToFormatParameter);
+  }
 
   onClickRun = async () => {
     if (state.syncVal !== '') {
@@ -82,13 +100,15 @@ export class EditorPage {
           state.nodes = res.data.result;
           state.timeTaken = res.data.timeTaken;
           state.isFetchedData = true;
+          this.formatter();
         } else {
           state.isError = true;
           state.errorMessage = error;
         }
       } catch (error) {
+        console.log({ error })
         state.isError = true;
-        state.errorMessage = error?.response?.data?.message ? error.response.data.message : 'Failed to fetch data from db server.';
+        state.errorMessage = error?.response?.data?.error ? error.response.data.error : 'Failed to fetch data from db server.';
       }
       state.isLoading = false;
     }
@@ -97,7 +117,7 @@ export class EditorPage {
   render() {
     return (
       <div>
-        <div class="w-full md:flex  justify-center gap-4 mt-4">
+        <div class="w-full md:flex justify-center gap-4 mt-4">
           <div>
             <aside class="w-full md:w-80" aria-label="Sidebar">
               <div class="w-full flex justify-between mb-4">
@@ -119,7 +139,7 @@ export class EditorPage {
           </div>
           <div class="w-full md:w-3/4">
             <h2 class="pb-3 font-mono text-lg font-bold leading-7 text-gray-600">Write your Gremlin Query Here</h2>
-            <code-editor onClickRun={this.onClickRun}></code-editor>
+            <code-editor formatter={this.formatter} onClickRun={this.onClickRun}></code-editor>
             {state.isFetchedData && state.nodes.length === 0 && !state.isLoading && !state.isError && (
               <div class="flex items-center bg-gray-500 text-white text-sm font-bold px-4 py-3" role="alert">
                 <p>No Data Found in Database</p>
