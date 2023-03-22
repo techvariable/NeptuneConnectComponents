@@ -59,12 +59,17 @@ export class LogsTable {
           }
         }
       } else {
+        if (id.alias === 'queryResult') {
         return (
           <a target="_blank" href={id.click.url + item[id.alias]} class="flex items-center py-1 px-4 text-base font-normal text-gray-900 rounded-lg bg-gray-200">
             <img class="h-4" src={id.click.icon} alt="icon" />
             <span class="px-2 ">View</span>
           </a>
-        );
+        )}else if(id.alias === 'email'){
+          return (<a target="_blank" href={id.click.url + item['ownerId']}>
+            <span class="px-2 ">{item[id.alias]}</span>
+          </a>)
+        }
       }
     }
   }

@@ -71,7 +71,8 @@ export class QueryLogs {
       },
       alias: 'email',
       click: {
-        clickable: false,
+        clickable: true,
+        url: '/users/',
       },
     },
     {
