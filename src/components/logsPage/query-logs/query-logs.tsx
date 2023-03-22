@@ -53,17 +53,6 @@ export class QueryLogs {
       },
     },
     {
-      title: 'query_status',
-      filter: {
-        searchable: true,
-        sortable: true,
-      },
-      alias: 'queryStatus',
-      click: {
-        clickable: false,
-      },
-    },
-    {
       title: 'time_of_execution',
       filter: {
         searchable: false,
