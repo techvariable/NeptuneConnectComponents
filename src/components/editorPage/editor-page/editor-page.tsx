@@ -46,8 +46,6 @@ export class EditorPage {
       });
   };
 
-  // animatingClass = ``
-
   btnClassType = {
     true: `mr-4 animate-spin`,
     false: `mr-4`,
@@ -117,7 +115,6 @@ export class EditorPage {
   };
 
   render() {
-    console.debug({state})
     return (
       <div>
         <div class="w-full md:flex justify-center gap-4 mt-4">
