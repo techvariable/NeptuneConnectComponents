@@ -66,7 +66,7 @@ export class LogsTable {
             <span class="px-2 ">View</span>
           </a>
         )}else if(id.alias === 'email'){
-          return (<a target="_blank" href={id.click.url + item['ownerId']}>
+          return (<a href={id.click.url + item['ownerId']}>
             <span class="px-2 ">{item[id.alias]}</span>
           </a>)
         }
