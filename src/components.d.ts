@@ -203,13 +203,13 @@ export namespace Components {
         "editMode": boolean;
         "fieldName": string;
         "item": {};
-        "rowId": number;
+        "rowId": number | string;
     }
     interface TableDataRows {
         "dataFormatter": any;
         "isModalOpen": boolean;
         "item": any;
-        "rowId": number;
+        "rowId": number | string;
         "tableHeader": any;
         "toggleModalState": any;
     }
@@ -819,13 +819,13 @@ declare namespace LocalJSX {
         "editMode"?: boolean;
         "fieldName"?: string;
         "item"?: {};
-        "rowId"?: number;
+        "rowId"?: number | string;
     }
     interface TableDataRows {
         "dataFormatter"?: any;
         "isModalOpen"?: boolean;
         "item"?: any;
-        "rowId"?: number;
+        "rowId"?: number | string;
         "tableHeader"?: any;
         "toggleModalState"?: any;
     }

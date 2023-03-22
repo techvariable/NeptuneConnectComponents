@@ -12,18 +12,17 @@ export class TableData {
   @Prop() dataFormatter: any;
   @Prop() editMode:boolean;
   @Prop() fieldName:string;
-  @Prop() rowId:number;
+  @Prop() rowId:number | string;
   @State() disabledEdit: boolean = true;
   @State() disableInputState:boolean = true;
   @State() inputValue:string = '';
   @Watch('editMode')
   validateDate(newValue, oldValue) {
       if(newValue !== oldValue) {
-        // console.log("Edit mode",this.editMode);
       this.disableInputState = typeof this.item[this.dataId.alias] !== 'string' && typeof this.item[this.dataId.alias] !== 'number' && this.disabledEdit || !this.editMode;
-      // console.log("This is the state:=====================>",this.disableInputState);
       }
   }
+  
   inputChangeHandler(e,fieldName){
     this.inputValue = e.target.value;
     console.log("Value changed in: ",this.rowId," in field:", fieldName, " to :" ,this.inputValue);
@@ -56,6 +55,8 @@ export class TableData {
 
 
   render() {
+    // console.log("This is item++++++++++++++++++++++++++===",this.item)
+    console.log("Field value is",this.item[this.dataId.alias] ? (this.disableInputState === true ?this.dataFormatter(this.item[this.dataId.alias]):this.item[this.dataId.alias]) : this.item[this.dataId.alias])
     return (
       <Host>
         <input

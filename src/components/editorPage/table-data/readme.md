@@ -7,14 +7,14 @@
 
 ## Properties
 
-| Property        | Attribute        | Description | Type      | Default     |
-| --------------- | ---------------- | ----------- | --------- | ----------- |
-| `dataFormatter` | `data-formatter` |             | `any`     | `undefined` |
-| `dataId`        | `data-id`        |             | `any`     | `undefined` |
-| `editMode`      | `edit-mode`      |             | `boolean` | `undefined` |
-| `fieldName`     | `field-name`     |             | `string`  | `undefined` |
-| `item`          | --               |             | `{}`      | `undefined` |
-| `rowId`         | `row-id`         |             | `number`  | `undefined` |
+| Property        | Attribute        | Description | Type               | Default     |
+| --------------- | ---------------- | ----------- | ------------------ | ----------- |
+| `dataFormatter` | `data-formatter` |             | `any`              | `undefined` |
+| `dataId`        | `data-id`        |             | `any`              | `undefined` |
+| `editMode`      | `edit-mode`      |             | `boolean`          | `undefined` |
+| `fieldName`     | `field-name`     |             | `string`           | `undefined` |
+| `item`          | --               |             | `{}`               | `undefined` |
+| `rowId`         | `row-id`         |             | `number \| string` | `undefined` |
 
 
 ## Dependencies

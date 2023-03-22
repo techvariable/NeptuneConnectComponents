@@ -80,9 +80,9 @@ export class QueryResultTable {
     }
     return (
       <div style={{ overflowY: 'auto' }}>
-        <div class="z-30">
+        {/* <div class="z-30">
         <edit-table-modal isModalOpen={this.isModalOpen} toggleModalState={this.toggleModalState}></edit-table-modal>
-        </div>
+        </div> */}
         <div style={{ maxHeight: '20rem', overflow: 'auto' }}>
           <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative">
             {/* Table Head */}
@@ -124,9 +124,9 @@ export class QueryResultTable {
                 {/* loaded body */}
                 {this.tableBody &&
                   !this.isLoadingError &&
-                  this.tableBody.map((item: any, index: number) => (
+                  this.tableBody.map((item: any) => (
                     <tr>
-                        <table-data-rows rowId={index} tableHeader={this.tableHeader} item={item} dataFormatter={this.dataFormatter} isModalOpen={this.isModalOpen} toggleModalState={this.toggleModalState}></table-data-rows>
+                        <table-data-rows rowId={item.id} tableHeader={this.tableHeader} item={item} dataFormatter={this.dataFormatter} isModalOpen={this.isModalOpen} toggleModalState={this.toggleModalState}></table-data-rows>
                     </tr>
                   ))}
               </tbody>

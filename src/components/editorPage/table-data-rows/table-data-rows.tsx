@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State } from '@stencil/core';
+import { Component, Host, h, Prop, State,Watch } from '@stencil/core';
 import state from '../store';
 
 @Component({
@@ -10,14 +10,20 @@ export class TableDataRows {
   @Prop() tableHeader: any;
   @Prop() item: any;
   @Prop() dataFormatter: any;
-  @Prop() rowId:number;
+  @Prop() rowId:number | string;
   @State() editMode: boolean = false;
   @Prop() isModalOpen:boolean;
   @Prop() toggleModalState:any;
-
-  // toggleModalState = ()=> {
-  //   this.isModalOpen = !this.isModalOpen;
-  // }
+  @State() rowItem:any;
+  @Watch('item')
+  validateDate(newValue, oldValue) {
+      if(newValue !== oldValue) {
+      this.rowItem = this.item;
+      }
+  }
+  componentWillLoad(){
+    this.rowItem = this.item;
+  }
 
   editModeEnabler(){
     if(state.tableEditMode === true){
@@ -33,9 +39,18 @@ export class TableDataRows {
     this.toggleModalState();
   }
   editModeCancel(){
+    const rowData  = this.getNodeFromId(this.rowId)
+    console.log("Row Data",rowData);
+    this.rowItem = {...rowData};
     state.tableEditMode = true
     this.editMode = false
     state.changedFieldValues = [];
+
+
+  }
+
+  getNodeFromId(id: number | string) {
+    return state.nodes.find(x => x.id === id)
   }
 
   render() {
@@ -79,9 +94,8 @@ export class TableDataRows {
           )}
         </td>
         {this.tableHeader.map((id: any) => (
-          <td title={this.item[id.alias]} text-overflow:ellipsis class="hover:bg-gray-50 px-3 py-3 whitespace-nowrap text-sm text-gray-900">
-            {/* {console.log("Row id:",this.rowId,"Field name",this.item[id.alias])} */}
-            <table-data rowId={this.rowId} fieldName={id.alias} editMode={this.editMode} item={this.item} dataId={id} dataFormatter={this.dataFormatter}></table-data>
+          <td title={this.rowItem[id.alias]} text-overflow:ellipsis class="hover:bg-gray-50 px-3 py-3 whitespace-nowrap text-sm text-gray-900">
+            <table-data rowId={this.rowId} fieldName={id.alias} editMode={this.editMode} item={this.rowItem} dataId={id} dataFormatter={this.dataFormatter}></table-data>
           </td>
         ))}
       </Host>

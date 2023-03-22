@@ -7,14 +7,14 @@
 
 ## Properties
 
-| Property           | Attribute            | Description | Type      | Default     |
-| ------------------ | -------------------- | ----------- | --------- | ----------- |
-| `dataFormatter`    | `data-formatter`     |             | `any`     | `undefined` |
-| `isModalOpen`      | `is-modal-open`      |             | `boolean` | `undefined` |
-| `item`             | `item`               |             | `any`     | `undefined` |
-| `rowId`            | `row-id`             |             | `number`  | `undefined` |
-| `tableHeader`      | `table-header`       |             | `any`     | `undefined` |
-| `toggleModalState` | `toggle-modal-state` |             | `any`     | `undefined` |
+| Property           | Attribute            | Description | Type               | Default     |
+| ------------------ | -------------------- | ----------- | ------------------ | ----------- |
+| `dataFormatter`    | `data-formatter`     |             | `any`              | `undefined` |
+| `isModalOpen`      | `is-modal-open`      |             | `boolean`          | `undefined` |
+| `item`             | `item`               |             | `any`              | `undefined` |
+| `rowId`            | `row-id`             |             | `number \| string` | `undefined` |
+| `tableHeader`      | `table-header`       |             | `any`              | `undefined` |
+| `toggleModalState` | `toggle-modal-state` |             | `any`              | `undefined` |
 
 
 ## Dependencies
