@@ -9,6 +9,7 @@
 
 | Property     | Attribute | Description | Type       | Default     |
 | ------------ | --------- | ----------- | ---------- | ----------- |
+| `formatter`  | --        |             | `Function` | `undefined` |
 | `onClickRun` | --        |             | `Function` | `undefined` |
 
 

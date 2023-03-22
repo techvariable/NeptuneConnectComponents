@@ -17,6 +17,7 @@ const TAB_LIST = [
 })
 export class CodeEditor {
   @Prop() onClickRun: Function;
+  @Prop() formatter: Function;
 
   @State() activeIndex: number = 0;
   @State() refreshLoading: boolean = false;
@@ -63,21 +64,21 @@ export class CodeEditor {
 
   onCtrlShiftEnter() {
     let runTemp = this.onClickRun;
-      return keymap.of([
-        {
-          key: 'Ctrl-Shift-Enter',
-          run() {
-            runTemp();
-            return true;
-          },
+    return keymap.of([
+      {
+        key: 'Ctrl-Shift-Enter',
+        run() {
+          runTemp();
+          return true;
         },
-      ]);
+      },
+    ]);
   }
 
   render() {
     return (
       <Host>
-        <div class="w-full flex content-between" style={{ justifyContent: 'space-between' }}>
+        <div class="px-3 w-full flex content-between" style={{ justifyContent: 'space-between' }}>
           <tabs-component activeIndex={this.activeIndex} tabslist={TAB_LIST} tabClickHandler={this.tabClickHandler}></tabs-component>
           <button
             class={this.btnClassType[`${this.refreshLoading}`]}
@@ -98,7 +99,7 @@ export class CodeEditor {
           </button>
         </div>
         {/* <tabs-component activeIndex={this.activeIndex} tabslist={TAB_LIST} tabClickHandler={this.tabClickHandler}></tabs-component> */}
-        <div class="border border-gray-300 shadow-gray-300   p-3">
+        <div class="border rounded-md border-gray-300 shadow-gray-300   p-3">
           <div style={{ maxHeight: '13rem', overflowY: 'auto' }} class="border-2">
             {TAB_LIST.map(item =>
               item.className === 'editor' ? (
@@ -110,17 +111,35 @@ export class CodeEditor {
           </div>
           {state.isError ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full mt-4 mb-6">{state.errorMessage || 'Something went wrong!!!'}</p> : null}
           <div class="flex justify-between">
-            <button
-              title="Ctrl+Shift+Enter to run"
-              disabled={state.syncVal === ''}
-              onClick={() => this.onClickRun()}
-              class="flex text-sm gap-2 items-center justify-center text-gray-600 border border-gray-300 px-3 mt-2 py-2 hover:bg-gray-200 disabled:text-gray-300 disabled:cursor-default disabled:hover:text-gray-200"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
-              </svg>
-              Run
-            </button>
+            <div class="flex gap-4">
+              <button
+                title="Ctrl+Shift+Enter to run"
+                disabled={state.syncVal === ''}
+                onClick={() => this.onClickRun()}
+                class="w-24 rounded-md flex text-sm gap-2 items-center justify-center text-gray-600 border border-gray-300 px-3 mt-2 py-2 hover:bg-gray-200 disabled:text-gray-300 disabled:cursor-default disabled:hover:text-gray-200"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                </svg>
+                Run
+              </button>
+
+              <button
+                disabled={state.syncVal === ''}
+                onClick={() => this.formatter()}
+                class="flex w-24 rounded-md text-sm gap-2 items-center justify-center text-gray-600 border border-gray-300 px-3 mt-2 py-2 hover:bg-gray-200 disabled:text-gray-300 disabled:cursor-default disabled:hover:text-gray-200"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"
+                  />
+                </svg>
+                Format
+              </button>
+            </div>
+
             <div>
               {state.isLoading && <loader-component></loader-component>}
               {state.timeTaken !== null && <p class="pt-4 font-semibold text-xs text-green-700">Executed in {state.timeTaken} ms</p>}

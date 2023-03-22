@@ -31,6 +31,7 @@ export namespace Components {
         "togglesort": any;
     }
     interface CodeEditor {
+        "formatter": Function;
         "onClickRun": Function;
     }
     interface DataTable {
@@ -606,6 +607,7 @@ declare namespace LocalJSX {
         "togglesort"?: any;
     }
     interface CodeEditor {
+        "formatter"?: Function;
         "onClickRun"?: Function;
     }
     interface DataTable {

@@ -42,6 +42,37 @@ export class LogsTable {
     this.from = (this.currentPage - 1) * this.limit + 1;
     this.to = this.currentPage * this.limit;
   }
+  dataFormatter(id, item) {
+    {
+      if (id.click.clickable === false) {
+        if (item[id.alias].length > 25 === true) {
+          return item[id.alias].slice(0, 25) + '...';
+        } else {
+          if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/.test(item[id.alias])) {
+            return new Date(item[id.alias]).toString().split('(')[0]
+          } else {
+            if (id.alias === 'timeTaken') {
+              return `${item[id.alias]} ms`;
+            } else {
+              return item[id.alias];
+            }
+          }
+        }
+      } else {
+        if (id.alias === 'queryResult') {
+        return (
+          <a target="_blank" href={id.click.url + item[id.alias]} class="flex items-center py-1 px-4 text-base font-normal text-gray-900 rounded-lg bg-gray-200">
+            <img class="h-4" src={id.click.icon} alt="icon" />
+            <span class="px-2 ">View</span>
+          </a>
+        )}else if(id.alias === 'email'){
+          return (<a href={id.click.url + item['ownerId']}>
+            <span class="px-2 ">{item[id.alias]}</span>
+          </a>)
+        }
+      }
+    }
+  }
 
   render() {
     const trList = [];
@@ -103,22 +134,8 @@ export class LogsTable {
                 this.tableBody.map((item: any) => (
                   <tr class="hover:bg-gray-100 transition">
                     {this.tableHeader.map((id: any) => (
-                      // <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item[id.alias]}</td>
                       <td text-overflow:ellipsis title={item[id.alias]} max-width="50px" class="px-6 py-3 whitespace-nowrap text-sm text-gray-900">
-                        {!id.click.clickable ? (
-                          item[id.alias].length > 25 ? (
-                            item[id.alias].slice(0, 25) + '...'
-                          ) : /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/.test(item[id.alias]) ? (
-                            item[id.alias].slice(0, 16).split('T')[0] + ' at ' + item[id.alias].slice(11, 19)
-                          ) : (
-                            item[id.alias]
-                          )
-                        ) : (
-                          <a target="_blank" href={id.click.url + item[id.alias]} class="flex items-center py-1 px-4 text-base font-normal text-gray-900 rounded-lg bg-gray-200">
-                            <img class="h-4" src={id.click.icon} alt="icon" />
-                            <span class="px-2 ">View</span>
-                          </a>
-                        )}
+                        {this.dataFormatter(id, item)}
                       </td>
                     ))}
                   </tr>
@@ -139,47 +156,41 @@ export class LogsTable {
             )}
           </table>
         </div>
-        <div style={{maxWidth: '75rem'}} class="bg-gray-100 sticky bottom-0">
-                <div class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  <div class="flex justify-between items-center">
-                    {/* pagination description */}
-                    <p>
-                      Showing <strong>{this.from}</strong> to <strong>{this.to <= Number(this.dataLength) ? this.to : this.dataLength}</strong> of{' '}
-                      <strong>{this.dataLength}</strong> results
-                    </p>
+        <div style={{ maxWidth: '75rem' }} class="bg-gray-100 sticky bottom-0">
+          <div class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <div class="flex justify-between items-center">
+              {/* pagination description */}
+              <p>
+                Showing <strong>{this.from}</strong> to <strong>{this.to <= Number(this.dataLength) ? this.to : this.dataLength}</strong> of <strong>{this.dataLength}</strong>{' '}
+                results
+              </p>
 
-                    {/* rows per page  */}
-                    <div class="space-x-3">
-                      <span>Rows per page</span>
-                      <select
-                        onChange={e => this.rowsHandler(e)}
-                        class="form-select px-3 py-1.5 border-none text-inherit font-inherit text-gray-700 bg-transparent bg-clip-padding bg-no-repeat rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                      >
-                        {this.rows.map(row => (
-                          <option value={`${row}`}>{row}</option>
-                        ))}
-                      </select>
-                    </div>
+              {/* rows per page  */}
+              <div class="space-x-3">
+                <span>Rows per page</span>
+                <select
+                  onChange={e => this.rowsHandler(e)}
+                  class="form-select px-3 py-1.5 border-none text-inherit font-inherit text-gray-700 bg-transparent bg-clip-padding bg-no-repeat rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                >
+                  {this.rows.map(row => (
+                    <option value={`${row}`}>{row}</option>
+                  ))}
+                </select>
+              </div>
 
-                    {/* pagination navigation menu */}
-                    <nav class="flex gap-4 items-center">
-                      <plain-button color="gray-500" type="text" clickHandler={() => this.prev()} disabledHandler={this.currentPage === 1} addClass="disabled:opacity-50">
-                        prev
-                      </plain-button>
-                      <plain-button
-                        color="gray-500"
-                        type="text"
-                        clickHandler={() => this.next()}
-                        disabledHandler={parseInt(this.dataLength) <= this.to}
-                        addClass="disabled:opacity-50"
-                      >
-                        next
-                      </plain-button>
-                    </nav>
-                  </div>
-                </div>
-                {this.isLoading && <td class="text-gray-500">&nbsp;</td>}
+              {/* pagination navigation menu */}
+              <nav class="flex gap-4 items-center">
+                <plain-button color="gray-500" type="text" clickHandler={() => this.prev()} disabledHandler={this.currentPage === 1} addClass="disabled:opacity-50">
+                  prev
+                </plain-button>
+                <plain-button color="gray-500" type="text" clickHandler={() => this.next()} disabledHandler={parseInt(this.dataLength) <= this.to} addClass="disabled:opacity-50">
+                  next
+                </plain-button>
+              </nav>
             </div>
+          </div>
+          {this.isLoading && <td class="text-gray-500">&nbsp;</td>}
+        </div>
       </div>
     );
   }
