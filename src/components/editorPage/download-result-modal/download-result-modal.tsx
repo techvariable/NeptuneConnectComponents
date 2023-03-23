@@ -171,7 +171,7 @@ export class DownloadResultModal {
         {/* Main Modal */}
         {this.isModalOpen && (
           <form onSubmit={e => this.submitHandler(e)} class="pt-6 space-y-3">
-            <div class="fixed z-10 inset-0 overflow-y-auto">
+            <div style={{zIndex:"12"}} class="fixed inset-0 overflow-y-auto">
               <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
