@@ -17,8 +17,8 @@ export class NavigatorsComponent {
       <div class={'overflow-y-auto py-4 px-3 bg-gray-100 rounded-md h-96'}>
         <ul class="space-y-2">
           {JSON.parse(this.navigators).map(item => {
-            const route:{name:string | string[],permission:'read'|'write'|'delete'|'update'} = {name:item.pagePermission.toLowerCase(),permission:'read'};
-            return hasAccess(this.parsedPermissions,route) ? (
+            const route:{name:string | string[],permission:'read'|'write'|'delete'|'update'} = {name:item.pagePermission?.toLowerCase(),permission:'read'};
+            return (hasAccess(this.parsedPermissions,route) || route.name=== undefined )? (
               <li>
                 <a href={item.link} class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg bg-gray-200 hover:bg-gray-300">
                   <img class="h-5" src={item.svg} alt={item.name} />

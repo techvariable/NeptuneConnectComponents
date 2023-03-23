@@ -165,7 +165,7 @@ export class PermissionEditor {
   render() {
     return (
       <Host>
-        <div class="w-auto border border-gray-300 shadow-gray-300 py-2 px-3 space-y-2">
+        <div class="w-auto border rounded-md border-gray-300 shadow-gray-300 py-2 px-3 space-y-2">
           <div class="flex justify-between items-center">
             <div class="border border-gray-300 space-x-3 shadow-gray-300 p-2 m-1">
               <span class="pb-6 text-md font-bold leading-7 text-gray-600">Select Role : </span>
@@ -195,7 +195,7 @@ export class PermissionEditor {
                 title="Ctrl+Shift+Enter to run"
                 onClick={() => this.onRoleUpdateClick()}
                 disabled={this.syncVal === '' || !hasAccess(this.parsedPermissions, { name: 'permissions', permission: 'update' }) || this.isLoading}
-                class="mr-1 flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 disabled:opacity-75 disabled:text-gray-300 disabled:cursor-default"
+                class="mr-1 rounded-md flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 disabled:opacity-75 disabled:text-gray-300 disabled:cursor-default"
               >
                 Update
               </button>
@@ -203,7 +203,7 @@ export class PermissionEditor {
                 title="Delete current role"
                 onClick={() => this.onRoleDeleteHandler()}
                 disabled={this.syncVal === '' || !hasAccess(this.parsedPermissions, { name: 'permissions', permission: 'delete' }) || this.isLoading}
-                class="mr-1 flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 disabled:opacity-75 disabled:text-gray-300 disabled:cursor-default"
+                class="mr-1 rounded-md flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 disabled:opacity-75 disabled:text-gray-300 disabled:cursor-default"
               >
                 Delete
               </button>

@@ -9,17 +9,6 @@ import state from '../../editorPage/store';
 export class QueryLogs {
   @State() headerList = [
     {
-      title: 'id',
-      filter: {
-        searchable: false,
-        sortable: false,
-      },
-      alias: 'id',
-      click: {
-        clickable: false,
-      },
-    },
-    {
       title: 'query_text',
       filter: {
         searchable: false,
@@ -48,17 +37,6 @@ export class QueryLogs {
         sortable: true,
       },
       alias: 'queryParameter',
-      click: {
-        clickable: false,
-      },
-    },
-    {
-      title: 'query_status',
-      filter: {
-        searchable: true,
-        sortable: true,
-      },
-      alias: 'queryStatus',
       click: {
         clickable: false,
       },
@@ -93,7 +71,8 @@ export class QueryLogs {
       },
       alias: 'email',
       click: {
-        clickable: false,
+        clickable: true,
+        url: '/users/',
       },
     },
     {
@@ -141,7 +120,6 @@ export class QueryLogs {
       }
     }
     const result = await axios.get(`${state.url}/api/editor/query/logs?${filterPar}`);
-
     return {
       total: result.data.total,
       data: result.data,
