@@ -1,7 +1,7 @@
 import { Component, h, State } from '@stencil/core';
 import { formatJSON } from '../../../utils/utils';
 
-import state from '../store';
+import state, { editModeHandler } from '../store';
 
 @Component({
   tag: 'tab-component',
@@ -58,7 +58,10 @@ export class TabComponent {
               </button>
             </li>
           </ul>
+          <div style={{width:"170px"}} class='flex justify-between'>
+          <toggle-button selectedOption={state.selectedEditOption} toggleButtonHandler={editModeHandler}></toggle-button>
           <download-result-modal ></download-result-modal>
+          </div>
         </div>
 
         {/* content */}

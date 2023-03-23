@@ -6,7 +6,7 @@ import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
   scoped: true,
 })
 export class ToggleButton {
-  @Prop() selectedOption: string = 'csv';
+  @Prop() selectedOption: string; 
   @Prop() toggleButtonHandler:any;
   @State() buttonValue:string = "";
   @State() checkedValue = '';
@@ -24,10 +24,10 @@ export class ToggleButton {
   
   render() {
     return (
-      <Host class="w-16">
+      <Host class="w-24 mx-2">
         <div onClick={()=>this.toggleButtonHandler()} class="flex items-center justify-center w-full mb-12 cursor-pointer">
             <div class="relative">
-              <input type="checkbox" id="toggleB" class="sr-only" checked={this.selectedOption=== this.checkedValue?true:false}/>
+              <input type="checkbox" id="toggleB" class="sr-only" checked={this.selectedOption=== this.checkedValue?false:true}/>
 
               <div style={{ width: '3.5rem', height: '2rem' }} class="block bg-gray-200 w-14 h-8 rounded-full"></div>
 

@@ -91,7 +91,7 @@ export class EditorPage {
 
         if (isValid) {
           state.timeTaken = null;
-          const res = await axios.post(`${state.url}/query/`, {
+          const res = await axios.post(`${state.url}/query/`, { 
             query,
             parameters: JSON.parse(parameters),
           });

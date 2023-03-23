@@ -37,11 +37,11 @@ export class QueryResultTable {
   @State() to: number;
   @State() isSearchMenuOpen = false;
   @State() value: string;
-  @State() isModalOpen:boolean = false;
+  @State() isModalOpen: boolean = false;
 
-  toggleModalState = ()=> {
+  toggleModalState = () => {
     this.isModalOpen = !this.isModalOpen;
-  }
+  };
 
   componentWillRender() {
     this.from = (this.currentPage - 1) * this.limit + 1;
@@ -87,11 +87,13 @@ export class QueryResultTable {
           <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative">
             {/* Table Head */}
             <thead class="bg-gray-100 sticky top-0 z-10">
-            <edit-table-modal isModalOpen={this.isModalOpen} toggleModalState={this.toggleModalState}></edit-table-modal>
+              <edit-table-modal isModalOpen={this.isModalOpen} toggleModalState={this.toggleModalState}></edit-table-modal>
               <tr>
-                <th scope="col" style={{ minWidth: '120px' }} class="px-6 py-4 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 uppercase tracking-wider">
-                  Operations
-                </th>
+                {state.selectedEditOption === 'ON' && (
+                  <th scope="col" style={{ minWidth: '120px' }} class="px-6 py-4 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 uppercase tracking-wider">
+                    Operations
+                  </th>
+                )}
                 {this.tableHeader.map((item: any) => (
                   <th scope="col" style={{ minWidth: '120px' }} class="px-6 py-4 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 uppercase tracking-wider">
                     <div style={{ display: 'flex' }}>
@@ -126,7 +128,14 @@ export class QueryResultTable {
                   !this.isLoadingError &&
                   this.tableBody.map((item: any) => (
                     <tr>
-                        <table-data-rows rowId={item.id} tableHeader={this.tableHeader} item={item} dataFormatter={this.dataFormatter} isModalOpen={this.isModalOpen} toggleModalState={this.toggleModalState}></table-data-rows>
+                      <table-data-rows
+                        rowId={item.id}
+                        tableHeader={this.tableHeader}
+                        item={item}
+                        dataFormatter={this.dataFormatter}
+                        isModalOpen={this.isModalOpen}
+                        toggleModalState={this.toggleModalState}
+                      ></table-data-rows>
                     </tr>
                   ))}
               </tbody>

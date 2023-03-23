@@ -5,7 +5,7 @@ import { createStore } from '@stencil/store';
 import { formatJSON } from '../../utils/utils';
 
 const { state, onChange, reset } = createStore({
-  url: "",
+  url: '',
   nodeList: [],
 
   selectedNodeName: null,
@@ -15,10 +15,10 @@ const { state, onChange, reset } = createStore({
   order: {},
   filter: {},
   total: 0,
-  isFetchedData:false,
+  isFetchedData: false,
 
   query: '\n\n\n\n\n\n\n\n\n',
-  queryParameter: "{\n  \n}\n\n\n\n\n\n",
+  queryParameter: '{\n  \n}\n\n\n\n\n\n',
   nodes: [],
   columnHeaders: [],
   isLoading: false,
@@ -26,27 +26,28 @@ const { state, onChange, reset } = createStore({
   errorMessage: null,
 
   // editor state
-  syncVal:'',
+  mode: 'read',
+  syncVal: '',
   viewQuery: null,
   stateQuery: null,
   viewParameter: null,
   stateParameter: null,
-  timeTaken:null,
-  refresh:null,
+  timeTaken: null,
+  refresh: null,
 
   // table state
   tableEditMode: true,
-  changedFieldValues:[],
+  changedFieldValues: [],
+  selectedEditOption:'OFF',
 
   refreshData: async () => {
-    await fetchData(state.selectedNodeName)
-  }
+    await fetchData(state.selectedNodeName);
+  },
 });
 
 onChange('refresh', () => {
-  if(state.refresh!==null)
-  fetchData(state.selectedNodeName);
-  state.refresh=null;
+  if (state.refresh !== null) fetchData(state.selectedNodeName);
+  state.refresh = null;
 });
 
 onChange('nodes', value => {
@@ -97,17 +98,20 @@ onChange('queryParameter', value => {
 
 const fetchData = async (nodeName: string) => {
   if (state.selectedNodeName) {
-    state.timeTaken=null;
+    state.timeTaken = null;
     state.isError = false;
     state.errorMessage = null;
     state.isLoading = true;
     state.selectedNodeName = nodeName;
     try {
-      const res = await axios.post(`${state.url}/query/builder/${nodeName}`, {
-        limit: state.limit,
-        offset: state.offset,
-        order: state.order,
-        filter: state.filter,
+      const res = await axios.post(`${state.url}/query/builder/${nodeName}/${state.mode}`, {
+        read: {
+          showMeta: true,
+          limit: state.limit,
+          offset: state.offset,
+          order: state.order,
+          filter: state.filter,
+        }
       });
 
       state.nodes = res.data.nodes;
@@ -133,5 +137,13 @@ const fetchData = async (nodeName: string) => {
   }
 };
 
+const editModeHandler= () => {
+  if(state.selectedEditOption === 'OFF'){
+    state.selectedEditOption= 'ON'
+  } else{
+    state.selectedEditOption = 'OFF'
+  }
+};
+
 export default state;
-export { fetchData, reset }
+export { fetchData, reset ,editModeHandler};

@@ -15,6 +15,7 @@ export class EditorRes {
     const chips = { ...state.order };
     delete chips[item];
     state.order = chips;
+    state.mode = "read";
     state.refreshData();
   }
 
@@ -22,6 +23,7 @@ export class EditorRes {
     const chips = { ...state.filter };
     delete chips[item];
     state.filter = chips;
+    state.mode = "read";
     state.refreshData();
   }
 
@@ -43,18 +45,21 @@ export class EditorRes {
     state.limit = e.target.value;
     state.page = 1;
     state.offset = (state.limit*state.page)- state.limit;
+    state.mode = "read";
     state.refreshData();
   }
 
   nextPage() {
     ++state.page;
     state.offset = (state.limit*state.page)- state.limit;
+    state.mode = "read";
     state.refreshData();
   }
 
   prevPage() {
     --state.page;
     state.offset = (state.limit*state.page)- state.limit;
+    state.mode = "read";
     state.refreshData();
   }
 
@@ -62,6 +67,7 @@ export class EditorRes {
     const chips = {};
     chips[id] = state.order[id] === "desc" ? 'asc' : 'desc';
     state.order = chips;
+    state.mode = "read";
     state.refreshData();
   };
 
@@ -76,6 +82,7 @@ export class EditorRes {
     chips[colName] = searchOperation;
 
     state.filter = chips;
+    state.mode = "read";
     state.refreshData();
   }
 

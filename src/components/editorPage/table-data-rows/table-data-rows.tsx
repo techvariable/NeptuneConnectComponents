@@ -56,6 +56,7 @@ export class TableDataRows {
   render() {
     return (
       <Host>
+        {state.selectedEditOption === 'ON' && (
         <td class="hover:bg-gray-50 px-3 py-3 whitespace-nowrap text-sm text-gray-900">
           {this.editMode === false ? (
             <div class="flex" style={{ justifyContent: 'space-evenly' }}>
@@ -93,6 +94,7 @@ export class TableDataRows {
             </div>
           )}
         </td>
+        )}
         {this.tableHeader.map((id: any) => (
           <td title={this.rowItem[id.alias]} text-overflow:ellipsis class="hover:bg-gray-50 px-3 py-3 whitespace-nowrap text-sm text-gray-900">
             <table-data rowId={this.rowId} fieldName={id.alias} editMode={this.editMode} item={this.rowItem} dataId={id} dataFormatter={this.dataFormatter}></table-data>
