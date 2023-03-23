@@ -26,7 +26,7 @@ export class DownloadResultModal {
   @State() selectedFileOption: string = 'csv';
 
   componentWillLoad() {
-    this.value = `${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}`;
+    this.value = `${!state.isCustom ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}`;
   }
 
   async downloadData() {
@@ -120,7 +120,7 @@ export class DownloadResultModal {
   }
 
   clearFields() {
-    this.value = `${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}`;
+    this.value = `${!state.isCustom ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}`;
     this.selectedDownloadOption = 'current';
     this.selectedFileOption = 'csv';
     this.startingIndex = 0;
@@ -162,7 +162,7 @@ export class DownloadResultModal {
     return (
       <Host>
         {/* Modal Button */}
-        <button class="hover:animate-pulse hover:text-blue-700" title="Export" onClick={() => this.toggleModalState()}>
+        <button class="hover:animate-pulse hover:text-blue-700 my-2" title="Export" onClick={() => this.toggleModalState()}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
           </svg>
@@ -171,7 +171,7 @@ export class DownloadResultModal {
         {/* Main Modal */}
         {this.isModalOpen && (
           <form onSubmit={e => this.submitHandler(e)} class="pt-6 space-y-3">
-            <div style={{zIndex:"12"}} class="fixed inset-0 overflow-y-auto">
+            <div style={{ zIndex: '12' }} class="fixed inset-0 overflow-y-auto">
               <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
@@ -204,7 +204,7 @@ export class DownloadResultModal {
                             <radio-button-multiple
                               clickHandler={this.radioSearchTypeHandler}
                               labels={this.downloadOptions}
-                              disabledOptions={state.selectedNodeName === null ? ['all', 'custom'] : []}
+                              disabledOptions={!state.isCustom ? ['all', 'custom'] : []}
                               name="SearchMethod"
                               label="Options"
                               align="horizontal"

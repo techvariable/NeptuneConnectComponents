@@ -30,6 +30,7 @@ graph TD;
   menu-drop-down --> backdrop-filter
   code-editor --> tabs-component
   code-editor --> loader-component
+  tab-component --> toggle-button
   tab-component --> download-result-modal
   tab-component --> editor-res
   tab-component --> editor-json-response-viewer

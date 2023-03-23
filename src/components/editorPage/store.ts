@@ -5,29 +5,39 @@ import { createStore } from '@stencil/store';
 import { formatJSON } from '../../utils/utils';
 
 const { state, onChange, reset } = createStore({
+  // api url
   url: '',
-  nodeList: [],
 
+  // modes
+  mode: 'read',
+  isCustom: false,
+  tableEditMode: true,
+  showMeta: false,
+
+  // parameters
   selectedNodeName: null,
   limit: 10,
-  offset: 0, //remove
+  total: 0,
   page: 1,
   order: {},
   filter: {},
-  total: 0,
-  isFetchedData: false,
 
+  // response
   query: '\n\n\n\n\n\n\n\n\n',
   queryParameter: '{\n  \n}\n\n\n\n\n\n',
-  nodes: [],
   columnHeaders: [],
+  nodeList: [],
+  nodes: [],
+
+  // flags
+  isFetchedData: false,
   isLoading: false,
   isError: false,
   errorMessage: null,
 
-  // editor state
-  mode: 'read',
   syncVal: '',
+
+  // editor state
   viewQuery: null,
   stateQuery: null,
   viewParameter: null,
@@ -35,10 +45,8 @@ const { state, onChange, reset } = createStore({
   timeTaken: null,
   refresh: null,
 
-  // table state
-  tableEditMode: true,
+  // edit table state
   changedFieldValues: [],
-  selectedEditOption:'OFF',
 
   refreshData: async () => {
     await fetchData(state.selectedNodeName);
@@ -106,12 +114,12 @@ const fetchData = async (nodeName: string) => {
     try {
       const res = await axios.post(`${state.url}/query/builder/${nodeName}/${state.mode}`, {
         read: {
-          showMeta: true,
+          showMeta: state.showMeta,
           limit: state.limit,
-          offset: state.offset,
+          offset: state.limit * state.page - state.limit,
           order: state.order,
           filter: state.filter,
-        }
+        },
       });
 
       state.nodes = res.data.nodes;
@@ -137,13 +145,10 @@ const fetchData = async (nodeName: string) => {
   }
 };
 
-const editModeHandler= () => {
-  if(state.selectedEditOption === 'OFF'){
-    state.selectedEditOption= 'ON'
-  } else{
-    state.selectedEditOption = 'OFF'
-  }
+const editModeHandler = () => {
+  state.showMeta = !state.showMeta;
+  state.refreshData();
 };
 
 export default state;
-export { fetchData, reset ,editModeHandler};
+export { fetchData, reset, editModeHandler };

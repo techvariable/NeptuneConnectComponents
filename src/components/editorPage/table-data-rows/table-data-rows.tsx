@@ -56,7 +56,7 @@ export class TableDataRows {
   render() {
     return (
       <Host>
-        {state.selectedEditOption === 'ON' && (
+        {state.showMeta && (
         <td class="hover:bg-gray-50 px-3 py-3 whitespace-nowrap text-sm text-gray-900">
           {this.editMode === false ? (
             <div class="flex" style={{ justifyContent: 'space-evenly' }}>

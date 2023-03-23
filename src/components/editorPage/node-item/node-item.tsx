@@ -12,9 +12,9 @@ export class NodeItem {
   @Prop() nodeError: null | string;
 
   nodeChangeHandler(nodeName: string) {
+    state.isCustom = false;
     state.selectedNodeName = nodeName;
     state.limit = 10;
-    state.offset = 0; //remove
     state.page = 1;
     state.order = {};
     state.filter = {};

@@ -13,6 +13,7 @@
 
 ### Depends on
 
+- [toggle-button](../../common/toggle-button)
 - [download-result-modal](../download-result-modal)
 - [editor-res](../editor-res)
 - [editor-json-response-viewer](../editor-json-response-viewer)
@@ -20,6 +21,7 @@
 ### Graph
 ```mermaid
 graph TD;
+  tab-component --> toggle-button
   tab-component --> download-result-modal
   tab-component --> editor-res
   tab-component --> editor-json-response-viewer

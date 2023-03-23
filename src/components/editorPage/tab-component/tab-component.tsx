@@ -15,12 +15,11 @@ export class TabComponent {
     this.setActive = id;
   }
 
-
   render() {
     return (
       <div>
         <p class="text-gray-400 pt-8 pb-2">
-          Showing results for <strong>{state.selectedNodeName !== null ? state.selectedNodeName : 'Custom Query'}</strong>
+          Showing results for <strong>{!state.isCustom ? state.selectedNodeName : 'Custom Query'}</strong>
         </p>
 
         <div class="flex justify-between border-b border-gray-200 ">
@@ -58,9 +57,14 @@ export class TabComponent {
               </button>
             </li>
           </ul>
-          <div style={{width:"170px"}} class='flex justify-between'>
-          <toggle-button selectedOption={state.selectedEditOption} toggleButtonHandler={editModeHandler}></toggle-button>
-          <download-result-modal ></download-result-modal>
+          <div style={{ width: '190px' }} class="flex justify-end my-auto">
+            {!state.isCustom && (
+              <div class="flex text-gray-700 font-semibold text-center text-sm py-2 mx-auto">
+                <span class="text-center p-2">Edit</span>
+                <toggle-button isSelected={state.showMeta} toggleButtonHandler={editModeHandler}></toggle-button>
+              </div>
+            )}
+            <download-result-modal></download-result-modal>
           </div>
         </div>
 
