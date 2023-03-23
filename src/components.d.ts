@@ -89,6 +89,10 @@ export namespace Components {
     }
     interface LoaderComponent {
     }
+    interface LogPage {
+        "navigators": string;
+        "permissions": string;
+    }
     interface LogTableWrapper {
         "api": any;
         "autocompute": boolean;
@@ -368,6 +372,12 @@ declare global {
         prototype: HTMLLoaderComponentElement;
         new (): HTMLLoaderComponentElement;
     };
+    interface HTMLLogPageElement extends Components.LogPage, HTMLStencilElement {
+    }
+    var HTMLLogPageElement: {
+        prototype: HTMLLogPageElement;
+        new (): HTMLLogPageElement;
+    };
     interface HTMLLogTableWrapperElement extends Components.LogTableWrapper, HTMLStencilElement {
     }
     var HTMLLogTableWrapperElement: {
@@ -552,6 +562,7 @@ declare global {
         "json-response-viewer": HTMLJsonResponseViewerElement;
         "last-logs": HTMLLastLogsElement;
         "loader-component": HTMLLoaderComponentElement;
+        "log-page": HTMLLogPageElement;
         "log-table-wrapper": HTMLLogTableWrapperElement;
         "logs-table": HTMLLogsTableElement;
         "logs-table-component": HTMLLogsTableComponentElement;
@@ -664,6 +675,10 @@ declare namespace LocalJSX {
         "user"?: string;
     }
     interface LoaderComponent {
+    }
+    interface LogPage {
+        "navigators"?: string;
+        "permissions"?: string;
     }
     interface LogTableWrapper {
         "api"?: any;
@@ -838,6 +853,7 @@ declare namespace LocalJSX {
         "json-response-viewer": JsonResponseViewer;
         "last-logs": LastLogs;
         "loader-component": LoaderComponent;
+        "log-page": LogPage;
         "log-table-wrapper": LogTableWrapper;
         "logs-table": LogsTable;
         "logs-table-component": LogsTableComponent;
@@ -892,6 +908,7 @@ declare module "@stencil/core" {
             "json-response-viewer": LocalJSX.JsonResponseViewer & JSXBase.HTMLAttributes<HTMLJsonResponseViewerElement>;
             "last-logs": LocalJSX.LastLogs & JSXBase.HTMLAttributes<HTMLLastLogsElement>;
             "loader-component": LocalJSX.LoaderComponent & JSXBase.HTMLAttributes<HTMLLoaderComponentElement>;
+            "log-page": LocalJSX.LogPage & JSXBase.HTMLAttributes<HTMLLogPageElement>;
             "log-table-wrapper": LocalJSX.LogTableWrapper & JSXBase.HTMLAttributes<HTMLLogTableWrapperElement>;
             "logs-table": LocalJSX.LogsTable & JSXBase.HTMLAttributes<HTMLLogsTableElement>;
             "logs-table-component": LocalJSX.LogsTableComponent & JSXBase.HTMLAttributes<HTMLLogsTableComponentElement>;
