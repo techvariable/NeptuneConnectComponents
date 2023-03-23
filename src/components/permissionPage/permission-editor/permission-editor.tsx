@@ -42,7 +42,6 @@ export class PermissionEditor {
   async fetchRolePermission(roleId: number) {
     try {
       const rolePermissionsResp = await axios.get(`${this.url}/?roleId=${roleId}`);
-
       let transaction = this.view.state.update({ changes: { from: 0, to: this.view.state.doc.toString().length, insert: `${formatJSON(rolePermissionsResp.data)}` } });
       this.view.dispatch(transaction);
     } catch (error) {
@@ -130,19 +129,21 @@ export class PermissionEditor {
         this.isLoading = true;
 
         const res = await axios.delete(`${this.url}/?roleId=${this.selectedRole}`);
-        if(res.data.isDeleted === true){
+        if (res.data.isDeleted === true) {
           this.resStatus = `${res.data.deletedPermissionName} is deleted successfully`;
           this.isLoading = false;
           this.errorMessage = '';
+          this.fetchRoles();
         }
-        
       } catch (err) {
-        if(err.response.data.isDeleted === false){
+        if (err.response.data.isDeleted === false) {
           this.isLoading = false;
-          this.errorMessage = `${err.response.data.deletedPermissionName} is assigned to  ${err.response.data.usersWithAssignedRole.length} user with email \n\n ${err.response.data.usersWithAssignedRole.join(',')}`;  
-        }else if(err.response.data.message){
+          this.errorMessage = `${err.response.data.deletedPermissionName} is assigned to  ${
+            err.response.data.usersWithAssignedRole.length
+          } user with email \n\n ${err.response.data.usersWithAssignedRole.join(',')}`;
+        } else if (err.response.data.message) {
           this.isLoading = false;
-          this.errorMessage = `${err.response.data.message}`
+          this.errorMessage = `${err.response.data.message}`;
         }
       }
       this.isLoading = false;
@@ -174,7 +175,9 @@ export class PermissionEditor {
                 class="form-select px-3 py-1.5 border-none text-inherit font-inherit text-gray-700 bg-transparent bg-clip-padding bg-no-repeat rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               >
                 {this.roles.map(item => (
-                  <option value={`${item.id}`}>{item.roleName}</option>
+                  <option selected={this.selectedRole === item.id} value={`${item.id}`}>
+                    {item.roleName}
+                  </option>
                 ))}
               </select>
             </div>
