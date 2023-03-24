@@ -22,7 +22,7 @@ export class EditorPage {
   @State() errorMessage: string | null = null;
   @State() isLoading: boolean = false;
   @State() loadingNodes: boolean = false;
-  @State() nodeError:string|null=null;
+  @State() nodeError: string | null = null;
 
   componentWillLoad() {
     state.url = this.url;
@@ -57,7 +57,7 @@ export class EditorPage {
 
     let transactionToFormatQuery = state.viewQuery.state.update({
       changes: { from: 0, to: state.viewQuery.state.doc.toString().length, insert: `${formatQuery(query)}` },
-    }); 
+    });
     state.viewQuery.dispatch(transactionToFormatQuery);
 
     let transactionParameter = state.viewParameter.state.update();
@@ -67,7 +67,7 @@ export class EditorPage {
       changes: { from: 0, to: state.viewParameter.state.doc.toString().length, insert: `${formatJSON(JSON.parse(parameter))}` },
     });
     state.viewParameter.dispatch(transactionToFormatParameter);
-  }
+  };
 
   onClickRun = async () => {
     if (state.syncVal !== '') {
@@ -106,7 +106,7 @@ export class EditorPage {
           state.errorMessage = error;
         }
       } catch (error) {
-        console.log({ error })
+        console.log({ error });
         state.isError = true;
         state.errorMessage = error?.response?.data?.error ? error.response.data.error : 'Failed to fetch data from db server.';
       }

@@ -7,6 +7,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [log-page](../log-page)
+
 ### Depends on
 
 - [log-table-wrapper](../log-table-wrapper)
@@ -19,6 +23,7 @@ graph TD;
   logs-table --> drop-down
   logs-table --> loader-component
   logs-table --> plain-button
+  log-page --> query-logs
   style query-logs fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+@media (min-width: 1267px) {
+  .xl\:flex {
+      display: flex;
+  }
+}
+
+@media (min-width: 1267px) {
+  .xl\:w-80 {
+      width: 20rem/* 320px */;
+  }
+}
