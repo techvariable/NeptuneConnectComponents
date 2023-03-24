@@ -92,7 +92,7 @@ export class DataTable {
       const n = value.length;
 
       if (column.maxChar && n >= column.maxChar) {
-        return `${column.prefix || ""}${value.substring(0, column.maxChar)}...${column.suffix || ""}`
+        return (<span title={`${column.prefix || ""}${value}${column.suffix || ""}`}>{`${column.prefix || ""}${value.substring(0, column.maxChar)}...${column.suffix || ""}`}</span>)
       }
 
       return `${column.prefix || ""}${value}${column.suffix || ""}`
@@ -115,8 +115,7 @@ export class DataTable {
         type: "string",
 
         // prefix and suffix
-        prefix: "test ",
-        suffix: " test",
+        suffix: " ms",
         maxChar: 25,
 
         // flags
