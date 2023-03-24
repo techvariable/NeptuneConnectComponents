@@ -134,6 +134,7 @@ export namespace Components {
         "selected": string[];
     }
     interface NavBar {
+        "stringifieduser": string;
     }
     interface NavigatorsComponent {
         "navigators": string;
@@ -721,6 +722,7 @@ declare namespace LocalJSX {
         "selected"?: string[];
     }
     interface NavBar {
+        "stringifieduser"?: string;
     }
     interface NavigatorsComponent {
         "navigators"?: string;

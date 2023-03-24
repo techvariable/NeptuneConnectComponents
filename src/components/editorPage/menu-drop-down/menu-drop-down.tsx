@@ -6,7 +6,6 @@ import state from '../store';
   scoped: true,
 })
 export class MenuDropDown {
-
   @Prop() listTitle: string;
   @Prop() list: string[];
   @Prop() fetchData: any;
@@ -48,7 +47,7 @@ export class MenuDropDown {
           style={{ right: '0px' }}
           class={this.showDropdown ? 'absolute bg-white z-10 w-44 text-sm list-none mt-2 rounded divide-y right-0 divide-gray-100 shadow ' : 'hidden'}
         >
-          <ul id="dropdown" class="py-1">
+          <ul id="dropdown" class="py-1 bg-white">
             {this.list?.map(item => (
               <li>
                 <a href="#" onClick={() => this.buttonHandler(this.listTitle)} class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">

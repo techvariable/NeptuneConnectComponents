@@ -1,4 +1,4 @@
-import { Component, Prop,Host, h, State } from '@stencil/core';
+import { Component, Prop, Host, h, State } from '@stencil/core';
 import axios from 'axios';
 
 @Component({
@@ -6,11 +6,11 @@ import axios from 'axios';
   scoped: true,
 })
 export class LastLogs {
-  @Prop() url:string;
-  @Prop() user:string;
+  @Prop() url: string;
+  @Prop() user: string;
   @State() isLoading = false;
   @State() isLoadingError = false;
-  @State() total:any = null;
+  @State() total: any = null;
   @State() headerList = [
     {
       title: 'id',
@@ -103,31 +103,33 @@ export class LastLogs {
       },
     },
   ];
-  @State() tableData:[]=[];
+  @State() tableData: [] = [];
 
   async fetchData() {
     this.isLoading = true;
     this.isLoadingError = false;
     try {
-      const response =await axios.get(`${this.url}api/editor/query/logs?limit=49&offset=0&filter_email=${this.user}&order=desc`)
-      response.data.respond.map(item=>{item.isCustomQuery===true? item["isCustomQuery"]="Custom Query": item["isCustomQuery"]="Builder Query"});
+      const response = await axios.get(`${this.url}api/editor/query/logs?limit=49&offset=0&filter_email=${this.user}&order=desc`);
+      response.data.respond.map(item => {
+        item.isCustomQuery === true ? (item['isCustomQuery'] = 'Custom Query') : (item['isCustomQuery'] = 'Builder Query');
+      });
       this.total = response.data.total;
       this.total = response.data.total;
-      this.tableData= response.data.respond;
+      this.tableData = response.data.respond;
       this.isLoading = false;
     } catch (error) {
-      console.log("error",error)
+      console.log('error', error);
     }
   }
 
-  componentWillLoad(){
+  componentWillLoad() {
     this.fetchData();
   }
 
   render() {
     return (
       <Host class="border-b-2 border-gray-200">
-        <logs-table-component tableHeader={this.headerList} tableBody={this.tableData} rows={[5,10]} isLoading={false} isLoadingError={false}></logs-table-component>
+        <logs-table-component tableHeader={this.headerList} tableBody={this.tableData} rows={[5, 10]} isLoading={false} isLoadingError={false}></logs-table-component>
       </Host>
     );
   }
