@@ -1,18 +1,18 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { DataTable } from '../data-table';
+import { TableRow } from '../table-row';
 
-describe('data-table', () => {
+describe('table-row', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [DataTable],
-      html: `<data-table></data-table>`,
+      components: [TableRow],
+      html: `<table-row></table-row>`,
     });
     expect(page.root).toEqualHtml(`
-      <data-table>
+      <table-row>
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
-      </data-table>
+      </table-row>
     `);
   });
 });

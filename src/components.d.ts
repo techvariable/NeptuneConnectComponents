@@ -35,7 +35,6 @@ export namespace Components {
         "onClickRun": Function;
     }
     interface DataTable {
-        "doc": object[];
     }
     interface DataTableUpdated {
         "doc": object[];
@@ -193,6 +192,10 @@ export namespace Components {
         "url": string;
     }
     interface TabComponent {
+    }
+    interface TableHeader {
+    }
+    interface TableRow {
     }
     interface TableSearchModal {
         "alias": string;
@@ -482,6 +485,18 @@ declare global {
         prototype: HTMLTabComponentElement;
         new (): HTMLTabComponentElement;
     };
+    interface HTMLTableHeaderElement extends Components.TableHeader, HTMLStencilElement {
+    }
+    var HTMLTableHeaderElement: {
+        prototype: HTMLTableHeaderElement;
+        new (): HTMLTableHeaderElement;
+    };
+    interface HTMLTableRowElement extends Components.TableRow, HTMLStencilElement {
+    }
+    var HTMLTableRowElement: {
+        prototype: HTMLTableRowElement;
+        new (): HTMLTableRowElement;
+    };
     interface HTMLTableSearchModalElement extends Components.TableSearchModal, HTMLStencilElement {
     }
     var HTMLTableSearchModalElement: {
@@ -571,6 +586,8 @@ declare global {
         "radio-button-multiple": HTMLRadioButtonMultipleElement;
         "side-bar": HTMLSideBarElement;
         "tab-component": HTMLTabComponentElement;
+        "table-header": HTMLTableHeaderElement;
+        "table-row": HTMLTableRowElement;
         "table-search-modal": HTMLTableSearchModalElement;
         "tabs-component": HTMLTabsComponentElement;
         "text-field": HTMLTextFieldElement;
@@ -611,7 +628,6 @@ declare namespace LocalJSX {
         "onClickRun"?: Function;
     }
     interface DataTable {
-        "doc"?: object[];
     }
     interface DataTableUpdated {
         "doc"?: object[];
@@ -770,6 +786,10 @@ declare namespace LocalJSX {
     }
     interface TabComponent {
     }
+    interface TableHeader {
+    }
+    interface TableRow {
+    }
     interface TableSearchModal {
         "alias"?: string;
         "clearSearch"?: any;
@@ -857,6 +877,8 @@ declare namespace LocalJSX {
         "radio-button-multiple": RadioButtonMultiple;
         "side-bar": SideBar;
         "tab-component": TabComponent;
+        "table-header": TableHeader;
+        "table-row": TableRow;
         "table-search-modal": TableSearchModal;
         "tabs-component": TabsComponent;
         "text-field": TextField;
@@ -911,6 +933,8 @@ declare module "@stencil/core" {
             "radio-button-multiple": LocalJSX.RadioButtonMultiple & JSXBase.HTMLAttributes<HTMLRadioButtonMultipleElement>;
             "side-bar": LocalJSX.SideBar & JSXBase.HTMLAttributes<HTMLSideBarElement>;
             "tab-component": LocalJSX.TabComponent & JSXBase.HTMLAttributes<HTMLTabComponentElement>;
+            "table-header": LocalJSX.TableHeader & JSXBase.HTMLAttributes<HTMLTableHeaderElement>;
+            "table-row": LocalJSX.TableRow & JSXBase.HTMLAttributes<HTMLTableRowElement>;
             "table-search-modal": LocalJSX.TableSearchModal & JSXBase.HTMLAttributes<HTMLTableSearchModalElement>;
             "tabs-component": LocalJSX.TabsComponent & JSXBase.HTMLAttributes<HTMLTabsComponentElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
