@@ -35,6 +35,38 @@ export namespace Components {
         "onClickRun": Function;
     }
     interface DataTable {
+        "columns": {
+    id: number | string
+    key: string
+    name: string
+    type: "number" | "string" | "date" | "datetime"
+
+    prefix?: string
+    suffix?: string
+    maxChar?: number
+    decimal?: boolean
+    decimalPlaces?: number
+    seperator?: string
+
+    isSortable: boolean
+    isFilterable: boolean
+    isEditable: boolean
+    isDeletable: boolean
+
+    onSort?: (id: number | string, name: string) => Promise<void>
+    onFilter?: (id: number | string, name: string) => Promise<void>
+    onRowClick?: (id: string | number, key: string, value: any) => Promise<void>
+    customColumnComponent?: (name: string) => any
+    customRowComponent?: (value: any) => any
+
+    customStyle?: {
+      headerStyle?: { [index: string]: string | number },
+      headerClass?: string,
+      cellStyle?: { [index: string]: string | number },
+      cellClass?: string
+    }
+  }[];
+        "showActions": boolean;
     }
     interface DataTableUpdated {
         "doc": object[];
@@ -610,6 +642,38 @@ declare namespace LocalJSX {
         "onClickRun"?: Function;
     }
     interface DataTable {
+        "columns"?: {
+    id: number | string
+    key: string
+    name: string
+    type: "number" | "string" | "date" | "datetime"
+
+    prefix?: string
+    suffix?: string
+    maxChar?: number
+    decimal?: boolean
+    decimalPlaces?: number
+    seperator?: string
+
+    isSortable: boolean
+    isFilterable: boolean
+    isEditable: boolean
+    isDeletable: boolean
+
+    onSort?: (id: number | string, name: string) => Promise<void>
+    onFilter?: (id: number | string, name: string) => Promise<void>
+    onRowClick?: (id: string | number, key: string, value: any) => Promise<void>
+    customColumnComponent?: (name: string) => any
+    customRowComponent?: (value: any) => any
+
+    customStyle?: {
+      headerStyle?: { [index: string]: string | number },
+      headerClass?: string,
+      cellStyle?: { [index: string]: string | number },
+      cellClass?: string
+    }
+  }[];
+        "showActions"?: boolean;
     }
     interface DataTableUpdated {
         "doc"?: object[];

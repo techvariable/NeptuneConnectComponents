@@ -1,6 +1,5 @@
-import { Component, Host, h, State } from '@stencil/core';
+import { Component, Host, h, State, Prop } from '@stencil/core';
 import formatter from 'format-number';
-
 
 const sort = (
   <svg xmlns="http://www.w3.org/2000/svg" class="inline h-4 w-4 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">
@@ -28,7 +27,6 @@ type TColumn = {
   decimalPlaces?: number
   seperator?: string
 
-  showActions: boolean
   isSortable: boolean
   isFilterable: boolean
   isEditable: boolean
@@ -58,56 +56,84 @@ export class DataTable {
   @State() isEditing: boolean = false;
   @State() isEditingIndex: number = -1;
   @State() editingState: { [rowColumnId: string]: { prevValue: TField, newValue: TField } } = {};
-  @State() columns: TColumn[] = [
-    {
-      id: 1,
-      key: "name",
-      name: "Name",
-      type: "string",
+  // TODO: Need to find a way to use TColumn here
+  @Prop() columns: {
+    id: number | string
+    key: string
+    name: string
+    type: "number" | "string" | "date" | "datetime"
 
-      // prefix and suffix
-      suffix: " ms",
-      maxChar: 25,
+    prefix?: string
+    suffix?: string
+    maxChar?: number
+    decimal?: boolean
+    decimalPlaces?: number
+    seperator?: string
 
-      // flags
-      showActions: true,
-      isSortable: true,
-      isFilterable: true,
-      isEditable: true,
-      isDeletable: true,
+    isSortable: boolean
+    isFilterable: boolean
+    isEditable: boolean
+    isDeletable: boolean
 
-      // handlers
-      onSort: async (id: number | string, name: string) => { console.log({ id, name }) },
-      onFilter: async (id: number | string, name: string) => { console.log({ id, name }) },
-    },
-    {
-      id: 2,
-      key: "age",
-      name: "Age",
-      type: "number",
+    onSort?: (id: number | string, name: string) => Promise<void>
+    onFilter?: (id: number | string, name: string) => Promise<void>
+    onRowClick?: (id: string | number, key: string, value: any) => Promise<void>
+    customColumnComponent?: (name: string) => any
+    customRowComponent?: (value: any) => any
 
-      showActions: true,
-      isSortable: true,
-      isDeletable: false,
-      isEditable: true,
-      isFilterable: true,
-
-      onSort: async (id: number | string, name: string) => { console.log({ id, name }) },
-      onFilter: async (id: number | string, name: string) => { console.log({ id, name }) },
-    },
-    {
-      id: 3,
-      key: "gender",
-      name: "Gender",
-      type: "string",
-
-      showActions: false,
-      isSortable: false,
-      isEditable: true,
-      isDeletable: false,
-      isFilterable: false,
+    customStyle?: {
+      headerStyle?: { [index: string]: string | number },
+      headerClass?: string,
+      cellStyle?: { [index: string]: string | number },
+      cellClass?: string
     }
-  ]
+  }[] = [
+      {
+        id: 1,
+        key: "name",
+        name: "Name",
+        type: "string",
+
+        // prefix and suffix
+        suffix: " ms",
+        maxChar: 25,
+
+        // flags
+        isSortable: true,
+        isFilterable: true,
+        isEditable: true,
+        isDeletable: true,
+
+        // handlers
+        onSort: async (id: number | string, name: string) => { console.log({ id, name }) },
+        onFilter: async (id: number | string, name: string) => { console.log({ id, name }) },
+      },
+      {
+        id: 2,
+        key: "age",
+        name: "Age",
+        type: "number",
+
+        isSortable: true,
+        isDeletable: false,
+        isEditable: true,
+        isFilterable: true,
+
+        onSort: async (id: number | string, name: string) => { console.log({ id, name }) },
+        onFilter: async (id: number | string, name: string) => { console.log({ id, name }) },
+      },
+      {
+        id: 3,
+        key: "gender",
+        name: "Gender",
+        type: "string",
+
+        isSortable: false,
+        isEditable: true,
+        isDeletable: false,
+        isFilterable: false,
+      }
+    ]
   @State() data: Array<{ [field: string]: TField }> = [
     {
       name: "Abhishek",
@@ -130,6 +156,7 @@ export class DataTable {
       gender: "Male"
     },
   ]
+  @Prop() showActions: boolean = true;
 
   onEdit(index: number, changes: Array<{ prevValue: TField, newValue: TField, name: string }>) { console.log({ message: "here i am", index, changes }) }
   onDelete(index: number, row: { [field: string]: TField }) { console.log({ index, row }) }
@@ -206,8 +233,6 @@ export class DataTable {
   }
 
   render() {
-    const isActionable = this.columns.filter(column => column.showActions).length > 0
-
     const renderAction = (row: { [field: string]: TField }, rowId: number) => {
       const getEditingButton = (disabled: boolean = false) => <button disabled={disabled} onClick={() => this.handleOpenEditForm(rowId)}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
         <path
@@ -233,7 +258,7 @@ export class DataTable {
         <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg></button>;
 
-      if (!isActionable) return null;
+      if (!this.showActions) return null;
 
       if (!this.isEditing) return <td>
         {getEditingButton()}
@@ -283,7 +308,7 @@ export class DataTable {
             <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative">
               <thead class="bg-gray-100 sticky top-0">
                 <tr>
-                  {isActionable && (
+                  {this.showActions && (
                     <th scope="col" style={{ minWidth: '120px' }} class="py-4 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 tracking-wider">
                       <div class="flex">
                         Actions
@@ -296,12 +321,12 @@ export class DataTable {
                         <div class="flex">
                           {column.customColumnComponent ? column.customColumnComponent(column.name) : column.name}
                           {column.isSortable && (
-                            <button class="ml-3" onClick={() => column.onSort(column.id, column.name)}>
+                            <button class="ml-3" onClick={() => column.onSort(column.id, column.key)}>
                               {this.icons.sort}
                             </button>
                           )}
                           {column.isFilterable && (
-                            <button class="ml-3" onClick={() => column.onFilter(column.id, column.name)}>
+                            <button class="ml-3" onClick={() => column.onFilter(column.id, column.key)}>
                               {this.icons.filter}
                             </button>
                           )}
