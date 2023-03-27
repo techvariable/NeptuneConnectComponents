@@ -1,4 +1,4 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Host, h, State } from '@stencil/core';
 import formatter from 'format-number';
 
 
@@ -14,27 +14,8 @@ const filter = (
   </svg>
 );
 
-const edit = (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-    />
-  </svg>
-)
-
-const del = (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-    />
-  </svg>
-)
-
-type IColumn = {
+type TField = number | Date | string
+type TColumn = {
   id: number | string
   key: string
   name: string
@@ -73,17 +54,91 @@ type IColumn = {
   scoped: true,
 })
 export class DataTable {
+  @State() editRow = {};
+  @State() isEditing: boolean = false;
+  @State() isEditingIndex: number = -1;
+  @State() editingState: { [rowColumnId: string]: { prevValue: TField, newValue: TField } } = {};
+  @State() columns: TColumn[] = [
+    {
+      id: 1,
+      key: "name",
+      name: "Name",
+      type: "string",
 
-  onEdit(index: number, row: any) { console.log({ index, row }) }
-  onDelete(index: number, row: any) { console.log({ index, row }) }
+      // prefix and suffix
+      suffix: " ms",
+      maxChar: 25,
+
+      // flags
+      showActions: true,
+      isSortable: true,
+      isFilterable: true,
+      isEditable: true,
+      isDeletable: true,
+
+      // handlers
+      onSort: async (id: number | string, name: string) => { console.log({ id, name }) },
+      onFilter: async (id: number | string, name: string) => { console.log({ id, name }) },
+    },
+    {
+      id: 2,
+      key: "age",
+      name: "Age",
+      type: "number",
+
+      showActions: true,
+      isSortable: true,
+      isDeletable: false,
+      isEditable: true,
+      isFilterable: true,
+
+      onSort: async (id: number | string, name: string) => { console.log({ id, name }) },
+      onFilter: async (id: number | string, name: string) => { console.log({ id, name }) },
+    },
+    {
+      id: 3,
+      key: "gender",
+      name: "Gender",
+      type: "string",
+
+      showActions: false,
+      isSortable: false,
+      isEditable: true,
+      isDeletable: false,
+      isFilterable: false,
+    }
+  ]
+  @State() data: Array<{ [field: string]: TField }> = [
+    {
+      name: "Abhishek",
+      age: 18,
+      gender: "Male"
+    },
+    {
+      name: "Dristi",
+      age: 69,
+      gender: "Female"
+    },
+    {
+      name: "Pankaj",
+      age: 18,
+      gender: "Male"
+    },
+    {
+      name: "Another",
+      age: 18,
+      gender: "Male"
+    },
+  ]
+
+  onEdit(index: number, changes: Array<{ prevValue: TField, newValue: TField, name: string }>) { console.log({ message: "here i am", index, changes }) }
+  onDelete(index: number, row: { [field: string]: TField }) { console.log({ index, row }) }
   icons = {
     sort,
     filter,
-    edit,
-    del
   }
 
-  formatData(value: number | string | Date, column: IColumn) {
+  formatData(value: TField, column: TColumn) {
     if (typeof value === "number") {
       return formatter({ prefix: column.prefix, suffix: column.suffix, integerSeparator: column.seperator || ",", decimal: column.seperator || "," })(value, { noSeparator: !Boolean(column.seperator) })
     }
@@ -106,101 +161,120 @@ export class DataTable {
     return JSON.stringify(value);
   }
 
-  render() {
-    const columns: IColumn[] = [
-      {
-        id: 1,
-        key: "name",
-        name: "Name",
-        type: "string",
-
-        // prefix and suffix
-        suffix: " ms",
-        maxChar: 25,
-
-        // flags
-        showActions: true,
-        isSortable: true,
-        isFilterable: true,
-        isEditable: true,
-        isDeletable: true,
-
-        // handlers
-        onSort: async (id: number | string, name: string) => { console.log({ id, name }) },
-        onFilter: async (id: number | string, name: string) => { console.log({ id, name }) },
-
-
-        // styles
-        customStyle: {
-          headerStyle: {
-            color: "red"
-          },
-          headerClass: "",
-          cellStyle: {
-            color: "blue"
-          },
-          cellClass: ""
-        }
-      },
-      {
-        id: 2,
-        key: "age",
-        name: "Age",
-        type: "number",
-
-        showActions: true,
-        isSortable: true,
-        isDeletable: false,
-        isEditable: false,
-        isFilterable: true,
-
-        onSort: async (id: number | string, name: string) => { console.log({ id, name }) },
-        onFilter: async (id: number | string, name: string) => { console.log({ id, name }) },
-      },
-      {
-        id: 3,
-        key: "gender",
-        name: "Gender",
-        type: "string",
-
-        showActions: false,
-        isSortable: false,
-        isEditable: false,
-        isDeletable: false,
-        isFilterable: false,
-
-        customStyle: {
-          headerStyle: {
-            textAlign: "right"
-          },
-          cellStyle: {
-            textAlign: "right"
-          }
+  handleEdit(index: number) {
+    const changes: Array<{ prevValue: TField, newValue: TField, name: string }> = this.columns.map(column => {
+      if (this.editingState[`${index}-${column.id}`]) {
+        return {
+          ... this.editingState[`${index}-${column.id}`],
+          name: column.key
         }
       }
-    ]
 
-    const data = [
-      {
-        name: "nbasjdgashgdgasjgdagshdasghdgajshgdkasgdasjdgashgdasgdjgj",
-        age: 18,
-        gender: "Male"
-      },
-      {
-        name: "Dristi",
-        age: 69,
-        gender: "Female"
-      },
-      {
-        name: "Pankaj",
-        age: 18,
-        gender: "Male"
-      },
-    ]
+      return null
+    }).filter(change => change)
 
-    const isActionable = columns.filter(column => column.showActions).length > 0
-    const isEditable = columns.filter(column => column.isEditable).length > 0
-    const isDeletable = columns.filter(column => column.isDeletable).length > 0
+    this.onEdit(index, changes);
+    this.isEditing = false;
+    this.isEditingIndex = -1;
+    this.editingState = {}
+  }
+
+  handleCancelEdit() {
+    this.isEditing = false;
+    this.isEditingIndex = -1;
+    this.editingState = {}
+  }
+
+  handleOpenEditForm(idx: number) {
+    this.isEditing = true;
+    this.isEditingIndex = idx;
+  }
+
+  hamdleFieldChange(rowId: number, columnId: string | number, prevValue: TField, newValue: TField) {
+    const editingState = { ...this.editingState }
+
+    if (editingState[`${rowId}-${columnId}`]) {
+      editingState[`${rowId}-${columnId}`].newValue = newValue;
+    }
+
+    editingState[`${rowId}-${columnId}`] = {
+      prevValue,
+      newValue
+    };
+
+    this.editingState = editingState;
+  }
+
+  render() {
+    const isActionable = this.columns.filter(column => column.showActions).length > 0
+
+    const renderAction = (row: { [field: string]: TField }, rowId: number) => {
+      const getEditingButton = (disabled: boolean = false) => <button disabled={disabled} onClick={() => this.handleOpenEditForm(rowId)}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+        />
+      </svg></button>;
+
+      const getSeleteButton = (disabled: boolean = false) => <button disabled={disabled} onClick={() => this.onDelete(rowId, row)}> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+        />
+      </svg></button>;
+
+      const getSaveButton = (disabled: boolean = false) => <button disabled={disabled} onClick={() => this.handleEdit(rowId)}> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg></button>;
+
+      const getCancelButton = (disabled: boolean = false) => <button disabled={disabled} onClick={() => this.handleCancelEdit()}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg></button>;
+
+      if (!isActionable) return null;
+
+      if (!this.isEditing) return <td>
+        {getEditingButton()}
+        {getSeleteButton()}
+      </td>
+
+      if (this.isEditingIndex === rowId) {
+        return <td>
+          {getSaveButton()}
+          {getCancelButton()}
+        </td>
+      }
+
+      return <td>
+        {getEditingButton(true)}
+        {getSeleteButton(true)}
+      </td>
+    }
+
+    const renderRow = (keyName: string, fieldValue: TField, rowId: number, columnId: number) => {
+      const column = this.columns[columnId]
+      if (column.isEditable && rowId === this.isEditingIndex) {
+        return <td class={`py-3 whitespace-nowrap text-sm text-gray-900 ${column.customStyle?.cellClass}`}><input
+          class={`appearance-none block w-full text-gray-700 focus:border-2 py-1 px-2 rounded leading-tight focus:outline outline-gray-200 focus:bg-white focus:border-gray-400`}
+          type={column.type}
+          value={(this.editingState[`${rowId}-${column.id}`]?.newValue || fieldValue).toString()}
+          // @ts-expect-error
+          onChange={e => this.hamdleFieldChange(rowId, column.id, fieldValue, e.target.value)}
+        /></td>
+      }
+
+      return <td
+        class={`py-3 whitespace-nowrap text-sm text-gray-900 ${column.customStyle?.cellClass}`}
+        style={{ cursor: column.onRowClick ? "pointer" : "auto", ...(column.customStyle?.cellStyle || {}) }}
+        onClick={() => { return column.onRowClick ? column.onRowClick(column.id, keyName, fieldValue) : null }}>
+        {column.customRowComponent ?
+          column.customRowComponent(fieldValue) :
+          this.formatData(fieldValue, column)
+        }
+      </td>
+    }
 
     return (
       <Host>
@@ -216,7 +290,7 @@ export class DataTable {
                       </div>
                     </th>
                   )}
-                  {columns.map(column => {
+                  {this.columns.map(column => {
                     return (
                       <th scope="col" key={column.id} style={{ minWidth: '120px', ...(column.customStyle?.headerStyle || {}) }} class={`py-4 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 tracking-wider ${column.customStyle?.headerClass}`}>
                         <div class="flex">
@@ -237,25 +311,13 @@ export class DataTable {
                   })}
                 </tr>
               </thead>
-              <tbody>
-                {data.map((row, index) => {
+              <tbody class="bg-white divide-y divide-gray-200">
+                {this.data.map((row, rowId) => {
                   return (
-                    <tr>
-                      {isActionable && (
-                        <td>
-                          {isEditable && (
-                            <button onClick={() => this.onEdit(index, row)}>{this.icons.edit}</button>
-                          )}
-                          {isDeletable && (
-                            <button onClick={() => this.onDelete(index, row)}>{this.icons.del}</button>
-                          )}
-                        </td>
-                      )}
-                      {Object.keys(row).map((d, dIdx) => {
-                        const column = columns[dIdx];
-                        return (
-                          <td class={column.customStyle?.cellClass} style={{ cursor: column.onRowClick ? "pointer" : "auto", ...(column.customStyle?.cellStyle || {}) }} onClick={() => { return column.onRowClick ? column.onRowClick(column.id, d, row[d]) : null }}>{column.customRowComponent ? column.customRowComponent(row[d]) : this.formatData(row[d], column)}</td>
-                        )
+                    <tr class="hover:bg-gray-100 transition">
+                      {renderAction(row, rowId)}
+                      {Object.keys(row).map((fieldKey, columnId) => {
+                        return renderRow(fieldKey, row[fieldKey], rowId, columnId)
                       })}
                     </tr>
                   )
