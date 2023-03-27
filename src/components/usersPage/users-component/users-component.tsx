@@ -1,5 +1,5 @@
 import { Component, h, Host, Prop, State } from '@stencil/core';
-import axios from 'axios';
+// import axios from 'axios';
 
 @Component({
   tag: 'users-component',
@@ -10,17 +10,10 @@ export class UsersComponent {
   @Prop() url: string;
   @Prop() parsedPermissions: [];
   @Prop() updatedUsers: any;
+  @Prop() refresh: Function;
+  @Prop() allPermissions: {}[];
   @State() rowsHandler: any = function (e) {
     this.option = e.target.value;
-  };
-
-  refresh = async () => {
-    try {
-      const response = await axios.get(`${this.url}/api/users/all`);
-      this.updatedUsers = response.data;
-    } catch (error) {
-      console.log(error);
-    }
   };
   redirectHandler(id) {
     window.location.href = `${this.url}/users/${id}`;
@@ -29,13 +22,16 @@ export class UsersComponent {
   render() {
     return (
       <Host style={{ width: '100%' }}>
-        <div class="mx-auto">
+        <div style={{ height: '43rem' }} class="mx-auto overflow-y-auto">
           <div class="md:grid grid-cols-3 gap-4" style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr));' }}>
             {this.updatedUsers.map((user: any) => {
               return (
                 <div class="p-2 md:w-full">
                   <div class="h-full flex items-center border-gray-200 border p-4 rounded-lg">
-                    <div onClick={() => this.redirectHandler(user.id)} class="cursor-pointer w-20 h-20 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4 flex justify-center items-center">
+                    <div
+                      onClick={() => this.redirectHandler(user.id)}
+                      class="cursor-pointer w-20 h-20 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4 flex justify-center items-center"
+                    >
                       <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-12 h-12" viewBox="0 0 24 24">
                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
@@ -49,6 +45,7 @@ export class UsersComponent {
                           userId={user.id}
                           email={user.email}
                           url={`${this.url}/api`}
+                          allPermissions={this.allPermissions}
                         ></user-drop-down>
                       </div>
                       <div class="pb-4 cursor-pointer" onClick={() => this.redirectHandler(user.id)}>
