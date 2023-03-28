@@ -256,7 +256,7 @@ export namespace Components {
     interface UsersComponent {
         "allPermissions": {}[];
         "parsedPermissions": [];
-        "refresh": Function;
+        "refresh": () => void;
         "updatedUsers": any;
         "url": string;
     }
@@ -866,7 +866,7 @@ declare namespace LocalJSX {
     interface UsersComponent {
         "allPermissions"?: {}[];
         "parsedPermissions"?: [];
-        "refresh"?: Function;
+        "refresh"?: () => void;
         "updatedUsers"?: any;
         "url"?: string;
     }

@@ -10,7 +10,7 @@ export class UsersComponent {
   @Prop() url: string;
   @Prop() parsedPermissions: [];
   @Prop() updatedUsers: any;
-  @Prop() refresh: Function;
+  @Prop() refresh: () => void;
   @Prop() allPermissions: {}[];
   @State() rowsHandler: any = function (e) {
     this.option = e.target.value;
@@ -21,9 +21,9 @@ export class UsersComponent {
 
   render() {
     return (
-      <Host style={{ width: '100%' }}>
-        <div style={{ height: '43rem' }} class="mx-auto overflow-y-auto">
-          <div class="md:grid grid-cols-3 gap-4" style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr));' }}>
+      <Host style={{ width: '100%', height: '67vh' }}>
+        <div class="mx-auto overflow-y-auto h-full">
+          <div class="md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 h-full">
             {this.updatedUsers.map((user: any) => {
               return (
                 <div class="p-2 md:w-full">

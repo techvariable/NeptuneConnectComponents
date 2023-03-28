@@ -19,7 +19,7 @@ export class AllUsers {
   @State() limit: number = 50;
   @State() offset: number = 0;
 
-  refresh = async () => {
+  refresh = () => {
     window.location.assign(`/users?offset=${this.offset}&limit=${this.limit}`);
   };
 
@@ -78,6 +78,7 @@ export class AllUsers {
             nextHandler={this.nextHandler}
             prevHandler={this.prevHandler}
             jumpPageHandler={this.jumpPageHandler}
+            class="mt-2"
           ></pagination-component>
         </div>
       </Host>

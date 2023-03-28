@@ -24,7 +24,6 @@ export class EditUser {
   validateName(newValue: string, oldValue: string) {
     if (newValue !== oldValue) {
       this.email = this.value;
-      console.log('zzzzzzz', this.allPermissions);
       for (let role of this.allPermissions) {
         let obj = {};
         obj['value'] = role.roleName;
