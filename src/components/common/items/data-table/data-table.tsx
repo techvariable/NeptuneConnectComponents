@@ -87,79 +87,12 @@ export class DataTable {
       cellStyle?: { [index: string]: string | number },
       cellClass?: string
     }
-  }[] = [
-      {
-        id: 1,
-        key: "name",
-        name: "Name",
-        type: "string",
+  }[] = []
+  @Prop() data: Array<{ [field: string]: number | Date | string }> = []
+  @Prop() showActions: boolean = false;
+  @Prop() onEdit: (index: number, changes: Array<{ prevValue: number | Date | string, newValue: number | Date | string, name: string }>) => Promise<any>
+  @Prop() onDelete: (index: number, row: { [field: string]: number | Date | string }) => Promise<any>
 
-        // prefix and suffix
-        suffix: " ms",
-        maxChar: 25,
-
-        // flags
-        isSortable: true,
-        isFilterable: true,
-        isEditable: true,
-        isDeletable: true,
-
-        // handlers
-        onSort: async (id: number | string, name: string) => { console.log({ id, name }) },
-        onFilter: async (id: number | string, name: string) => { console.log({ id, name }) },
-      },
-      {
-        id: 2,
-        key: "age",
-        name: "Age",
-        type: "number",
-
-        isSortable: true,
-        isDeletable: false,
-        isEditable: true,
-        isFilterable: true,
-
-        onSort: async (id: number | string, name: string) => { console.log({ id, name }) },
-        onFilter: async (id: number | string, name: string) => { console.log({ id, name }) },
-      },
-      {
-        id: 3,
-        key: "gender",
-        name: "Gender",
-        type: "string",
-
-        isSortable: false,
-        isEditable: true,
-        isDeletable: false,
-        isFilterable: false,
-      }
-    ]
-  @State() data: Array<{ [field: string]: TField }> = [
-    {
-      name: "Abhishek",
-      age: 18,
-      gender: "Male"
-    },
-    {
-      name: "Dristi",
-      age: 69,
-      gender: "Female"
-    },
-    {
-      name: "Pankaj",
-      age: 18,
-      gender: "Male"
-    },
-    {
-      name: "Another",
-      age: 18,
-      gender: "Male"
-    },
-  ]
-  @Prop() showActions: boolean = true;
-
-  onEdit(index: number, changes: Array<{ prevValue: TField, newValue: TField, name: string }>) { console.log({ message: "here i am", index, changes }) }
-  onDelete(index: number, row: { [field: string]: TField }) { console.log({ index, row }) }
   icons = {
     sort,
     filter,

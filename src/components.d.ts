@@ -66,6 +66,9 @@ export namespace Components {
       cellClass?: string
     }
   }[];
+        "data": Array<{ [field: string]: number | Date | string }>;
+        "onDelete": (index: number, row: { [field: string]: number | Date | string }) => Promise<any>;
+        "onEdit": (index: number, changes: Array<{ prevValue: number | Date | string, newValue: number | Date | string, name: string }>) => Promise<any>;
         "showActions": boolean;
     }
     interface DataTableUpdated {
@@ -673,6 +676,9 @@ declare namespace LocalJSX {
       cellClass?: string
     }
   }[];
+        "data"?: Array<{ [field: string]: number | Date | string }>;
+        "onDelete"?: (index: number, row: { [field: string]: number | Date | string }) => Promise<any>;
+        "onEdit"?: (index: number, changes: Array<{ prevValue: number | Date | string, newValue: number | Date | string, name: string }>) => Promise<any>;
         "showActions"?: boolean;
     }
     interface DataTableUpdated {
