@@ -1,10 +1,11 @@
 import { Component, h, Element, State, Prop, Host } from '@stencil/core';
-import { EditorState, basicSetup } from '@codemirror/basic-setup';
+import { EditorState } from '@codemirror/basic-setup';
 import { EditorView, keymap } from '@codemirror/view';
 import { java } from '@codemirror/lang-java';
 import { json } from '@codemirror/lang-json';
 
 import state from '../store';
+import { customSetup } from '../../customSetup';
 
 const TAB_LIST = [
   { name: 'Query', className: 'editor' },
@@ -32,7 +33,7 @@ export class CodeEditor {
     state.stateQuery = EditorState.create({
       doc: state.query,
       extensions: [
-        basicSetup,
+        customSetup,
         java(),
         this.onCtrlShiftEnter(),
         EditorView.updateListener.of(function (e) {
@@ -48,7 +49,7 @@ export class CodeEditor {
 
     state.stateParameter = EditorState.create({
       doc: state.queryParameter,
-      extensions: [basicSetup, json(), this.onCtrlShiftEnter()],
+      extensions: [customSetup, json(), this.onCtrlShiftEnter()],
     });
 
     state.viewParameter = new EditorView({

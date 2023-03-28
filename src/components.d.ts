@@ -20,6 +20,8 @@ export namespace Components {
         "backDropHandler": any;
         "showBackDrop": boolean;
     }
+    interface BasicSettings {
+    }
     interface CheckBox {
         "name": string;
     }
@@ -226,7 +228,7 @@ export namespace Components {
         "width": 'full' | 'auto';
     }
     interface ToggleButton {
-        "selectedOption": string;
+        "isSelected": boolean;
         "toggleButtonHandler": any;
     }
     interface UserDetailsComponent {
@@ -263,6 +265,12 @@ declare global {
     var HTMLBackdropFilterElement: {
         prototype: HTMLBackdropFilterElement;
         new (): HTMLBackdropFilterElement;
+    };
+    interface HTMLBasicSettingsElement extends Components.BasicSettings, HTMLStencilElement {
+    }
+    var HTMLBasicSettingsElement: {
+        prototype: HTMLBasicSettingsElement;
+        new (): HTMLBasicSettingsElement;
     };
     interface HTMLCheckBoxElement extends Components.CheckBox, HTMLStencilElement {
     }
@@ -544,6 +552,7 @@ declare global {
         "add-role": HTMLAddRoleElement;
         "all-users": HTMLAllUsersElement;
         "backdrop-filter": HTMLBackdropFilterElement;
+        "basic-settings": HTMLBasicSettingsElement;
         "check-box": HTMLCheckBoxElement;
         "chips-list": HTMLChipsListElement;
         "code-editor": HTMLCodeEditorElement;
@@ -606,6 +615,8 @@ declare namespace LocalJSX {
     interface BackdropFilter {
         "backDropHandler"?: any;
         "showBackDrop"?: boolean;
+    }
+    interface BasicSettings {
     }
     interface CheckBox {
         "name"?: string;
@@ -813,7 +824,7 @@ declare namespace LocalJSX {
         "width"?: 'full' | 'auto';
     }
     interface ToggleButton {
-        "selectedOption"?: string;
+        "isSelected"?: boolean;
         "toggleButtonHandler"?: any;
     }
     interface UserDetailsComponent {
@@ -835,6 +846,7 @@ declare namespace LocalJSX {
         "add-role": AddRole;
         "all-users": AllUsers;
         "backdrop-filter": BackdropFilter;
+        "basic-settings": BasicSettings;
         "check-box": CheckBox;
         "chips-list": ChipsList;
         "code-editor": CodeEditor;
@@ -890,6 +902,7 @@ declare module "@stencil/core" {
             "add-role": LocalJSX.AddRole & JSXBase.HTMLAttributes<HTMLAddRoleElement>;
             "all-users": LocalJSX.AllUsers & JSXBase.HTMLAttributes<HTMLAllUsersElement>;
             "backdrop-filter": LocalJSX.BackdropFilter & JSXBase.HTMLAttributes<HTMLBackdropFilterElement>;
+            "basic-settings": LocalJSX.BasicSettings & JSXBase.HTMLAttributes<HTMLBasicSettingsElement>;
             "check-box": LocalJSX.CheckBox & JSXBase.HTMLAttributes<HTMLCheckBoxElement>;
             "chips-list": LocalJSX.ChipsList & JSXBase.HTMLAttributes<HTMLChipsListElement>;
             "code-editor": LocalJSX.CodeEditor & JSXBase.HTMLAttributes<HTMLCodeEditorElement>;
