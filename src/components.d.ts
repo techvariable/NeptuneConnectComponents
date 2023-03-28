@@ -36,39 +36,39 @@ export namespace Components {
     }
     interface DataTable {
         "columns": {
-    id: number | string
-    key: string
-    name: string
-    type: "number" | "string" | "date" | "datetime"
+    id: number | string;
+    key: string;
+    name: string;
+    type: 'number' | 'string' | 'date' | 'datetime';
 
-    prefix?: string
-    suffix?: string
-    maxChar?: number
-    decimal?: boolean
-    decimalPlaces?: number
-    seperator?: string
+    prefix?: string;
+    suffix?: string;
+    maxChar?: number;
+    decimal?: boolean;
+    decimalPlaces?: number;
+    seperator?: string;
 
-    isSortable: boolean
-    isFilterable: boolean
-    isEditable: boolean
-    isDeletable: boolean
+    isSortable: boolean;
+    isFilterable: boolean;
+    isEditable: boolean;
+    isDeletable: boolean;
 
-    onSort?: (id: number | string, name: string) => Promise<void>
-    onFilter?: (id: number | string, name: string) => Promise<void>
-    onRowClick?: (id: string | number, key: string, value: any) => Promise<void>
-    customColumnComponent?: (name: string) => any
-    customRowComponent?: (value: any) => any
+    onSort?: (id: number | string, name: string) => Promise<void>;
+    onFilter?: (id: number | string, name: string) => Promise<void>;
+    onRowClick?: (id: string | number, key: string, value: any) => Promise<void>;
+    customColumnComponent?: (name: string) => any;
+    customRowComponent?: (value: any) => any;
 
     customStyle?: {
-      headerStyle?: { [index: string]: string | number },
-      headerClass?: string,
-      cellStyle?: { [index: string]: string | number },
-      cellClass?: string
-    }
+      headerStyle?: { [index: string]: string | number };
+      headerClass?: string;
+      cellStyle?: { [index: string]: string | number };
+      cellClass?: string;
+    };
   }[];
-        "data": Array<{ [field: string]: number | Date | string }>;
+        "data": Array<any>;
         "onDelete": (index: number, row: { [field: string]: number | Date | string }) => Promise<any>;
-        "onEdit": (index: number, changes: Array<{ prevValue: number | Date | string, newValue: number | Date | string, name: string }>) => Promise<any>;
+        "onEdit": (index: number, changes: Array<{ prevValue: number | Date | string; newValue: number | Date | string; name: string }>) => Promise<any>;
         "showActions": boolean;
     }
     interface DataTableUpdated {
@@ -646,39 +646,39 @@ declare namespace LocalJSX {
     }
     interface DataTable {
         "columns"?: {
-    id: number | string
-    key: string
-    name: string
-    type: "number" | "string" | "date" | "datetime"
+    id: number | string;
+    key: string;
+    name: string;
+    type: 'number' | 'string' | 'date' | 'datetime';
 
-    prefix?: string
-    suffix?: string
-    maxChar?: number
-    decimal?: boolean
-    decimalPlaces?: number
-    seperator?: string
+    prefix?: string;
+    suffix?: string;
+    maxChar?: number;
+    decimal?: boolean;
+    decimalPlaces?: number;
+    seperator?: string;
 
-    isSortable: boolean
-    isFilterable: boolean
-    isEditable: boolean
-    isDeletable: boolean
+    isSortable: boolean;
+    isFilterable: boolean;
+    isEditable: boolean;
+    isDeletable: boolean;
 
-    onSort?: (id: number | string, name: string) => Promise<void>
-    onFilter?: (id: number | string, name: string) => Promise<void>
-    onRowClick?: (id: string | number, key: string, value: any) => Promise<void>
-    customColumnComponent?: (name: string) => any
-    customRowComponent?: (value: any) => any
+    onSort?: (id: number | string, name: string) => Promise<void>;
+    onFilter?: (id: number | string, name: string) => Promise<void>;
+    onRowClick?: (id: string | number, key: string, value: any) => Promise<void>;
+    customColumnComponent?: (name: string) => any;
+    customRowComponent?: (value: any) => any;
 
     customStyle?: {
-      headerStyle?: { [index: string]: string | number },
-      headerClass?: string,
-      cellStyle?: { [index: string]: string | number },
-      cellClass?: string
-    }
+      headerStyle?: { [index: string]: string | number };
+      headerClass?: string;
+      cellStyle?: { [index: string]: string | number };
+      cellClass?: string;
+    };
   }[];
-        "data"?: Array<{ [field: string]: number | Date | string }>;
+        "data"?: Array<any>;
         "onDelete"?: (index: number, row: { [field: string]: number | Date | string }) => Promise<any>;
-        "onEdit"?: (index: number, changes: Array<{ prevValue: number | Date | string, newValue: number | Date | string, name: string }>) => Promise<any>;
+        "onEdit"?: (index: number, changes: Array<{ prevValue: number | Date | string; newValue: number | Date | string; name: string }>) => Promise<any>;
         "showActions"?: boolean;
     }
     interface DataTableUpdated {

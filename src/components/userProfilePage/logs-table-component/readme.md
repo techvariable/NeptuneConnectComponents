@@ -18,10 +18,6 @@
 
 ## Dependencies
 
-### Used by
-
- - [last-logs](../last-logs)
-
 ### Depends on
 
 - [loader-component](../../common/loader-component)
@@ -30,7 +26,6 @@
 ```mermaid
 graph TD;
   logs-table-component --> loader-component
-  last-logs --> logs-table-component
   style logs-table-component fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -17,13 +17,12 @@
 
 ### Depends on
 
-- [logs-table-component](../logs-table-component)
+- [data-table](../../common/items/data-table)
 
 ### Graph
 ```mermaid
 graph TD;
-  last-logs --> logs-table-component
-  logs-table-component --> loader-component
+  last-logs --> data-table
   style last-logs fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

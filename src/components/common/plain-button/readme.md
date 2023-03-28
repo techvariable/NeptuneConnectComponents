@@ -22,7 +22,6 @@
 
 ### Used by
 
- - [data-table](../data-table)
  - [data-table-updated](../data-table-updated)
  - [invite-component](../../invitationPage/invite-component)
  - [logs-table](../../logsPage/logs-table)
@@ -31,7 +30,6 @@
 ### Graph
 ```mermaid
 graph TD;
-  data-table --> plain-button
   data-table-updated --> plain-button
   invite-component --> plain-button
   logs-table --> plain-button
