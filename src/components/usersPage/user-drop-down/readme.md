@@ -9,6 +9,7 @@
 
 | Property            | Attribute | Description | Type     | Default     |
 | ------------------- | --------- | ----------- | -------- | ----------- |
+| `allPermissions`    | --        |             | `{}[]`   | `undefined` |
 | `email`             | `email`   |             | `string` | `undefined` |
 | `parsedPermissions` | --        |             | `[]`     | `undefined` |
 | `refresh`           | `refresh` |             | `any`    | `undefined` |
