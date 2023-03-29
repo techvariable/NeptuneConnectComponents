@@ -43,98 +43,6 @@ export class LastLogs {
   @State() isLoading = false;
   @State() isLoadingError = false;
   @State() total: any = null;
-  @State() headerList = [
-    {
-      title: 'id',
-      filter: {
-        searchable: false,
-        sortable: false,
-      },
-      alias: 'id',
-      click: {
-        clickable: false,
-      },
-    },
-    {
-      title: 'query_text',
-      filter: {
-        searchable: false,
-        sortable: false,
-      },
-      alias: 'queryText',
-      click: {
-        clickable: false,
-      },
-    },
-    {
-      title: 'query_Type',
-      filter: {
-        searchable: false,
-        sortable: false,
-      },
-      alias: 'isCustomQuery',
-      click: {
-        clickable: false,
-      },
-    },
-    {
-      title: 'query_parameter',
-      filter: {
-        searchable: false,
-        sortable: false,
-      },
-      alias: 'queryParameter',
-      click: {
-        clickable: false,
-      },
-    },
-    {
-      title: 'query_status',
-      filter: {
-        searchable: false,
-        sortable: false,
-      },
-      alias: 'queryStatus',
-      click: {
-        clickable: false,
-      },
-    },
-    {
-      title: 'time_of_execution',
-      filter: {
-        searchable: false,
-        sortable: false,
-      },
-      alias: 'timeOfExecution',
-      click: {
-        clickable: false,
-      },
-    },
-    {
-      title: 'time_taken',
-      filter: {
-        searchable: false,
-        sortable: false,
-      },
-      alias: 'timeTaken',
-      click: {
-        clickable: false,
-      },
-    },
-    {
-      title: 'log_Files',
-      filter: {
-        searchable: false,
-        sortable: false,
-      },
-      alias: 'queryResult',
-      click: {
-        clickable: true,
-        icon: 'https://i.stack.imgur.com/To3El.png',
-        url: '/editor/query/logs/',
-      },
-    },
-  ];
   @State() tableData: Array<{}> = [];
 
   async fetchData() {
@@ -156,14 +64,15 @@ export class LastLogs {
 
   componentWillLoad() {
     this.fetchData();
-    console.log('Table Data', this.tableData);
   }
 
   render() {
     let columns: IColumn[] = Object.keys(this.tableData[0] || {}).map(op => {
+      const result = op.replace(/([A-Z])/g, ' $1');
+      const finalResult = result.charAt(0).toUpperCase() + result.slice(1);
       return {
         id: op,
-        name: op,
+        name: op === 'isCustomQuery' ? 'Query Type' : finalResult,
         key: op,
         type: op === 'timeOfExecution' ? 'datetime' : 'string',
 
@@ -233,7 +142,6 @@ export class LastLogs {
       return row;
     });
 
-    console.log('Table', this.tableData, 'data ', data, 'columns', columns);
     return (
       <Host class="border-b-2 border-gray-200">
         <data-table showActions={false} columns={columns} data={data}></data-table>
