@@ -7,11 +7,13 @@
 
 ## Properties
 
-| Property            | Attribute       | Description | Type     | Default     |
-| ------------------- | --------------- | ----------- | -------- | ----------- |
-| `parsedPermissions` | --              |             | `[]`     | `undefined` |
-| `updatedUsers`      | `updated-users` |             | `any`    | `undefined` |
-| `url`               | `url`           |             | `string` | `undefined` |
+| Property            | Attribute       | Description | Type         | Default     |
+| ------------------- | --------------- | ----------- | ------------ | ----------- |
+| `allPermissions`    | --              |             | `{}[]`       | `undefined` |
+| `parsedPermissions` | --              |             | `[]`         | `undefined` |
+| `refresh`           | --              |             | `() => void` | `undefined` |
+| `updatedUsers`      | `updated-users` |             | `any`        | `undefined` |
+| `url`               | `url`           |             | `string`     | `undefined` |
 
 
 ## Dependencies
