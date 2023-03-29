@@ -66,6 +66,10 @@ export namespace Components {
       cellClass?: string;
     };
   }[];
+        "customClass": string;
+        "customStyle": {
+    [style: string]: string | number;
+  };
         "data": Array<any>;
         "limit": number;
         "onDelete": (index: number, row: { [field: string]: number | Date | string }) => Promise<any>;
@@ -669,6 +673,10 @@ declare namespace LocalJSX {
       cellClass?: string;
     };
   }[];
+        "customClass"?: string;
+        "customStyle"?: {
+    [style: string]: string | number;
+  };
         "data"?: Array<any>;
         "limit"?: number;
         "onDelete"?: (index: number, row: { [field: string]: number | Date | string }) => Promise<any>;

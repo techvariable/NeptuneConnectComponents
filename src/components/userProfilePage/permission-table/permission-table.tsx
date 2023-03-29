@@ -138,7 +138,11 @@ export class PermissionTable {
     return (
       <Host>
         <slot>
-          <data-table showActions={false} columns={columns} data={data}></data-table>
+          {data.length > 0 ? (
+            <data-table showActions={false} columns={columns} data={data} customStyle={{ maxHeight: '16rem' }}></data-table>
+          ) : (
+            <h2 class="font-mono text-lg text-center font-bold leading-7 text-gray-400">No Permission Data Available</h2>
+          )}
         </slot>
       </Host>
     );

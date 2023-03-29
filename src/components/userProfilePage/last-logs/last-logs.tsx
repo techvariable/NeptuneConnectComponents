@@ -144,7 +144,11 @@ export class LastLogs {
 
     return (
       <Host class="border-b-2 border-gray-200">
-        <data-table showActions={false} columns={columns} data={data}></data-table>
+        {data.length > 0 ? (
+          <data-table showActions={false} columns={columns} data={data} customStyle={{ maxHeight: '16rem' }}></data-table>
+        ) : (
+          <h2 class="font-mono text-lg text-center font-bold leading-7 text-gray-400">No Logs Data Available</h2>
+        )}
       </Host>
     );
   }

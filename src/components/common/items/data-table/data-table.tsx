@@ -98,6 +98,10 @@ export class DataTable {
   @Prop() limit: number = 10;
   @Prop() supportedLimit: number[] = [];
   @Prop() page: number = 1;
+  @Prop() customStyle: {
+    [style: string]: string | number;
+  };
+  @Prop() customClass: string;
 
   @State() currentPage: number = this.page;
   @State() to: number = this.page * this.limit;
@@ -305,7 +309,7 @@ export class DataTable {
     return (
       <Host>
         <div style={{ overflowY: 'auto' }}>
-          <div style={{ maxHeight: '25rem', overflow: 'auto' }}>
+          <div style={{ overflow: 'auto', ...this.customStyle }} class={this.customClass}>
             <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative">
               <thead class="bg-gray-100 sticky top-0">
                 <tr>

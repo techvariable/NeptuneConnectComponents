@@ -148,6 +148,7 @@ export class EditorRes {
               state.offset = state.limit * state.page - state.limit;
               state.refreshData();
             }}
+            customStyle={{ maxHeight: '25rem' }}
           />
         </div>
       </Host>
