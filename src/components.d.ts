@@ -12,6 +12,9 @@ export namespace Components {
         "url": string;
     }
     interface AllUsers {
+        "count": number;
+        "limitbackend": number;
+        "offsetbackend": number;
         "permissions": string;
         "url": string;
         "users": string;
@@ -52,6 +55,7 @@ export namespace Components {
         "searchMethod": any;
     }
     interface EditUser {
+        "allPermissions": any;
         "ismodelopen": boolean;
         "toggle": () => void;
         "url": string;
@@ -142,6 +146,15 @@ export namespace Components {
     }
     interface NodeItem {
         "nodeError": null | string;
+    }
+    interface PaginationComponent {
+        "jumpPageHandler": Function;
+        "limit": number;
+        "nextHandler": Function;
+        "offset": number;
+        "prevHandler": Function;
+        "totalData": number;
+        "url": string;
     }
     interface PermissionEditor {
         "permissions": string;
@@ -234,6 +247,7 @@ export namespace Components {
         "stringifieduser": string;
     }
     interface UserDropDown {
+        "allPermissions": {}[];
         "email": string;
         "parsedPermissions": [];
         "refresh": any;
@@ -241,7 +255,9 @@ export namespace Components {
         "userId": number;
     }
     interface UsersComponent {
+        "allPermissions": {}[];
         "parsedPermissions": [];
+        "refresh": () => void;
         "updatedUsers": any;
         "url": string;
     }
@@ -433,6 +449,12 @@ declare global {
         prototype: HTMLNodeItemElement;
         new (): HTMLNodeItemElement;
     };
+    interface HTMLPaginationComponentElement extends Components.PaginationComponent, HTMLStencilElement {
+    }
+    var HTMLPaginationComponentElement: {
+        prototype: HTMLPaginationComponentElement;
+        new (): HTMLPaginationComponentElement;
+    };
     interface HTMLPermissionEditorElement extends Components.PermissionEditor, HTMLStencilElement {
     }
     var HTMLPermissionEditorElement: {
@@ -573,6 +595,7 @@ declare global {
         "nav-bar": HTMLNavBarElement;
         "navigators-component": HTMLNavigatorsComponentElement;
         "node-item": HTMLNodeItemElement;
+        "pagination-component": HTMLPaginationComponentElement;
         "permission-editor": HTMLPermissionEditorElement;
         "permission-table": HTMLPermissionTableElement;
         "plain-button": HTMLPlainButtonElement;
@@ -600,6 +623,9 @@ declare namespace LocalJSX {
         "url"?: string;
     }
     interface AllUsers {
+        "count"?: number;
+        "limitbackend"?: number;
+        "offsetbackend"?: number;
         "permissions"?: string;
         "url"?: string;
         "users"?: string;
@@ -640,6 +666,7 @@ declare namespace LocalJSX {
         "searchMethod"?: any;
     }
     interface EditUser {
+        "allPermissions"?: any;
         "ismodelopen"?: boolean;
         "toggle"?: () => void;
         "url"?: string;
@@ -730,6 +757,15 @@ declare namespace LocalJSX {
     }
     interface NodeItem {
         "nodeError"?: null | string;
+    }
+    interface PaginationComponent {
+        "jumpPageHandler"?: Function;
+        "limit"?: number;
+        "nextHandler"?: Function;
+        "offset"?: number;
+        "prevHandler"?: Function;
+        "totalData"?: number;
+        "url"?: string;
     }
     interface PermissionEditor {
         "permissions"?: string;
@@ -822,6 +858,7 @@ declare namespace LocalJSX {
         "stringifieduser"?: string;
     }
     interface UserDropDown {
+        "allPermissions"?: {}[];
         "email"?: string;
         "parsedPermissions"?: [];
         "refresh"?: any;
@@ -829,7 +866,9 @@ declare namespace LocalJSX {
         "userId"?: number;
     }
     interface UsersComponent {
+        "allPermissions"?: {}[];
         "parsedPermissions"?: [];
+        "refresh"?: () => void;
         "updatedUsers"?: any;
         "url"?: string;
     }
@@ -865,6 +904,7 @@ declare namespace LocalJSX {
         "nav-bar": NavBar;
         "navigators-component": NavigatorsComponent;
         "node-item": NodeItem;
+        "pagination-component": PaginationComponent;
         "permission-editor": PermissionEditor;
         "permission-table": PermissionTable;
         "plain-button": PlainButton;
@@ -920,6 +960,7 @@ declare module "@stencil/core" {
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
             "navigators-component": LocalJSX.NavigatorsComponent & JSXBase.HTMLAttributes<HTMLNavigatorsComponentElement>;
             "node-item": LocalJSX.NodeItem & JSXBase.HTMLAttributes<HTMLNodeItemElement>;
+            "pagination-component": LocalJSX.PaginationComponent & JSXBase.HTMLAttributes<HTMLPaginationComponentElement>;
             "permission-editor": LocalJSX.PermissionEditor & JSXBase.HTMLAttributes<HTMLPermissionEditorElement>;
             "permission-table": LocalJSX.PermissionTable & JSXBase.HTMLAttributes<HTMLPermissionTableElement>;
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
