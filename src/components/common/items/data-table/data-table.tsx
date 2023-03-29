@@ -33,7 +33,7 @@ type TColumn = {
   isDeletable: boolean;
 
   onSort?: (id: number | string, name: string) => Promise<void>;
-  onFilter?: (id: number | string, name: string) => Promise<void>;
+  onFilter?: (column: TColumn) => Promise<void>;
   onRowClick?: (id: string | number, key: string, value: any) => Promise<void>;
   customColumnComponent?: (name: string) => any;
   customRowComponent?: (value: any) => any;
@@ -75,8 +75,8 @@ export class DataTable {
     isEditable: boolean;
     isDeletable: boolean;
 
-    onSort?: (id: number | string, name: string) => Promise<void>;
-    onFilter?: (id: number | string, name: string) => Promise<void>;
+    onSort?: (key: string) => Promise<void>;
+    onFilter?: (column) => Promise<void>;
     onRowClick?: (id: string | number, key: string, value: any) => Promise<void>;
     customColumnComponent?: (name: string) => any;
     customRowComponent?: (value: any) => any;
@@ -92,6 +92,16 @@ export class DataTable {
   @Prop() showActions: boolean = false;
   @Prop() onEdit: (index: number, changes: Array<{ prevValue: number | Date | string; newValue: number | Date | string; name: string }>) => Promise<any>;
   @Prop() onDelete: (index: number, row: { [field: string]: number | Date | string }) => Promise<any>;
+  @Prop() onPaginate: (tcurrentPage: number, limit: number) => Promise<void>;
+  @Prop() showPagination: boolean = false;
+  @Prop() total: number = 0;
+  @Prop() limit: number = 10;
+  @Prop() supportedLimit: number[] = [];
+  @Prop() page: number = 1;
+
+  @State() currentPage: number = this.page;
+  @State() to: number = this.page * this.limit;
+  @State() from: number = this.page * this.limit - this.limit + 1;
 
   icons = {
     sort,
@@ -120,7 +130,13 @@ export class DataTable {
       return value.toLocaleString();
     }
 
-    return JSON.stringify(value);
+    const strVal = JSON.stringify(value);
+
+    if (column.maxChar && strVal.length >= column.maxChar) {
+      return <span title={`${column.prefix || ''}${strVal}${column.suffix || ''}`}>{`${column.prefix || ''}${strVal.substring(0, column.maxChar)}...${column.suffix || ''}`}</span>;
+    }
+
+    return `${column.prefix || ''}${strVal}${column.suffix || ''}`;
   }
 
   handleEditSave(rowId: number) {
@@ -167,6 +183,24 @@ export class DataTable {
     };
 
     this.editingState = editingState;
+  }
+
+  handlePagePrev() {
+    this.currentPage--;
+    this.to -= this.limit;
+    this.from -= this.limit;
+    this.handlePaginate();
+  }
+
+  handlePageNext() {
+    this.currentPage++;
+    this.to += this.limit;
+    this.from += this.limit;
+    this.handlePaginate();
+  }
+
+  handlePaginate() {
+    this.onPaginate(this.currentPage, this.limit);
   }
 
   render() {
@@ -271,7 +305,7 @@ export class DataTable {
     return (
       <Host>
         <div style={{ overflowY: 'auto' }}>
-          <div style={{ maxHeight: '16rem', overflow: 'auto' }}>
+          <div style={{ maxHeight: '25rem', overflow: 'auto' }}>
             <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative">
               <thead class="bg-gray-100 sticky top-0">
                 <tr>
@@ -291,12 +325,12 @@ export class DataTable {
                         <div class="flex">
                           {column.customColumnComponent ? column.customColumnComponent(column.name) : column.name}
                           {column.isSortable && (
-                            <button class="ml-3" onClick={() => column.onSort(column.id, column.key)}>
+                            <button class="ml-3" onClick={() => column.onSort(column.key)}>
                               {this.icons.sort}
                             </button>
                           )}
                           {column.isFilterable && (
-                            <button class="ml-3" onClick={() => column.onFilter(column.id, column.key)}>
+                            <button class="ml-3" onClick={() => column.onFilter(column)}>
                               {this.icons.filter}
                             </button>
                           )}
@@ -321,6 +355,44 @@ export class DataTable {
             </table>
           </div>
         </div>
+
+        {this.showPagination && (
+          <div class="bg-gray-100 flex justify-between items-center px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {/* pagination description */}
+            <p class="pr-4">
+              Showing <strong>{this.from}</strong> to <strong>{this.to >= this.total ? this.total : this.to}</strong> results out of total <strong>{this.total}</strong> results
+            </p>
+
+            {/* rows per page  */}
+            <div style={{ maxWidth: '450px' }} class="space-x-6">
+              <span>Rows per page</span>
+              <select
+                onChange={e => {
+                  // @ts-expect-error
+                  this.limit = e.target.value;
+                  this.handlePaginate();
+                }}
+                class="form-select px-3 py-1.5 border-none text-inherit font-inherit text-gray-700 bg-transparent bg-clip-padding bg-no-repeat rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+              >
+                {this.supportedLimit.map(row => (
+                  <option selected={this.limit == row} value={`${row}`}>
+                    {row}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* pagination navigation menu */}
+            <nav class="flex ml-4 gap-4 items-center">
+              <plain-button color="gray-500" type="text" clickHandler={() => this.handlePagePrev()} disabledHandler={this.currentPage === 1} addClass="disabled:opacity-50">
+                prev
+              </plain-button>
+              <plain-button color="gray-500" type="text" clickHandler={() => this.handlePageNext()} disabledHandler={this.to >= this.total} addClass="disabled:opacity-50">
+                next
+              </plain-button>
+            </nav>
+          </div>
+        )}
       </Host>
     );
   }

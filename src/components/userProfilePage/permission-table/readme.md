@@ -22,6 +22,7 @@
 ```mermaid
 graph TD;
   permission-table --> data-table
+  data-table --> plain-button
   style permission-table fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

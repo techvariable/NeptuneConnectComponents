@@ -23,6 +23,7 @@
 ```mermaid
 graph TD;
   last-logs --> data-table
+  data-table --> plain-button
   style last-logs fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

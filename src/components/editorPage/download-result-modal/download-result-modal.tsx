@@ -29,22 +29,37 @@ export class DownloadResultModal {
     this.value = `${state.selectedNodeName ? state.selectedNodeName : 'CustomQuery'}_${+new Date()}`;
   }
 
+  stringifyNodes(nodes: Array<{}>): any {
+    const stringifiedNodes = nodes.map(node => {
+      const keys = Object.keys(node);
+      keys.forEach(key => {
+        if (typeof node[key] === 'object') {
+          node[key] = JSON.stringify(node[key]);
+        }
+      });
+      return node;
+    });
+    return stringifiedNodes;
+  }
+
   async downloadData() {
     try {
+      let stringifiedData = this.stringifyNodes(state.nodes);
       this.isDownloading = true;
       this.downloadProgress = 0;
 
       if (this.selectedFileOption === 'xlsx') {
         const workbook = XLSX.utils.book_new();
-        const sheet = XLSX.utils.json_to_sheet(state.nodes, {
+        const sheet = XLSX.utils.json_to_sheet(stringifiedData, {
           skipHeader: false,
         });
         XLSX.utils.book_append_sheet(workbook, sheet, `${this.value}.xlsx`);
         XLSX.writeFileXLSX(workbook, `${this.value}.xlsx`, {});
       } else {
-        const csvData = jsonToCsv(state.nodes);
+        const csvData = jsonToCsv(stringifiedData);
         new CsvBuilder(this.value)
           .setColumns(csvData.columns)
+          // @ts-expect-error
           .addRows([...csvData.data])
           .exportFile();
       }
@@ -79,7 +94,7 @@ export class DownloadResultModal {
             },
           });
 
-          nodes = nodes.concat(res.data.result);
+          nodes = this.stringifyNodes(nodes.concat(res.data.result));
 
           if (this.downloadProgress + progressStep < 100) this.downloadProgress += 100 / progressStep;
         }

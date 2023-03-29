@@ -1,29 +1,27 @@
-import { Component, Host, h, State, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, State } from '@stencil/core';
 
 @Component({
-  tag: 'table-search-modal',
-  styleUrl: 'table-search-modal.css',
+  tag: 'table-search-modal-form',
+  styleUrl: 'table-search-modal-form.css',
   scoped: true,
 })
-export class TableSearchModal {
-  @Prop() url: string;
+export class TableSearchModalForm {
   @Prop() refresh: any;
-  @Prop() alias: string;
-  @Prop() type: string;
+  @Prop() alias: string = 'name';
+  @Prop() type: string = 'string';
   @Prop() searchMethod: any;
-  @Prop() clearSearch: any;
-  @Prop() icon: any;
+  @Prop() closeSearchModal: () => void;
 
   @State() value: any;
-  @State() isModalOpen = false;
+  @State() isModalOpen = true;
   @State() searchOptions: string[] = ['string', 'number'];
   @State() textSearchOptions: string[] = ['exact', 'contains'];
-  @State() numberSearchOptions: string[] = ['gte', 'lte','gt','lt','exact'];
+  @State() numberSearchOptions: string[] = ['gte', 'lte', 'gt', 'lt', 'exact'];
   @State() selectedSearchOption: string = '';
   @State() selectedTextSearchOption: string = '';
   @State() selectedNumberSearchOption: string = '';
   @State() colName: string = '';
-  @State()
+
   componentWillLoad() {
     this.colName = this.alias;
     if (this.type !== null) {
@@ -33,7 +31,6 @@ export class TableSearchModal {
 
   clearHandler() {
     this.value = '';
-    this.clearSearch(this.colName);
   }
 
   clearFields() {
@@ -46,6 +43,8 @@ export class TableSearchModal {
 
   toggleModalState() {
     this.isModalOpen = !this.isModalOpen;
+
+    if (!this.isModalOpen) this.closeSearchModal();
   }
 
   submitHandler(e) {
@@ -58,9 +57,9 @@ export class TableSearchModal {
   }
 
   handleChange(event) {
-    if(this.selectedSearchOption === 'string'){
+    if (this.selectedSearchOption === 'string') {
       this.value = event.target.value;
-    }else{
+    } else {
       this.value = parseFloat(event.target.value);
     }
   }
@@ -80,22 +79,14 @@ export class TableSearchModal {
   render() {
     return (
       <Host>
-        {/* Modal Button */}
-        <button type="button" onClick={() => this.toggleModalState()} class="px-2">
-          {this.icon}
-        </button>
-
-        {/* Main Modal */}
         {this.isModalOpen && (
           <form onSubmit={e => this.submitHandler(e)} class="pt-6 space-y-3">
-            <div class="fixed z-12 inset-0 overflow-y-auto">
+            <div class="fixed z-10 inset-0 overflow-y-auto">
               <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
                 {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen">
-                  &#8203;
-                </span>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
 
                 <div class="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                   <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">

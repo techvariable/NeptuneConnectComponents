@@ -19,8 +19,8 @@ type IColumn = {
   isEditable: boolean;
   isDeletable: boolean;
 
-  onSort?: (id: number | string, name: string) => Promise<void>;
-  onFilter?: (id: number | string, name: string) => Promise<void>;
+  onSort?: (key: string) => Promise<void>;
+  onFilter?: (key: string) => Promise<void>;
   onRowClick?: (id: string | number, key: string, value: any) => Promise<void>;
   customColumnComponent?: (name: string) => any;
   customRowComponent?: (value: any) => any;

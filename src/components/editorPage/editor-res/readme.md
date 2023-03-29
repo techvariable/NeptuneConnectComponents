@@ -14,16 +14,17 @@
 ### Depends on
 
 - [chips-list](../chips-list)
-- [query-result-table](../query-result-table)
+- [table-search-modal-form](../table-search-modal-form)
+- [data-table](../../common/items/data-table)
 
 ### Graph
 ```mermaid
 graph TD;
   editor-res --> chips-list
-  editor-res --> query-result-table
-  query-result-table --> table-search-modal
-  query-result-table --> plain-button
-  table-search-modal --> radio-button-multiple
+  editor-res --> table-search-modal-form
+  editor-res --> data-table
+  table-search-modal-form --> radio-button-multiple
+  data-table --> plain-button
   tab-component --> editor-res
   style editor-res fill:#f9f,stroke:#333,stroke-width:4px
 ```
