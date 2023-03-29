@@ -154,7 +154,7 @@ export class DataTable {
     this.isEditingIndex = idx;
   }
 
-  hamdleFieldChange(rowId: number, columnId: string | number, prevValue: TField, newValue: TField) {
+  handleFieldChange(rowId: number, columnId: string | number, prevValue: TField, newValue: TField) {
     const editingState = { ...this.editingState };
 
     if (editingState[`${rowId}-${columnId}`]) {
@@ -250,7 +250,7 @@ export class DataTable {
               type={column.type}
               value={(this.editingState[`${rowId}-${column.id}`]?.newValue || fieldValue).toString()}
               // @ts-expect-error
-              onChange={e => this.hamdleFieldChange(rowId, column.id, fieldValue, e.target.value)}
+              onChange={e => this.handleFieldChange(rowId, column.id, fieldValue, e.target.value)}
             />
           </td>
         );
