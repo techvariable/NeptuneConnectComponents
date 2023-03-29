@@ -123,12 +123,12 @@ export class DataTable {
     return JSON.stringify(value);
   }
 
-  handleEdit(index: number) {
+  handleEditSave(rowId: number) {
     const changes: Array<{ prevValue: TField; newValue: TField; name: string }> = this.columns
       .map(column => {
-        if (this.editingState[`${index}-${column.id}`]) {
+        if (this.editingState[`${rowId}-${column.id}`]) {
           return {
-            ...this.editingState[`${index}-${column.id}`],
+            ...this.editingState[`${rowId}-${column.id}`],
             name: column.key,
           };
         }
@@ -137,7 +137,7 @@ export class DataTable {
       })
       .filter(change => change);
 
-    this.onEdit(index, changes);
+    this.onEdit(rowId, changes);
     this.isEditing = false;
     this.isEditingIndex = -1;
     this.editingState = {};
@@ -183,7 +183,7 @@ export class DataTable {
         </button>
       );
 
-      const getSeleteButton = (disabled: boolean = false) => (
+      const getDeleteButton = (disabled: boolean = false) => (
         <button disabled={disabled} onClick={() => this.onDelete(rowId, row)}>
           {' '}
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -197,7 +197,7 @@ export class DataTable {
       );
 
       const getSaveButton = (disabled: boolean = false) => (
-        <button disabled={disabled} onClick={() => this.handleEdit(rowId)}>
+        <button disabled={disabled} onClick={() => this.handleEditSave(rowId)}>
           {' '}
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -219,7 +219,7 @@ export class DataTable {
         return (
           <td>
             {getEditingButton()}
-            {getSeleteButton()}
+            {getDeleteButton()}
           </td>
         );
 
@@ -235,7 +235,7 @@ export class DataTable {
       return (
         <td>
           {getEditingButton(true)}
-          {getSeleteButton(true)}
+          {getDeleteButton(true)}
         </td>
       );
     };
