@@ -38,7 +38,51 @@ export namespace Components {
         "onClickRun": Function;
     }
     interface DataTable {
-        "doc": object[];
+        "columns": {
+    id: number | string;
+    key: string;
+    name: string;
+    type: 'number' | 'string' | 'date' | 'datetime';
+
+    prefix?: string;
+    suffix?: string;
+    maxChar?: number;
+    decimal?: boolean;
+    decimalPlaces?: number;
+    seperator?: string;
+
+    isSortable: boolean;
+    isFilterable: boolean;
+    isEditable: boolean;
+    isDeletable: boolean;
+
+    onSort?: (key: string) => Promise<void>;
+    onFilter?: (column) => Promise<void>;
+    onRowClick?: (id: string | number, key: string, value: any) => Promise<void>;
+    customColumnComponent?: (name: string) => any;
+    customRowComponent?: (value: any) => any;
+
+    customStyle?: {
+      headerStyle?: { [index: string]: string | number };
+      headerClass?: string;
+      cellStyle?: { [index: string]: string | number };
+      cellClass?: string;
+    };
+  }[];
+        "customClass": string;
+        "customStyle": {
+    [style: string]: string | number;
+  };
+        "data": Array<any>;
+        "limit": number;
+        "onDelete": (index: number, row: { [field: string]: number | Date | string }) => Promise<any>;
+        "onEdit": (index: number, changes: Array<{ prevValue: number | Date | string; newValue: number | Date | string; name: string }>) => Promise<any>;
+        "onPaginate": (tcurrentPage: number, limit: number) => Promise<void>;
+        "page": number;
+        "showActions": boolean;
+        "showPagination": boolean;
+        "supportedLimit": number[];
+        "total": number;
     }
     interface DataTableUpdated {
         "doc": object[];
@@ -178,21 +222,6 @@ export namespace Components {
     }
     interface QueryLogs {
     }
-    interface QueryResultTable {
-        "clearSearch": any;
-        "currentPage": number;
-        "dataLength": string;
-        "isLoadingError": boolean;
-        "limit": number;
-        "next": any;
-        "prev": any;
-        "rows": number[];
-        "rowsHandler": any;
-        "searchMethod": any;
-        "tableBody": object[];
-        "tableHeader": object[];
-        "toggleSortMethod": any;
-    }
     interface RadioButton {
         "align": 'vertical' | 'horizontal';
         "name": string;
@@ -212,14 +241,12 @@ export namespace Components {
     }
     interface TabComponent {
     }
-    interface TableSearchModal {
+    interface TableSearchModalForm {
         "alias": string;
-        "clearSearch": any;
-        "icon": any;
+        "closeSearchModal": () => void;
         "refresh": any;
         "searchMethod": any;
         "type": string;
-        "url": string;
     }
     interface TabsComponent {
         "activeIndex": number;
@@ -485,12 +512,6 @@ declare global {
         prototype: HTMLQueryLogsElement;
         new (): HTMLQueryLogsElement;
     };
-    interface HTMLQueryResultTableElement extends Components.QueryResultTable, HTMLStencilElement {
-    }
-    var HTMLQueryResultTableElement: {
-        prototype: HTMLQueryResultTableElement;
-        new (): HTMLQueryResultTableElement;
-    };
     interface HTMLRadioButtonElement extends Components.RadioButton, HTMLStencilElement {
     }
     var HTMLRadioButtonElement: {
@@ -515,11 +536,11 @@ declare global {
         prototype: HTMLTabComponentElement;
         new (): HTMLTabComponentElement;
     };
-    interface HTMLTableSearchModalElement extends Components.TableSearchModal, HTMLStencilElement {
+    interface HTMLTableSearchModalFormElement extends Components.TableSearchModalForm, HTMLStencilElement {
     }
-    var HTMLTableSearchModalElement: {
-        prototype: HTMLTableSearchModalElement;
-        new (): HTMLTableSearchModalElement;
+    var HTMLTableSearchModalFormElement: {
+        prototype: HTMLTableSearchModalFormElement;
+        new (): HTMLTableSearchModalFormElement;
     };
     interface HTMLTabsComponentElement extends Components.TabsComponent, HTMLStencilElement {
     }
@@ -601,12 +622,11 @@ declare global {
         "plain-button": HTMLPlainButtonElement;
         "profile-component": HTMLProfileComponentElement;
         "query-logs": HTMLQueryLogsElement;
-        "query-result-table": HTMLQueryResultTableElement;
         "radio-button": HTMLRadioButtonElement;
         "radio-button-multiple": HTMLRadioButtonMultipleElement;
         "side-bar": HTMLSideBarElement;
         "tab-component": HTMLTabComponentElement;
-        "table-search-modal": HTMLTableSearchModalElement;
+        "table-search-modal-form": HTMLTableSearchModalFormElement;
         "tabs-component": HTMLTabsComponentElement;
         "text-field": HTMLTextFieldElement;
         "text-field-area": HTMLTextFieldAreaElement;
@@ -649,7 +669,51 @@ declare namespace LocalJSX {
         "onClickRun"?: Function;
     }
     interface DataTable {
-        "doc"?: object[];
+        "columns"?: {
+    id: number | string;
+    key: string;
+    name: string;
+    type: 'number' | 'string' | 'date' | 'datetime';
+
+    prefix?: string;
+    suffix?: string;
+    maxChar?: number;
+    decimal?: boolean;
+    decimalPlaces?: number;
+    seperator?: string;
+
+    isSortable: boolean;
+    isFilterable: boolean;
+    isEditable: boolean;
+    isDeletable: boolean;
+
+    onSort?: (key: string) => Promise<void>;
+    onFilter?: (column) => Promise<void>;
+    onRowClick?: (id: string | number, key: string, value: any) => Promise<void>;
+    customColumnComponent?: (name: string) => any;
+    customRowComponent?: (value: any) => any;
+
+    customStyle?: {
+      headerStyle?: { [index: string]: string | number };
+      headerClass?: string;
+      cellStyle?: { [index: string]: string | number };
+      cellClass?: string;
+    };
+  }[];
+        "customClass"?: string;
+        "customStyle"?: {
+    [style: string]: string | number;
+  };
+        "data"?: Array<any>;
+        "limit"?: number;
+        "onDelete"?: (index: number, row: { [field: string]: number | Date | string }) => Promise<any>;
+        "onEdit"?: (index: number, changes: Array<{ prevValue: number | Date | string; newValue: number | Date | string; name: string }>) => Promise<any>;
+        "onPaginate"?: (tcurrentPage: number, limit: number) => Promise<void>;
+        "page"?: number;
+        "showActions"?: boolean;
+        "showPagination"?: boolean;
+        "supportedLimit"?: number[];
+        "total"?: number;
     }
     interface DataTableUpdated {
         "doc"?: object[];
@@ -789,21 +853,6 @@ declare namespace LocalJSX {
     }
     interface QueryLogs {
     }
-    interface QueryResultTable {
-        "clearSearch"?: any;
-        "currentPage"?: number;
-        "dataLength"?: string;
-        "isLoadingError"?: boolean;
-        "limit"?: number;
-        "next"?: any;
-        "prev"?: any;
-        "rows"?: number[];
-        "rowsHandler"?: any;
-        "searchMethod"?: any;
-        "tableBody"?: object[];
-        "tableHeader"?: object[];
-        "toggleSortMethod"?: any;
-    }
     interface RadioButton {
         "align"?: 'vertical' | 'horizontal';
         "name"?: string;
@@ -823,14 +872,12 @@ declare namespace LocalJSX {
     }
     interface TabComponent {
     }
-    interface TableSearchModal {
+    interface TableSearchModalForm {
         "alias"?: string;
-        "clearSearch"?: any;
-        "icon"?: any;
+        "closeSearchModal"?: () => void;
         "refresh"?: any;
         "searchMethod"?: any;
         "type"?: string;
-        "url"?: string;
     }
     interface TabsComponent {
         "activeIndex"?: number;
@@ -910,12 +957,11 @@ declare namespace LocalJSX {
         "plain-button": PlainButton;
         "profile-component": ProfileComponent;
         "query-logs": QueryLogs;
-        "query-result-table": QueryResultTable;
         "radio-button": RadioButton;
         "radio-button-multiple": RadioButtonMultiple;
         "side-bar": SideBar;
         "tab-component": TabComponent;
-        "table-search-modal": TableSearchModal;
+        "table-search-modal-form": TableSearchModalForm;
         "tabs-component": TabsComponent;
         "text-field": TextField;
         "text-field-area": TextFieldArea;
@@ -966,12 +1012,11 @@ declare module "@stencil/core" {
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
             "profile-component": LocalJSX.ProfileComponent & JSXBase.HTMLAttributes<HTMLProfileComponentElement>;
             "query-logs": LocalJSX.QueryLogs & JSXBase.HTMLAttributes<HTMLQueryLogsElement>;
-            "query-result-table": LocalJSX.QueryResultTable & JSXBase.HTMLAttributes<HTMLQueryResultTableElement>;
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
             "radio-button-multiple": LocalJSX.RadioButtonMultiple & JSXBase.HTMLAttributes<HTMLRadioButtonMultipleElement>;
             "side-bar": LocalJSX.SideBar & JSXBase.HTMLAttributes<HTMLSideBarElement>;
             "tab-component": LocalJSX.TabComponent & JSXBase.HTMLAttributes<HTMLTabComponentElement>;
-            "table-search-modal": LocalJSX.TableSearchModal & JSXBase.HTMLAttributes<HTMLTableSearchModalElement>;
+            "table-search-modal-form": LocalJSX.TableSearchModalForm & JSXBase.HTMLAttributes<HTMLTableSearchModalFormElement>;
             "tabs-component": LocalJSX.TabsComponent & JSXBase.HTMLAttributes<HTMLTabsComponentElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
             "text-field-area": LocalJSX.TextFieldArea & JSXBase.HTMLAttributes<HTMLTextFieldAreaElement>;

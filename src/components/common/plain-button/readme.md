@@ -22,11 +22,10 @@
 
 ### Used by
 
- - [data-table](../data-table)
+ - [data-table](../items/data-table)
  - [data-table-updated](../data-table-updated)
  - [invite-component](../../invitationPage/invite-component)
  - [logs-table](../../logsPage/logs-table)
- - [query-result-table](../../editorPage/query-result-table)
 
 ### Graph
 ```mermaid
@@ -35,7 +34,6 @@ graph TD;
   data-table-updated --> plain-button
   invite-component --> plain-button
   logs-table --> plain-button
-  query-result-table --> plain-button
   style plain-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

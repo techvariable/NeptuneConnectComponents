@@ -35,10 +35,10 @@ graph TD;
   tab-component --> editor-json-response-viewer
   download-result-modal --> radio-button-multiple
   editor-res --> chips-list
-  editor-res --> query-result-table
-  query-result-table --> table-search-modal
-  query-result-table --> plain-button
-  table-search-modal --> radio-button-multiple
+  editor-res --> table-search-modal-form
+  editor-res --> data-table
+  table-search-modal-form --> radio-button-multiple
+  data-table --> plain-button
   style editor-page fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
