@@ -62,7 +62,7 @@ export class NavBar {
                       <button
                         id="dropdownAvatarNameButton"
                         data-dropdown-toggle="dropdownAvatarName"
-                        class="flex items-center text-sm font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:mr-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white"
+                        class="flex items-center text-sm font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:mr-0 ring-4 ring-gray-100 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:text-white"
                         type="button"
                         onClick={() => this.avatarDropDownHandler()}
                       >
