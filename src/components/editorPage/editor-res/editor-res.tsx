@@ -90,8 +90,8 @@ export class EditorRes {
 
         isEditable: false,
         isDeletable: false,
-        isFilterable: ['string', 'number', 'date'].includes(column.type),
-        isSortable: ['string', 'number', 'date'].includes(column.type),
+        isFilterable: ['string', 'number', 'date'].includes(column.type) && state.selectedNodeName,
+        isSortable: ['string', 'number', 'date'].includes(column.type) && state.selectedNodeName,
 
         maxChar: 30,
 
@@ -137,7 +137,7 @@ export class EditorRes {
             columns={columns}
             data={state.nodes}
             showActions={false}
-            showPagination={true}
+            showPagination={Boolean(state.selectedNodeName)}
             total={state.total}
             limit={state.limit}
             supportedLimit={SUPPORTED_ROWS}
