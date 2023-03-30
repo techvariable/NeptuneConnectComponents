@@ -85,7 +85,7 @@ export class DownloadResultModal {
         this.isDownloading = true;
         this.downloadProgress = 0;
         for (let i = this.startingIndex; i < total + this.startingIndex; i += pageSize) {
-          const res = await axios.post(`${state.url}/query/`, {
+          const res = await axios.post(`${state.hostUrl}/query/`, {
             query: state.query,
             parameters: {
               ...JSON.parse(state.queryParameter),

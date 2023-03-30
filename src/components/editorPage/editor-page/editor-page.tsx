@@ -25,7 +25,7 @@ export class EditorPage {
   @State() nodeError: string | null = null;
 
   componentWillLoad() {
-    state.url = this.url;
+    state.hostUrl = this.url;
     this.fetchNavigators();
   }
 
@@ -36,7 +36,7 @@ export class EditorPage {
     axios
       .get(`${this.url}/nodes`)
       .then((res: any) => {
-        state.nodeList = res.data.nodes;
+        state.availableNodes = res.data.nodes;
         this.loadingNodes = false;
       })
       .catch(err => {
@@ -77,6 +77,7 @@ export class EditorPage {
       state.isError = false;
       state.errorMessage = null;
       state.isLoading = true;
+      state.isCustomQuery = true;
 
       try {
         let transactionQuery = state.viewQuery.state.update();
@@ -91,7 +92,7 @@ export class EditorPage {
 
         if (isValid) {
           state.timeTaken = null;
-          const res = await axios.post(`${state.url}/query/`, {
+          const res = await axios.post(`${state.hostUrl}/query/`, {
             query,
             parameters: JSON.parse(parameters),
           });

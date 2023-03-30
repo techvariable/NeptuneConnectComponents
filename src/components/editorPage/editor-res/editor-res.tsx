@@ -49,6 +49,7 @@ export class EditorRes {
     const chips = { ...state.order };
     delete chips[item];
     state.order = chips;
+    state.queryMode = 'read';
     state.refreshData();
   };
 
@@ -56,6 +57,7 @@ export class EditorRes {
     const chips = { ...state.filter };
     delete chips[item];
     state.filter = chips;
+    state.queryMode = 'read';
     state.refreshData();
   };
 
@@ -63,6 +65,7 @@ export class EditorRes {
     const chips = {};
     chips[id] = state.order[id] === 'desc' ? 'asc' : 'desc';
     state.order = chips;
+    state.queryMode = 'read';
     state.refreshData();
   };
 
@@ -77,6 +80,7 @@ export class EditorRes {
     chips[colName] = searchOperation;
 
     state.filter = chips;
+    state.queryMode = 'read';
     state.refreshData();
   }
 
@@ -90,8 +94,8 @@ export class EditorRes {
 
         isEditable: false,
         isDeletable: false,
-        isFilterable: ['string', 'number', 'date'].includes(column.type) && state.selectedNodeName,
-        isSortable: ['string', 'number', 'date'].includes(column.type) && state.selectedNodeName,
+        isFilterable: ['string', 'number', 'date'].includes(column.type) && !state.isCustomQuery,
+        isSortable: ['string', 'number', 'date'].includes(column.type) && !state.isCustomQuery,
 
         maxChar: 30,
 
@@ -137,7 +141,7 @@ export class EditorRes {
             columns={columns}
             data={state.nodes}
             showActions={false}
-            showPagination={Boolean(state.selectedNodeName)}
+            showPagination={!state.isCustomQuery}
             total={state.total}
             limit={state.limit}
             supportedLimit={SUPPORTED_ROWS}
@@ -145,7 +149,8 @@ export class EditorRes {
             onPaginate={async (currentPage, limit) => {
               state.limit = limit;
               state.page = currentPage;
-              state.offset = state.limit * state.page - state.limit;
+              // state.offset = state.limit * state.page - state.limit;
+              state.queryMode = 'read';
               state.refreshData();
             }}
             customStyle={{ maxHeight: '25rem' }}

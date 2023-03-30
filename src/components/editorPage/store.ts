@@ -5,17 +5,20 @@ import { createStore } from '@stencil/store';
 import { formatJSON } from '../../utils/utils';
 
 const { state, onChange, reset } = createStore({
-  url: '',
-  nodeList: [],
+  // flags
+  queryMode: 'read',
+  isCustomQuery: false,
+  isFetchedData: false,
+
+  hostUrl: '',
+  availableNodes: [],
 
   selectedNodeName: null,
   limit: 10,
-  offset: 0, //remove
   page: 1,
   order: {},
   filter: {},
   total: 0,
-  isFetchedData: false,
 
   query: '\n\n\n\n\n\n\n\n\n',
   queryParameter: '{\n  \n}\n\n\n\n\n\n',
@@ -88,17 +91,22 @@ onChange('queryParameter', value => {
 
 const fetchData = async (nodeName: string) => {
   if (state.selectedNodeName) {
+    state.isCustomQuery = false;
     state.timeTaken = null;
     state.isError = false;
     state.errorMessage = null;
     state.isLoading = true;
     state.selectedNodeName = nodeName;
+
     try {
-      const res = await axios.post(`${state.url}/query/builder/${nodeName}`, {
-        limit: state.limit,
-        offset: state.offset,
-        order: state.order,
-        filter: state.filter,
+      const res = await axios.post(`${state.hostUrl}/query/builder/${nodeName}/${state.queryMode}`, {
+        read: {
+          showMeta: false,
+          limit: state.limit,
+          offset: state.limit * state.page - state.limit,
+          order: state.order,
+          filter: state.filter,
+        },
       });
 
       state.nodes = res.data.nodes;
