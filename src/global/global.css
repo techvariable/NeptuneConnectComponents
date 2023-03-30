@@ -689,10 +689,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-right: 1.75rem;
 }
 
-.mb-12 {
-  margin-bottom: 3rem;
-}
-
 .mr-4 {
   margin-right: 1rem;
 }
@@ -815,6 +811,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .h-2 {
   height: 0.5rem;
+}
+
+.h-52 {
+  height: 13rem;
 }
 
 .h-12 {
@@ -1080,6 +1080,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-divide-opacity));
+}
+
+.overflow-auto {
+  overflow: auto;
 }
 
 .overflow-hidden {
@@ -1389,6 +1393,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-right: 0.75rem;
 }
 
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -1473,6 +1482,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-top: 2rem;
 }
 
+.pt-2 {
+  padding-top: 0.5rem;
+}
+
 .pt-3 {
   padding-top: 0.75rem;
 }
@@ -1483,10 +1496,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .pt-10 {
   padding-top: 2.5rem;
-}
-
-.pt-2 {
-  padding-top: 0.5rem;
 }
 
 .text-left {
@@ -1908,6 +1917,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(3 105 161 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-gray-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(75 85 99 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-gray-400:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(156 163 175 / var(--tw-bg-opacity));
@@ -2032,19 +2046,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity));
 }
 
-.focus\:ring-gray-100:focus {
+.focus\:ring-gray-200:focus {
   --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(243 244 246 / var(--tw-ring-opacity));
+  --tw-ring-color: rgb(229 231 235 / var(--tw-ring-opacity));
 }
 
 .focus\:ring-sky-500:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(14 165 233 / var(--tw-ring-opacity));
-}
-
-.focus\:ring-gray-200:focus {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(229 231 235 / var(--tw-ring-opacity));
 }
 
 .focus\:ring-offset-2:focus {

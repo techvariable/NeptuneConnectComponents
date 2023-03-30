@@ -36,7 +36,7 @@ export class CodeEditor {
         java(),
         this.onCtrlShiftEnter(),
         EditorView.updateListener.of(function (e) {
-          state.syncVal = e.state.doc.toString().trim();
+          state.editorTextFlag = e.state.doc.toString().trim() !== '';
         }),
       ],
     });
@@ -114,7 +114,7 @@ export class CodeEditor {
             <div class="flex gap-4">
               <button
                 title="Ctrl+Shift+Enter to run"
-                disabled={state.syncVal === ''}
+                disabled={!state.editorTextFlag}
                 onClick={() => this.onClickRun()}
                 class="w-24 rounded-md flex text-sm gap-2 items-center justify-center text-gray-600 border border-gray-300 px-3 mt-2 py-2 hover:bg-gray-200 disabled:text-gray-300 disabled:cursor-default disabled:hover:text-gray-200"
               >
@@ -125,7 +125,7 @@ export class CodeEditor {
               </button>
 
               <button
-                disabled={state.syncVal === ''}
+                disabled={!state.editorTextFlag}
                 onClick={() => this.formatter()}
                 class="flex w-24 rounded-md text-sm gap-2 items-center justify-center text-gray-600 border border-gray-300 px-3 mt-2 py-2 hover:bg-gray-200 disabled:text-gray-300 disabled:cursor-default disabled:hover:text-gray-200"
               >

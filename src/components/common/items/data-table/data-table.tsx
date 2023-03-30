@@ -90,7 +90,7 @@ export class DataTable {
   }[] = [];
   @Prop() data: Array<any> = [];
   @Prop() showActions: boolean = false;
-  @Prop() onEdit: (index: number, changes: Array<{ prevValue: number | Date | string; newValue: number | Date | string; name: string }>) => Promise<any>;
+  @Prop() onEdit: (id: number | string, changes: Array<{ prevValue: number | Date | string; newValue: number | Date | string; name: string }>) => Promise<any>;
   @Prop() onDelete: (index: number, row: { [field: string]: number | Date | string }) => Promise<any>;
   @Prop() onPaginate: (tcurrentPage: number, limit: number) => Promise<void>;
   @Prop() showPagination: boolean = false;
@@ -143,7 +143,7 @@ export class DataTable {
     return `${column.prefix || ''}${strVal}${column.suffix || ''}`;
   }
 
-  handleEditSave(rowId: number) {
+  handleEditSave(rowId: number, dataId: string | number) {
     const changes: Array<{ prevValue: TField; newValue: TField; name: string }> = this.columns
       .map(column => {
         if (this.editingState[`${rowId}-${column.id}`]) {
@@ -157,7 +157,7 @@ export class DataTable {
       })
       .filter(change => change);
 
-    this.onEdit(rowId, changes);
+    this.onEdit(dataId, changes);
     this.isEditing = false;
     this.isEditingIndex = -1;
     this.editingState = {};
@@ -209,8 +209,10 @@ export class DataTable {
 
   render() {
     const renderAction = (row: { [field: string]: TField }, rowId: number) => {
+      const column = this.columns[0];
+
       const getEditingButton = (disabled: boolean = false) => (
-        <button disabled={disabled} onClick={() => this.handleOpenEditForm(rowId)}>
+        <button class="disabled:opacity-50" disabled={disabled} onClick={() => this.handleOpenEditForm(rowId)}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path
               stroke-linecap="round"
@@ -222,7 +224,7 @@ export class DataTable {
       );
 
       const getDeleteButton = (disabled: boolean = false) => (
-        <button disabled={disabled} onClick={() => this.onDelete(rowId, row)}>
+        <button class="disabled:opacity-50" disabled={disabled} onClick={() => this.onDelete(rowId, row)}>
           {' '}
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path
@@ -235,7 +237,8 @@ export class DataTable {
       );
 
       const getSaveButton = (disabled: boolean = false) => (
-        <button disabled={disabled} onClick={() => this.handleEditSave(rowId)}>
+        // @ts-expect-error
+        <button class="disabled:opacity-50" disabled={disabled} onClick={() => this.handleEditSave(rowId, row?.id)}>
           {' '}
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -244,7 +247,7 @@ export class DataTable {
       );
 
       const getCancelButton = (disabled: boolean = false) => (
-        <button disabled={disabled} onClick={() => this.handleCancelEdit()}>
+        <button class="disabled:opacity-50" disabled={disabled} onClick={() => this.handleCancelEdit()}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
@@ -255,7 +258,7 @@ export class DataTable {
 
       if (!this.isEditing)
         return (
-          <td>
+          <td class={`py-3 whitespace-nowrap text-sm text-gray-900 ${column.customStyle?.cellClass}`} style={{ cursor: 'auto', ...(column.customStyle?.cellStyle || {}) }}>
             {getEditingButton()}
             {getDeleteButton()}
           </td>
@@ -263,7 +266,7 @@ export class DataTable {
 
       if (this.isEditingIndex === rowId) {
         return (
-          <td>
+          <td class={`py-3 whitespace-nowrap text-sm text-gray-900 ${column.customStyle?.cellClass}`} style={{ cursor: 'auto', ...(column.customStyle?.cellStyle || {}) }}>
             {getSaveButton()}
             {getCancelButton()}
           </td>
@@ -271,7 +274,7 @@ export class DataTable {
       }
 
       return (
-        <td>
+        <td class={`py-3 whitespace-nowrap text-sm text-gray-900 ${column.customStyle?.cellClass}`} style={{ cursor: 'auto', ...(column.customStyle?.cellStyle || {}) }}>
           {getEditingButton(true)}
           {getDeleteButton(true)}
         </td>
@@ -282,9 +285,9 @@ export class DataTable {
       const column = this.columns[columnId];
       if (column.isEditable && rowId === this.isEditingIndex) {
         return (
-          <td class={`py-3 whitespace-nowrap text-sm text-gray-900 ${column.customStyle?.cellClass}`}>
+          <td class={`py-3 whitespace-nowrap text-sm text-gray-900 ${column.customStyle?.cellClass}`} style={{ cursor: 'auto', ...(column.customStyle?.cellStyle || {}) }}>
             <input
-              class={`appearance-none block w-full text-gray-700 focus:border-2 py-1 px-2 rounded leading-tight focus:outline outline-gray-200 focus:bg-white focus:border-gray-400`}
+              class={`appearance-none block w-full text-gray-700 focus:border-2 py-1 rounded leading-tight focus:outline outline-gray-200 focus:bg-white focus:border-gray-400`}
               type={column.type}
               value={(this.editingState[`${rowId}-${column.id}`]?.newValue || fieldValue).toString()}
               // @ts-expect-error
@@ -314,7 +317,11 @@ export class DataTable {
               <thead class="bg-gray-100 sticky top-0">
                 <tr>
                   {this.showActions && (
-                    <th scope="col" style={{ minWidth: '120px' }} class="py-4 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 tracking-wider">
+                    <th
+                      scope="col"
+                      style={{ minWidth: '120px', ...(this.columns[0].customStyle?.headerStyle || {}) }}
+                      class={`py-4 text-left text-xs font-medium text-gray-500 hover:text-indigo-700 tracking-wider ${this.columns[0].customStyle?.headerClass}`}
+                    >
                       <div class="flex">Actions</div>
                     </th>
                   )}

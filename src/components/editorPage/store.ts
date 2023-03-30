@@ -5,34 +5,46 @@ import { createStore } from '@stencil/store';
 import { formatJSON } from '../../utils/utils';
 
 const { state, onChange, reset } = createStore({
-  url: '',
-  nodeList: [],
-
-  selectedNodeName: null,
-  limit: 10,
-  offset: 0, //remove
-  page: 1,
-  order: {},
-  filter: {},
-  total: 0,
+  // flags
+  queryMode: 'read',
+  isCustomQuery: false,
   isFetchedData: false,
-
-  query: '\n\n\n\n\n\n\n\n\n',
-  queryParameter: '{\n  \n}\n\n\n\n\n\n',
-  nodes: [],
-  columnHeaders: [],
+  showMeta: false,
   isLoading: false,
   isError: false,
+  canEdit: false,
+
+  hostUrl: '',
+
+  // parameters
+  selectedNodeName: null,
+  limit: 10,
+  page: 1,
+  total: 0,
+  order: {},
+  filter: {},
+
+  // edit parameters
+  updateId: null,
+  changesMade: {},
+
+  // response
+  nodes: [],
+  columnHeaders: [],
+  availableNodes: [],
+  query: '\n\n\n\n\n\n\n\n\n',
+  queryParameter: '{\n  \n}\n\n\n\n\n\n',
+
   errorMessage: null,
 
   // editor state
-  syncVal: '',
+  editorTextFlag: false,
   viewQuery: null,
   stateQuery: null,
   viewParameter: null,
   stateParameter: null,
-  timeTaken: null,
-  refresh: null,
+  timeTaken: 0,
+  refresh: null, // TODO: need to check
 
   refreshData: async () => {
     await fetchData(state.selectedNodeName);
@@ -86,19 +98,51 @@ onChange('queryParameter', value => {
   }
 });
 
+const getQueryPreview = async () => {
+  try {
+    const res = await axios.post(`${state.hostUrl}/query/builder/${state.selectedNodeName}/${state.queryMode}/preview`, {
+      read: {
+        showMeta: state.showMeta,
+        limit: state.limit,
+        offset: state.limit * state.page - state.limit,
+        order: state.order,
+        filter: state.filter,
+      },
+      update: {
+        updateId: state.updateId,
+        changes: state.changesMade,
+      },
+    });
+
+    return res.data;
+  } catch (error) {
+    state.isError = true;
+    state.errorMessage = 'Failed to fetch data from db';
+  }
+};
+
 const fetchData = async (nodeName: string) => {
   if (state.selectedNodeName) {
+    state.isCustomQuery = false;
     state.timeTaken = null;
     state.isError = false;
     state.errorMessage = null;
     state.isLoading = true;
     state.selectedNodeName = nodeName;
+
     try {
-      const res = await axios.post(`${state.url}/query/builder/${nodeName}`, {
-        limit: state.limit,
-        offset: state.offset,
-        order: state.order,
-        filter: state.filter,
+      const res = await axios.post(`${state.hostUrl}/query/builder/${nodeName}/${state.queryMode}`, {
+        read: {
+          showMeta: state.showMeta,
+          limit: state.limit,
+          offset: state.limit * state.page - state.limit,
+          order: state.order,
+          filter: state.filter,
+        },
+        update: {
+          updateId: state.updateId,
+          changes: state.changesMade,
+        },
       });
 
       state.nodes = res.data.nodes;
@@ -125,4 +169,4 @@ const fetchData = async (nodeName: string) => {
 };
 
 export default state;
-export { fetchData, reset };
+export { fetchData, reset, getQueryPreview };

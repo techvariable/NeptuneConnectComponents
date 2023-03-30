@@ -13,6 +13,7 @@
 
 ### Depends on
 
+- [edit-table-modal](../edit-table-modal)
 - [chips-list](../chips-list)
 - [table-search-modal-form](../table-search-modal-form)
 - [data-table](../../common/items/data-table)
@@ -20,9 +21,11 @@
 ### Graph
 ```mermaid
 graph TD;
+  editor-res --> edit-table-modal
   editor-res --> chips-list
   editor-res --> table-search-modal-form
   editor-res --> data-table
+  edit-table-modal --> tabs-component
   table-search-modal-form --> radio-button-multiple
   data-table --> plain-button
   tab-component --> editor-res

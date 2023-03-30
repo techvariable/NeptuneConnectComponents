@@ -114,12 +114,11 @@ export class QueryLogs {
     }
 
     if (search) {
-     
       for (let key in search) {
         filterPar = filterPar + `&filter_${key}=${search[key]}`;
       }
     }
-    const result = await axios.get(`${state.url}/api/editor/query/logs?${filterPar}`);
+    const result = await axios.get(`${state.hostUrl}/api/editor/query/logs?${filterPar}`);
     return {
       total: result.data.total,
       data: result.data,
