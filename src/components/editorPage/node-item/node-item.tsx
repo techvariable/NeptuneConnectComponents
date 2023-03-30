@@ -17,6 +17,7 @@ export class NodeItem {
     state.order = {};
     state.filter = {};
     state.total = 0;
+    state.queryMode = 'read';
     state.refreshData();
   }
   render() {

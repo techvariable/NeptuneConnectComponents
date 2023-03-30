@@ -70,7 +70,7 @@ export class EditorPage {
   };
 
   onClickRun = async () => {
-    if (state.syncVal !== '') {
+    if (state.editorTextFlag) {
       state.selectedNodeName = null;
       state.filter = {};
       state.order = {};

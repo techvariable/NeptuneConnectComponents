@@ -44,6 +44,7 @@ export class EditorRes {
   @State() isFilter: boolean = false;
   @State() isFilterKey: string = null;
   @State() type: string = null;
+  @State() isModalOpen: boolean = false;
 
   removeSortChip = item => {
     const chips = { ...state.order };
@@ -83,6 +84,9 @@ export class EditorRes {
     state.queryMode = 'read';
     state.refreshData();
   }
+  toggleModalState() {
+    this.isModalOpen = !this.isModalOpen;
+  }
 
   render() {
     const columns: TColumn[] = state.columnHeaders.map(column => {
@@ -92,10 +96,10 @@ export class EditorRes {
         name: column.title,
         type: column.type,
 
-        isEditable: false,
+        isEditable: !['label', 'id'].includes(column.title) && state.canEdit,
         isDeletable: false,
-        isFilterable: ['string', 'number', 'date'].includes(column.type) && !state.isCustomQuery,
-        isSortable: ['string', 'number', 'date'].includes(column.type) && !state.isCustomQuery,
+        isFilterable: !['label', 'id'].includes(column.title) && ['string', 'number', 'date'].includes(column.type) && !state.isCustomQuery,
+        isSortable: !['label', 'id'].includes(column.title) && ['string', 'number', 'date'].includes(column.type) && !state.isCustomQuery,
 
         maxChar: 30,
 
@@ -117,6 +121,7 @@ export class EditorRes {
 
     return (
       <Host>
+        {this.isModalOpen && <edit-table-modal toggleModalState={this.toggleModalState.bind(this)} isModalOpen={this.isModalOpen}></edit-table-modal>}
         <chips-list
           sortchips={state.order}
           searchChips={state.filter}
@@ -140,7 +145,7 @@ export class EditorRes {
           <data-table
             columns={columns}
             data={state.nodes}
-            showActions={false}
+            showActions={state.canEdit && !state.isCustomQuery}
             showPagination={!state.isCustomQuery}
             total={state.total}
             limit={state.limit}
@@ -149,9 +154,23 @@ export class EditorRes {
             onPaginate={async (currentPage, limit) => {
               state.limit = limit;
               state.page = currentPage;
-              // state.offset = state.limit * state.page - state.limit;
               state.queryMode = 'read';
               state.refreshData();
+            }}
+            onEdit={async (id, changes) => {
+              if (changes.length > 0) {
+                const hash = {};
+
+                changes.forEach(ch => {
+                  hash[ch.name] = ch.newValue;
+                });
+
+                state.queryMode = 'update';
+                state.updateId = id;
+                state.changesMade = hash;
+                this.toggleModalState();
+                // state.refreshData();
+              }
             }}
             customStyle={{ maxHeight: '25rem' }}
           />
