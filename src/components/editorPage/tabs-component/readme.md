@@ -19,11 +19,13 @@
 ### Used by
 
  - [code-editor](../code-editor)
+ - [edit-table-modal](../edit-table-modal)
 
 ### Graph
 ```mermaid
 graph TD;
   code-editor --> tabs-component
+  edit-table-modal --> tabs-component
   style tabs-component fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

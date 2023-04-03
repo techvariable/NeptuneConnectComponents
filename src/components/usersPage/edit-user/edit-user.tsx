@@ -1,7 +1,6 @@
-import { Component, Host, h, Prop, State } from '@stencil/core';
+import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
 
 @Component({
   tag: 'edit-user',
@@ -18,40 +17,37 @@ export class EditUser {
   @Prop() value: string;
   @Prop() toggle: () => void;
   @Prop() userid: number;
+  @Prop() allPermissions: any;
   @State() rolesobj: {}[] = [];
   @State() email: string = '';
+  @Watch('allPermissions')
+  validateName(newValue: string, oldValue: string) {
+    if (newValue !== oldValue) {
+      this.email = this.value;
+      for (let role of this.allPermissions) {
+        let obj = {};
+        obj['value'] = role.roleName;
+        obj['id'] = role.id;
+        obj['label'] = role.roleName;
+        obj['selected'] = false;
+        obj['disabled'] = false;
+        this.rolesobj.push(obj);
+      }
 
-  componentWillLoad() {
-    this.email = this.value;
-
-    axios
-      .get(`${this.url}/permissions/all`)
-      .then((res: any) => {
-        for (let role of res.data) {
-          let obj = {};
-          (obj['value'] = role.roleName);
-          (obj['id'] = role.id);
-          (obj['label'] = role.roleName);
-          (obj['selected'] = false);
-          (obj['disabled'] = false);
-          this.rolesobj.push(obj);
-        }
-
-        axios
-          .get(`${this.url}/users/roles?userId=${this.userid}`)
-          .then((res: any) => {
-            for (let role of this.rolesobj) {
-              if (res.data.includes(role["id"])) {
-                role['selected'] = true;
-              } else {
-                role['selected'] = false;
-              }
+      axios
+        .get(`${this.url}/users/roles?userId=${this.userid}`)
+        .then((res: any) => {
+          for (let role of this.rolesobj) {
+            if (res.data.includes(role['id'])) {
+              role['selected'] = true;
+            } else {
+              role['selected'] = false;
             }
-          })
-      })
-      .catch(err => console.log(err));
+          }
+        })
+        .catch(err => console.log(err));
+    }
   }
-
 
   async handleSubmit(e) {
     e.preventDefault();
@@ -64,11 +60,10 @@ export class EditUser {
     }
 
     try {
-      await axios
-        .put(`${this.url}/users/roles`, {
-          userId: this.userid,
-          roles: selectedRoles,
-        });
+      await axios.put(`${this.url}/users/roles`, {
+        userId: this.userid,
+        roles: selectedRoles,
+      });
       Swal.fire({
         position: 'center',
         icon: 'success',
@@ -77,7 +72,7 @@ export class EditUser {
         timer: 1500,
       });
       for (let role of this.rolesobj) {
-        if (selectedRoles.includes(role["id"])) {
+        if (selectedRoles.includes(role['id'])) {
           role['selected'] = true;
         } else {
           role['selected'] = false;
@@ -99,7 +94,6 @@ export class EditUser {
   handleChange(event) {
     this.value = event.target.value;
   }
-
 
   render() {
     return (
@@ -145,9 +139,11 @@ export class EditUser {
                         <div class="w-full">
                           <p class="z-10 text-md text-gray-500 mb-4">Select permissions</p>
                           <label class="block text-left">
-                            <select name='role' class="form-multiselect block w-full mt-1 border rounded-md" multiple>
+                            <select name="role" class="form-multiselect block w-full mt-1 border rounded-md" multiple>
                               {this.rolesobj.map((role: any) => (
-                                <option class="px-6 py-1 hover:bg-gray-200 cursor-pointer" selected={role.selected} value={role.id}>{role.value}</option>
+                                <option class="px-6 py-1 hover:bg-gray-200 cursor-pointer" selected={role.selected} value={role.id}>
+                                  {role.value}
+                                </option>
                               ))}
                             </select>
                           </label>

@@ -1,5 +1,6 @@
 import { Component, h, Element, State, Prop, Host } from '@stencil/core';
 import { EditorState } from '@codemirror/basic-setup';
+import { Compartment } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
 import { java } from '@codemirror/lang-java';
 import { json } from '@codemirror/lang-json';
@@ -7,6 +8,31 @@ import { json } from '@codemirror/lang-json';
 import state from '../store';
 import { customSetup } from '../../customSetup';
 
+let myTheme = EditorView.theme(
+  {
+    '&': {
+      color: 'white',
+      backgroundColor: '#034',
+    },
+    '.cm-content': {
+      caretColor: '#0e9',
+    },
+    '&.cm-focused .cm-cursor': {
+      borderLeftColor: '#0e9',
+    },
+    '&.cm-focused .cm-selectionBackground, ::selection': {
+      backgroundColor: '#074',
+    },
+    '.cm-gutters': {
+      backgroundColor: '#045',
+      color: '#ddd',
+      border: 'none',
+    },
+  },
+  { dark: true },
+);
+
+const themeConfig = new Compartment();
 const TAB_LIST = [
   { name: 'Query', className: 'editor' },
   { name: 'Parameter', className: 'parameter' },
@@ -34,13 +60,17 @@ export class CodeEditor {
       doc: state.query,
       extensions: [
         customSetup,
+        themeConfig.of([myTheme]),
         java(),
+
         this.onCtrlShiftEnter(),
         EditorView.updateListener.of(function (e) {
-          state.syncVal = e.state.doc.toString().trim();
+          state.editorTextFlag = e.state.doc.toString().trim() !== '';
         }),
       ],
     });
+
+    // state.stateQuery.setOption('theme', 'night');
 
     state.viewQuery = new EditorView({
       state: state.stateQuery,
@@ -115,7 +145,7 @@ export class CodeEditor {
             <div class="flex gap-4">
               <button
                 title="Ctrl+Shift+Enter to run"
-                disabled={state.syncVal === ''}
+                disabled={!state.editorTextFlag}
                 onClick={() => this.onClickRun()}
                 class="w-24 rounded-md flex text-sm gap-2 items-center justify-center text-gray-600 border border-gray-300 px-3 mt-2 py-2 hover:bg-gray-200 disabled:text-gray-300 disabled:cursor-default disabled:hover:text-gray-200"
               >
@@ -126,7 +156,7 @@ export class CodeEditor {
               </button>
 
               <button
-                disabled={state.syncVal === ''}
+                disabled={!state.editorTextFlag}
                 onClick={() => this.formatter()}
                 class="flex w-24 rounded-md text-sm gap-2 items-center justify-center text-gray-600 border border-gray-300 px-3 mt-2 py-2 hover:bg-gray-200 disabled:text-gray-300 disabled:cursor-default disabled:hover:text-gray-200"
               >

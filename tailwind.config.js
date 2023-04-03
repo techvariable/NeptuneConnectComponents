@@ -1,4 +1,5 @@
 module.exports = {
+  darkMode: 'class',
   content: ['./src/**/*.{html, tsx}', './src/**/*.tsx'],
 
   theme: {
@@ -12,4 +13,4 @@ module.exports = {
   plugins: [],
 };
 
-// npx tailwindcss -i ./src/input.css -o ./global/global.css --watch
+// npx tailwindcss -i ./src/input.css -o ./src/global/global.css --watch

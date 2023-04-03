@@ -12,6 +12,9 @@ export namespace Components {
         "url": string;
     }
     interface AllUsers {
+        "count": number;
+        "limitbackend": number;
+        "offsetbackend": number;
         "permissions": string;
         "url": string;
         "users": string;
@@ -37,7 +40,51 @@ export namespace Components {
         "onClickRun": Function;
     }
     interface DataTable {
-        "doc": object[];
+        "columns": {
+    id: number | string;
+    key: string;
+    name: string;
+    type: 'number' | 'string' | 'date' | 'datetime';
+
+    prefix?: string;
+    suffix?: string;
+    maxChar?: number;
+    decimal?: boolean;
+    decimalPlaces?: number;
+    seperator?: string;
+
+    isSortable: boolean;
+    isFilterable: boolean;
+    isEditable: boolean;
+    isDeletable: boolean;
+
+    onSort?: (key: string) => Promise<void>;
+    onFilter?: (column) => Promise<void>;
+    onRowClick?: (id: string | number, key: string, value: any) => Promise<void>;
+    customColumnComponent?: (name: string) => any;
+    customRowComponent?: (value: any) => any;
+
+    customStyle?: {
+      headerStyle?: { [index: string]: string | number };
+      headerClass?: string;
+      cellStyle?: { [index: string]: string | number };
+      cellClass?: string;
+    };
+  }[];
+        "customClass": string;
+        "customStyle": {
+    [style: string]: string | number;
+  };
+        "data": Array<any>;
+        "limit": number;
+        "onDelete": (index: number, row: { [field: string]: number | Date | string }) => Promise<any>;
+        "onEdit": (id: number | string, changes: Array<{ prevValue: number | Date | string; newValue: number | Date | string; name: string }>) => Promise<any>;
+        "onPaginate": (tcurrentPage: number, limit: number) => Promise<void>;
+        "page": number;
+        "showActions": boolean;
+        "showPagination": boolean;
+        "supportedLimit": number[];
+        "total": number;
     }
     interface DataTableUpdated {
         "doc": object[];
@@ -53,7 +100,12 @@ export namespace Components {
         "clearSearch": any;
         "searchMethod": any;
     }
+    interface EditTableModal {
+        "isModalOpen": boolean;
+        "toggleModalState": any;
+    }
     interface EditUser {
+        "allPermissions": any;
         "ismodelopen": boolean;
         "toggle": () => void;
         "url": string;
@@ -136,6 +188,7 @@ export namespace Components {
         "selected": string[];
     }
     interface NavBar {
+        "stringifieduser": string;
     }
     interface NavigatorsComponent {
         "navigators": string;
@@ -143,6 +196,15 @@ export namespace Components {
     }
     interface NodeItem {
         "nodeError": null | string;
+    }
+    interface PaginationComponent {
+        "jumpPageHandler": Function;
+        "limit": number;
+        "nextHandler": Function;
+        "offset": number;
+        "prevHandler": Function;
+        "totalData": number;
+        "url": string;
     }
     interface PermissionEditor {
         "permissions": string;
@@ -166,21 +228,6 @@ export namespace Components {
     }
     interface QueryLogs {
     }
-    interface QueryResultTable {
-        "clearSearch": any;
-        "currentPage": number;
-        "dataLength": string;
-        "isLoadingError": boolean;
-        "limit": number;
-        "next": any;
-        "prev": any;
-        "rows": number[];
-        "rowsHandler": any;
-        "searchMethod": any;
-        "tableBody": object[];
-        "tableHeader": object[];
-        "toggleSortMethod": any;
-    }
     interface RadioButton {
         "align": 'vertical' | 'horizontal';
         "name": string;
@@ -200,14 +247,12 @@ export namespace Components {
     }
     interface TabComponent {
     }
-    interface TableSearchModal {
+    interface TableSearchModalForm {
         "alias": string;
-        "clearSearch": any;
-        "icon": any;
+        "closeSearchModal": () => void;
         "refresh": any;
         "searchMethod": any;
         "type": string;
-        "url": string;
     }
     interface TabsComponent {
         "activeIndex": number;
@@ -235,6 +280,7 @@ export namespace Components {
         "stringifieduser": string;
     }
     interface UserDropDown {
+        "allPermissions": {}[];
         "email": string;
         "parsedPermissions": [];
         "refresh": any;
@@ -242,7 +288,9 @@ export namespace Components {
         "userId": number;
     }
     interface UsersComponent {
+        "allPermissions": {}[];
         "parsedPermissions": [];
+        "refresh": () => void;
         "updatedUsers": any;
         "url": string;
     }
@@ -319,6 +367,12 @@ declare global {
     var HTMLDropDownElement: {
         prototype: HTMLDropDownElement;
         new (): HTMLDropDownElement;
+    };
+    interface HTMLEditTableModalElement extends Components.EditTableModal, HTMLStencilElement {
+    }
+    var HTMLEditTableModalElement: {
+        prototype: HTMLEditTableModalElement;
+        new (): HTMLEditTableModalElement;
     };
     interface HTMLEditUserElement extends Components.EditUser, HTMLStencilElement {
     }
@@ -440,6 +494,12 @@ declare global {
         prototype: HTMLNodeItemElement;
         new (): HTMLNodeItemElement;
     };
+    interface HTMLPaginationComponentElement extends Components.PaginationComponent, HTMLStencilElement {
+    }
+    var HTMLPaginationComponentElement: {
+        prototype: HTMLPaginationComponentElement;
+        new (): HTMLPaginationComponentElement;
+    };
     interface HTMLPermissionEditorElement extends Components.PermissionEditor, HTMLStencilElement {
     }
     var HTMLPermissionEditorElement: {
@@ -470,12 +530,6 @@ declare global {
         prototype: HTMLQueryLogsElement;
         new (): HTMLQueryLogsElement;
     };
-    interface HTMLQueryResultTableElement extends Components.QueryResultTable, HTMLStencilElement {
-    }
-    var HTMLQueryResultTableElement: {
-        prototype: HTMLQueryResultTableElement;
-        new (): HTMLQueryResultTableElement;
-    };
     interface HTMLRadioButtonElement extends Components.RadioButton, HTMLStencilElement {
     }
     var HTMLRadioButtonElement: {
@@ -500,11 +554,11 @@ declare global {
         prototype: HTMLTabComponentElement;
         new (): HTMLTabComponentElement;
     };
-    interface HTMLTableSearchModalElement extends Components.TableSearchModal, HTMLStencilElement {
+    interface HTMLTableSearchModalFormElement extends Components.TableSearchModalForm, HTMLStencilElement {
     }
-    var HTMLTableSearchModalElement: {
-        prototype: HTMLTableSearchModalElement;
-        new (): HTMLTableSearchModalElement;
+    var HTMLTableSearchModalFormElement: {
+        prototype: HTMLTableSearchModalFormElement;
+        new (): HTMLTableSearchModalFormElement;
     };
     interface HTMLTabsComponentElement extends Components.TabsComponent, HTMLStencilElement {
     }
@@ -561,6 +615,7 @@ declare global {
         "dialog-component": HTMLDialogComponentElement;
         "download-result-modal": HTMLDownloadResultModalElement;
         "drop-down": HTMLDropDownElement;
+        "edit-table-modal": HTMLEditTableModalElement;
         "edit-user": HTMLEditUserElement;
         "editor-json-response-viewer": HTMLEditorJsonResponseViewerElement;
         "editor-page": HTMLEditorPageElement;
@@ -581,17 +636,17 @@ declare global {
         "nav-bar": HTMLNavBarElement;
         "navigators-component": HTMLNavigatorsComponentElement;
         "node-item": HTMLNodeItemElement;
+        "pagination-component": HTMLPaginationComponentElement;
         "permission-editor": HTMLPermissionEditorElement;
         "permission-table": HTMLPermissionTableElement;
         "plain-button": HTMLPlainButtonElement;
         "profile-component": HTMLProfileComponentElement;
         "query-logs": HTMLQueryLogsElement;
-        "query-result-table": HTMLQueryResultTableElement;
         "radio-button": HTMLRadioButtonElement;
         "radio-button-multiple": HTMLRadioButtonMultipleElement;
         "side-bar": HTMLSideBarElement;
         "tab-component": HTMLTabComponentElement;
-        "table-search-modal": HTMLTableSearchModalElement;
+        "table-search-modal-form": HTMLTableSearchModalFormElement;
         "tabs-component": HTMLTabsComponentElement;
         "text-field": HTMLTextFieldElement;
         "text-field-area": HTMLTextFieldAreaElement;
@@ -608,6 +663,9 @@ declare namespace LocalJSX {
         "url"?: string;
     }
     interface AllUsers {
+        "count"?: number;
+        "limitbackend"?: number;
+        "offsetbackend"?: number;
         "permissions"?: string;
         "url"?: string;
         "users"?: string;
@@ -633,7 +691,51 @@ declare namespace LocalJSX {
         "onClickRun"?: Function;
     }
     interface DataTable {
-        "doc"?: object[];
+        "columns"?: {
+    id: number | string;
+    key: string;
+    name: string;
+    type: 'number' | 'string' | 'date' | 'datetime';
+
+    prefix?: string;
+    suffix?: string;
+    maxChar?: number;
+    decimal?: boolean;
+    decimalPlaces?: number;
+    seperator?: string;
+
+    isSortable: boolean;
+    isFilterable: boolean;
+    isEditable: boolean;
+    isDeletable: boolean;
+
+    onSort?: (key: string) => Promise<void>;
+    onFilter?: (column) => Promise<void>;
+    onRowClick?: (id: string | number, key: string, value: any) => Promise<void>;
+    customColumnComponent?: (name: string) => any;
+    customRowComponent?: (value: any) => any;
+
+    customStyle?: {
+      headerStyle?: { [index: string]: string | number };
+      headerClass?: string;
+      cellStyle?: { [index: string]: string | number };
+      cellClass?: string;
+    };
+  }[];
+        "customClass"?: string;
+        "customStyle"?: {
+    [style: string]: string | number;
+  };
+        "data"?: Array<any>;
+        "limit"?: number;
+        "onDelete"?: (index: number, row: { [field: string]: number | Date | string }) => Promise<any>;
+        "onEdit"?: (id: number | string, changes: Array<{ prevValue: number | Date | string; newValue: number | Date | string; name: string }>) => Promise<any>;
+        "onPaginate"?: (tcurrentPage: number, limit: number) => Promise<void>;
+        "page"?: number;
+        "showActions"?: boolean;
+        "showPagination"?: boolean;
+        "supportedLimit"?: number[];
+        "total"?: number;
     }
     interface DataTableUpdated {
         "doc"?: object[];
@@ -649,7 +751,12 @@ declare namespace LocalJSX {
         "clearSearch"?: any;
         "searchMethod"?: any;
     }
+    interface EditTableModal {
+        "isModalOpen"?: boolean;
+        "toggleModalState"?: any;
+    }
     interface EditUser {
+        "allPermissions"?: any;
         "ismodelopen"?: boolean;
         "toggle"?: () => void;
         "url"?: string;
@@ -732,6 +839,7 @@ declare namespace LocalJSX {
         "selected"?: string[];
     }
     interface NavBar {
+        "stringifieduser"?: string;
     }
     interface NavigatorsComponent {
         "navigators"?: string;
@@ -739,6 +847,15 @@ declare namespace LocalJSX {
     }
     interface NodeItem {
         "nodeError"?: null | string;
+    }
+    interface PaginationComponent {
+        "jumpPageHandler"?: Function;
+        "limit"?: number;
+        "nextHandler"?: Function;
+        "offset"?: number;
+        "prevHandler"?: Function;
+        "totalData"?: number;
+        "url"?: string;
     }
     interface PermissionEditor {
         "permissions"?: string;
@@ -762,21 +879,6 @@ declare namespace LocalJSX {
     }
     interface QueryLogs {
     }
-    interface QueryResultTable {
-        "clearSearch"?: any;
-        "currentPage"?: number;
-        "dataLength"?: string;
-        "isLoadingError"?: boolean;
-        "limit"?: number;
-        "next"?: any;
-        "prev"?: any;
-        "rows"?: number[];
-        "rowsHandler"?: any;
-        "searchMethod"?: any;
-        "tableBody"?: object[];
-        "tableHeader"?: object[];
-        "toggleSortMethod"?: any;
-    }
     interface RadioButton {
         "align"?: 'vertical' | 'horizontal';
         "name"?: string;
@@ -796,14 +898,12 @@ declare namespace LocalJSX {
     }
     interface TabComponent {
     }
-    interface TableSearchModal {
+    interface TableSearchModalForm {
         "alias"?: string;
-        "clearSearch"?: any;
-        "icon"?: any;
+        "closeSearchModal"?: () => void;
         "refresh"?: any;
         "searchMethod"?: any;
         "type"?: string;
-        "url"?: string;
     }
     interface TabsComponent {
         "activeIndex"?: number;
@@ -831,6 +931,7 @@ declare namespace LocalJSX {
         "stringifieduser"?: string;
     }
     interface UserDropDown {
+        "allPermissions"?: {}[];
         "email"?: string;
         "parsedPermissions"?: [];
         "refresh"?: any;
@@ -838,7 +939,9 @@ declare namespace LocalJSX {
         "userId"?: number;
     }
     interface UsersComponent {
+        "allPermissions"?: {}[];
         "parsedPermissions"?: [];
+        "refresh"?: () => void;
         "updatedUsers"?: any;
         "url"?: string;
     }
@@ -855,6 +958,7 @@ declare namespace LocalJSX {
         "dialog-component": DialogComponent;
         "download-result-modal": DownloadResultModal;
         "drop-down": DropDown;
+        "edit-table-modal": EditTableModal;
         "edit-user": EditUser;
         "editor-json-response-viewer": EditorJsonResponseViewer;
         "editor-page": EditorPage;
@@ -875,17 +979,17 @@ declare namespace LocalJSX {
         "nav-bar": NavBar;
         "navigators-component": NavigatorsComponent;
         "node-item": NodeItem;
+        "pagination-component": PaginationComponent;
         "permission-editor": PermissionEditor;
         "permission-table": PermissionTable;
         "plain-button": PlainButton;
         "profile-component": ProfileComponent;
         "query-logs": QueryLogs;
-        "query-result-table": QueryResultTable;
         "radio-button": RadioButton;
         "radio-button-multiple": RadioButtonMultiple;
         "side-bar": SideBar;
         "tab-component": TabComponent;
-        "table-search-modal": TableSearchModal;
+        "table-search-modal-form": TableSearchModalForm;
         "tabs-component": TabsComponent;
         "text-field": TextField;
         "text-field-area": TextFieldArea;
@@ -911,6 +1015,7 @@ declare module "@stencil/core" {
             "dialog-component": LocalJSX.DialogComponent & JSXBase.HTMLAttributes<HTMLDialogComponentElement>;
             "download-result-modal": LocalJSX.DownloadResultModal & JSXBase.HTMLAttributes<HTMLDownloadResultModalElement>;
             "drop-down": LocalJSX.DropDown & JSXBase.HTMLAttributes<HTMLDropDownElement>;
+            "edit-table-modal": LocalJSX.EditTableModal & JSXBase.HTMLAttributes<HTMLEditTableModalElement>;
             "edit-user": LocalJSX.EditUser & JSXBase.HTMLAttributes<HTMLEditUserElement>;
             "editor-json-response-viewer": LocalJSX.EditorJsonResponseViewer & JSXBase.HTMLAttributes<HTMLEditorJsonResponseViewerElement>;
             "editor-page": LocalJSX.EditorPage & JSXBase.HTMLAttributes<HTMLEditorPageElement>;
@@ -931,17 +1036,17 @@ declare module "@stencil/core" {
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
             "navigators-component": LocalJSX.NavigatorsComponent & JSXBase.HTMLAttributes<HTMLNavigatorsComponentElement>;
             "node-item": LocalJSX.NodeItem & JSXBase.HTMLAttributes<HTMLNodeItemElement>;
+            "pagination-component": LocalJSX.PaginationComponent & JSXBase.HTMLAttributes<HTMLPaginationComponentElement>;
             "permission-editor": LocalJSX.PermissionEditor & JSXBase.HTMLAttributes<HTMLPermissionEditorElement>;
             "permission-table": LocalJSX.PermissionTable & JSXBase.HTMLAttributes<HTMLPermissionTableElement>;
             "plain-button": LocalJSX.PlainButton & JSXBase.HTMLAttributes<HTMLPlainButtonElement>;
             "profile-component": LocalJSX.ProfileComponent & JSXBase.HTMLAttributes<HTMLProfileComponentElement>;
             "query-logs": LocalJSX.QueryLogs & JSXBase.HTMLAttributes<HTMLQueryLogsElement>;
-            "query-result-table": LocalJSX.QueryResultTable & JSXBase.HTMLAttributes<HTMLQueryResultTableElement>;
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
             "radio-button-multiple": LocalJSX.RadioButtonMultiple & JSXBase.HTMLAttributes<HTMLRadioButtonMultipleElement>;
             "side-bar": LocalJSX.SideBar & JSXBase.HTMLAttributes<HTMLSideBarElement>;
             "tab-component": LocalJSX.TabComponent & JSXBase.HTMLAttributes<HTMLTabComponentElement>;
-            "table-search-modal": LocalJSX.TableSearchModal & JSXBase.HTMLAttributes<HTMLTableSearchModalElement>;
+            "table-search-modal-form": LocalJSX.TableSearchModalForm & JSXBase.HTMLAttributes<HTMLTableSearchModalFormElement>;
             "tabs-component": LocalJSX.TabsComponent & JSXBase.HTMLAttributes<HTMLTabsComponentElement>;
             "text-field": LocalJSX.TextField & JSXBase.HTMLAttributes<HTMLTextFieldElement>;
             "text-field-area": LocalJSX.TextFieldArea & JSXBase.HTMLAttributes<HTMLTextFieldAreaElement>;

@@ -23,13 +23,13 @@
 ### Used by
 
  - [download-result-modal](../../editorPage/download-result-modal)
- - [table-search-modal](../../editorPage/table-search-modal)
+ - [table-search-modal-form](../../editorPage/table-search-modal-form)
 
 ### Graph
 ```mermaid
 graph TD;
   download-result-modal --> radio-button-multiple
-  table-search-modal --> radio-button-multiple
+  table-search-modal-form --> radio-button-multiple
   style radio-button-multiple fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

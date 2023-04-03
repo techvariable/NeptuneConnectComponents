@@ -14,7 +14,11 @@ export class TabComponent {
   activeHandler(id) {
     this.setActive = id;
   }
-
+  handleEditMode() {
+    state.canEdit = !state.canEdit;
+    state.showMeta = state.canEdit;
+    state.refreshData();
+  }
 
   render() {
     return (
@@ -58,7 +62,17 @@ export class TabComponent {
               </button>
             </li>
           </ul>
-          <download-result-modal ></download-result-modal>
+          <div class="flex justify-between w-44">
+            <div class="flex">
+              {!state.isCustomQuery && (
+                <div class="flex">
+                  <span class="text-sm font-semibold text-gray-600 pt-2 px-2">Edit</span>
+                  <toggle-button isSelected={state.canEdit} toggleButtonHandler={() => this.handleEditMode()} />
+                </div>
+              )}
+            </div>
+            <download-result-modal></download-result-modal>
+          </div>
         </div>
 
         {/* content */}

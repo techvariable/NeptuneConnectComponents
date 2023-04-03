@@ -8,26 +8,25 @@ import Swal from 'sweetalert2';
   styleUrl: 'user-drop-down.css',
   scoped: true,
 })
-
 export class UserDropDown {
   @Prop() userId: number = 0;
   @Prop() email: string;
   @Prop() url: string;
-  @Prop() refresh:any;
+  @Prop() refresh: any;
   @Prop() parsedPermissions: [];
+  @Prop() allPermissions: {}[];
   @State() ismodelopen: boolean = false;
   @State() value: string;
   @State() showDropdown: boolean = false;
-  @State() option: any[] = [{edit:'update'},{delete:'delete'}];
+  @State() option: any[] = [{ edit: 'update' }, { delete: 'delete' }];
 
-  async deleteHandler(){
+  async deleteHandler() {
     try {
-      await axios
-        .delete(`${this.url}/users/`, {
-          data:{
-            id:this.userId
-          }
-        });
+      await axios.delete(`${this.url}/users/`, {
+        data: {
+          id: this.userId,
+        },
+      });
       Swal.fire({
         position: 'center',
         icon: 'success',
@@ -46,10 +45,12 @@ export class UserDropDown {
   }
 
   clickHandler(item) {
-    if(item === 'edit'){
-    this.ismodelopen = !this.ismodelopen;}
-    if(item === 'delete'){
-    this.deleteHandler();}
+    if (item === 'edit') {
+      this.ismodelopen = !this.ismodelopen;
+    }
+    if (item === 'delete') {
+      this.deleteHandler();
+    }
     this.toggleDropdown();
   }
 
@@ -61,7 +62,7 @@ export class UserDropDown {
     this.showDropdown = false;
   };
 
-  dropDownClickHandler(event){
+  dropDownClickHandler(event) {
     event.stopPropagation();
     this.toggleDropdown();
   }
@@ -70,7 +71,10 @@ export class UserDropDown {
     return (
       <div class="relative">
         {/* Header */}
-        <h2 onClick={(event) => this.dropDownClickHandler(event)} class="font-sans text-gray-600 hover:text-indigo-800 cursor-pointer transition text-sm capitalize flex gap-1 items-center">
+        <h2
+          onClick={event => this.dropDownClickHandler(event)}
+          class="font-sans text-gray-600 hover:text-indigo-800 cursor-pointer transition text-sm capitalize flex gap-1 items-center"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path
               stroke-linecap="round"
@@ -85,7 +89,14 @@ export class UserDropDown {
           <ul class="py-1">
             {this.option?.map(item => (
               <li class="hover:bg-gray-300">
-                <button class="disabled-custom" onClick={(e) =>{e.stopPropagation() ;this.clickHandler(Object.keys(item)[0])}} disabled={!hasAccess(this.parsedPermissions, { name: 'users', permission: item[Object.keys(item)[0]]})}>
+                <button
+                  class="disabled-custom"
+                  onClick={e => {
+                    e.stopPropagation();
+                    this.clickHandler(Object.keys(item)[0]);
+                  }}
+                  disabled={!hasAccess(this.parsedPermissions, { name: 'users', permission: item[Object.keys(item)[0]] })}
+                >
                   <a href="#" class="block py-2 px-4 text-base font-sm font-medium text-gray-700">
                     {Object.keys(item)[0].toUpperCase()}
                   </a>
@@ -100,6 +111,7 @@ export class UserDropDown {
           ismodelopen={this.ismodelopen}
           value={this.email}
           toggle={() => (this.ismodelopen = !this.ismodelopen)}
+          allPermissions={this.allPermissions}
         ></edit-user>
       </div>
     );

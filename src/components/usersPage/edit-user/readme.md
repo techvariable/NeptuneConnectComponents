@@ -7,13 +7,14 @@
 
 ## Properties
 
-| Property      | Attribute     | Description | Type         | Default     |
-| ------------- | ------------- | ----------- | ------------ | ----------- |
-| `ismodelopen` | `ismodelopen` |             | `boolean`    | `undefined` |
-| `toggle`      | --            |             | `() => void` | `undefined` |
-| `url`         | `url`         |             | `string`     | `undefined` |
-| `userid`      | `userid`      |             | `number`     | `undefined` |
-| `value`       | `value`       |             | `string`     | `undefined` |
+| Property         | Attribute         | Description | Type         | Default     |
+| ---------------- | ----------------- | ----------- | ------------ | ----------- |
+| `allPermissions` | `all-permissions` |             | `any`        | `undefined` |
+| `ismodelopen`    | `ismodelopen`     |             | `boolean`    | `undefined` |
+| `toggle`         | --                |             | `() => void` | `undefined` |
+| `url`            | `url`             |             | `string`     | `undefined` |
+| `userid`         | `userid`          |             | `number`     | `undefined` |
+| `value`          | `value`           |             | `string`     | `undefined` |
 
 
 ## Dependencies

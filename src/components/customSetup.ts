@@ -16,62 +16,32 @@ import { rectangularSelection } from '@codemirror/rectangular-selection';
 import { defaultHighlightStyle } from '@codemirror/highlight';
 import { lintKeymap } from '@codemirror/lint';
 
-/**
-This is an extension value that just pulls together a whole lot of
-extensions that you might want in a basic editor. It is meant as a
-convenient helper to quickly set up CodeMirror without installing
-and importing a lot of packages.
+const isLineNumberEnabled = JSON.parse(localStorage.getItem('isLineNumberEnabled'));
+const isHigglightActiveLine = JSON.parse(localStorage.getItem('isHigglightActiveLine'));
+const isAutoCloseBracket = JSON.parse(localStorage.getItem('isAutoCloseBracket'));
+const ishighlightSelectionMatches = JSON.parse(localStorage.getItem('highlightSelectionMatches'));
+const isbracketMatchingEnabled = JSON.parse(localStorage.getItem('isbracketMatchingEnabled'));
 
-Specifically, it includes...
-
- - [the default command bindings](https://codemirror.net/6/docs/ref/#commands.defaultKeymap)
- - [line numbers](https://codemirror.net/6/docs/ref/#gutter.lineNumbers)
- - [special character highlighting](https://codemirror.net/6/docs/ref/#view.highlightSpecialChars)
- - [the undo history](https://codemirror.net/6/docs/ref/#history.history)
- - [a fold gutter](https://codemirror.net/6/docs/ref/#fold.foldGutter)
- - [custom selection drawing](https://codemirror.net/6/docs/ref/#view.drawSelection)
- - [drop cursor](https://codemirror.net/6/docs/ref/#view.dropCursor)
- - [multiple selections](https://codemirror.net/6/docs/ref/#state.EditorState^allowMultipleSelections)
- - [reindentation on input](https://codemirror.net/6/docs/ref/#language.indentOnInput)
- - [the default highlight style](https://codemirror.net/6/docs/ref/#highlight.defaultHighlightStyle) (as fallback)
- - [bracket matching](https://codemirror.net/6/docs/ref/#matchbrackets.bracketMatching)
- - [bracket closing](https://codemirror.net/6/docs/ref/#closebrackets.closeBrackets)
- - [autocompletion](https://codemirror.net/6/docs/ref/#autocomplete.autocompletion)
- - [rectangular selection](https://codemirror.net/6/docs/ref/#rectangular-selection.rectangularSelection)
- - [active line highlighting](https://codemirror.net/6/docs/ref/#view.highlightActiveLine)
- - [active line gutter highlighting](https://codemirror.net/6/docs/ref/#gutter.highlightActiveLineGutter)
- - [selection match highlighting](https://codemirror.net/6/docs/ref/#search.highlightSelectionMatches)
- - [search](https://codemirror.net/6/docs/ref/#search.searchKeymap)
- - [commenting](https://codemirror.net/6/docs/ref/#comment.commentKeymap)
- - [linting](https://codemirror.net/6/docs/ref/#lint.lintKeymap)
-
-(You'll probably want to add some language package to your setup
-too.)
-
-This package does not allow customization. The idea is that, once
-you decide you want to configure your editor more precisely, you
-take this package's source (which is just a bunch of imports and
-an array literal), copy it into your own code, and adjust it as
-desired.
-*/
 const customSetup = [
-  /*@__PURE__*/ lineNumbers(),
-  /*@__PURE__*/ highlightActiveLineGutter(),
-  /*@__PURE__*/ highlightSpecialChars(),
-  /*@__PURE__*/ history(),
-  /*@__PURE__*/ foldGutter(),
-  /*@__PURE__*/ drawSelection(),
-  /*@__PURE__*/ dropCursor(),
-  /*@__PURE__*/ EditorState.allowMultipleSelections.of(true),
-  /*@__PURE__*/ indentOnInput(),
+  highlightActiveLineGutter(),
+  highlightSpecialChars(),
+  history(),
+  foldGutter(),
+  drawSelection(),
+  dropCursor(),
+  EditorState.allowMultipleSelections.of(true),
+  indentOnInput(),
   defaultHighlightStyle.fallback,
-  /*@__PURE__*/ bracketMatching(),
-  /*@__PURE__*/ closeBrackets(),
-  /*@__PURE__*/ autocompletion(),
-  /*@__PURE__*/ rectangularSelection(),
-  /*@__PURE__*/ highlightActiveLine(),
-  /*@__PURE__*/ highlightSelectionMatches(),
-  /*@__PURE__*/ keymap.of([...closeBracketsKeymap, ...defaultKeymap, ...searchKeymap, ...historyKeymap, ...foldKeymap, ...commentKeymap, ...completionKeymap, ...lintKeymap]),
+  autocompletion(),
+  rectangularSelection(),
+  keymap.of([...closeBracketsKeymap, ...defaultKeymap, ...searchKeymap, ...historyKeymap, ...foldKeymap, ...commentKeymap, ...completionKeymap, ...lintKeymap]),
 ];
+
+if (isLineNumberEnabled) customSetup.push(lineNumbers());
+if (ishighlightSelectionMatches) customSetup.push(highlightSelectionMatches());
+if (isAutoCloseBracket) customSetup.push(closeBrackets());
+if (isHigglightActiveLine) customSetup.push(highlightActiveLine());
+if (isLineNumberEnabled) customSetup.push(lineNumbers());
+if (isbracketMatchingEnabled) customSetup.push(bracketMatching());
 
 export { customSetup };
