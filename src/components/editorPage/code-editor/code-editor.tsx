@@ -85,7 +85,11 @@ export class CodeEditor {
             title="Refresh Query"
             onClick={async () => {
               this.refreshLoading = true;
-              state.selectedNodeName ? (state.refresh = true) : await this.onClickRun();
+              if (state.isCustomQuery) {
+                await this.onClickRun()
+              } else {
+                await state.refreshData()
+              }
               this.refreshLoading = false;
             }}
           >
