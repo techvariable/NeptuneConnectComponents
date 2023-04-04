@@ -67,12 +67,19 @@ export class InsertNodeModal {
   }
   optionHandler(index, selectedLabel) {
     this.addNodeState[index]['valueType'] = selectedLabel;
-    console.log('select', selectedLabel, index, this.addNodeState);
+  }
+  validationChecker() {
+    let isNodeEmpty = false;
+    this.addNodeState.forEach(node => {
+      if (node.property === '' || node.value === '') isNodeEmpty = true;
+    });
+
+    if (this.customDropDownValue === '' || isNodeEmpty) return false;
+    return true;
   }
 
   handleSubmit(e) {
-    console.log('Pressed', this.customDropDownValue, this.addNodeState);
-    if (this.customDropDownValue !== '') {
+    if (this.validationChecker()) {
       const properties: { [key: string]: string | number } = {};
       this.addNodeState.forEach(node => {
         switch (node.valueType) {
@@ -231,6 +238,7 @@ export class InsertNodeModal {
                     >
                       Cancel
                     </button>
+                    <div>{!this.validationChecker() && <span class="bg-red-100 text-red-600">Please fill up all the required fields</span>}</div>
                   </div>
                 </div>
               </div>
