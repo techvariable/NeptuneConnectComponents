@@ -40,6 +40,7 @@ export namespace Components {
         "togglesort": any;
     }
     interface CodeEditor {
+        "fetchNavigators": Function;
         "formatter": Function;
         "onClickRun": Function;
     }
@@ -138,6 +139,7 @@ export namespace Components {
         "type": 'outlined' | 'contained';
     }
     interface InsertNodeModal {
+        "fetchNavigators": Function;
     }
     interface InviteComponent {
         "apiurl": string;
@@ -716,6 +718,7 @@ declare namespace LocalJSX {
         "togglesort"?: any;
     }
     interface CodeEditor {
+        "fetchNavigators"?: Function;
         "formatter"?: Function;
         "onClickRun"?: Function;
     }
@@ -814,6 +817,7 @@ declare namespace LocalJSX {
         "type"?: 'outlined' | 'contained';
     }
     interface InsertNodeModal {
+        "fetchNavigators"?: Function;
     }
     interface InviteComponent {
         "apiurl"?: string;

@@ -1263,11 +1263,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: rgb(37 99 235 / var(--tw-border-opacity));
 }
 
-.border-red-500 {
-  --tw-border-opacity: 1;
-  border-color: rgb(239 68 68 / var(--tw-border-opacity));
-}
-
 .border-indigo-700 {
   --tw-border-opacity: 1;
   border-color: rgb(67 56 202 / var(--tw-border-opacity));
@@ -1906,6 +1901,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 /* height and width */
 
 .custom-scrollbar::-webkit-scrollbar {
+  height: 6px;
   width: 6px;
 }
 

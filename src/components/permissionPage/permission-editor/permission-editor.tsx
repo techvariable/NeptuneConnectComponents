@@ -183,7 +183,7 @@ export class PermissionEditor {
             </div>
             <add-role parsedPermissions={this.parsedPermissions} refresh={() => this.fetchRoles()} url={this.url}></add-role>
           </div>
-          <div style={{ maxHeight: '40rem', overflowY: 'auto' }} class="border-2">
+          <div style={{ maxHeight: '40rem', overflowY: 'auto' }} class="border-2 custom-scrollbar ">
             <div id="permissionEditor" class="border border-gray-300"></div>
           </div>
           {this.errorMessage !== '' ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full -mt-4 mb-6">{this.errorMessage}</p> : null}
