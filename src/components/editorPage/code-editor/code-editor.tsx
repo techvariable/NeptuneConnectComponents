@@ -80,23 +80,31 @@ export class CodeEditor {
       <Host>
         <div class="px-3 w-full flex content-between" style={{ justifyContent: 'space-between' }}>
           <tabs-component activeIndex={this.activeIndex} tabslist={TAB_LIST} tabClickHandler={this.tabClickHandler}></tabs-component>
-          <button
-            class={this.btnClassType[`${this.refreshLoading}`]}
-            title="Refresh Query"
-            onClick={async () => {
-              this.refreshLoading = true;
-              state.selectedNodeName ? (state.refresh = true) : await this.onClickRun();
-              this.refreshLoading = false;
-            }}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
-              />
-            </svg>
-          </button>
+          <div class="flex w-28 justify-between">
+            <insert-node-modal class="pt-3"></insert-node-modal>
+
+            <button
+              class={`hover:animate-pulse hover:text-blue-700 ${this.btnClassType[`${this.refreshLoading}`]}`}
+              title="Refresh Query"
+              onClick={async () => {
+                this.refreshLoading = true;
+                if (state.isCustomQuery) {
+                  await this.onClickRun();
+                } else {
+                  await state.refreshData();
+                }
+                this.refreshLoading = false;
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
         {/* <tabs-component activeIndex={this.activeIndex} tabslist={TAB_LIST} tabClickHandler={this.tabClickHandler}></tabs-component> */}
         <div class="border rounded-md border-gray-300 shadow-gray-300   p-3">

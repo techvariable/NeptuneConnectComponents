@@ -4,7 +4,50 @@ import { createStore } from '@stencil/store';
 
 import { formatJSON } from '../../utils/utils';
 
-const { state, onChange, reset } = createStore({
+type IStore = {
+  queryMode: 'read' | 'insert' | 'update' | 'delete';
+  isCustomQuery: boolean;
+  isFetchedData: boolean;
+  showMeta: boolean;
+  isLoading: boolean;
+  isError: boolean;
+  canEdit: boolean;
+
+  hostUrl: string;
+  selectedNodeName: string;
+  limit: number;
+  page: number;
+  total: number;
+  order: {};
+  filter: {};
+
+  updateId: number | string;
+  changesMade: {};
+
+  deleteId: number | string;
+
+  insertNodeLabel: string;
+  insertProperties: {};
+
+  nodes: Array<any>;
+  columnHeaders: Array<any>;
+  availableNodes: Array<any>;
+
+  query: string;
+  queryParameter: string;
+
+  errorMessage: string;
+
+  editorTextFlag: boolean;
+  viewQuery: any;
+  stateQuery: any;
+  viewParameter: any;
+  stateParameter: any;
+  timeTaken: number;
+  refreshData: () => Promise<void>;
+};
+
+const { state, onChange, reset } = createStore<IStore>({
   // flags
   queryMode: 'read',
   isCustomQuery: false,
@@ -28,6 +71,13 @@ const { state, onChange, reset } = createStore({
   updateId: null,
   changesMade: {},
 
+  // delete parameters
+  deleteId: null,
+
+  // insert parameters
+  insertNodeLabel: null,
+  insertProperties: {},
+
   // response
   nodes: [],
   columnHeaders: [],
@@ -44,16 +94,46 @@ const { state, onChange, reset } = createStore({
   viewParameter: null,
   stateParameter: null,
   timeTaken: 0,
-  refresh: null, // TODO: need to check
 
   refreshData: async () => {
-    await fetchData(state.selectedNodeName);
+    fetchData(state.selectedNodeName);
   },
 });
 
-onChange('refresh', () => {
-  if (state.refresh !== null) fetchData(state.selectedNodeName);
-  state.refresh = null;
+onChange('queryMode', value => {
+  switch (value) {
+    case 'read':
+      state.insertNodeLabel = null;
+      state.insertProperties = {};
+      state.updateId = null;
+      state.changesMade = {};
+      state.deleteId = null;
+    case 'insert':
+      state.limit = 10;
+      state.page = 1;
+      state.order = {};
+      state.filter = {};
+      state.updateId = null;
+      state.changesMade = {};
+      state.deleteId = null;
+    case 'update':
+      state.limit = 10;
+      state.page = 1;
+      state.order = {};
+      state.filter = {};
+      state.deleteId = null;
+      state.insertNodeLabel = null;
+      state.insertProperties = {};
+    case 'delete':
+      state.limit = 10;
+      state.page = 1;
+      state.order = {};
+      state.filter = {};
+      state.updateId = null;
+      state.changesMade = {};
+      state.insertNodeLabel = null;
+      state.insertProperties = {};
+  }
 });
 
 onChange('nodes', value => {
@@ -98,21 +178,32 @@ onChange('queryParameter', value => {
   }
 });
 
+const getParamsForBuilder = () => {
+  return {
+    read: {
+      showMeta: state.showMeta,
+      limit: state.limit,
+      offset: state.limit * state.page - state.limit,
+      order: state.order,
+      filter: state.filter,
+    },
+    update: {
+      updateId: state.updateId,
+      changes: state.changesMade,
+    },
+    delete: {
+      deleteId: state.deleteId,
+    },
+    insert: {
+      label: state.insertNodeLabel,
+      properties: state.insertProperties,
+    },
+  };
+};
+
 const getQueryPreview = async () => {
   try {
-    const res = await axios.post(`${state.hostUrl}/query/builder/${state.selectedNodeName}/${state.queryMode}/preview`, {
-      read: {
-        showMeta: state.showMeta,
-        limit: state.limit,
-        offset: state.limit * state.page - state.limit,
-        order: state.order,
-        filter: state.filter,
-      },
-      update: {
-        updateId: state.updateId,
-        changes: state.changesMade,
-      },
-    });
+    const res = await axios.post(`${state.hostUrl}/query/builder/${state.selectedNodeName}/${state.queryMode}/preview`, getParamsForBuilder());
 
     return res.data;
   } catch (error) {
@@ -131,19 +222,7 @@ const fetchData = async (nodeName: string) => {
     state.selectedNodeName = nodeName;
 
     try {
-      const res = await axios.post(`${state.hostUrl}/query/builder/${nodeName}/${state.queryMode}`, {
-        read: {
-          showMeta: state.showMeta,
-          limit: state.limit,
-          offset: state.limit * state.page - state.limit,
-          order: state.order,
-          filter: state.filter,
-        },
-        update: {
-          updateId: state.updateId,
-          changes: state.changesMade,
-        },
-      });
+      const res = await axios.post(`${state.hostUrl}/query/builder/${nodeName}/${state.queryMode}`, getParamsForBuilder());
 
       state.nodes = res.data.nodes;
       state.total = res.data.count;

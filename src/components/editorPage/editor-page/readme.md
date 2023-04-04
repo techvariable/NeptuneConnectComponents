@@ -29,7 +29,10 @@ graph TD;
   node-item --> menu-drop-down
   menu-drop-down --> backdrop-filter
   code-editor --> tabs-component
+  code-editor --> insert-node-modal
   code-editor --> loader-component
+  insert-node-modal --> custom-drop-down
+  insert-node-modal --> basic-dropdown
   tab-component --> toggle-button
   tab-component --> download-result-modal
   tab-component --> editor-res

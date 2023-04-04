@@ -22,13 +22,17 @@
 ### Depends on
 
 - [tabs-component](../tabs-component)
+- [insert-node-modal](../insert-node-modal)
 - [loader-component](../../common/loader-component)
 
 ### Graph
 ```mermaid
 graph TD;
   code-editor --> tabs-component
+  code-editor --> insert-node-modal
   code-editor --> loader-component
+  insert-node-modal --> custom-drop-down
+  insert-node-modal --> basic-dropdown
   editor-page --> code-editor
   style code-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```

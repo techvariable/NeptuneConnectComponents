@@ -169,8 +169,12 @@ export class EditorRes {
                 state.updateId = id;
                 state.changesMade = hash;
                 this.toggleModalState();
-                // state.refreshData();
               }
+            }}
+            onDelete={async (_, row) => {
+              state.deleteId = Number(row.id);
+              state.queryMode = "delete";
+              this.toggleModalState()
             }}
             customStyle={{ maxHeight: '25rem' }}
           />
