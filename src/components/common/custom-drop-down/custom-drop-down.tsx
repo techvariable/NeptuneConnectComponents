@@ -37,12 +37,10 @@ export class CustomDropDown {
       }
     });
     this.optionList = matchedOptionList.filter(item => item !== undefined);
-    console.log('This is options', this.optionList);
   }
   handleSelect() {
-    // this.dropDownValue = this.dropdownSearchKey
     this.selectHandler(this.dropdownSearchKey);
-    console.log(this.dropdownSearchKey);
+
     this.dropDownHandler();
   }
 

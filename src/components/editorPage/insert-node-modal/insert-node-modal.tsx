@@ -53,7 +53,6 @@ export class InsertNodeModal {
     };
     currentNodes.push(node);
     this.addNodeState = currentNodes;
-    console.log('node', this.addNodeState);
   }
   removeNodeHandler(index) {
     this.addNodeState = [...this.addNodeState].filter((_, idx) => idx !== index);
@@ -61,15 +60,32 @@ export class InsertNodeModal {
   handleCustomSelect(value) {
     this.customDropDownValue = value;
   }
+  optionHandler(index, selectedLabel) {
+    this.addNodeState[index]['valueType'] = selectedLabel;
+  }
 
   handleSubmit() {
     if (this.customDropDownValue !== '') {
       const properties: { [key: string]: string | number } = {};
       this.addNodeState.forEach(node => {
-        properties[node.property] = node.value;
+        switch (node.valueType) {
+          case 'String':
+            properties[node.property] = node.value;
+            break;
+          case 'Number':
+            properties[node.property] = parseFloat(node.value);
+            break;
+          default:
+            properties[node.property] = node.value;
+            break;
+        }
       });
 
-      console.log({ properties });
+      state.queryMode = 'insert';
+      state.insertNodeLabel = this.customDropDownValue;
+      state.insertProperties = properties;
+
+      state.refreshData();
     }
   }
 
@@ -77,8 +93,8 @@ export class InsertNodeModal {
     return (
       <Host>
         {/* Modal Button */}
-        <button class="hover:animate-pulse hover:text-blue-700" title="Add" onClick={() => this.toggleModalState()}>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9 h-9">
+        <button class="hover:animate-pulse hover:text-blue-700" title="Add Node" onClick={() => this.toggleModalState()}>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -89,7 +105,7 @@ export class InsertNodeModal {
 
         {/* Main Modal */}
         {this.isModalOpen && (
-          <form onSubmit={e => this.submitHandler(e)} class="pt-6 space-y-3">
+          <form onSubmit={e => this.submitHandler(e)} class=" space-y-3">
             <div class="fixed z-10 inset-0 overflow-y-auto">
               <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
@@ -147,6 +163,7 @@ export class InsertNodeModal {
                                     label="Select:"
                                     propOptions={this.valueOptions}
                                     propSelectedOptionLabel={this.propSelectedOptionLabel}
+                                    optionHandler={selectedLabel => this.optionHandler(index, selectedLabel)}
                                     class="w-40"
                                     id="valueType"
                                   ></basic-dropdown>

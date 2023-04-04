@@ -14,13 +14,27 @@ export class BasicDropdown {
   @Prop() propOptions: any;
   @Prop() propSelectedOptionLabel: string;
   @Prop() label: string = 'DropDown';
+  @Prop() optionHandler: any;
   @State() options: any;
   @State() toggle: boolean = false;
   @State() selectedOption: string = '';
   @Watch('propSelectedOptionLabel')
   validateName(newValue: string, oldValue: string) {
     if (newValue !== oldValue) {
+      this.options = [...this.options].map(option => {
+        if (option.label === newValue) {
+          return {
+            label: newValue,
+            selected: true,
+          };
+        }
+        return {
+          label: option.label,
+          selected: false,
+        };
+      });
       this.selectedOption = this.propSelectedOptionLabel;
+      this.optionHandler(this.selectedOption);
     }
   }
 
@@ -47,6 +61,7 @@ export class BasicDropdown {
         selected: false,
       };
     });
+    this.optionHandler(selectedLabel);
     this.toggleDropDown();
   }
 

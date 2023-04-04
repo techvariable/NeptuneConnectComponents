@@ -5,44 +5,47 @@ import { createStore } from '@stencil/store';
 import { formatJSON } from '../../utils/utils';
 
 type IStore = {
-  queryMode: "read" | "insert" | "update" | "delete"
-  isCustomQuery: boolean
-  isFetchedData: boolean
-  showMeta: boolean
-  isLoading: boolean
-  isError: boolean
-  canEdit: boolean
+  queryMode: 'read' | 'insert' | 'update' | 'delete';
+  isCustomQuery: boolean;
+  isFetchedData: boolean;
+  showMeta: boolean;
+  isLoading: boolean;
+  isError: boolean;
+  canEdit: boolean;
 
-  hostUrl: string
-  selectedNodeName: string
-  limit: number
-  page: number
-  total: number
-  order: {}
-  filter: {}
+  hostUrl: string;
+  selectedNodeName: string;
+  limit: number;
+  page: number;
+  total: number;
+  order: {};
+  filter: {};
 
-  updateId: number | string
-  changesMade: {}
+  updateId: number | string;
+  changesMade: {};
 
-  deleteId: number | string
+  deleteId: number | string;
 
-  nodes: Array<any>
-  columnHeaders: Array<any>
-  availableNodes: Array<any>
+  insertNodeLabel: string;
+  insertProperties: {};
 
-  query: string
-  queryParameter: string
+  nodes: Array<any>;
+  columnHeaders: Array<any>;
+  availableNodes: Array<any>;
 
-  errorMessage: string
+  query: string;
+  queryParameter: string;
 
-  editorTextFlag: boolean
-  viewQuery: any
-  stateQuery: any
-  viewParameter: any
-  stateParameter: any
-  timeTaken: number
-  refreshData: () => Promise<void>
-}
+  errorMessage: string;
+
+  editorTextFlag: boolean;
+  viewQuery: any;
+  stateQuery: any;
+  viewParameter: any;
+  stateParameter: any;
+  timeTaken: number;
+  refreshData: () => Promise<void>;
+};
 
 const { state, onChange, reset } = createStore<IStore>({
   // flags
@@ -71,6 +74,10 @@ const { state, onChange, reset } = createStore<IStore>({
   // delete parameters
   deleteId: null,
 
+  // insert parameters
+  insertNodeLabel: null,
+  insertProperties: {},
+
   // response
   nodes: [],
   columnHeaders: [],
@@ -93,13 +100,15 @@ const { state, onChange, reset } = createStore<IStore>({
   },
 });
 
-onChange('queryMode', (value) => {
+onChange('queryMode', value => {
   switch (value) {
-    case "read":
+    case 'read':
+      state.insertNodeLabel = null;
+      state.insertProperties = {};
       state.updateId = null;
       state.changesMade = {};
       state.deleteId = null;
-    case "insert":
+    case 'insert':
       state.limit = 10;
       state.page = 1;
       state.order = {};
@@ -107,22 +116,25 @@ onChange('queryMode', (value) => {
       state.updateId = null;
       state.changesMade = {};
       state.deleteId = null;
-    case "update":
+    case 'update':
       state.limit = 10;
       state.page = 1;
       state.order = {};
       state.filter = {};
       state.deleteId = null;
-    case "delete":
+      state.insertNodeLabel = null;
+      state.insertProperties = {};
+    case 'delete':
       state.limit = 10;
       state.page = 1;
       state.order = {};
       state.filter = {};
       state.updateId = null;
       state.changesMade = {};
+      state.insertNodeLabel = null;
+      state.insertProperties = {};
   }
 });
-
 
 onChange('nodes', value => {
   const keys = new Set();
@@ -180,10 +192,14 @@ const getParamsForBuilder = () => {
       changes: state.changesMade,
     },
     delete: {
-      deleteId: state.deleteId
-    }
+      deleteId: state.deleteId,
+    },
+    insert: {
+      label: state.insertNodeLabel,
+      properties: state.insertProperties,
+    },
   };
-}
+};
 
 const getQueryPreview = async () => {
   try {

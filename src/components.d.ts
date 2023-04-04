@@ -25,6 +25,7 @@ export namespace Components {
     }
     interface BasicDropdown {
         "label": string;
+        "optionHandler": any;
         "propOptions": any;
         "propSelectedOptionLabel": string;
     }
@@ -700,6 +701,7 @@ declare namespace LocalJSX {
     }
     interface BasicDropdown {
         "label"?: string;
+        "optionHandler"?: any;
         "propOptions"?: any;
         "propSelectedOptionLabel"?: string;
     }

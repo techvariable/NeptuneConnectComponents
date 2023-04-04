@@ -62,10 +62,7 @@ export class TabComponent {
               </button>
             </li>
           </ul>
-          <div class="flex justify-between w-56">
-            <div>
-              <insert-node-modal></insert-node-modal>
-            </div>
+          <div class="flex justify-between w-44">
             <div class="flex">
               {!state.isCustomQuery && (
                 <div class="flex">
