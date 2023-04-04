@@ -312,7 +312,7 @@ export class DataTable {
     return (
       <Host>
         <div style={{ overflowY: 'auto' }}>
-          <div style={{ overflow: 'auto', ...this.customStyle }} class={this.customClass}>
+          <div style={{ overflow: 'auto', ...this.customStyle }} class={`${this.customClass} custom-scrollbar`}>
             <table class="table-auto h-full min-w-full divide-y divide-gray-200 relative">
               <thead class="bg-gray-100 sticky top-0">
                 <tr>
