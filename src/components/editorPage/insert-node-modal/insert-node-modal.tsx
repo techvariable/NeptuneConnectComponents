@@ -19,7 +19,7 @@ export class InsertNodeModal {
     { label: 'Number', selected: false },
   ];
   @State() propSelectedOptionLabel: string = 'String';
-
+  @State() isFormValid: boolean = true;
   nodeMapper() {
     const nodes = state.availableNodes.map(node => {
       return {
@@ -35,6 +35,7 @@ export class InsertNodeModal {
   }
 
   discardAddNode() {
+    this.isFormValid = true;
     this.toggleModalState();
     this.addNodeState = [{ property: '', value: '', valueType: '' }];
   }
@@ -74,11 +75,15 @@ export class InsertNodeModal {
       if (node.property === '' || node.value === '') isNodeEmpty = true;
     });
 
-    if (this.customDropDownValue === '' || isNodeEmpty) return false;
+    if (this.customDropDownValue === '' || isNodeEmpty) {
+      this.isFormValid = false;
+      return false;
+    }
+    this.isFormValid = true;
     return true;
   }
 
-  handleSubmit(e) {
+  handleSubmit() {
     if (this.validationChecker()) {
       const properties: { [key: string]: string | number } = {};
       this.addNodeState.forEach(node => {
@@ -221,15 +226,15 @@ export class InsertNodeModal {
                   <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button
                       type="submit"
-                      onClick={e => this.handleSubmit(e)}
-                      class="w-full gap-2 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-600 text-base font-medium text-white disabled:bg-gray-200 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                      onClick={() => this.handleSubmit()}
+                      class="w-full gap-2 inline-flex justify-center rounded-md border-transparent shadow-sm px-4 py-2 border border-gray-300 bg-gray-600 text-base font-medium text-white disabled:bg-gray-200 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                     >
                       {
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                       }
-                      Add
+                      <span class="text-md font-semibold">Add</span>
                     </button>
                     <button
                       type="button"
@@ -238,7 +243,9 @@ export class InsertNodeModal {
                     >
                       Cancel
                     </button>
-                    <div>{!this.validationChecker() && <span class="bg-red-100 text-red-600">Please fill up all the required fields</span>}</div>
+                    <div class="mt-2">
+                      {!this.isFormValid && <span class=" rounded-lg px-20 py-2 border border-red-300 bg-gray-100 text-red-500">Please fill up all the required fields</span>}
+                    </div>
                   </div>
                 </div>
               </div>
