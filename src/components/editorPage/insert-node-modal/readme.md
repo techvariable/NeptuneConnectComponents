@@ -1,4 +1,4 @@
-# code-editor
+# insert-node-modal
 
 
 
@@ -10,32 +10,26 @@
 | Property          | Attribute | Description | Type       | Default     |
 | ----------------- | --------- | ----------- | ---------- | ----------- |
 | `fetchNavigators` | --        |             | `Function` | `undefined` |
-| `formatter`       | --        |             | `Function` | `undefined` |
-| `onClickRun`      | --        |             | `Function` | `undefined` |
 
 
 ## Dependencies
 
 ### Used by
 
- - [editor-page](../editor-page)
+ - [code-editor](../code-editor)
 
 ### Depends on
 
-- [tabs-component](../tabs-component)
-- [insert-node-modal](../insert-node-modal)
-- [loader-component](../../common/loader-component)
+- [custom-drop-down](../../common/custom-drop-down)
+- [basic-dropdown](../../common/basic-dropdown)
 
 ### Graph
 ```mermaid
 graph TD;
-  code-editor --> tabs-component
-  code-editor --> insert-node-modal
-  code-editor --> loader-component
   insert-node-modal --> custom-drop-down
   insert-node-modal --> basic-dropdown
-  editor-page --> code-editor
-  style code-editor fill:#f9f,stroke:#333,stroke-width:4px
+  code-editor --> insert-node-modal
+  style insert-node-modal fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

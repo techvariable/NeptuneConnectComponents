@@ -22,8 +22,8 @@ export class UsersComponent {
   render() {
     return (
       <Host style={{ width: '100%', height: '67vh' }}>
-        <div class="mx-auto overflow-y-auto h-full">
-          <div class="md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 h-full">
+        <div class="mx-auto overflow-y-auto h-full custom-scrollbar ">
+          <div class="md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-24">
             {this.updatedUsers.map((user: any) => {
               return (
                 <div class="p-2 md:w-full">

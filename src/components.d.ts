@@ -23,6 +23,12 @@ export namespace Components {
         "backDropHandler": any;
         "showBackDrop": boolean;
     }
+    interface BasicDropdown {
+        "label": string;
+        "optionHandler": any;
+        "propOptions": any;
+        "propSelectedOptionLabel": string;
+    }
     interface BasicSettings {
     }
     interface CheckBox {
@@ -36,8 +42,14 @@ export namespace Components {
         "togglesort": any;
     }
     interface CodeEditor {
+        "fetchNavigators": Function;
         "formatter": Function;
         "onClickRun": Function;
+    }
+    interface CustomDropDown {
+        "dropDownValue": string;
+        "optionListProp": { label: string; selected: boolean; }[];
+        "selectHandler": any;
     }
     interface DataTable {
         "columns": {
@@ -127,6 +139,9 @@ export namespace Components {
         "btnLabel": string;
         "iconPosition": 'right' | 'left';
         "type": 'outlined' | 'contained';
+    }
+    interface InsertNodeModal {
+        "fetchNavigators": Function;
     }
     interface InviteComponent {
         "apiurl": string;
@@ -315,6 +330,12 @@ declare global {
         prototype: HTMLBackdropFilterElement;
         new (): HTMLBackdropFilterElement;
     };
+    interface HTMLBasicDropdownElement extends Components.BasicDropdown, HTMLStencilElement {
+    }
+    var HTMLBasicDropdownElement: {
+        prototype: HTMLBasicDropdownElement;
+        new (): HTMLBasicDropdownElement;
+    };
     interface HTMLBasicSettingsElement extends Components.BasicSettings, HTMLStencilElement {
     }
     var HTMLBasicSettingsElement: {
@@ -338,6 +359,12 @@ declare global {
     var HTMLCodeEditorElement: {
         prototype: HTMLCodeEditorElement;
         new (): HTMLCodeEditorElement;
+    };
+    interface HTMLCustomDropDownElement extends Components.CustomDropDown, HTMLStencilElement {
+    }
+    var HTMLCustomDropDownElement: {
+        prototype: HTMLCustomDropDownElement;
+        new (): HTMLCustomDropDownElement;
     };
     interface HTMLDataTableElement extends Components.DataTable, HTMLStencilElement {
     }
@@ -410,6 +437,12 @@ declare global {
     var HTMLIconButtonElement: {
         prototype: HTMLIconButtonElement;
         new (): HTMLIconButtonElement;
+    };
+    interface HTMLInsertNodeModalElement extends Components.InsertNodeModal, HTMLStencilElement {
+    }
+    var HTMLInsertNodeModalElement: {
+        prototype: HTMLInsertNodeModalElement;
+        new (): HTMLInsertNodeModalElement;
     };
     interface HTMLInviteComponentElement extends Components.InviteComponent, HTMLStencilElement {
     }
@@ -607,10 +640,12 @@ declare global {
         "add-role": HTMLAddRoleElement;
         "all-users": HTMLAllUsersElement;
         "backdrop-filter": HTMLBackdropFilterElement;
+        "basic-dropdown": HTMLBasicDropdownElement;
         "basic-settings": HTMLBasicSettingsElement;
         "check-box": HTMLCheckBoxElement;
         "chips-list": HTMLChipsListElement;
         "code-editor": HTMLCodeEditorElement;
+        "custom-drop-down": HTMLCustomDropDownElement;
         "data-table": HTMLDataTableElement;
         "data-table-updated": HTMLDataTableUpdatedElement;
         "dialog-component": HTMLDialogComponentElement;
@@ -623,6 +658,7 @@ declare global {
         "editor-res": HTMLEditorResElement;
         "fluid-container": HTMLFluidContainerElement;
         "icon-button": HTMLIconButtonElement;
+        "insert-node-modal": HTMLInsertNodeModalElement;
         "invite-component": HTMLInviteComponentElement;
         "json-response-viewer": HTMLJsonResponseViewerElement;
         "last-logs": HTMLLastLogsElement;
@@ -675,6 +711,12 @@ declare namespace LocalJSX {
         "backDropHandler"?: any;
         "showBackDrop"?: boolean;
     }
+    interface BasicDropdown {
+        "label"?: string;
+        "optionHandler"?: any;
+        "propOptions"?: any;
+        "propSelectedOptionLabel"?: string;
+    }
     interface BasicSettings {
     }
     interface CheckBox {
@@ -688,8 +730,14 @@ declare namespace LocalJSX {
         "togglesort"?: any;
     }
     interface CodeEditor {
+        "fetchNavigators"?: Function;
         "formatter"?: Function;
         "onClickRun"?: Function;
+    }
+    interface CustomDropDown {
+        "dropDownValue"?: string;
+        "optionListProp"?: { label: string; selected: boolean; }[];
+        "selectHandler"?: any;
     }
     interface DataTable {
         "columns"?: {
@@ -779,6 +827,9 @@ declare namespace LocalJSX {
         "btnLabel"?: string;
         "iconPosition"?: 'right' | 'left';
         "type"?: 'outlined' | 'contained';
+    }
+    interface InsertNodeModal {
+        "fetchNavigators"?: Function;
     }
     interface InviteComponent {
         "apiurl"?: string;
@@ -951,10 +1002,12 @@ declare namespace LocalJSX {
         "add-role": AddRole;
         "all-users": AllUsers;
         "backdrop-filter": BackdropFilter;
+        "basic-dropdown": BasicDropdown;
         "basic-settings": BasicSettings;
         "check-box": CheckBox;
         "chips-list": ChipsList;
         "code-editor": CodeEditor;
+        "custom-drop-down": CustomDropDown;
         "data-table": DataTable;
         "data-table-updated": DataTableUpdated;
         "dialog-component": DialogComponent;
@@ -967,6 +1020,7 @@ declare namespace LocalJSX {
         "editor-res": EditorRes;
         "fluid-container": FluidContainer;
         "icon-button": IconButton;
+        "insert-node-modal": InsertNodeModal;
         "invite-component": InviteComponent;
         "json-response-viewer": JsonResponseViewer;
         "last-logs": LastLogs;
@@ -1008,10 +1062,12 @@ declare module "@stencil/core" {
             "add-role": LocalJSX.AddRole & JSXBase.HTMLAttributes<HTMLAddRoleElement>;
             "all-users": LocalJSX.AllUsers & JSXBase.HTMLAttributes<HTMLAllUsersElement>;
             "backdrop-filter": LocalJSX.BackdropFilter & JSXBase.HTMLAttributes<HTMLBackdropFilterElement>;
+            "basic-dropdown": LocalJSX.BasicDropdown & JSXBase.HTMLAttributes<HTMLBasicDropdownElement>;
             "basic-settings": LocalJSX.BasicSettings & JSXBase.HTMLAttributes<HTMLBasicSettingsElement>;
             "check-box": LocalJSX.CheckBox & JSXBase.HTMLAttributes<HTMLCheckBoxElement>;
             "chips-list": LocalJSX.ChipsList & JSXBase.HTMLAttributes<HTMLChipsListElement>;
             "code-editor": LocalJSX.CodeEditor & JSXBase.HTMLAttributes<HTMLCodeEditorElement>;
+            "custom-drop-down": LocalJSX.CustomDropDown & JSXBase.HTMLAttributes<HTMLCustomDropDownElement>;
             "data-table": LocalJSX.DataTable & JSXBase.HTMLAttributes<HTMLDataTableElement>;
             "data-table-updated": LocalJSX.DataTableUpdated & JSXBase.HTMLAttributes<HTMLDataTableUpdatedElement>;
             "dialog-component": LocalJSX.DialogComponent & JSXBase.HTMLAttributes<HTMLDialogComponentElement>;
@@ -1024,6 +1080,7 @@ declare module "@stencil/core" {
             "editor-res": LocalJSX.EditorRes & JSXBase.HTMLAttributes<HTMLEditorResElement>;
             "fluid-container": LocalJSX.FluidContainer & JSXBase.HTMLAttributes<HTMLFluidContainerElement>;
             "icon-button": LocalJSX.IconButton & JSXBase.HTMLAttributes<HTMLIconButtonElement>;
+            "insert-node-modal": LocalJSX.InsertNodeModal & JSXBase.HTMLAttributes<HTMLInsertNodeModalElement>;
             "invite-component": LocalJSX.InviteComponent & JSXBase.HTMLAttributes<HTMLInviteComponentElement>;
             "json-response-viewer": LocalJSX.JsonResponseViewer & JSXBase.HTMLAttributes<HTMLJsonResponseViewerElement>;
             "last-logs": LocalJSX.LastLogs & JSXBase.HTMLAttributes<HTMLLastLogsElement>;
