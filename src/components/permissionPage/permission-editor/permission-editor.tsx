@@ -1,9 +1,37 @@
 import { Component, h, Element, State, Prop, Host } from '@stencil/core';
-import { EditorState, basicSetup } from '@codemirror/basic-setup';
+import { EditorState } from '@codemirror/basic-setup';
+import { Compartment } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
 import { json } from '@codemirror/lang-json';
 import axios from 'axios';
 import { formatJSON, hasAccess, isValidPermissionJson } from '../../../utils/utils';
+import { customSetup } from '../../customSetup';
+
+let myTheme = EditorView.theme(
+  {
+    '&': {
+      color: 'white',
+      backgroundColor: '#034',
+    },
+    '.cm-content': {
+      caretColor: '#0e9',
+    },
+    '&.cm-focused .cm-cursor': {
+      borderLeftColor: '#0e9',
+    },
+    '&.cm-focused .cm-selectionBackground, ::selection': {
+      backgroundColor: '#074',
+    },
+    '.cm-gutters': {
+      backgroundColor: '#045',
+      color: '#ddd',
+      border: 'none',
+    },
+  },
+  { dark: true },
+);
+
+const themeConfig = new Compartment();
 @Component({
   tag: 'permission-editor',
   styleUrl: 'permission-editor.css',
@@ -65,16 +93,20 @@ export class PermissionEditor {
   }
 
   componentDidLoad() {
+    const permissionExtensions = [
+      customSetup,
+      json(),
+      EditorView.updateListener.of(e => {
+        this.syncVal = e.state.doc.toString().trim();
+      }),
+      this.dummyKeymap(),
+    ];
+    if (localStorage.getItem('themesArray') === 'dark') {
+      permissionExtensions.push(themeConfig.of([myTheme]));
+    }
     this.state = EditorState.create({
       doc: '\n\n\n\n',
-      extensions: [
-        basicSetup,
-        json(),
-        EditorView.updateListener.of(e => {
-          this.syncVal = e.state.doc.toString().trim();
-        }),
-        this.dummyKeymap(),
-      ],
+      extensions: permissionExtensions,
     });
     this.view = new EditorView({
       state: this.state,
@@ -168,14 +200,14 @@ export class PermissionEditor {
       <Host>
         <div class="w-auto border rounded-md border-gray-300 shadow-gray-300 py-2 px-3 space-y-2">
           <div class="flex justify-between items-center">
-            <div class="border border-gray-300 space-x-3 shadow-gray-300 p-2 m-1">
+            <div class="border border-gray-300 space-x-3 rounded-md shadow-gray-300 p-2 m-1">
               <span class="pb-6 text-md font-bold leading-7 text-gray-600">Select Role : </span>
               <select
                 onChange={e => this.onRoleSelect(e)}
-                class="form-select px-3 py-1.5 border-none text-inherit font-inherit text-gray-700 bg-transparent bg-clip-padding bg-no-repeat rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                class="form-select px-3 py-1.5 border-none text-inherit font-inherit text-gray-700 bg-transparent bg-clip-padding bg-no-repeat rounded-md transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               >
                 {this.roles.map(item => (
-                  <option selected={this.selectedRole === item.id} value={`${item.id}`}>
+                  <option class="rounded-md hover:bg-gray-200 hover:text-gray-600" selected={this.selectedRole === item.id} value={`${item.id}`}>
                     {item.roleName}
                   </option>
                 ))}

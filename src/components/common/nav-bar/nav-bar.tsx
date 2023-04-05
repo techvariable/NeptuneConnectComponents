@@ -24,7 +24,7 @@ export class NavBar {
   render() {
     return (
       <div class="container mx-auto">
-        <nav class="sticky top-0 pt-6 pb-8 bg-white border-b">
+        <nav class="sticky top-0 pt-6 pb-8 bg-white border-b z-10">
           <div>
             <div class="flex flex-wrap justify-between items-center mx-auto bg-white">
               <a href="/" class="text-lg text-gray-800">

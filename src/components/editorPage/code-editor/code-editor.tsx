@@ -1,11 +1,38 @@
 import { Component, h, Element, State, Prop, Host } from '@stencil/core';
-import { EditorState, basicSetup } from '@codemirror/basic-setup';
+import { EditorState } from '@codemirror/basic-setup';
+import { Compartment } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
 import { java } from '@codemirror/lang-java';
 import { json } from '@codemirror/lang-json';
 
 import state from '../store';
+import { customSetup } from '../../customSetup';
 
+let myTheme = EditorView.theme(
+  {
+    '&': {
+      color: 'white',
+      backgroundColor: '#034',
+    },
+    '.cm-content': {
+      caretColor: '#0e9',
+    },
+    '&.cm-focused .cm-cursor': {
+      borderLeftColor: '#0e9',
+    },
+    '&.cm-focused .cm-selectionBackground, ::selection': {
+      backgroundColor: '#074',
+    },
+    '.cm-gutters': {
+      backgroundColor: '#045',
+      color: '#ddd',
+      border: 'none',
+    },
+  },
+  { dark: true },
+);
+
+const themeConfig = new Compartment();
 const TAB_LIST = [
   { name: 'Query', className: 'editor' },
   { name: 'Parameter', className: 'parameter' },
@@ -30,16 +57,22 @@ export class CodeEditor {
   };
 
   componentDidLoad() {
+    const editorExtensions = [
+      customSetup,
+      java(),
+      this.onCtrlShiftEnter(),
+      EditorView.updateListener.of(function (e) {
+        state.editorTextFlag = e.state.doc.toString().trim() !== '';
+      }),
+    ];
+    const parameterExtensions = [customSetup, json(), this.onCtrlShiftEnter()];
+    if (localStorage.getItem('themesArray') === 'dark') {
+      editorExtensions.push(themeConfig.of([myTheme]));
+      parameterExtensions.push(themeConfig.of([myTheme]));
+    }
     state.stateQuery = EditorState.create({
       doc: state.query,
-      extensions: [
-        basicSetup,
-        java(),
-        this.onCtrlShiftEnter(),
-        EditorView.updateListener.of(function (e) {
-          state.editorTextFlag = e.state.doc.toString().trim() !== '';
-        }),
-      ],
+      extensions: editorExtensions,
     });
 
     state.viewQuery = new EditorView({
@@ -49,7 +82,7 @@ export class CodeEditor {
 
     state.stateParameter = EditorState.create({
       doc: state.queryParameter,
-      extensions: [basicSetup, json(), this.onCtrlShiftEnter()],
+      extensions: parameterExtensions,
     });
 
     state.viewParameter = new EditorView({

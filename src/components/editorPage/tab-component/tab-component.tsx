@@ -67,7 +67,7 @@ export class TabComponent {
               {!state.isCustomQuery && (
                 <div class="flex">
                   <span class="text-sm font-semibold text-gray-600 pt-2 px-2">Edit</span>
-                  <toggle-button selectedOption={state.canEdit} toggleButtonHandler={() => this.handleEditMode()} />
+                  <toggle-button isSelected={state.canEdit} toggleButtonHandler={() => this.handleEditMode()} />
                 </div>
               )}
             </div>

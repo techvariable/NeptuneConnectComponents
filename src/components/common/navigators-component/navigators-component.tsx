@@ -19,7 +19,7 @@ export class NavigatorsComponent {
   };
   render() {
     return (
-      <div class={'overflow-y-auto py-4 px-3 bg-gray-100 rounded-md h-96'}>
+      <div class={'overflow-y-auto py-4 px-3 bg-gray-100 rounded-md h-full'}>
         <ul class="space-y-2">
           {JSON.parse(this.navigators).map(item => {
             const route: { name: string | string[]; permission: 'read' | 'write' | 'delete' | 'update' } = { name: item.pagePermission?.toLowerCase(), permission: 'read' };
