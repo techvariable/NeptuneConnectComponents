@@ -1,4 +1,4 @@
-import { Component, Host, h, State } from '@stencil/core';
+import { Component, Host, h, State, Prop } from '@stencil/core';
 import state from '../store';
 
 @Component({
@@ -7,6 +7,7 @@ import state from '../store';
   scoped: true,
 })
 export class InsertNodeModal {
+  @Prop() fetchNavigators: Function;
   @State() value: string;
   @State() isModalOpen = false;
 
@@ -83,7 +84,7 @@ export class InsertNodeModal {
     return true;
   }
 
-  handleSubmit() {
+  async handleSubmit() {
     if (this.validationChecker()) {
       const properties: { [key: string]: string | number } = {};
       this.addNodeState.forEach(node => {
@@ -105,9 +106,10 @@ export class InsertNodeModal {
       state.insertProperties = properties;
       state.selectedNodeName = state.insertNodeLabel;
       this.customDropDownValue = '';
-      state.refreshData();
+      await state.refreshData();
       this.toggleModalState();
       this.addNodeState = [{ property: '', value: '', valueType: '' }];
+      await this.fetchNavigators();
     }
   }
 
@@ -145,7 +147,7 @@ export class InsertNodeModal {
                           </h3>
                         </div>
                         <custom-drop-down class="py-4" selectHandler={value => this.handleCustomSelect(value)} optionListProp={this.nodeMapper()}></custom-drop-down>
-                        <div class="max-h-60 overflow-auto">
+                        <div class="max-h-60 overflow-auto custom-scrollbar">
                           {this.addNodeState.map((_node, index) => {
                             return (
                               <div class="mt-2 flex gap-4">

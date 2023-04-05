@@ -49,7 +49,7 @@ export class LogsTable {
           return item[id.alias].slice(0, 25) + '...';
         } else {
           if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/.test(item[id.alias])) {
-            return new Date(item[id.alias]).toString().split('(')[0]
+            return new Date(item[id.alias]).toString().split('(')[0];
           } else {
             if (id.alias === 'timeTaken') {
               return `${item[id.alias]} ms`;
@@ -60,15 +60,18 @@ export class LogsTable {
         }
       } else {
         if (id.alias === 'queryResult') {
-        return (
-          <a target="_blank" href={id.click.url + item[id.alias]} class="flex items-center py-1 px-4 text-base font-normal text-gray-900 rounded-lg bg-gray-200">
-            <img class="h-4" src={id.click.icon} alt="icon" />
-            <span class="px-2 ">View</span>
-          </a>
-        )}else if(id.alias === 'email'){
-          return (<a href={id.click.url + item['ownerId']}>
-            <span class="px-2 ">{item[id.alias]}</span>
-          </a>)
+          return (
+            <a target="_blank" href={id.click.url + item[id.alias]} class="flex items-center py-1 px-4 text-base font-normal text-gray-900 rounded-lg bg-gray-200">
+              <img class="h-4" src={id.click.icon} alt="icon" />
+              <span class="px-2 ">View</span>
+            </a>
+          );
+        } else if (id.alias === 'email') {
+          return (
+            <a href={id.click.url + item['ownerId']}>
+              <span class="px-2 ">{item[id.alias]}</span>
+            </a>
+          );
         }
       }
     }
@@ -86,7 +89,7 @@ export class LogsTable {
 
     return (
       <div style={{ overflowY: 'auto' }}>
-        <div style={{ maxWidth: '75rem', maxHeight: '580px', overflow: 'auto' }}>
+        <div class="custom-scrollbar " style={{ maxWidth: '75rem', maxHeight: '580px', overflow: 'auto' }}>
           <table class="table-auto h-full min-w-full divide-y border border-gray-100 divide-gray-200 relative">
             {/* Table Head */}
             <thead class="bg-gray-100 sticky top-0">

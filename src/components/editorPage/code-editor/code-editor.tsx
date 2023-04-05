@@ -18,6 +18,7 @@ const TAB_LIST = [
 export class CodeEditor {
   @Prop() onClickRun: Function;
   @Prop() formatter: Function;
+  @Prop() fetchNavigators: Function;
 
   @State() activeIndex: number = 0;
   @State() refreshLoading: boolean = false;
@@ -81,7 +82,7 @@ export class CodeEditor {
         <div class="px-3 w-full flex content-between" style={{ justifyContent: 'space-between' }}>
           <tabs-component activeIndex={this.activeIndex} tabslist={TAB_LIST} tabClickHandler={this.tabClickHandler}></tabs-component>
           <div class="flex w-28 justify-between">
-            <insert-node-modal class="pt-3"></insert-node-modal>
+            <insert-node-modal fetchNavigators={() => this.fetchNavigators()} class="pt-3"></insert-node-modal>
 
             <button
               class={`hover:animate-pulse hover:text-blue-700 ${this.btnClassType[`${this.refreshLoading}`]}`}
@@ -108,7 +109,7 @@ export class CodeEditor {
         </div>
         {/* <tabs-component activeIndex={this.activeIndex} tabslist={TAB_LIST} tabClickHandler={this.tabClickHandler}></tabs-component> */}
         <div class="border rounded-md border-gray-300 shadow-gray-300   p-3">
-          <div style={{ maxHeight: '13rem', overflowY: 'auto' }} class="border-2">
+          <div style={{ maxHeight: '13rem', overflowY: 'auto' }} class="border-2 custom-scrollbar ">
             {TAB_LIST.map(item =>
               item.className === 'editor' ? (
                 <div id={item.className} class="border border-gray-300" style={{ display: this.activeIndex === 1 ? 'none' : 'block' }}></div>

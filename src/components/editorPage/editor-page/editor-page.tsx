@@ -133,14 +133,14 @@ export class EditorPage {
                   </svg>
                 </button>
               </div>
-              <div style={{ maxHeight: '43.5rem', overflowX: 'visible', overflowY: 'auto', minHeight: '20rem' }}>
+              <div class="custom-scrollbar " style={{ maxHeight: '43.5rem', overflowX: 'visible', overflowY: 'auto', minHeight: '20rem' }}>
                 <node-item nodeError={this.nodeError}></node-item>
               </div>
             </aside>
           </div>
           <div class="w-full md:w-3/4">
             <h2 class="pb-3 font-mono text-lg font-bold leading-7 text-gray-600">Write your Gremlin Query Here</h2>
-            <code-editor formatter={this.formatter} onClickRun={this.onClickRun}></code-editor>
+            <code-editor formatter={() => this.formatter()} onClickRun={this.onClickRun} fetchNavigators={this.fetchNavigators}></code-editor>
             {state.isFetchedData && state.nodes.length === 0 && !state.isLoading && !state.isError && (
               <div class="flex items-center bg-gray-500 text-white text-sm font-bold px-4 py-3" role="alert">
                 <p>No Data Found in Database</p>

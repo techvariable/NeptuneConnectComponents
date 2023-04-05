@@ -100,7 +100,7 @@ export class EditUser {
       <Host>
         {this.ismodelopen && (
           <form onSubmit={e => this.handleSubmit(e)} class="pt-10 space-y-3">
-            <div class="fixed z-10 inset-0 overflow-y-scroll" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div class="fixed z-10 inset-0 overflow-y-scroll custom-scrollbar " aria-labelledby="modal-title" role="dialog" aria-modal="true">
               <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
 
@@ -122,7 +122,7 @@ export class EditUser {
                           Edit User
                         </h3>
                         <div class="mt-2">
-                          <p class="text-md text-gray-500 mb-4">Enter email of the user.</p>
+                          <p class="text-md text-gray-500 mb-4">Email of the user.</p>
                           <input
                             type="email"
                             name="email"
@@ -139,7 +139,7 @@ export class EditUser {
                         <div class="w-full">
                           <p class="z-10 text-md text-gray-500 mb-4">Select permissions</p>
                           <label class="block text-left">
-                            <select name="role" class="form-multiselect block w-full mt-1 border rounded-md" multiple>
+                            <select name="role" class="form-multiselect block w-full mt-1 border rounded-md custom-scrollbar " multiple>
                               {this.rolesobj.map((role: any) => (
                                 <option class="px-6 py-1 hover:bg-gray-200 cursor-pointer" selected={role.selected} value={role.id}>
                                   {role.value}
