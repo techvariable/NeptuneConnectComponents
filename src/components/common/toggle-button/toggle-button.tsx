@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 
 const classesDisableHandling = {
-  true: 'opacity-95',
+  true: 'cursor-not-allowed',
   false: 'cursor-pointer',
 };
 @Component({
