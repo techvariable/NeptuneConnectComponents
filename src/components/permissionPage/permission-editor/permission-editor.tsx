@@ -200,7 +200,7 @@ export class PermissionEditor {
       <Host>
         <div class="w-auto border rounded-md border-gray-300 shadow-gray-300 py-2 px-3 space-y-2">
           <div class="flex justify-between items-center">
-            <div class="border border-gray-300 space-x-3 shadow-gray-300 p-2 m-1">
+            <div class="border border-gray-300 space-x-3 rounded-md shadow-gray-300 p-2 m-1">
               <span class="pb-6 text-md font-bold leading-7 text-gray-600">Select Role : </span>
               <select
                 onChange={e => this.onRoleSelect(e)}
