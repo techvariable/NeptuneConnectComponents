@@ -1,9 +1,37 @@
 import { Component, h, Element, State, Prop, Host } from '@stencil/core';
-import { EditorState, basicSetup } from '@codemirror/basic-setup';
+import { EditorState } from '@codemirror/basic-setup';
+import { Compartment } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
 import { json } from '@codemirror/lang-json';
 import axios from 'axios';
 import { formatJSON, hasAccess, isValidPermissionJson } from '../../../utils/utils';
+import { customSetup } from '../../customSetup';
+
+let myTheme = EditorView.theme(
+  {
+    '&': {
+      color: 'white',
+      backgroundColor: '#034',
+    },
+    '.cm-content': {
+      caretColor: '#0e9',
+    },
+    '&.cm-focused .cm-cursor': {
+      borderLeftColor: '#0e9',
+    },
+    '&.cm-focused .cm-selectionBackground, ::selection': {
+      backgroundColor: '#074',
+    },
+    '.cm-gutters': {
+      backgroundColor: '#045',
+      color: '#ddd',
+      border: 'none',
+    },
+  },
+  { dark: true },
+);
+
+const themeConfig = new Compartment();
 @Component({
   tag: 'permission-editor',
   styleUrl: 'permission-editor.css',
@@ -65,16 +93,20 @@ export class PermissionEditor {
   }
 
   componentDidLoad() {
+    const permissionExtensions = [
+      customSetup,
+      json(),
+      EditorView.updateListener.of(e => {
+        this.syncVal = e.state.doc.toString().trim();
+      }),
+      this.dummyKeymap(),
+    ];
+    if (localStorage.getItem('themesArray') === 'dark') {
+      permissionExtensions.push(themeConfig.of([myTheme]));
+    }
     this.state = EditorState.create({
       doc: '\n\n\n\n',
-      extensions: [
-        basicSetup,
-        json(),
-        EditorView.updateListener.of(e => {
-          this.syncVal = e.state.doc.toString().trim();
-        }),
-        this.dummyKeymap(),
-      ],
+      extensions: permissionExtensions,
     });
     this.view = new EditorView({
       state: this.state,

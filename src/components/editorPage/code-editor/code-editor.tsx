@@ -56,21 +56,23 @@ export class CodeEditor {
   };
 
   componentDidLoad() {
+    const editorExtensions = [
+      customSetup,
+      java(),
+      this.onCtrlShiftEnter(),
+      EditorView.updateListener.of(function (e) {
+        state.editorTextFlag = e.state.doc.toString().trim() !== '';
+      }),
+    ];
+    const parameterExtensions = [customSetup, json(), this.onCtrlShiftEnter()];
+    if (localStorage.getItem('themesArray') === 'dark') {
+      editorExtensions.push(themeConfig.of([myTheme]));
+      parameterExtensions.push(themeConfig.of([myTheme]));
+    }
     state.stateQuery = EditorState.create({
       doc: state.query,
-      extensions: [
-        customSetup,
-        themeConfig.of([myTheme]),
-        java(),
-
-        this.onCtrlShiftEnter(),
-        EditorView.updateListener.of(function (e) {
-          state.editorTextFlag = e.state.doc.toString().trim() !== '';
-        }),
-      ],
+      extensions: editorExtensions,
     });
-
-    // state.stateQuery.setOption('theme', 'night');
 
     state.viewQuery = new EditorView({
       state: state.stateQuery,
@@ -79,7 +81,7 @@ export class CodeEditor {
 
     state.stateParameter = EditorState.create({
       doc: state.queryParameter,
-      extensions: [customSetup, json(), this.onCtrlShiftEnter()],
+      extensions: parameterExtensions,
     });
 
     state.viewParameter = new EditorView({

@@ -9,6 +9,7 @@
 
 | Property              | Attribute               | Description | Type      | Default     |
 | --------------------- | ----------------------- | ----------- | --------- | ----------- |
+| `isDisabled`          | `is-disabled`           |             | `boolean` | `false`     |
 | `isSelected`          | `is-selected`           |             | `boolean` | `undefined` |
 | `toggleButtonHandler` | `toggle-button-handler` |             | `any`     | `undefined` |
 

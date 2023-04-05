@@ -273,6 +273,7 @@ export namespace Components {
         "width": 'full' | 'auto';
     }
     interface ToggleButton {
+        "isDisabled": boolean;
         "isSelected": boolean;
         "toggleButtonHandler": any;
     }
@@ -924,6 +925,7 @@ declare namespace LocalJSX {
         "width"?: 'full' | 'auto';
     }
     interface ToggleButton {
+        "isDisabled"?: boolean;
         "isSelected"?: boolean;
         "toggleButtonHandler"?: any;
     }

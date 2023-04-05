@@ -25,28 +25,29 @@ export class BasicSettings {
       label: 'Editor Theme',
       type: 'dropDown',
       dropDownOpen: false,
-      currentState: localStorage.getItem('themesArray') || '3024-night',
-      options: [
-        '3024-night',
-        'abcdef',
-        'ambiance',
-        'base16-dark',
-        'bespin',
-        'blackboard',
-        'cobalt',
-        'colorforth',
-        'dracula',
-        'erlang-dark',
-        'hopscotch',
-        'icecoder',
-        'isotope',
-        'lesser-dark',
-        'liquibyte',
-        'material',
-        'mbo',
-        'mdn-like',
-        'monokai',
-      ],
+      currentState: localStorage.getItem('themesArray') || 'light',
+      options: ['light', 'dark'],
+      // options: [
+      //   '3024-night',
+      //   'abcdef',
+      //   'ambiance',
+      //   'base16-dark',
+      //   'bespin',
+      //   'blackboard',
+      //   'cobalt',
+      //   'colorforth',
+      //   'dracula',
+      //   'erlang-dark',
+      //   'hopscotch',
+      //   'icecoder',
+      //   'isotope',
+      //   'lesser-dark',
+      //   'liquibyte',
+      //   'material',
+      //   'mbo',
+      //   'mdn-like',
+      //   'monokai',
+      // ],
     },
     isLineNumberEnabled: {
       label: 'Line Number',
@@ -130,7 +131,7 @@ export class BasicSettings {
             <h2 id="accordion-collapse-heading-1">
               <div class={this.accordianClasses.firstHeading} data-accordion-target="#accordion-collapse-body-1" aria-expanded="true" aria-controls="accordion-collapse-body-1">
                 <span>Dark Mode</span>
-                <toggle-button isSelected={this.darkMode} toggleButtonHandler={this.darkModeHandler}></toggle-button>
+                <toggle-button isDisabled={true} isSelected={this.darkMode} toggleButtonHandler={this.darkModeHandler}></toggle-button>
               </div>
             </h2>
 
@@ -167,13 +168,7 @@ export class BasicSettings {
                     </button>
                   </h2>
                   <div id="accordion-collapse-body-2" class={this.viewClasses[`${this.accordianState[accordian]['currentState']}`]} aria-labelledby="accordion-collapse-heading-1">
-                    <div
-                      class={
-                        index === Object.keys(this.accordianState).length && Object.keys(this.accordianState).length === 0
-                          ? this.accordianClasses.lastDiv
-                          : this.accordianClasses.midDiv
-                      }
-                    >
+                    <div class={index === Object.keys(this.accordianState).length - 1 ? this.accordianClasses.lastDiv : this.accordianClasses.midDiv}>
                       {this.accordianState[accordian]['name'] === 'Editor' &&
                         Object.keys(this.editorSettingsState).map(item => {
                           return (
@@ -186,10 +181,10 @@ export class BasicSettings {
                                       onClick={() => this.editorSettingsDropDownHandler(item)}
                                       id="dropdownDefaultButton"
                                       data-dropdown-toggle="dropdown"
-                                      class="w-full justify-between text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                      class="w-full justify-between text-md text-white bg-gray-600 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
                                       type="button"
                                     >
-                                      <div>{this.editorSettingsState[item].currentState || 'Themes'}</div>
+                                      <div class="overflow-hidden overflow-ellipsis">{this.editorSettingsState[item].currentState.toUpperCase() || 'Themes'}</div>
                                       {this.editorSettingsState[item]['dropDownOpen'] ? (
                                         <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -206,7 +201,7 @@ export class BasicSettings {
                                     </button>
                                     <div
                                       id="dropdown"
-                                      class={`z-50 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 ${
+                                      class={`z-50 max-h-80 overflow-auto custom-scrollbar bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 ${
                                         this.viewClasses[`${this.editorSettingsState[item]['dropDownOpen']}`]
                                       }`}
                                     >
@@ -216,9 +211,9 @@ export class BasicSettings {
                                             <li>
                                               <button
                                                 onClick={() => this.selectHandler(selectedOption, item)}
-                                                class="w-full block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                                class="w-full font-medium block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white overflow-hidden overflow-ellipsis"
                                               >
-                                                {selectedOption}
+                                                {selectedOption.toUpperCase()}
                                               </button>
                                             </li>
                                           );
@@ -240,6 +235,7 @@ export class BasicSettings {
                             </div>
                           );
                         })}
+                      {this.accordianState[accordian]['name'] === 'Others' && <div class="w-full font-semibold text-gray-400 text-center">Comming Soon !!! &#128521;</div>}
                     </div>
                   </div>
                 </div>

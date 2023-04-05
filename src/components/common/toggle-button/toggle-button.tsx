@@ -1,5 +1,9 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 
+const classesDisableHandling = {
+  true: 'opacity-95',
+  false: 'cursor-pointer',
+};
 @Component({
   tag: 'toggle-button',
   styleUrl: 'toggle-button.css',
@@ -8,13 +12,17 @@ import { Component, Host, h, Prop, State } from '@stencil/core';
 export class ToggleButton {
   @Prop() isSelected: boolean;
   @Prop() toggleButtonHandler: any;
+  @Prop() isDisabled: boolean = false;
   @State() buttonValue: string = '';
   @State() checkedValue = '';
+  clickHandler() {
+    if (this.isDisabled === false) this.toggleButtonHandler();
+  }
 
   render() {
     return (
       <Host class="mx-1">
-        <div onClick={() => this.toggleButtonHandler()} class="flex items-center justify-center w-full cursor-pointer">
+        <div onClick={() => this.clickHandler()} class={`flex items-center justify-center w-full ${classesDisableHandling[this.isDisabled.toString()]}`}>
           <div class="relative">
             <input type="checkbox" id="toggleB" class="sr-only" checked={this.isSelected} />
 
