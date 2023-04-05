@@ -85,7 +85,7 @@ export class UserDropDown {
         </h2>
         <backdrop-filter showBackDrop={this.showDropdown} backDropHandler={this.backDropHandler}></backdrop-filter>
         {/* List */}
-        <div class={this.showDropdown === true ? 'absolute bg-gray-100 z-10 w-28 text-sm list-none mt-2 rounded divide-y divide-gray-100 shadow ' : 'hidden'}>
+        <div class={this.showDropdown === true ? 'absolute right-0 bg-gray-100 z-10 w-28 text-sm list-none mt-2 rounded divide-y divide-gray-100 shadow ' : 'hidden'}>
           <ul class="py-1">
             {this.option?.map(item => (
               <li class="hover:bg-gray-300">
