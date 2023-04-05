@@ -204,10 +204,10 @@ export class PermissionEditor {
               <span class="pb-6 text-md font-bold leading-7 text-gray-600">Select Role : </span>
               <select
                 onChange={e => this.onRoleSelect(e)}
-                class="form-select px-3 py-1.5 border-none text-inherit font-inherit text-gray-700 bg-transparent bg-clip-padding bg-no-repeat rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                class="form-select px-3 py-1.5 border-none text-inherit font-inherit text-gray-700 bg-transparent bg-clip-padding bg-no-repeat rounded-md transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               >
                 {this.roles.map(item => (
-                  <option selected={this.selectedRole === item.id} value={`${item.id}`}>
+                  <option class="rounded-md hover:bg-gray-200 hover:text-gray-600" selected={this.selectedRole === item.id} value={`${item.id}`}>
                     {item.roleName}
                   </option>
                 ))}
