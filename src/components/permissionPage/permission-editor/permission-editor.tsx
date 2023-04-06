@@ -225,23 +225,25 @@ export class PermissionEditor {
             </div>
           )}
           <div class="flex justify-between gap-4">
-            <div class="flex">
-              <button
-                title="Ctrl+Shift+Enter to run"
-                onClick={() => this.onRoleUpdateClick()}
+            <div class="flex gap-4">
+              <icon-label-submit-button
+                title="Update Role"
+                clickHandler={() => this.onRoleUpdateClick()}
                 disabled={this.syncVal === '' || !hasAccess(this.parsedPermissions, { name: 'permissions', permission: 'update' }) || this.isLoading}
-                class="mr-1 rounded-md flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 disabled:opacity-75 disabled:text-gray-300 disabled:cursor-default"
+                loading={this.isLoading}
+                color="primary"
               >
                 Update
-              </button>
-              <button
-                title="Delete current role"
-                onClick={() => this.onRoleDeleteHandler()}
+              </icon-label-submit-button>
+
+              <icon-label-submit-button
+                title="Delete Current Role"
+                clickHandler={() => this.onRoleDeleteHandler()}
                 disabled={this.syncVal === '' || !hasAccess(this.parsedPermissions, { name: 'permissions', permission: 'delete' }) || this.isLoading}
-                class="mr-1 rounded-md flex text-sm gap-2 items-center justify-between text-gray-600 border border-gray-300 px-3 py-2 disabled:opacity-75 disabled:text-gray-300 disabled:cursor-default"
+                color="primary"
               >
                 Delete
-              </button>
+              </icon-label-submit-button>
             </div>
             <div class="mx-4">{this.isLoading && <loader-component></loader-component>}</div>
           </div>
