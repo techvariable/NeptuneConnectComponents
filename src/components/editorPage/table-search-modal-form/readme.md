@@ -25,11 +25,13 @@
 ### Depends on
 
 - [radio-button-multiple](../../common/radio-button-multiple)
+- [icon-label-submit-button](../../common/buttons/icon-label-submit-button)
 
 ### Graph
 ```mermaid
 graph TD;
   table-search-modal-form --> radio-button-multiple
+  table-search-modal-form --> icon-label-submit-button
   editor-res --> table-search-modal-form
   style table-search-modal-form fill:#f9f,stroke:#333,stroke-width:4px
 ```

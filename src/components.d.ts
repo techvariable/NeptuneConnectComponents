@@ -229,6 +229,7 @@ export namespace Components {
     interface PaginationComponent {
         "jumpPageHandler": Function;
         "limit": number;
+        "loading": true | false;
         "nextHandler": Function;
         "offset": number;
         "prevHandler": Function;
@@ -938,6 +939,7 @@ declare namespace LocalJSX {
     interface PaginationComponent {
         "jumpPageHandler"?: Function;
         "limit"?: number;
+        "loading"?: true | false;
         "nextHandler"?: Function;
         "offset"?: number;
         "prevHandler"?: Function;

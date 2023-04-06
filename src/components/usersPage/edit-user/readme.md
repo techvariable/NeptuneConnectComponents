@@ -23,9 +23,14 @@
 
  - [user-drop-down](../user-drop-down)
 
+### Depends on
+
+- [icon-label-submit-button](../../common/buttons/icon-label-submit-button)
+
 ### Graph
 ```mermaid
 graph TD;
+  edit-user --> icon-label-submit-button
   user-drop-down --> edit-user
   style edit-user fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -231,6 +231,7 @@ export class PermissionEditor {
                 clickHandler={() => this.onRoleUpdateClick()}
                 disabled={this.syncVal === '' || !hasAccess(this.parsedPermissions, { name: 'permissions', permission: 'update' }) || this.isLoading}
                 loading={this.isLoading}
+                varient="outlined"
                 color="primary"
               >
                 Update
@@ -240,6 +241,7 @@ export class PermissionEditor {
                 title="Delete Current Role"
                 clickHandler={() => this.onRoleDeleteHandler()}
                 disabled={this.syncVal === '' || !hasAccess(this.parsedPermissions, { name: 'permissions', permission: 'delete' }) || this.isLoading}
+                varient="outlined"
                 color="primary"
               >
                 Delete

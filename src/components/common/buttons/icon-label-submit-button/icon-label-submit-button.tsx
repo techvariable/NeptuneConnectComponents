@@ -32,15 +32,15 @@ export class IconLabelSubmitButton {
 
   containedClass = `flex border border-transparent ${this.sizeClasses[this.size]}  text-white bg-${this.colorClasses[this.color]}-600 hover:bg-${
     this.colorClasses[this.color]
-  }-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${this.colorClasses[this.color]}-500 justify-center py-2 capitalize w-${this.width} ${
+  }-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${this.colorClasses[this.color]}-500 justify-center  capitalize w-${this.width} ${
     this.customClass
   } cursor-pointer disabled:cursor-default disabled:text-white disabled:bg-gray-300 `;
 
-  textClass = `flex justify-center border border-transparent ${this.sizeClasses[this.size]}  text-${this.colorClasses[this.color]}-600 px-4 py-2 focus:outline-none  capitalize w-${
+  textClass = `flex justify-center border border-transparent ${this.sizeClasses[this.size]}  text-${this.colorClasses[this.color]}-600 focus:outline-none  capitalize w-${
     this.width
   } ${this.customClass} hover:text-${this.colorClasses[this.color]}-900 cursor-pointer disabled:cursor-default disabled:text-gray-400`;
 
-  outlinedClass = `inline-flex justify-center  ${this.sizeClasses[this.size]} border border-${this.colorClasses[this.color]}-500 shadow-sm px-4 py-2 bg-white text-${
+  outlinedClass = `flex justify-center  ${this.sizeClasses[this.size]} border border-${this.colorClasses[this.color]}-500 shadow-sm bg-white text-${
     this.colorClasses[this.color]
   }-700 hover:bg-${this.colorClasses[this.color]}-50  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${this.colorClasses[this.color]}-500 w-${
     this.width

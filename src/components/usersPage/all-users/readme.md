@@ -32,6 +32,7 @@ graph TD;
   users-component --> user-drop-down
   user-drop-down --> backdrop-filter
   user-drop-down --> edit-user
+  edit-user --> icon-label-submit-button
   style all-users fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

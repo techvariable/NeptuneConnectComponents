@@ -30,6 +30,7 @@ graph TD;
   menu-drop-down --> backdrop-filter
   code-editor --> tabs-component
   code-editor --> insert-node-modal
+  code-editor --> icon-label-submit-button
   code-editor --> loader-component
   insert-node-modal --> custom-drop-down
   insert-node-modal --> basic-dropdown
@@ -38,12 +39,14 @@ graph TD;
   tab-component --> editor-res
   tab-component --> editor-json-response-viewer
   download-result-modal --> radio-button-multiple
+  download-result-modal --> icon-label-submit-button
   editor-res --> edit-table-modal
   editor-res --> chips-list
   editor-res --> table-search-modal-form
   editor-res --> data-table
   edit-table-modal --> tabs-component
   table-search-modal-form --> radio-button-multiple
+  table-search-modal-form --> icon-label-submit-button
   data-table --> plain-button
   style editor-page fill:#f9f,stroke:#333,stroke-width:4px
 ```
