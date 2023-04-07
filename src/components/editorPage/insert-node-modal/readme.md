@@ -20,12 +20,14 @@
 
 ### Depends on
 
+- [icon-button-basic](../../common/buttons/icon-button-basic)
 - [custom-drop-down](../../common/custom-drop-down)
 - [basic-dropdown](../../common/basic-dropdown)
 
 ### Graph
 ```mermaid
 graph TD;
+  insert-node-modal --> icon-button-basic
   insert-node-modal --> custom-drop-down
   insert-node-modal --> basic-dropdown
   code-editor --> insert-node-modal

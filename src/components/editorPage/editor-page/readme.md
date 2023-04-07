@@ -16,6 +16,7 @@
 
 ### Depends on
 
+- [icon-button-basic](../../common/buttons/icon-button-basic)
 - [node-item](../node-item)
 - [code-editor](../code-editor)
 - [tab-component](../tab-component)
@@ -23,6 +24,7 @@
 ### Graph
 ```mermaid
 graph TD;
+  editor-page --> icon-button-basic
   editor-page --> node-item
   editor-page --> code-editor
   editor-page --> tab-component
@@ -30,14 +32,17 @@ graph TD;
   menu-drop-down --> backdrop-filter
   code-editor --> tabs-component
   code-editor --> insert-node-modal
+  code-editor --> icon-button-basic
   code-editor --> icon-label-submit-button
   code-editor --> loader-component
+  insert-node-modal --> icon-button-basic
   insert-node-modal --> custom-drop-down
   insert-node-modal --> basic-dropdown
   tab-component --> toggle-button
   tab-component --> download-result-modal
   tab-component --> editor-res
   tab-component --> editor-json-response-viewer
+  download-result-modal --> icon-button-basic
   download-result-modal --> radio-button-multiple
   download-result-modal --> icon-label-submit-button
   editor-res --> edit-table-modal

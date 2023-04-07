@@ -117,9 +117,12 @@ export class CodeEditor {
           <div class="flex w-28 justify-between">
             <insert-node-modal fetchNavigators={() => this.fetchNavigators()} class="pt-3"></insert-node-modal>
 
-            <button
-              class={`hover:animate-pulse hover:text-blue-700 ${this.btnClassType[`${this.refreshLoading}`]}`}
+            <icon-button-basic
+              customClass="mt-3"
               title="Refresh Query"
+              color="secondary"
+              size="md"
+              loading={this.refreshLoading}
               onClick={async () => {
                 this.refreshLoading = true;
                 if (state.isCustomQuery) {
@@ -129,15 +132,16 @@ export class CodeEditor {
                 }
                 this.refreshLoading = false;
               }}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
-                />
-              </svg>
-            </button>
+              icon={
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                  />
+                </svg>
+              }
+            />
           </div>
         </div>
         {/* <tabs-component activeIndex={this.activeIndex} tabslist={TAB_LIST} tabClickHandler={this.tabClickHandler}></tabs-component> */}

@@ -177,11 +177,18 @@ export class DownloadResultModal {
     return (
       <Host>
         {/* Modal Button */}
-        <button class="hover:animate-pulse hover:text-blue-700" title="Export" onClick={() => this.toggleModalState()}>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-          </svg>
-        </button>
+        <icon-button-basic
+          title="Download Results"
+          color="secondary"
+          customClass="pb-2"
+          size="md"
+          clickHandler={() => this.toggleModalState()}
+          icon={
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+          }
+        />
 
         {/* Main Modal */}
         {this.isModalOpen && (

@@ -34,6 +34,7 @@
  - [edit-user](../../../usersPage/edit-user)
  - [permission-editor](../../../permissionPage/permission-editor)
  - [profile-component](../../../profilePage/profile-component)
+ - [side-bar](../../../settingsPage/side-bar)
  - [table-search-modal-form](../../../editorPage/table-search-modal-form)
 
 ### Graph
@@ -46,6 +47,7 @@ graph TD;
   edit-user --> icon-label-submit-button
   permission-editor --> icon-label-submit-button
   profile-component --> icon-label-submit-button
+  side-bar --> icon-label-submit-button
   table-search-modal-form --> icon-label-submit-button
   style icon-label-submit-button fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -120,7 +120,7 @@ export class EditUser {
                 <div class="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                   <div class="bg-white px-4 pt-2 pb-4 sm:p-6 sm:pb-4">
                     <div class="sm:flex sm:items-start">
-                      <div class="mx-auto pt-3 flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-sky-100 sm:mx-0 sm:h-10 sm:w-10">
+                      <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-sky-100 sm:mx-0 sm:h-10 sm:w-10">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
@@ -147,7 +147,7 @@ export class EditUser {
                         <div class="w-full">
                           <p class="z-10 text-md text-gray-500 mb-4">Select permissions</p>
                           <label class="block text-left">
-                            <select name="role" class="form-multiselect block w-full mt-1 border rounded-md custom-scrollbar " multiple>
+                            <select name="role" class="form-multiselect block w-full mt-1 border rounded-md " multiple>
                               {this.rolesobj.map((role: any) => (
                                 <option class="px-6 py-1 hover:bg-gray-200 cursor-pointer" selected={role.selected} value={role.id}>
                                   {role.value}

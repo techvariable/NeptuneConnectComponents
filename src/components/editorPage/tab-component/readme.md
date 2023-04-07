@@ -25,6 +25,7 @@ graph TD;
   tab-component --> download-result-modal
   tab-component --> editor-res
   tab-component --> editor-json-response-viewer
+  download-result-modal --> icon-button-basic
   download-result-modal --> radio-button-multiple
   download-result-modal --> icon-label-submit-button
   editor-res --> edit-table-modal
