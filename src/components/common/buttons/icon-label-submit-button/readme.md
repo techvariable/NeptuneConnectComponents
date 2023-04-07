@@ -31,6 +31,7 @@
  - [code-editor](../../../editorPage/code-editor)
  - [dialog-component](../../../usersPage/dialog-component)
  - [download-result-modal](../../../editorPage/download-result-modal)
+ - [edit-table-modal](../../../editorPage/edit-table-modal)
  - [edit-user](../../../usersPage/edit-user)
  - [permission-editor](../../../permissionPage/permission-editor)
  - [profile-component](../../../profilePage/profile-component)
@@ -44,6 +45,7 @@ graph TD;
   code-editor --> icon-label-submit-button
   dialog-component --> icon-label-submit-button
   download-result-modal --> icon-label-submit-button
+  edit-table-modal --> icon-label-submit-button
   edit-user --> icon-label-submit-button
   permission-editor --> icon-label-submit-button
   profile-component --> icon-label-submit-button

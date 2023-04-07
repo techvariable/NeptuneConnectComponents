@@ -21,8 +21,8 @@ export class IconLabelSubmitButton {
 
   colorClasses = {
     primary: 'gray',
-    secondary: 'indigo',
-    tertiary: 'blue',
+    secondary: 'sky',
+    tertiary: 'indigo',
   };
   sizeClasses = {
     sm: 'py-2 px-4 text-sm font-medium rounded-md',
