@@ -187,7 +187,6 @@ export class CodeEditor {
                   </svg>
                 }
                 customClass="mt-2"
-                color="secondary"
                 loading={state.isLoading}
               >
                 Format
