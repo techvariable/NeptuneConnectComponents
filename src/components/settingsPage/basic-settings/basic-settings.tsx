@@ -14,10 +14,6 @@ export class BasicSettings {
       name: 'Editor',
       currentState: false,
     },
-    isOtherAccordianOpen: {
-      name: 'Others',
-      currentState: false,
-    },
   };
 
   @State() editorSettingsState: Object = {
@@ -27,27 +23,6 @@ export class BasicSettings {
       dropDownOpen: false,
       currentState: localStorage.getItem('themesArray') || 'light',
       options: ['light', 'dark'],
-      // options: [
-      //   '3024-night',
-      //   'abcdef',
-      //   'ambiance',
-      //   'base16-dark',
-      //   'bespin',
-      //   'blackboard',
-      //   'cobalt',
-      //   'colorforth',
-      //   'dracula',
-      //   'erlang-dark',
-      //   'hopscotch',
-      //   'icecoder',
-      //   'isotope',
-      //   'lesser-dark',
-      //   'liquibyte',
-      //   'material',
-      //   'mbo',
-      //   'mdn-like',
-      //   'monokai',
-      // ],
     },
     isLineNumberEnabled: {
       label: 'Line Number',
@@ -120,7 +95,7 @@ export class BasicSettings {
     lastHeading:
       'flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800',
     midDiv: 'p-5 pb-0 pl-8 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900 divide-y',
-    lastDiv: 'p-5 border border-t-0 border-gray-200 dark:border-gray-700',
+    lastDiv: 'p-5 border border-t-0 border-gray-200 dark:border-gray-700 divide-y divide-gray-100',
   };
 
   render() {
@@ -235,7 +210,6 @@ export class BasicSettings {
                             </div>
                           );
                         })}
-                      {this.accordianState[accordian]['name'] === 'Others' && <div class="w-full font-semibold text-gray-400 text-center">Comming Soon !!! &#128521;</div>}
                     </div>
                   </div>
                 </div>

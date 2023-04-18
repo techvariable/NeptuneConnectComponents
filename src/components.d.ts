@@ -140,6 +140,32 @@ export namespace Components {
         "iconPosition": 'right' | 'left';
         "type": 'outlined' | 'contained';
     }
+    interface IconButtonBasic {
+        "clickHandler": any;
+        "color": 'primary' | 'secondary' | 'tertiary';
+        "customClass": string;
+        "disabled": boolean;
+        "icon": any;
+        "loading": boolean;
+        "size": 'lg' | 'md' | 'sm';
+        "title": string | null;
+        "type": 'button' | 'submit';
+        "width": 'full' | 'auto';
+    }
+    interface IconLabelSubmitButton {
+        "clickHandler": any;
+        "color": 'primary' | 'secondary' | 'tertiary';
+        "customClass": string;
+        "disabled": boolean;
+        "endIcon": any;
+        "loading": boolean;
+        "size": 'lg' | 'md' | 'sm';
+        "startIcon": any;
+        "title": string | null;
+        "type": 'button' | 'submit';
+        "varient": 'contained' | 'outlined' | 'text';
+        "width": 'full' | 'auto';
+    }
     interface InsertNodeModal {
         "fetchNavigators": Function;
     }
@@ -215,6 +241,7 @@ export namespace Components {
     interface PaginationComponent {
         "jumpPageHandler": Function;
         "limit": number;
+        "loading": true | false;
         "nextHandler": Function;
         "offset": number;
         "prevHandler": Function;
@@ -438,6 +465,18 @@ declare global {
         prototype: HTMLIconButtonElement;
         new (): HTMLIconButtonElement;
     };
+    interface HTMLIconButtonBasicElement extends Components.IconButtonBasic, HTMLStencilElement {
+    }
+    var HTMLIconButtonBasicElement: {
+        prototype: HTMLIconButtonBasicElement;
+        new (): HTMLIconButtonBasicElement;
+    };
+    interface HTMLIconLabelSubmitButtonElement extends Components.IconLabelSubmitButton, HTMLStencilElement {
+    }
+    var HTMLIconLabelSubmitButtonElement: {
+        prototype: HTMLIconLabelSubmitButtonElement;
+        new (): HTMLIconLabelSubmitButtonElement;
+    };
     interface HTMLInsertNodeModalElement extends Components.InsertNodeModal, HTMLStencilElement {
     }
     var HTMLInsertNodeModalElement: {
@@ -658,6 +697,8 @@ declare global {
         "editor-res": HTMLEditorResElement;
         "fluid-container": HTMLFluidContainerElement;
         "icon-button": HTMLIconButtonElement;
+        "icon-button-basic": HTMLIconButtonBasicElement;
+        "icon-label-submit-button": HTMLIconLabelSubmitButtonElement;
         "insert-node-modal": HTMLInsertNodeModalElement;
         "invite-component": HTMLInviteComponentElement;
         "json-response-viewer": HTMLJsonResponseViewerElement;
@@ -828,6 +869,32 @@ declare namespace LocalJSX {
         "iconPosition"?: 'right' | 'left';
         "type"?: 'outlined' | 'contained';
     }
+    interface IconButtonBasic {
+        "clickHandler"?: any;
+        "color"?: 'primary' | 'secondary' | 'tertiary';
+        "customClass"?: string;
+        "disabled"?: boolean;
+        "icon"?: any;
+        "loading"?: boolean;
+        "size"?: 'lg' | 'md' | 'sm';
+        "title"?: string | null;
+        "type"?: 'button' | 'submit';
+        "width"?: 'full' | 'auto';
+    }
+    interface IconLabelSubmitButton {
+        "clickHandler"?: any;
+        "color"?: 'primary' | 'secondary' | 'tertiary';
+        "customClass"?: string;
+        "disabled"?: boolean;
+        "endIcon"?: any;
+        "loading"?: boolean;
+        "size"?: 'lg' | 'md' | 'sm';
+        "startIcon"?: any;
+        "title"?: string | null;
+        "type"?: 'button' | 'submit';
+        "varient"?: 'contained' | 'outlined' | 'text';
+        "width"?: 'full' | 'auto';
+    }
     interface InsertNodeModal {
         "fetchNavigators"?: Function;
     }
@@ -903,6 +970,7 @@ declare namespace LocalJSX {
     interface PaginationComponent {
         "jumpPageHandler"?: Function;
         "limit"?: number;
+        "loading"?: true | false;
         "nextHandler"?: Function;
         "offset"?: number;
         "prevHandler"?: Function;
@@ -1020,6 +1088,8 @@ declare namespace LocalJSX {
         "editor-res": EditorRes;
         "fluid-container": FluidContainer;
         "icon-button": IconButton;
+        "icon-button-basic": IconButtonBasic;
+        "icon-label-submit-button": IconLabelSubmitButton;
         "insert-node-modal": InsertNodeModal;
         "invite-component": InviteComponent;
         "json-response-viewer": JsonResponseViewer;
@@ -1080,6 +1150,8 @@ declare module "@stencil/core" {
             "editor-res": LocalJSX.EditorRes & JSXBase.HTMLAttributes<HTMLEditorResElement>;
             "fluid-container": LocalJSX.FluidContainer & JSXBase.HTMLAttributes<HTMLFluidContainerElement>;
             "icon-button": LocalJSX.IconButton & JSXBase.HTMLAttributes<HTMLIconButtonElement>;
+            "icon-button-basic": LocalJSX.IconButtonBasic & JSXBase.HTMLAttributes<HTMLIconButtonBasicElement>;
+            "icon-label-submit-button": LocalJSX.IconLabelSubmitButton & JSXBase.HTMLAttributes<HTMLIconLabelSubmitButtonElement>;
             "insert-node-modal": LocalJSX.InsertNodeModal & JSXBase.HTMLAttributes<HTMLInsertNodeModalElement>;
             "invite-component": LocalJSX.InviteComponent & JSXBase.HTMLAttributes<HTMLInviteComponentElement>;
             "json-response-viewer": LocalJSX.JsonResponseViewer & JSXBase.HTMLAttributes<HTMLJsonResponseViewerElement>;

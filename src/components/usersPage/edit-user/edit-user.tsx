@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, State } from '@stencil/core';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
@@ -20,36 +20,42 @@ export class EditUser {
   @Prop() allPermissions: any;
   @State() rolesobj: {}[] = [];
   @State() email: string = '';
-  @Watch('allPermissions')
-  validateName(newValue: string, oldValue: string) {
-    if (newValue !== oldValue) {
-      this.email = this.value;
-      for (let role of this.allPermissions) {
-        let obj = {};
-        obj['value'] = role.roleName;
-        obj['id'] = role.id;
-        obj['label'] = role.roleName;
-        obj['selected'] = false;
-        obj['disabled'] = false;
-        this.rolesobj.push(obj);
-      }
+  @State() loading = false;
 
-      axios
-        .get(`${this.url}/users/roles?userId=${this.userid}`)
-        .then((res: any) => {
-          for (let role of this.rolesobj) {
-            if (res.data.includes(role['id'])) {
-              role['selected'] = true;
-            } else {
-              role['selected'] = false;
-            }
-          }
-        })
-        .catch(err => console.log(err));
+  componentWillLoad() {
+    console.log('Triggered First', this.allPermissions);
+    this.email = this.value;
+    for (let role of this.allPermissions) {
+      let obj = {
+        value: role.roleName,
+        id: role.id,
+        label: role.roleName,
+        selected: false,
+        disabled: false,
+      };
+      const rolesTemp = [...this.rolesobj];
+      rolesTemp.push(obj);
+      this.rolesobj = rolesTemp;
     }
+
+    axios
+      .get(`${this.url}/users/roles?userId=${this.userid}`)
+      .then((res: any) => {
+        for (let role of this.rolesobj) {
+          if (res.data.includes(role['id'])) {
+            role['selected'] = true;
+          } else {
+            role['selected'] = false;
+          }
+        }
+
+        this.rolesobj = [...this.rolesobj];
+      })
+      .catch(err => console.log(err));
   }
 
   async handleSubmit(e) {
+    this.loading = true;
     e.preventDefault();
 
     let selectedRoles = [];
@@ -64,6 +70,7 @@ export class EditUser {
         userId: this.userid,
         roles: selectedRoles,
       });
+      this.loading = false;
       Swal.fire({
         position: 'center',
         icon: 'success',
@@ -81,6 +88,7 @@ export class EditUser {
       this.value = '';
       this.toggle();
     } catch (error) {
+      this.loading = false;
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -112,7 +120,7 @@ export class EditUser {
                 <div class="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                   <div class="bg-white px-4 pt-2 pb-4 sm:p-6 sm:pb-4">
                     <div class="sm:flex sm:items-start">
-                      <div class="mx-auto pt-3 flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-sky-100 sm:mx-0 sm:h-10 sm:w-10">
+                      <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-sky-100 sm:mx-0 sm:h-10 sm:w-10">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
@@ -139,7 +147,7 @@ export class EditUser {
                         <div class="w-full">
                           <p class="z-10 text-md text-gray-500 mb-4">Select permissions</p>
                           <label class="block text-left">
-                            <select name="role" class="form-multiselect block w-full mt-1 border rounded-md custom-scrollbar " multiple>
+                            <select name="role" class="form-multiselect block w-full mt-1 border rounded-md " multiple>
                               {this.rolesobj.map((role: any) => (
                                 <option class="px-6 py-1 hover:bg-gray-200 cursor-pointer" selected={role.selected} value={role.id}>
                                   {role.value}
@@ -153,22 +161,13 @@ export class EditUser {
                   </div>
                   <div>
                     {/* <div class="w-full md:w-1/2 flex flex-col items-center h-64 mx-auto"></div> */}
-                    <div class="bg-gray-50 pb-4 sm:px-6 sm:flex sm:flex-row-reverse">
-                      <button
-                        type="submit"
-                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-600 text-base font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:ml-3 sm:w-auto sm:text-sm"
-                      >
+                    <div class="bg-gray-50 pb-4 sm:px-6 sm:flex sm:flex-row-reverse gap-4">
+                      <icon-label-submit-button type="submit" color="secondary" loading={this.loading}>
                         Update
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          this.toggle();
-                        }}
-                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                      >
+                      </icon-label-submit-button>
+                      <icon-label-submit-button clickHandler={() => this.toggle()} varient="outlined">
                         Cancel
-                      </button>
+                      </icon-label-submit-button>
                     </div>
                   </div>
                 </div>

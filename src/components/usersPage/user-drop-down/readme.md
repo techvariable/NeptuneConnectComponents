@@ -33,6 +33,7 @@
 graph TD;
   user-drop-down --> backdrop-filter
   user-drop-down --> edit-user
+  edit-user --> icon-label-submit-button
   users-component --> user-drop-down
   style user-drop-down fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -24,6 +24,8 @@
 
 - [tabs-component](../tabs-component)
 - [insert-node-modal](../insert-node-modal)
+- [icon-button-basic](../../common/buttons/icon-button-basic)
+- [icon-label-submit-button](../../common/buttons/icon-label-submit-button)
 - [loader-component](../../common/loader-component)
 
 ### Graph
@@ -31,7 +33,10 @@
 graph TD;
   code-editor --> tabs-component
   code-editor --> insert-node-modal
+  code-editor --> icon-button-basic
+  code-editor --> icon-label-submit-button
   code-editor --> loader-component
+  insert-node-modal --> icon-button-basic
   insert-node-modal --> custom-drop-down
   insert-node-modal --> basic-dropdown
   editor-page --> code-editor

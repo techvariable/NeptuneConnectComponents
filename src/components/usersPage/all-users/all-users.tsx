@@ -18,6 +18,7 @@ export class AllUsers {
   @State() updatedUsers: any;
   @State() limit: number = 50;
   @State() offset: number = 0;
+  @State() loading = false;
 
   refresh = () => {
     window.location.assign(`/users?offset=${this.offset}&limit=${this.limit}`);
@@ -39,16 +40,22 @@ export class AllUsers {
 
   // pagination functions
   nextHandler = () => {
+    this.loading = true;
     if (this.offset + this.limit < this.count) this.offset = this.offset + this.limit;
     this.refresh();
+    this.loading = false;
   };
   prevHandler = () => {
+    this.loading = true;
     if (this.offset - this.limit >= 0) this.offset = this.offset - this.limit;
     this.refresh();
+    this.loading = false;
   };
   jumpPageHandler = pageNumber => {
+    this.loading = true;
     this.offset = pageNumber * this.limit - this.limit;
     this.refresh();
+    this.loading = false;
   };
 
   render() {
@@ -79,6 +86,7 @@ export class AllUsers {
             prevHandler={this.prevHandler}
             jumpPageHandler={this.jumpPageHandler}
             class="mt-2"
+            loading={this.loading}
           ></pagination-component>
         </div>
       </Host>

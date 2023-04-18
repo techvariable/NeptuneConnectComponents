@@ -82,27 +82,16 @@ ${this.parameters}`);
                     {this.editModalTabActiveIndex === 1 && <pre class="overflow-auto my-2">{this.parameters}</pre>}
                   </div>
 
-                  <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button
-                      type="submit"
-                      class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-600 text-base font-medium text-white disabled:bg-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                    >
+                  <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-4">
+                    <icon-label-submit-button title="Confirm Generated Query" type="submit" color="secondary">
                       Confirm Query
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => this.copyToClipboard()}
-                      class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-500 text-base font-medium text-white disabled:bg-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                    >
+                    </icon-label-submit-button>
+                    <icon-label-submit-button title="Copy Generated Query" clickHandler={() => this.copyToClipboard()}>
                       Copy Query
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => this.cancelEdit()}
-                      class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                    >
+                    </icon-label-submit-button>
+                    <icon-label-submit-button title="Cancel" varient="outlined" clickHandler={() => this.cancelEdit()}>
                       Cancel
-                    </button>
+                    </icon-label-submit-button>
                   </div>
                 </div>
               </div>

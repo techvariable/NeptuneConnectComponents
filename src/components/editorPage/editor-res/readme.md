@@ -26,7 +26,9 @@ graph TD;
   editor-res --> table-search-modal-form
   editor-res --> data-table
   edit-table-modal --> tabs-component
+  edit-table-modal --> icon-label-submit-button
   table-search-modal-form --> radio-button-multiple
+  table-search-modal-form --> icon-label-submit-button
   data-table --> plain-button
   tab-component --> editor-res
   style editor-res fill:#f9f,stroke:#333,stroke-width:4px

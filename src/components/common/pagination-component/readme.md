@@ -11,6 +11,7 @@
 | ----------------- | ------------ | ----------- | ---------- | ----------- |
 | `jumpPageHandler` | --           |             | `Function` | `undefined` |
 | `limit`           | `limit`      |             | `number`   | `undefined` |
+| `loading`         | `loading`    |             | `boolean`  | `undefined` |
 | `nextHandler`     | --           |             | `Function` | `undefined` |
 | `offset`          | `offset`     |             | `number`   | `undefined` |
 | `prevHandler`     | --           |             | `Function` | `undefined` |

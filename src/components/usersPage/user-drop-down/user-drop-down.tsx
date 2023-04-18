@@ -90,7 +90,7 @@ export class UserDropDown {
             {this.option?.map(item => (
               <li class="hover:bg-gray-300">
                 <button
-                  class="disabled-custom"
+                  class="disabled-custom w-full"
                   onClick={e => {
                     e.stopPropagation();
                     this.clickHandler(Object.keys(item)[0]);
@@ -105,14 +105,16 @@ export class UserDropDown {
             ))}
           </ul>
         </div>
-        <edit-user
-          url={this.url}
-          userid={this.userId}
-          ismodelopen={this.ismodelopen}
-          value={this.email}
-          toggle={() => (this.ismodelopen = !this.ismodelopen)}
-          allPermissions={this.allPermissions}
-        ></edit-user>
+        {this.ismodelopen && (
+          <edit-user
+            url={this.url}
+            userid={this.userId}
+            ismodelopen={this.ismodelopen}
+            value={this.email}
+            toggle={() => (this.ismodelopen = !this.ismodelopen)}
+            allPermissions={this.allPermissions}
+          ></edit-user>
+        )}
       </div>
     );
   }

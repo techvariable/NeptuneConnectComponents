@@ -117,9 +117,12 @@ export class CodeEditor {
           <div class="flex w-28 justify-between">
             <insert-node-modal fetchNavigators={() => this.fetchNavigators()} class="pt-3"></insert-node-modal>
 
-            <button
-              class={`hover:animate-pulse hover:text-blue-700 ${this.btnClassType[`${this.refreshLoading}`]}`}
+            <icon-button-basic
+              customClass="mt-3"
               title="Refresh Query"
+              color="secondary"
+              size="md"
+              loading={this.refreshLoading}
               onClick={async () => {
                 this.refreshLoading = true;
                 if (state.isCustomQuery) {
@@ -129,15 +132,16 @@ export class CodeEditor {
                 }
                 this.refreshLoading = false;
               }}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
-                />
-              </svg>
-            </button>
+              icon={
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                  />
+                </svg>
+              }
+            />
           </div>
         </div>
         {/* <tabs-component activeIndex={this.activeIndex} tabslist={TAB_LIST} tabClickHandler={this.tabClickHandler}></tabs-component> */}
@@ -154,32 +158,39 @@ export class CodeEditor {
           {state.isError ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full mt-4 mb-6">{state.errorMessage || 'Something went wrong!!!'}</p> : null}
           <div class="flex justify-between">
             <div class="flex gap-4">
-              <button
+              <icon-label-submit-button
                 title="Ctrl+Shift+Enter to run"
                 disabled={!state.editorTextFlag}
-                onClick={() => this.onClickRun()}
-                class="w-24 rounded-md flex text-sm gap-2 items-center justify-center text-gray-600 border border-gray-300 px-3 mt-2 py-2 hover:bg-gray-200 disabled:text-gray-300 disabled:cursor-default disabled:hover:text-gray-200"
+                clickHandler={() => this.onClickRun()}
+                startIcon={
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                  </svg>
+                }
+                customClass="mt-2"
+                color="secondary"
+                loading={state.isLoading}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
-                </svg>
                 Run
-              </button>
-
-              <button
+              </icon-label-submit-button>
+              <icon-label-submit-button
+                title="Format the query"
                 disabled={!state.editorTextFlag}
-                onClick={() => this.formatter()}
-                class="flex w-24 rounded-md text-sm gap-2 items-center justify-center text-gray-600 border border-gray-300 px-3 mt-2 py-2 hover:bg-gray-200 disabled:text-gray-300 disabled:cursor-default disabled:hover:text-gray-200"
+                clickHandler={() => this.formatter()}
+                startIcon={
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"
+                    />
+                  </svg>
+                }
+                customClass="mt-2"
+                loading={state.isLoading}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"
-                  />
-                </svg>
                 Format
-              </button>
+              </icon-label-submit-button>
             </div>
 
             <div>
