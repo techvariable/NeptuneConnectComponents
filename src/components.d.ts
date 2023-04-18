@@ -310,6 +310,14 @@ export namespace Components {
         "updatedUsers": any;
         "url": string;
     }
+    interface VisualizeDataComponent {
+    }
+    interface VisualizeDataDagreComponent {
+    }
+    interface VisualizePage {
+    }
+    interface ZoomController {
+    }
 }
 declare global {
     interface HTMLAddRoleElement extends Components.AddRole, HTMLStencilElement {
@@ -636,6 +644,30 @@ declare global {
         prototype: HTMLUsersComponentElement;
         new (): HTMLUsersComponentElement;
     };
+    interface HTMLVisualizeDataComponentElement extends Components.VisualizeDataComponent, HTMLStencilElement {
+    }
+    var HTMLVisualizeDataComponentElement: {
+        prototype: HTMLVisualizeDataComponentElement;
+        new (): HTMLVisualizeDataComponentElement;
+    };
+    interface HTMLVisualizeDataDagreComponentElement extends Components.VisualizeDataDagreComponent, HTMLStencilElement {
+    }
+    var HTMLVisualizeDataDagreComponentElement: {
+        prototype: HTMLVisualizeDataDagreComponentElement;
+        new (): HTMLVisualizeDataDagreComponentElement;
+    };
+    interface HTMLVisualizePageElement extends Components.VisualizePage, HTMLStencilElement {
+    }
+    var HTMLVisualizePageElement: {
+        prototype: HTMLVisualizePageElement;
+        new (): HTMLVisualizePageElement;
+    };
+    interface HTMLZoomControllerElement extends Components.ZoomController, HTMLStencilElement {
+    }
+    var HTMLZoomControllerElement: {
+        prototype: HTMLZoomControllerElement;
+        new (): HTMLZoomControllerElement;
+    };
     interface HTMLElementTagNameMap {
         "add-role": HTMLAddRoleElement;
         "all-users": HTMLAllUsersElement;
@@ -691,6 +723,10 @@ declare global {
         "user-details-component": HTMLUserDetailsComponentElement;
         "user-drop-down": HTMLUserDropDownElement;
         "users-component": HTMLUsersComponentElement;
+        "visualize-data-component": HTMLVisualizeDataComponentElement;
+        "visualize-data-dagre-component": HTMLVisualizeDataDagreComponentElement;
+        "visualize-page": HTMLVisualizePageElement;
+        "zoom-controller": HTMLZoomControllerElement;
     }
 }
 declare namespace LocalJSX {
@@ -998,6 +1034,14 @@ declare namespace LocalJSX {
         "updatedUsers"?: any;
         "url"?: string;
     }
+    interface VisualizeDataComponent {
+    }
+    interface VisualizeDataDagreComponent {
+    }
+    interface VisualizePage {
+    }
+    interface ZoomController {
+    }
     interface IntrinsicElements {
         "add-role": AddRole;
         "all-users": AllUsers;
@@ -1053,6 +1097,10 @@ declare namespace LocalJSX {
         "user-details-component": UserDetailsComponent;
         "user-drop-down": UserDropDown;
         "users-component": UsersComponent;
+        "visualize-data-component": VisualizeDataComponent;
+        "visualize-data-dagre-component": VisualizeDataDagreComponent;
+        "visualize-page": VisualizePage;
+        "zoom-controller": ZoomController;
     }
 }
 export { LocalJSX as JSX };
@@ -1113,6 +1161,10 @@ declare module "@stencil/core" {
             "user-details-component": LocalJSX.UserDetailsComponent & JSXBase.HTMLAttributes<HTMLUserDetailsComponentElement>;
             "user-drop-down": LocalJSX.UserDropDown & JSXBase.HTMLAttributes<HTMLUserDropDownElement>;
             "users-component": LocalJSX.UsersComponent & JSXBase.HTMLAttributes<HTMLUsersComponentElement>;
+            "visualize-data-component": LocalJSX.VisualizeDataComponent & JSXBase.HTMLAttributes<HTMLVisualizeDataComponentElement>;
+            "visualize-data-dagre-component": LocalJSX.VisualizeDataDagreComponent & JSXBase.HTMLAttributes<HTMLVisualizeDataDagreComponentElement>;
+            "visualize-page": LocalJSX.VisualizePage & JSXBase.HTMLAttributes<HTMLVisualizePageElement>;
+            "zoom-controller": LocalJSX.ZoomController & JSXBase.HTMLAttributes<HTMLZoomControllerElement>;
         }
     }
 }

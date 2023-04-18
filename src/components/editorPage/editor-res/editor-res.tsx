@@ -173,8 +173,8 @@ export class EditorRes {
             }}
             onDelete={async (_, row) => {
               state.deleteId = Number(row.id);
-              state.queryMode = "delete";
-              this.toggleModalState()
+              state.queryMode = 'delete';
+              this.toggleModalState();
             }}
             customStyle={{ maxHeight: '25rem' }}
           />
