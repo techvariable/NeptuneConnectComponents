@@ -1,4 +1,4 @@
-import { Component, Host, h, State, Prop } from '@stencil/core';
+import { Component, Host, h, State, Prop, Watch } from '@stencil/core';
 import formatter from 'format-number';
 
 const sort = (
@@ -57,6 +57,7 @@ export class DataTable {
   @State() isEditingIndex: number = -1;
   @State() editingState: { [rowColumnId: string]: { prevValue: TField; newValue: TField } } = {};
   // TODO: Need to find a way to use TColumn here
+  @State() columnNames: string[] = [];
   @Prop() columns: {
     id: number | string;
     key: string;
@@ -88,7 +89,15 @@ export class DataTable {
       cellClass?: string;
     };
   }[] = [];
+  @Watch('columns')
+  watchPropHandler(newValue: any, oldValue: any) {
+    if (newValue !== oldValue) {
+      const updatedColumns = this.columns.map(item => item.name);
+      this.columnNames = updatedColumns;
+    }
+  }
   @Prop() data: Array<any> = [];
+  @State() processedData: Array<any> = [];
   @Prop() showActions: boolean = false;
   @Prop() onEdit: (id: number | string, changes: Array<{ prevValue: number | Date | string; newValue: number | Date | string; name: string }>) => Promise<any>;
   @Prop() onDelete: (index: number, row: { [field: string]: number | Date | string }) => Promise<any>;
@@ -205,6 +214,23 @@ export class DataTable {
 
   handlePaginate() {
     this.onPaginate(this.currentPage, this.limit);
+  }
+  dataProcessor(data) {
+    const newData = data.map(row => {
+      const processedRow = { ...row };
+
+      this.columns
+        .map(item => item.name)
+        .forEach(column => {
+          if (!Object.keys(row).includes(column)) {
+            processedRow[column] = '';
+          }
+        });
+
+      return processedRow;
+    });
+
+    return newData;
   }
 
   render() {
@@ -352,13 +378,15 @@ export class DataTable {
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
-                {this.data.map((row, rowId) => {
+                {this.dataProcessor(this.data).map((row, rowId) => {
                   return (
                     <tr class="hover:bg-gray-100 transition">
                       {renderAction(row, rowId)}
-                      {Object.keys(row).map((fieldKey, columnId) => {
-                        return renderRow(fieldKey, row[fieldKey], rowId, columnId);
-                      })}
+                      {this.columns
+                        .map(item => item.name)
+                        .map((fieldKey, columnId) => {
+                          return renderRow(fieldKey, row[fieldKey], rowId, columnId);
+                        })}
                     </tr>
                   );
                 })}
@@ -381,6 +409,7 @@ export class DataTable {
                 onChange={e => {
                   // @ts-expect-error
                   this.limit = e.target.value;
+                  this.currentPage = 1;
                   this.handlePaginate();
                 }}
                 class="form-select px-3 py-1.5 border-none text-inherit font-inherit text-gray-700 bg-transparent bg-clip-padding bg-no-repeat rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"

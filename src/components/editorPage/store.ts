@@ -147,9 +147,12 @@ onChange('nodes', value => {
 
   state.columnHeaders = [...keys].map((k: string) => {
     let dataType = 'string';
-
-    value.slice(0, 5).forEach(row => {
-      dataType = typeof row[k];
+    value.every(row => {
+      if (row[k] !== undefined) {
+        dataType = typeof row[k];
+        return false;
+      }
+      return true;
     });
 
     return {
