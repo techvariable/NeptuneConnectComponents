@@ -67,6 +67,7 @@ export class EditorRes {
     chips[id] = state.order[id] === 'desc' ? 'asc' : 'desc';
     state.order = chips;
     state.queryMode = 'read';
+    state.page = 1;
     state.refreshData();
   };
 
@@ -82,6 +83,7 @@ export class EditorRes {
 
     state.filter = chips;
     state.queryMode = 'read';
+    state.page = 1;
     state.refreshData();
   }
   toggleModalState() {
