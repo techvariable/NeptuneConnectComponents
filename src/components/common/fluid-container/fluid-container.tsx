@@ -16,7 +16,7 @@ export class FluidContainer {
   render() {
     return (
       // <div class={`max-w-screen-${this.breakpoint} mx-auto`}>
-      <div class="max-w-screen-2xl mx-auto">
+      <div class="max-w-screen-2xl mx-auto bg-white">
         <slot></slot>
       </div>
     );

@@ -167,8 +167,8 @@ export class CodeEditor {
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
                   </svg>
                 }
+                color="tertiary"
                 customClass="mt-2"
-                color="secondary"
                 loading={state.isLoading}
               >
                 Run
@@ -195,7 +195,7 @@ export class CodeEditor {
 
             <div>
               {state.isLoading && <loader-component></loader-component>}
-              {state.timeTaken !== null && <p class="pt-4 font-semibold text-xs text-green-700">Executed in {state.timeTaken} ms</p>}
+              {state.timeTaken !== null && <p class="pt-4 font-semibold text-xs text-indigo-500">Executed in {state.timeTaken} ms</p>}
             </div>
           </div>
         </div>
