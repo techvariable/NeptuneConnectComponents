@@ -155,7 +155,9 @@ export class CodeEditor {
               ),
             )}
           </div>
-          {state.isError ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full mt-4 mb-6">{state.errorMessage || 'Something went wrong!!!'}</p> : null}
+          {state.isError ? (
+            <p class="px-3 py-2 bg-indigo-200 text-indigo-800 border-l-4 border-indigo-600 w-full mt-4 mb-6">{state.errorMessage || 'Something went wrong!!!'}</p>
+          ) : null}
           <div class="flex justify-between">
             <div class="flex gap-4">
               <icon-label-submit-button
