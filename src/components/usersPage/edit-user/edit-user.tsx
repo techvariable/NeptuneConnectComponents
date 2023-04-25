@@ -23,7 +23,6 @@ export class EditUser {
   @State() loading = false;
 
   componentWillLoad() {
-    console.log('Triggered First', this.allPermissions);
     this.email = this.value;
     for (let role of this.allPermissions) {
       let obj = {

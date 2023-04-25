@@ -115,7 +115,6 @@ export class BasicSettings {
         style = 'filter:invert(.9) hue-rotate(220deg)';
         break;
       case 'dark-orange':
-        console.log('');
         style = 'filter:invert(.9) hue-rotate(320deg)';
         break;
       case 'dark-candy':
@@ -141,10 +140,10 @@ export class BasicSettings {
     `);
   }
   applyDynamicStyle(css) {
-    var styleTag = document.createElement('style');
-    var dynamicStyleCss = document.createTextNode(css);
+    const styleTag = document.createElement('style');
+    const dynamicStyleCss = document.createTextNode(css);
     styleTag.appendChild(dynamicStyleCss);
-    var header = document.getElementsByTagName('head')[0];
+    const header = document.getElementsByTagName('head')[0];
     header.appendChild(styleTag);
   }
 
