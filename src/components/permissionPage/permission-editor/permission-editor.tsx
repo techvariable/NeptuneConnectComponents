@@ -218,7 +218,7 @@ export class PermissionEditor {
           <div style={{ maxHeight: '40rem', overflowY: 'auto' }} class="border-2 custom-scrollbar ">
             <div id="permissionEditor" class="border border-gray-300"></div>
           </div>
-          {this.errorMessage !== '' ? <p class="px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full -mt-4 mb-6">{this.errorMessage}</p> : null}
+          {this.errorMessage !== '' ? <p class="px-3 py-2 bg-indigo-200 text-indigo-800 border-l-4 border-indigo-600 w-full -mt-4 mb-6">{this.errorMessage}</p> : null}
           {this.errorMessage === '' && this.resStatus !== '' && (
             <div class="flex items-center bg-gray-500 text-white text-sm font-bold px-4 py-3" role="alert">
               <p>{this.resStatus}</p>

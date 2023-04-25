@@ -11,15 +11,15 @@
 
   <script type="module" src="build/neptune.esm.js"></script>
   <script nomodule src="build/neptune.js"></script>
-  <!-- <script src="choicesjs-stencil/dist/choicesjsstencil.js"></script> -->
-  <!-- <script type="module" src="/build/choicesjs-stencil-example.esm.js"></script> -->
-  <!-- <script nomodule src="/build/choicesjs-stencil-example.js"></script> -->
-  <style>
-    
-  </style>
+   <style>
+    /* html{
+      filter: hue-rotate(60deg);
+    } */
+ 
+ </style>
 </head>
 
-<body class="selection:bg-indigo-200 selection:text-violet-800">
+<body class="selection:bg-indigo-200 selection:text-violet-800 bg-white text-black">
   <fluid-container breakpoint="lg">
     <!-- <node-item nodeurl="http://localhost:3000/api/editor/nodes"></node-item> -->
     <!-- <code-editor-updated url="http://ec2-54-221-111-75.compute-1.amazonaws.com:5000/query" doc="\n\n\n"></code-editor-updated> -->
@@ -40,12 +40,61 @@
     <!-- <user-details-component></user-details-component> -->
     <!-- <download-result-modal></download-result-modal> -->
     <!-- <toggle-button></toggle-button> -->
-    <!-- <basic-settings></basic-settings> -->
+    <basic-settings></basic-settings>
     <!-- <plain-button >Button</plain-button> -->
     <!-- <icon-label-submit-button width="auto" size="md" varient="contained" color="secondary" loading>Button</icon-label-submit-button> -->
     <!-- <icon-button-basic size="sm" color="secondary" title="download"/> -->
   </fluid-container>
   </div>
+
+  <!-- <script>
+    console.log("HYYYYYYYYYYYYYYY");
+
+    function applyDynamicStyle(css) {
+      var styleTag = document.createElement('style');
+      var dynamicStyleCss = document.createTextNode(css);
+      styleTag.appendChild(dynamicStyleCss);
+      var header = document.getElementsByTagName('head')[0];
+      header.appendChild(styleTag);    
+    };
+
+    const theme = localStorage.getItem('generalTheme');
+    console.log(theme);
+
+    let style = '';
+    switch(theme){
+      case 'dark-green':
+        style = 'filter:invert(.9) hue-rotate(30deg)'
+        break;
+      case 'dark-night':
+        style = 'filter:invert(.9) hue-rotate(120deg)'
+        break;
+      case 'dark-violet':
+        style='filter:invert(.9) hue-rotate(220deg)'
+        break;
+      case 'dark-orange':
+        console.log("")
+        style="filter:invert(.9) hue-rotate(320deg)"
+        break;
+      case 'dark-candy':
+        style="filter:invert(.9) hue-rotate(360deg)"
+        break;
+      case 'light-blue':
+        style='filter: hue-rotate(330deg)'
+        break;
+      case 'light-orange':
+        style='filter: hue-rotate(180deg)'
+        break
+      default:
+        style="filter:invert(0) hue-rotate(0deg)"
+        break
+    }
+    applyDynamicStyle(`
+    html{
+      ${style}
+    } 
+    `);
+  </script> -->
 </body>
 
 </html>

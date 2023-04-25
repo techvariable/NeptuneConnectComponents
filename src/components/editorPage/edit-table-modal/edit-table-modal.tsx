@@ -83,7 +83,7 @@ ${this.parameters}`);
                   </div>
 
                   <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-4">
-                    <icon-label-submit-button title="Confirm Generated Query" type="submit" color="secondary">
+                    <icon-label-submit-button title="Confirm Generated Query" type="submit" color="tertiary">
                       Confirm Query
                     </icon-label-submit-button>
                     <icon-label-submit-button title="Copy Generated Query" clickHandler={() => this.copyToClipboard()}>

@@ -43,7 +43,7 @@ type IStore = {
   stateQuery: any;
   viewParameter: any;
   stateParameter: any;
-  timeTaken: number;
+  timeTaken: number | null;
   refreshData: () => Promise<void>;
 };
 
@@ -93,7 +93,7 @@ const { state, onChange, reset } = createStore<IStore>({
   stateQuery: null,
   viewParameter: null,
   stateParameter: null,
-  timeTaken: 0,
+  timeTaken: null,
 
   refreshData: async () => {
     fetchData(state.selectedNodeName);

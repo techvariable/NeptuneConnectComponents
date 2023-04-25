@@ -23,7 +23,6 @@ export class EditUser {
   @State() loading = false;
 
   componentWillLoad() {
-    console.log('Triggered First', this.allPermissions);
     this.email = this.value;
     for (let role of this.allPermissions) {
       let obj = {
@@ -162,7 +161,7 @@ export class EditUser {
                   <div>
                     {/* <div class="w-full md:w-1/2 flex flex-col items-center h-64 mx-auto"></div> */}
                     <div class="bg-gray-50 pb-4 sm:px-6 sm:flex sm:flex-row-reverse gap-4">
-                      <icon-label-submit-button type="submit" color="secondary" loading={this.loading}>
+                      <icon-label-submit-button type="submit" color="tertiary" loading={this.loading}>
                         Update
                       </icon-label-submit-button>
                       <icon-label-submit-button clickHandler={() => this.toggle()} varient="outlined">

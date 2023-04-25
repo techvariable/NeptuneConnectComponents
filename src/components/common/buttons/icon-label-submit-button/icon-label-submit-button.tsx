@@ -1,5 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 
+// bg-${this.colorClasses[this.color]}-700
 @Component({
   tag: 'icon-label-submit-button',
   styleUrl: 'icon-label-submit-button.css',
