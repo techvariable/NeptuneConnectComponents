@@ -31,10 +31,14 @@ graph TD;
   node-item --> menu-drop-down
   menu-drop-down --> backdrop-filter
   code-editor --> tabs-component
+  code-editor --> save-query-modal
   code-editor --> insert-node-modal
   code-editor --> icon-button-basic
   code-editor --> icon-label-submit-button
+  code-editor --> text-field
   code-editor --> loader-component
+  save-query-modal --> icon-button-basic
+  save-query-modal --> icon-label-submit-button
   insert-node-modal --> icon-button-basic
   insert-node-modal --> custom-drop-down
   insert-node-modal --> basic-dropdown

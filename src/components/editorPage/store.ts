@@ -32,7 +32,8 @@ type IStore = {
   nodes: Array<any>;
   columnHeaders: Array<any>;
   availableNodes: Array<any>;
-
+  queryHistory: Array<Object>;
+  saveTitle: string;
   query: string;
   queryParameter: string;
 
@@ -78,6 +79,8 @@ const { state, onChange, reset } = createStore<IStore>({
   insertNodeLabel: null,
   insertProperties: {},
 
+  queryHistory: [],
+  saveTitle: '',
   // response
   nodes: [],
   columnHeaders: [],

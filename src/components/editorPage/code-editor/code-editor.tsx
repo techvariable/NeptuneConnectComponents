@@ -4,7 +4,7 @@ import { Compartment } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
 import { java } from '@codemirror/lang-java';
 import { json } from '@codemirror/lang-json';
-
+import Swal from 'sweetalert2';
 import state from '../store';
 import { customSetup } from '../../customSetup';
 
@@ -49,6 +49,8 @@ export class CodeEditor {
 
   @State() activeIndex: number = 0;
   @State() refreshLoading: boolean = false;
+  @State() isSaveModalOpen: boolean = false;
+  @State() saveError: string = '';
 
   @Element() element: HTMLElement;
 
@@ -91,6 +93,10 @@ export class CodeEditor {
     });
   }
 
+  saveModalHandler() {
+    this.isSaveModalOpen = !this.isSaveModalOpen;
+  }
+
   btnClassType = {
     true: `mr-4 animate-spin`,
     false: `mr-4`,
@@ -108,13 +114,140 @@ export class CodeEditor {
       },
     ]);
   }
+  saveQueryHandler() {
+    const dbName: string = 'neptuneQueryDB';
+    const dbVersion: number = 1;
+
+    const request: IDBOpenDBRequest = indexedDB.open(dbName, dbVersion);
+
+    request.onerror = function (event: Event): void {
+      console.log('Database error: ' + (event.target as any).errorCode);
+    };
+
+    request.onupgradeneeded = function (event: IDBVersionChangeEvent): void {
+      const db: IDBDatabase = (event.target as any).result;
+      const objectStore: IDBObjectStore = db.createObjectStore('savedQueries', { keyPath: 'id', autoIncrement: true });
+      objectStore.createIndex('id', 'id', { unique: false });
+    };
+
+    request.onsuccess = function (event: Event): void {
+      const db: IDBDatabase = (event.target as any).result;
+
+      // Add data to the database
+      const transaction: IDBTransaction = db.transaction(['savedQueries'], 'readwrite');
+      const objectStore: IDBObjectStore = transaction.objectStore('savedQueries');
+
+      const data: any = { title: state.saveTitle, query: state.query, parameter: state.queryParameter };
+      state.saveTitle = '';
+      const addRequest: IDBRequest = objectStore.add(data);
+      addRequest.onerror = function (event: Event): void {
+        console.log('Error adding data: ' + (event.target as any).errorCode);
+      };
+
+      addRequest.onsuccess = function (): void {
+        console.log('Data added successfully');
+      };
+    };
+    this.isSaveModalOpen = false;
+  }
+  retriveQueryData() {
+    const dbName: string = 'neptuneQueryDB';
+    const dbVersion: number = 1;
+
+    const request: IDBOpenDBRequest = indexedDB.open(dbName, dbVersion);
+
+    request.onerror = function (event: Event): void {
+      console.log('Database error: ' + (event.target as any).errorCode);
+    };
+
+    request.onupgradeneeded = function (event: IDBVersionChangeEvent): void {
+      const db: IDBDatabase = (event.target as any).result;
+      const objectStore: IDBObjectStore = db.createObjectStore('savedQueries', { keyPath: 'id', autoIncrement: true });
+      objectStore.createIndex('id', 'id', { unique: false });
+    };
+
+    request.onsuccess = function (event: Event): void {
+      const db: IDBDatabase = (event.target as any).result;
+      // Retrieve data from the database
+      const transaction2: IDBTransaction = db.transaction(['savedQueries'], 'readonly');
+      const objectStore2: IDBObjectStore = transaction2.objectStore('savedQueries');
+      const index: IDBIndex = objectStore2.index('id');
+      const getRequest: IDBRequest = index.getAll();
+      getRequest.onerror = function (event: Event): void {
+        console.log('Error retrieving data: ' + (event.target as any).errorCode);
+      };
+
+      getRequest.onsuccess = function (event: Event): void {
+        state.queryHistory = (event.target as any).result;
+      };
+    };
+  }
+  deleteQueryData(deleteId: number) {
+    const dbName: string = 'neptuneQueryDB';
+    const dbVersion: number = 1;
+
+    const request: IDBOpenDBRequest = indexedDB.open(dbName, dbVersion);
+
+    request.onerror = function (event: Event): void {
+      console.log('Database error: ' + (event.target as any).errorCode);
+    };
+
+    request.onupgradeneeded = function (event: IDBVersionChangeEvent): void {
+      const db: IDBDatabase = (event.target as any).result;
+      const objectStore: IDBObjectStore = db.createObjectStore('savedQueries', { keyPath: 'id', autoIncrement: true });
+      objectStore.createIndex('id', 'id', { unique: false });
+    };
+
+    request.onsuccess = function (event: Event): void {
+      const db: IDBDatabase = (event.target as any).result;
+      // Delete data from the database
+      const transaction2: IDBTransaction = db.transaction(['savedQueries'], 'readwrite');
+      const objectStore2: IDBObjectStore = transaction2.objectStore('savedQueries');
+
+      const deleteRequest: IDBRequest = objectStore2.delete(deleteId);
+      deleteRequest.onerror = function (event: Event): void {
+        console.log('Error deleting data: ' + (event.target as any).errorCode);
+      };
+
+      deleteRequest.onsuccess = function (): void {
+        console.log('Data deleted successfully');
+      };
+    };
+  }
+  saveSubmitHandler() {
+    try {
+      this.saveError = '';
+      if (state.saveTitle.trim().length > 0) {
+        this.saveModalHandler();
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          text: 'Query saved successfully!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.saveQueryHandler();
+      } else {
+        this.saveError = 'Query title is empty !!!';
+      }
+    } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: err,
+      });
+      console.log(err);
+    }
+  }
 
   render() {
     return (
       <Host>
         <div class="px-3 w-full flex content-between" style={{ justifyContent: 'space-between' }}>
           <tabs-component activeIndex={this.activeIndex} tabslist={TAB_LIST} tabClickHandler={this.tabClickHandler}></tabs-component>
-          <div class="flex w-28 justify-between">
+          <div class="flex w-40 justify-between">
+            <save-query-modal class="pt-3" deleteQueryData={deleteId => this.deleteQueryData(deleteId)} queryDataFetcher={() => this.retriveQueryData()} />
+
             <insert-node-modal fetchNavigators={() => this.fetchNavigators()} class="pt-3"></insert-node-modal>
 
             <icon-button-basic
@@ -156,7 +289,7 @@ export class CodeEditor {
             )}
           </div>
           {state.isError ? (
-            <p class="px-3 py-2 bg-indigo-200 text-indigo-800 border-l-4 border-indigo-600 w-full mt-4 mb-6">{state.errorMessage || 'Something went wrong!!!'}</p>
+            <p class=" px-3 py-2 bg-indigo-100 text-indigo-800 border-l-4 border-indigo-600 w-full mt-4 mb-6">{state.errorMessage || 'Something went wrong!!!'}</p>
           ) : null}
           <div class="flex justify-between">
             <div class="flex gap-4">
@@ -193,6 +326,100 @@ export class CodeEditor {
               >
                 Format
               </icon-label-submit-button>
+
+              <icon-label-submit-button
+                title="Save the query"
+                disabled={!state.editorTextFlag}
+                clickHandler={() => this.saveModalHandler()}
+                startIcon={
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
+                    />
+                  </svg>
+                }
+                customClass="mt-2"
+                loading={state.isLoading}
+              >
+                Save
+              </icon-label-submit-button>
+
+              {/* Main Modal */}
+              {this.isSaveModalOpen && (
+                <form
+                  style={{ display: 'contents' }}
+                  onSubmit={e => {
+                    console.log(e);
+                  }}
+                  class="pt-6 space-y-3"
+                >
+                  <div class="fixed z-30 inset-0 overflow-y-auto">
+                    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+                      {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
+                      <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+
+                      <div class="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                        <h3 class="pt-3 px-4 font-semibold text-lg text-gray-400">Query Title</h3>
+                        <div class="overflow-auto w-full h-16 px-8 mt-3 gap-4">
+                          <text-field
+                            name="Title"
+                            type="text"
+                            onChange={e => {
+                              state.saveTitle = e.target.value;
+                            }}
+                          ></text-field>
+                        </div>
+
+                        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-4">
+                          <icon-label-submit-button
+                            title="Save the query"
+                            disabled={!state.editorTextFlag}
+                            clickHandler={() => {
+                              this.saveSubmitHandler();
+                            }}
+                            startIcon={
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
+                                />
+                              </svg>
+                            }
+                            customClass="mt-2"
+                            loading={state.isLoading}
+                          >
+                            Save
+                          </icon-label-submit-button>
+                          <icon-label-submit-button
+                            startIcon={
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                            }
+                            title="Cancel"
+                            varient="outlined"
+                            customClass="mt-2"
+                            clickHandler={() => {
+                              this.saveError = '';
+                              this.saveModalHandler();
+                            }}
+                          >
+                            Cancel
+                          </icon-label-submit-button>
+                          {this.saveError !== '' ? <p class="px-2 py-1 bg-indigo-200 text-indigo-800 border-l-4 border-indigo-600 w-full mt-2">{this.saveError}</p> : null}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              )}
+
+              {/* ========================================= */}
             </div>
 
             <div>
