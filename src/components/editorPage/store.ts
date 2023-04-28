@@ -32,7 +32,7 @@ type IStore = {
   nodes: Array<any>;
   columnHeaders: Array<any>;
   availableNodes: Array<any>;
-  queryHistory: Array<Object>;
+  queryHistory: Array<{ id: number; title: string; query: string; parameter: string }>;
   saveTitle: string;
   query: string;
   queryParameter: string;
