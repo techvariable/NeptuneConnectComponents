@@ -29,6 +29,7 @@ export class EditUser {
         value: role.roleName,
         id: role.id,
         label: role.roleName,
+        persistant: false,
         selected: false,
         disabled: false,
       };
@@ -36,16 +37,18 @@ export class EditUser {
       rolesTemp.push(obj);
       this.rolesobj = rolesTemp;
     }
-
     axios
       .get(`${this.url}/users/roles?userId=${this.userid}`)
       .then((res: any) => {
         for (let role of this.rolesobj) {
-          if (res.data.includes(role['id'])) {
-            role['selected'] = true;
-          } else {
-            role['selected'] = false;
-          }
+          res.data.forEach(item => {
+            if (item.roleId === role['id']) {
+              role['selected'] = true;
+            }
+            if (item.roleId === role['id'] && item.persistant === true) {
+              role['persistant'] = true;
+            }
+          });
         }
 
         this.rolesobj = [...this.rolesobj];
@@ -58,6 +61,11 @@ export class EditUser {
     e.preventDefault();
 
     let selectedRoles = [];
+    this.rolesobj.forEach(role => {
+      if (role['persistant'] === true) {
+        selectedRoles.push(role['id']);
+      }
+    });
     for (let item of e.target[1]) {
       if (item.selected === true) {
         selectedRoles.push(Number(item.value));
@@ -65,7 +73,7 @@ export class EditUser {
     }
 
     try {
-      await axios.put(`${this.url}/users/roles`, {
+      const res = await axios.put(`${this.url}/users/roles`, {
         userId: this.userid,
         roles: selectedRoles,
       });
@@ -78,11 +86,14 @@ export class EditUser {
         timer: 1500,
       });
       for (let role of this.rolesobj) {
-        if (selectedRoles.includes(role['id'])) {
-          role['selected'] = true;
-        } else {
-          role['selected'] = false;
-        }
+        res.data.forEach(item => {
+          if (item.roleId === role['id']) {
+            role['selected'] = true;
+          }
+          if (item.roleId === role['id'] && item.persistant === true) {
+            role['persistant'] = true;
+          }
+        });
       }
       this.value = '';
       this.toggle();
@@ -148,7 +159,12 @@ export class EditUser {
                           <label class="block text-left">
                             <select name="role" class="form-multiselect block w-full mt-1 border rounded-md " multiple>
                               {this.rolesobj.map((role: any) => (
-                                <option class="px-6 py-1 hover:bg-gray-200 cursor-pointer" selected={role.selected} value={role.id}>
+                                <option
+                                  class="px-6 py-1 hover:bg-gray-200 cursor-pointer disabled:bg-gray-500 disabled:text-white disabled:font-semibold"
+                                  disabled={role.persistant}
+                                  selected={role.selected || role.persistant}
+                                  value={role.id}
+                                >
                                   {role.value}
                                 </option>
                               ))}
