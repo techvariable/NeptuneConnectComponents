@@ -226,10 +226,8 @@ export class DataTable {
             processedRow[column] = '';
           }
         });
-
       return processedRow;
     });
-
     return newData;
   }
 
@@ -383,7 +381,7 @@ export class DataTable {
                     <tr class="hover:bg-gray-100 transition">
                       {renderAction(row, rowId)}
                       {this.columns
-                        .map(item => item.name)
+                        .map(item => item.key)
                         .map((fieldKey, columnId) => {
                           return renderRow(fieldKey, row[fieldKey], rowId, columnId);
                         })}
