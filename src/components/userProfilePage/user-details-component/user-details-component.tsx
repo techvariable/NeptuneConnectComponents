@@ -15,7 +15,7 @@ export class UserDetailsComponent {
 
   render() {
     return (
-      <Host class="flex justify-center rounded-lg w-auto py-2 px-3 space-y-2 gap-4">
+      <Host style={{ alignItems: 'center' }} class="flex align-middle justify-center rounded-lg w-auto py-2 px-3 space-y-2 gap-4">
         <div class="w-28 h-28 border-2 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4 flex justify-center items-center">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-20 h-20">
             <path

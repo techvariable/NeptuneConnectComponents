@@ -38,16 +38,18 @@ export class UsersComponent {
                       </svg>
                     </div>
                     <div class="flex-grow">
-                      <div class="flex justify-end">
-                        <user-drop-down
-                          refresh={this.refresh}
-                          parsedPermissions={this.parsedPermissions}
-                          userId={user.id}
-                          email={user.email}
-                          url={`${this.url}/api`}
-                          allPermissions={this.allPermissions}
-                        ></user-drop-down>
-                      </div>
+                      {!user['persistant'] && (
+                        <div class="flex justify-end">
+                          <user-drop-down
+                            refresh={this.refresh}
+                            parsedPermissions={this.parsedPermissions}
+                            userId={user.id}
+                            email={user.email}
+                            url={`${this.url}/api`}
+                            allPermissions={this.allPermissions}
+                          ></user-drop-down>
+                        </div>
+                      )}
                       <div class="pb-4 cursor-pointer" onClick={() => this.redirectHandler(user.id)}>
                         <h2 class="text-gray-900 title-font font-medium">{user.name}</h2>
                         <p class="text-gray-500">{user.email}</p>

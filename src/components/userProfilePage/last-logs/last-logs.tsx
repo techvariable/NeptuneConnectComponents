@@ -108,7 +108,6 @@ export class LastLogs {
       isDeletable: false,
 
       customRowComponent: value => {
-        console.log({ value });
         return (
           <a target="_blank" href={'/editor/query/logs/' + value} class="mx-4 flex items-center py-1 px-4 text-base font-normal text-gray-900 rounded-lg bg-gray-200">
             <img class="h-4" src={'https://i.stack.imgur.com/To3El.png'} alt="icon" />
@@ -141,7 +140,6 @@ export class LastLogs {
 
       return row;
     });
-
     return (
       <Host class="border-b-2 border-gray-200">
         {data.length > 0 ? (
