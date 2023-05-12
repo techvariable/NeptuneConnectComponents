@@ -322,7 +322,6 @@ export class CodeEditor {
                   </svg>
                 }
                 customClass="mt-2"
-                loading={state.isLoading}
               >
                 Format
               </icon-label-submit-button>
@@ -341,7 +340,6 @@ export class CodeEditor {
                   </svg>
                 }
                 customClass="mt-2"
-                loading={state.isLoading}
               >
                 Save
               </icon-label-submit-button>

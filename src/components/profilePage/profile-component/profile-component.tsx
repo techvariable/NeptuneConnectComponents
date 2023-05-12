@@ -130,7 +130,7 @@ export class ProfileComponent {
             </div>
           </div>
           <div class="flex flex-row-reverse -mx-3 mb-6 ">
-            <icon-label-submit-button customClass="mx-4" size="md" type="submit">
+            <icon-label-submit-button customClass="mx-4" type="submit">
               Update
             </icon-label-submit-button>
             {this.error ? <p class="rounded-lg mx-4 my-2 px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full">{this.error}</p> : null}

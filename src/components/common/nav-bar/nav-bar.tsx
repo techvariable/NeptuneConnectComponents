@@ -23,12 +23,17 @@ export class NavBar {
 
   render() {
     return (
-      <div class="container mx-auto">
+      <div class="container mx-4 sm:mx-auto">
         <nav class="sticky top-0 pt-6 pb-8 bg-white border-b z-10">
           <div>
             <div class="flex flex-wrap justify-between items-center mx-auto bg-white">
-              <a href="/" class="text-lg text-gray-800">
-                Neptune Connect
+              <a href="/" class="">
+                <div class="flex gap-4">
+                  <span>
+                    <img class="h-10" src="public/assets/images/neptune.png" alt="neptune logo" />
+                  </span>
+                  <span class="hidden mt-2 sm:block text-lg font-semibold text-indigo-600">Neptune Connect</span>
+                </div>
               </a>
 
               <div class="block w-64">
