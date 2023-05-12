@@ -117,10 +117,10 @@ export class EditorPage {
 
   render() {
     return (
-      <div>
-        <div class="w-full md:flex justify-center gap-4 mt-4">
+      <div class="mx-4">
+        <div class="w-full lg:flex justify-center gap-4 mt-4">
           <div>
-            <aside class="w-full md:w-80" aria-label="Sidebar">
+            <aside class="w-full lg:w-80" aria-label="Sidebar">
               <div class="w-full flex justify-between ">
                 <h2 class="font-mono text-lg font-bold leading-7 text-gray-600">Nodes</h2>
                 <icon-button-basic
