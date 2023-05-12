@@ -63,7 +63,7 @@ export class TabComponent {
             </li>
           </ul>
           <div class="flex justify-between w-44">
-            <div class="flex">
+            <div class="flex pt-1">
               {!state.isCustomQuery && (
                 <div class="flex">
                   <span class="text-sm font-semibold text-gray-600 pt-2 px-2">Edit</span>
