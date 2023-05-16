@@ -6,6 +6,7 @@ import { Component, h, State, Prop } from '@stencil/core';
 })
 export class NavBar {
   @Prop() stringifieduser: string;
+  @Prop() imgurl: string;
   @State() isAvatarDropDownOpen: boolean = false;
   @State() userDetails: Object;
 
@@ -30,7 +31,7 @@ export class NavBar {
               <a href="/" class="">
                 <div class="flex gap-4">
                   <span>
-                    <img class="h-10" src="public/assets/images/neptune.png" alt="neptune logo" />
+                    <img class="h-10" src={`${this.imgurl}public/assets/images/neptune.png`} alt="neptune logo" />
                   </span>
                   <span class="hidden mt-2 sm:block text-lg font-semibold text-indigo-600">Neptune Connect</span>
                 </div>
