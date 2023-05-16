@@ -9,6 +9,7 @@
 
 | Property          | Attribute         | Description | Type     | Default     |
 | ----------------- | ----------------- | ----------- | -------- | ----------- |
+| `imgurl`          | `imgurl`          |             | `string` | `undefined` |
 | `stringifieduser` | `stringifieduser` |             | `string` | `undefined` |
 
 
