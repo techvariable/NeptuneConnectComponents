@@ -30,7 +30,6 @@
  - [editor-page](../../../editorPage/editor-page)
  - [insert-node-modal](../../../editorPage/insert-node-modal)
  - [save-query-modal](../../../editorPage/save-query-modal)
- - [side-bar](../../../settingsPage/side-bar)
 
 ### Graph
 ```mermaid
@@ -40,7 +39,6 @@ graph TD;
   editor-page --> icon-button-basic
   insert-node-modal --> icon-button-basic
   save-query-modal --> icon-button-basic
-  side-bar --> icon-button-basic
   style icon-button-basic fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

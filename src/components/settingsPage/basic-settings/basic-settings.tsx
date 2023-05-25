@@ -200,7 +200,7 @@ export class BasicSettings {
                         <div
                           id="dropdown"
                           style={{ zIndex: '5' }}
-                          class={` max-h-80 overflow-auto custom-scrollbar bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 ${
+                          class={` max-h-80 overflow-auto custom-scrollbar bg-white divide-y divide-gray-100 rounded-lg shadow w-44  ${
                             this.viewClasses[`${this.generalSettingsState[item]['dropDownOpen']}`]
                           }`}
                         >
@@ -210,7 +210,7 @@ export class BasicSettings {
                                 <li>
                                   <button
                                     onClick={() => this.generalSettingsSelectHandler(selectedOption, item)}
-                                    class="w-full font-medium block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white overflow-hidden overflow-ellipsis"
+                                    class="w-full font-medium block px-4 py-2 bg-white hover:bg-gray-200 text-gray-800  overflow-hidden overflow-ellipsis"
                                   >
                                     {selectedOption.toUpperCase()}
                                   </button>
@@ -302,7 +302,7 @@ export class BasicSettings {
                                             <li>
                                               <button
                                                 onClick={() => this.selectHandler(selectedOption, item)}
-                                                class="w-full font-medium block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white overflow-hidden overflow-ellipsis"
+                                                class="w-full font-medium block px-4 py-2 hover:bg-gray-200 text-gray-700 dark:hover:bg-gray-600 dark:hover:text-white overflow-hidden overflow-ellipsis"
                                               >
                                                 {selectedOption.toUpperCase()}
                                               </button>
