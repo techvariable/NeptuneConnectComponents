@@ -283,6 +283,11 @@ export namespace Components {
         "labels": string[];
         "name": string;
     }
+    interface ResetComponent {
+        "apiurl": string;
+        "email": string;
+        "url": string;
+    }
     interface SaveQueryModal {
         "deleteQueryData": (deleteId: number) => void;
         "queryDataFetcher": () => void;
@@ -619,6 +624,12 @@ declare global {
         prototype: HTMLRadioButtonMultipleElement;
         new (): HTMLRadioButtonMultipleElement;
     };
+    interface HTMLResetComponentElement extends Components.ResetComponent, HTMLStencilElement {
+    }
+    var HTMLResetComponentElement: {
+        prototype: HTMLResetComponentElement;
+        new (): HTMLResetComponentElement;
+    };
     interface HTMLSaveQueryModalElement extends Components.SaveQueryModal, HTMLStencilElement {
     }
     var HTMLSaveQueryModalElement: {
@@ -732,6 +743,7 @@ declare global {
         "query-logs": HTMLQueryLogsElement;
         "radio-button": HTMLRadioButtonElement;
         "radio-button-multiple": HTMLRadioButtonMultipleElement;
+        "reset-component": HTMLResetComponentElement;
         "save-query-modal": HTMLSaveQueryModalElement;
         "side-bar": HTMLSideBarElement;
         "tab-component": HTMLTabComponentElement;
@@ -1023,6 +1035,11 @@ declare namespace LocalJSX {
         "labels"?: string[];
         "name"?: string;
     }
+    interface ResetComponent {
+        "apiurl"?: string;
+        "email"?: string;
+        "url"?: string;
+    }
     interface SaveQueryModal {
         "deleteQueryData"?: (deleteId: number) => void;
         "queryDataFetcher"?: () => void;
@@ -1128,6 +1145,7 @@ declare namespace LocalJSX {
         "query-logs": QueryLogs;
         "radio-button": RadioButton;
         "radio-button-multiple": RadioButtonMultiple;
+        "reset-component": ResetComponent;
         "save-query-modal": SaveQueryModal;
         "side-bar": SideBar;
         "tab-component": TabComponent;
@@ -1191,6 +1209,7 @@ declare module "@stencil/core" {
             "query-logs": LocalJSX.QueryLogs & JSXBase.HTMLAttributes<HTMLQueryLogsElement>;
             "radio-button": LocalJSX.RadioButton & JSXBase.HTMLAttributes<HTMLRadioButtonElement>;
             "radio-button-multiple": LocalJSX.RadioButtonMultiple & JSXBase.HTMLAttributes<HTMLRadioButtonMultipleElement>;
+            "reset-component": LocalJSX.ResetComponent & JSXBase.HTMLAttributes<HTMLResetComponentElement>;
             "save-query-modal": LocalJSX.SaveQueryModal & JSXBase.HTMLAttributes<HTMLSaveQueryModalElement>;
             "side-bar": LocalJSX.SideBar & JSXBase.HTMLAttributes<HTMLSideBarElement>;
             "tab-component": LocalJSX.TabComponent & JSXBase.HTMLAttributes<HTMLTabComponentElement>;

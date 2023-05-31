@@ -24,12 +24,14 @@
 
  - [code-editor](../../editorPage/code-editor)
  - [invite-component](../../invitationPage/invite-component)
+ - [reset-component](../../resetPasswordPage/reset-component)
 
 ### Graph
 ```mermaid
 graph TD;
   code-editor --> text-field
   invite-component --> text-field
+  reset-component --> text-field
   style text-field fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -26,6 +26,7 @@
  - [data-table-updated](../data-table-updated)
  - [invite-component](../../invitationPage/invite-component)
  - [logs-table](../../logsPage/logs-table)
+ - [reset-component](../../resetPasswordPage/reset-component)
 
 ### Graph
 ```mermaid
@@ -34,6 +35,7 @@ graph TD;
   data-table-updated --> plain-button
   invite-component --> plain-button
   logs-table --> plain-button
+  reset-component --> plain-button
   style plain-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
