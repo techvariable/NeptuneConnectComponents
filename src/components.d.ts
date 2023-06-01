@@ -72,7 +72,7 @@ export namespace Components {
 
     onSort?: (key: string) => Promise<void>;
     onFilter?: (column) => Promise<void>;
-    onRowClick?: (id: string | number, key: string, value: any) => Promise<void>;
+    onRowClick?: (rowId: string | number, columnId: string | number, key: string, value: any) => Promise<void>;
     customColumnComponent?: (name: string) => any;
     customRowComponent?: (value: any) => any;
 
@@ -291,7 +291,7 @@ export namespace Components {
     }
     interface SaveQueryModal {
         "deleteQueryData": (deleteId: number) => void;
-        "queryDataFetcher": () => void;
+        "queryDataFetcher": () => Promise<void>;
     }
     interface SideBar {
         "permissions": string;
@@ -825,7 +825,7 @@ declare namespace LocalJSX {
 
     onSort?: (key: string) => Promise<void>;
     onFilter?: (column) => Promise<void>;
-    onRowClick?: (id: string | number, key: string, value: any) => Promise<void>;
+    onRowClick?: (rowId: string | number, columnId: string | number, key: string, value: any) => Promise<void>;
     customColumnComponent?: (name: string) => any;
     customRowComponent?: (value: any) => any;
 
@@ -1044,7 +1044,7 @@ declare namespace LocalJSX {
     }
     interface SaveQueryModal {
         "deleteQueryData"?: (deleteId: number) => void;
-        "queryDataFetcher"?: () => void;
+        "queryDataFetcher"?: () => Promise<void>;
     }
     interface SideBar {
         "permissions"?: string;

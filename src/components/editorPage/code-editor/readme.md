@@ -41,7 +41,9 @@ graph TD;
   code-editor --> text-field
   code-editor --> loader-component
   save-query-modal --> icon-button-basic
+  save-query-modal --> data-table
   save-query-modal --> icon-label-submit-button
+  data-table --> plain-button
   insert-node-modal --> icon-button-basic
   insert-node-modal --> custom-drop-down
   insert-node-modal --> basic-dropdown
