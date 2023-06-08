@@ -210,11 +210,10 @@ const getParamsForBuilder = () => {
 const getQueryPreview = async () => {
   try {
     const res = await axios.post(`${state.hostUrl}/query/builder/${state.selectedNodeName}/${state.queryMode}/preview`, getParamsForBuilder());
-
     return res.data;
   } catch (error) {
     state.isError = true;
-    state.errorMessage = 'Failed to fetch data from db';
+    state.errorMessage = error.response?.data?.error?.split(':')[0] || 'Failed to fetch data from db';
   }
 };
 
@@ -247,7 +246,7 @@ const fetchData = async (nodeName: string) => {
       state.isFetchedData = true;
     } catch (error) {
       state.isError = true;
-      state.errorMessage = 'Failed to fetch data from db';
+      state.errorMessage = error.response?.data?.error?.split(':')[0] || 'Failed to fetch data from db';
     }
     state.isLoading = false;
   }

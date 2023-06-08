@@ -9,6 +9,7 @@
 
 | Property          | Attribute         | Description | Type     | Default     |
 | ----------------- | ----------------- | ----------- | -------- | ----------- |
+| `permissions`     | `permissions`     |             | `string` | `undefined` |
 | `stringifieduser` | `stringifieduser` |             | `string` | `undefined` |
 | `url`             | `url`             |             | `string` | `undefined` |
 

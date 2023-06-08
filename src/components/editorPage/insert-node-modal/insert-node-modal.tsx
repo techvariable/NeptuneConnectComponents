@@ -1,5 +1,6 @@
 import { Component, Host, h, State, Prop } from '@stencil/core';
 import state from '../store';
+import { hasAccess } from '../../../utils/utils';
 
 @Component({
   tag: 'insert-node-modal',
@@ -8,6 +9,9 @@ import state from '../store';
 })
 export class InsertNodeModal {
   @Prop() fetchNavigators: Function;
+  @Prop() permissions: string;
+
+  @State() parsedPermissions: [] = [];
   @State() value: string;
   @State() isModalOpen = false;
 
@@ -21,6 +25,11 @@ export class InsertNodeModal {
   ];
   @State() propSelectedOptionLabel: string = 'String';
   @State() isFormValid: boolean = true;
+
+  componentWillLoad() {
+    this.parsedPermissions = JSON.parse(this.permissions || '[]');
+  }
+
   nodeMapper() {
     const nodes = state.availableNodes.map(node => {
       return {
@@ -235,6 +244,7 @@ export class InsertNodeModal {
                     <button
                       type="submit"
                       onClick={() => this.handleSubmit()}
+                      disabled={!hasAccess(this.parsedPermissions, { name: 'editor', permission: 'update' })}
                       class="w-full gap-2 inline-flex justify-center rounded-md border-transparent shadow-sm px-4 py-2 border border-gray-300 bg-gray-600 text-base font-medium text-white disabled:bg-gray-200 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                     >
                       {

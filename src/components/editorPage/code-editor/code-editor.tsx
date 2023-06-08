@@ -46,6 +46,7 @@ export class CodeEditor {
   @Prop() onClickRun: Function;
   @Prop() formatter: Function;
   @Prop() fetchNavigators: Function;
+  @Prop() permissions: string;
 
   @State() activeIndex: number = 0;
   @State() refreshLoading: boolean = false;
@@ -248,7 +249,7 @@ export class CodeEditor {
           <div class="flex w-40 justify-between">
             <save-query-modal class="pt-3" deleteQueryData={deleteId => this.deleteQueryData(deleteId)} queryDataFetcher={() => this.retriveQueryData()} />
 
-            <insert-node-modal fetchNavigators={() => this.fetchNavigators()} class="pt-3"></insert-node-modal>
+            <insert-node-modal fetchNavigators={() => this.fetchNavigators()} class="pt-3" permissions={this.permissions}></insert-node-modal>
 
             <icon-button-basic
               customClass="mt-3"

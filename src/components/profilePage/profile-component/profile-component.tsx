@@ -1,6 +1,7 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { hasAccess } from '../../../utils/utils';
 
 @Component({
   tag: 'profile-component',
@@ -10,6 +11,9 @@ import Swal from 'sweetalert2';
 export class ProfileComponent {
   @Prop() stringifieduser: string;
   @Prop() url: string;
+  @Prop() permissions: string;
+
+  @State() parsedPermissions: [] = [];
   @State() user: any;
   @State() password: string = '';
   @State() repassword: string = '';
@@ -19,6 +23,7 @@ export class ProfileComponent {
   componentWillLoad() {
     this.user = JSON.parse(this.stringifieduser);
     this.name = this.user.name;
+    this.parsedPermissions = JSON.parse(this.permissions || '[]');
   }
 
   async handleSubmit(e) {
@@ -84,6 +89,7 @@ export class ProfileComponent {
                 type="text"
                 placeholder=""
                 value={this.name}
+                disabled={!hasAccess(this.parsedPermissions, { name: 'myprofile', permission: 'update' })}
               />
               <p class="text-gray-600 text-xs italic">Enter updated name</p>
             </div>
@@ -111,6 +117,7 @@ export class ProfileComponent {
                 type="password"
                 placeholder="******************"
                 value={this.password}
+                disabled={!hasAccess(this.parsedPermissions, { name: 'myprofile', permission: 'update' })}
               />
               <p class="text-gray-600 text-xs italic">Enter updated password</p>
             </div>
@@ -125,12 +132,13 @@ export class ProfileComponent {
                 type="password"
                 placeholder="******************"
                 value={this.repassword}
+                disabled={!hasAccess(this.parsedPermissions, { name: 'myprofile', permission: 'update' })}
               />
               <p class="text-gray-600 text-xs italic">Re-enter the password</p>
             </div>
           </div>
           <div class="flex flex-row-reverse -mx-3 mb-6 ">
-            <icon-label-submit-button customClass="mx-4" type="submit">
+            <icon-label-submit-button customClass="mx-4" type="submit" disabled={!hasAccess(this.parsedPermissions, { name: 'myprofile', permission: 'update' })}>
               Update
             </icon-label-submit-button>
             {this.error ? <p class="rounded-lg mx-4 my-2 px-3 py-2 bg-red-200 text-red-800 border-l-4 border-red-600 w-full">{this.error}</p> : null}

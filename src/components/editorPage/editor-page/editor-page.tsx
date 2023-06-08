@@ -12,6 +12,7 @@ import { formatJSON } from '../../../utils/utils';
 })
 export class EditorPage {
   @Prop() url: string;
+  @Prop() permissions: string;
 
   @State() selectedNodeName: string;
   @State() nodeList: string[] = [];
@@ -147,13 +148,13 @@ export class EditorPage {
           </div>
           <div class="w-full md:w-3/4">
             <h2 class="pb-3 font-mono text-lg font-bold leading-7 text-gray-600">Write your Gremlin Query Here</h2>
-            <code-editor formatter={() => this.formatter()} onClickRun={this.onClickRun} fetchNavigators={this.fetchNavigators}></code-editor>
+            <code-editor formatter={() => this.formatter()} onClickRun={this.onClickRun} fetchNavigators={this.fetchNavigators} permissions={this.permissions}></code-editor>
             {state.isFetchedData && state.nodes.length === 0 && !state.isLoading && !state.isError && (
               <div class="flex items-center bg-gray-500 text-white text-sm font-bold px-4 py-3" role="alert">
                 <p>No Data Found in Database</p>
               </div>
             )}
-            {state.nodes.length > 0 && !state.isLoading && !state.isError && <tab-component></tab-component>}
+            {state.nodes.length > 0 && !state.isLoading && !state.isError && <tab-component permissions={this.permissions}></tab-component>}
           </div>
         </div>
       </div>

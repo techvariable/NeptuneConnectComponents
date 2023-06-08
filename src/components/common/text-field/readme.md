@@ -24,6 +24,7 @@
 
  - [code-editor](../../editorPage/code-editor)
  - [invite-component](../../invitationPage/invite-component)
+ - [login-form](../../loginPage/login-form)
  - [reset-component](../../resetPasswordPage/reset-component)
 
 ### Graph
@@ -31,6 +32,7 @@
 graph TD;
   code-editor --> text-field
   invite-component --> text-field
+  login-form --> text-field
   reset-component --> text-field
   style text-field fill:#f9f,stroke:#333,stroke-width:4px
 ```

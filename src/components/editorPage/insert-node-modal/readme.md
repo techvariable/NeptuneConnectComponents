@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property          | Attribute | Description | Type       | Default     |
-| ----------------- | --------- | ----------- | ---------- | ----------- |
-| `fetchNavigators` | --        |             | `Function` | `undefined` |
+| Property          | Attribute     | Description | Type       | Default     |
+| ----------------- | ------------- | ----------- | ---------- | ----------- |
+| `fetchNavigators` | --            |             | `Function` | `undefined` |
+| `permissions`     | `permissions` |             | `string`   | `undefined` |
 
 
 ## Dependencies
