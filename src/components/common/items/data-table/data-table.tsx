@@ -34,7 +34,7 @@ type TColumn = {
 
   onSort?: (id: number | string, name: string) => Promise<void>;
   onFilter?: (column: TColumn) => Promise<void>;
-  onRowClick?: (id: string | number, key: string, value: any) => Promise<void>;
+  onRowClick?: (rowId: string | number, columnId: string | number, key: string, value: any) => Promise<void>;
   customColumnComponent?: (name: string) => any;
   customRowComponent?: (value: any) => any;
 
@@ -78,7 +78,7 @@ export class DataTable {
 
     onSort?: (key: string) => Promise<void>;
     onFilter?: (column) => Promise<void>;
-    onRowClick?: (id: string | number, key: string, value: any) => Promise<void>;
+    onRowClick?: (rowId: string | number, columnId: string | number, key: string, value: any) => Promise<void>;
     customColumnComponent?: (name: string) => any;
     customRowComponent?: (value: any) => any;
 
@@ -325,7 +325,7 @@ export class DataTable {
           class={`py-3 whitespace-nowrap text-sm text-gray-900 ${column.customStyle?.cellClass}`}
           style={{ cursor: column.onRowClick ? 'pointer' : 'auto', ...(column.customStyle?.cellStyle || {}) }}
           onClick={() => {
-            return column.onRowClick ? column.onRowClick(column.id, keyName, fieldValue) : null;
+            return column.onRowClick ? column.onRowClick(rowId, column.id, keyName, fieldValue) : null;
           }}
         >
           {column.customRowComponent ? column.customRowComponent(fieldValue) : this.formatData(fieldValue, column)}

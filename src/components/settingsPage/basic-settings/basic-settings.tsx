@@ -17,37 +17,30 @@ export class BasicSettings {
   };
 
   @State() editorSettingsState: Object = {
-    themesArray: {
-      label: 'Editor Theme',
-      type: 'dropDown',
-      dropDownOpen: false,
-      currentState: localStorage.getItem('themesArray') || 'light',
-      options: ['light', 'dark'],
-    },
     isLineNumberEnabled: {
       label: 'Line Number',
       type: 'toggle',
-      currentState: localStorage.getItem('isLineNumberEnabled') || false,
+      currentState: localStorage.getItem('isLineNumberEnabled') !== "false" ? true : false,
     },
     isHigglightActiveLine: {
       label: 'Highlight Active Line',
       type: 'toggle',
-      currentState: localStorage.getItem('isHigglightActiveLine') || false,
+      currentState: localStorage.getItem('isHigglightActiveLine') !== "false" ? true : false,
     },
     isAutoCloseBracket: {
       label: 'Auto Close Brackets',
       type: 'toggle',
-      currentState: localStorage.getItem('isAutoCloseBracket') || false,
+      currentState: localStorage.getItem('isAutoCloseBracket') !== "false" ? true : false,
     },
     ishighlightSelectionMatches: {
       label: 'Highlight Selection Matches',
       type: 'toggle',
-      currentState: localStorage.getItem('highlightSelectionMatches') || false,
+      currentState: localStorage.getItem('highlightSelectionMatches') !== "false" ? true : false,
     },
     isbracketMatchingEnabled: {
       label: 'Bracket Matching',
       type: 'toggle',
-      currentState: localStorage.getItem('isbracketMatchingEnabled') || false,
+      currentState: localStorage.getItem('isbracketMatchingEnabled') !== "false" ? true : false,
     },
   };
   @State() generalSettingsState: Object = {
@@ -200,9 +193,8 @@ export class BasicSettings {
                         <div
                           id="dropdown"
                           style={{ zIndex: '5' }}
-                          class={` max-h-80 overflow-auto custom-scrollbar bg-white divide-y divide-gray-100 rounded-lg shadow w-44  ${
-                            this.viewClasses[`${this.generalSettingsState[item]['dropDownOpen']}`]
-                          }`}
+                          class={` max-h-80 overflow-auto custom-scrollbar bg-white divide-y divide-gray-100 rounded-lg shadow w-44  ${this.viewClasses[`${this.generalSettingsState[item]['dropDownOpen']}`]
+                            }`}
                         >
                           <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                             {this.generalSettingsState[item]['options'].map(selectedOption => {
@@ -292,9 +284,8 @@ export class BasicSettings {
                                     <div
                                       id="dropdown"
                                       style={{ zIndex: '1' }}
-                                      class={`z-50 max-h-80 overflow-auto custom-scrollbar bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 ${
-                                        this.viewClasses[`${this.editorSettingsState[item]['dropDownOpen']}`]
-                                      }`}
+                                      class={`z-50 max-h-80 overflow-auto custom-scrollbar bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 ${this.viewClasses[`${this.editorSettingsState[item]['dropDownOpen']}`]
+                                        }`}
                                     >
                                       <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                                         {this.editorSettingsState[item]['options'].map(selectedOption => {
