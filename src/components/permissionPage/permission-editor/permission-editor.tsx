@@ -232,7 +232,7 @@ export class PermissionEditor {
                 disabled={this.syncVal === '' || !hasAccess(this.parsedPermissions, { name: 'permissions', permission: 'update' }) || this.isLoading}
                 loading={this.isLoading}
                 varient="outlined"
-                color="primary"
+                color="tertiary"
               >
                 Update
               </icon-label-submit-button>
