@@ -1,4 +1,4 @@
-import { Component, h, State } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
 import { formatJSON } from '../../../utils/utils';
 
 import state from '../store';
@@ -8,6 +8,7 @@ import state from '../store';
   scoped: true,
 })
 export class TabComponent {
+  @Prop() permissions: string;
   @State() setActive: string = 'table';
   @State() downloadProgress: number = 0;
 
@@ -27,7 +28,7 @@ export class TabComponent {
           Showing results for <strong>{state.selectedNodeName !== null ? state.selectedNodeName : 'Custom Query'}</strong>
         </p>
 
-        <div class="flex justify-between border-b border-gray-200 ">
+        <div class="flex justify-between border-b border-gray-200">
           <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500">
             <li class="mr-2">
               <button
@@ -77,7 +78,7 @@ export class TabComponent {
 
         {/* content */}
         <div class="border border-gray-200 text-gray-500">
-          {this.setActive !== 'json' ? <editor-res></editor-res> : <editor-json-response-viewer doc={formatJSON(state.nodes)}></editor-json-response-viewer>}
+          {this.setActive !== 'json' ? <editor-res permissions={this.permissions}></editor-res> : <editor-json-response-viewer doc={formatJSON(state.nodes)}></editor-json-response-viewer>}
         </div>
       </div>
     );

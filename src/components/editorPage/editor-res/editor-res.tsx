@@ -1,5 +1,6 @@
-import { Component, h, Host, State } from '@stencil/core';
+import { Component, h, Host, Prop, State } from '@stencil/core';
 import state from '../store';
+import { hasAccess } from '../../../utils/utils';
 
 const SUPPORTED_ROWS = [10, 20, 50];
 
@@ -40,11 +41,22 @@ type TColumn = {
   scoped: true,
 })
 export class EditorRes {
+  @Prop() permissions: string;
+
+  @State() parsedPermissions: [] = [];
   @State() total: string;
   @State() isFilter: boolean = false;
   @State() isFilterKey: string = null;
   @State() type: string = null;
   @State() isModalOpen: boolean = false;
+  @State() canEditRow: boolean = false;
+  @State() canDeleteRow: boolean = false;
+
+  componentWillLoad() {
+    this.parsedPermissions = JSON.parse(this.permissions || '[]');
+    this.canEditRow = hasAccess(this.parsedPermissions, { name: 'editor', permission: 'update' })
+    this.canDeleteRow = hasAccess(this.parsedPermissions, { name: 'editor', permission: 'delete' })
+  }
 
   removeSortChip = item => {
     const chips = { ...state.order };
@@ -98,7 +110,7 @@ export class EditorRes {
         name: column.title,
         type: column.type,
 
-        isEditable: !['label', 'id'].includes(column.title) && state.canEdit,
+        isEditable: !['label', 'id'].includes(column.title) && state.canEdit && hasAccess(this.parsedPermissions, { name: 'editor', permission: 'write' }),
         isDeletable: false,
         isFilterable: !['label', 'id'].includes(column.title) && ['string', 'number', 'date'].includes(column.type) && !state.isCustomQuery,
         isSortable: !['label', 'id'].includes(column.title) && ['string', 'number', 'date'].includes(column.type) && !state.isCustomQuery,
@@ -148,6 +160,8 @@ export class EditorRes {
             columns={columns}
             data={state.nodes}
             showActions={state.canEdit && !state.isCustomQuery}
+            canEditRow={this.canEditRow}
+            canDeleteRow={this.canDeleteRow}
             showPagination={!state.isCustomQuery}
             total={state.total}
             limit={state.limit}

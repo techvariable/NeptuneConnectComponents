@@ -19,9 +19,13 @@ export namespace Components {
         "url": string;
         "users": string;
     }
+    interface AsideContainer {
+    }
     interface BackdropFilter {
         "backDropHandler": any;
         "showBackDrop": boolean;
+    }
+    interface BannerComponent {
     }
     interface BasicDropdown {
         "label": string;
@@ -45,6 +49,7 @@ export namespace Components {
         "fetchNavigators": Function;
         "formatter": Function;
         "onClickRun": Function;
+        "permissions": string;
     }
     interface CustomDropDown {
         "dropDownValue": string;
@@ -52,6 +57,8 @@ export namespace Components {
         "selectHandler": any;
     }
     interface DataTable {
+        "canDeleteRow": boolean;
+        "canEditRow": boolean;
         "columns": {
     id: number | string;
     key: string;
@@ -128,9 +135,11 @@ export namespace Components {
         "doc": any;
     }
     interface EditorPage {
+        "permissions": string;
         "url": string;
     }
     interface EditorRes {
+        "permissions": string;
     }
     interface FluidContainer {
     }
@@ -168,6 +177,7 @@ export namespace Components {
     }
     interface InsertNodeModal {
         "fetchNavigators": Function;
+        "permissions": string;
     }
     interface InviteComponent {
         "apiurl": string;
@@ -193,6 +203,13 @@ export namespace Components {
         "autocompute": boolean;
         "headerList": object[];
         "rowPerPage": number[];
+    }
+    interface LoginForm {
+        "email": string;
+        "error": string;
+        "mode": string;
+        "password": string;
+        "url": string;
     }
     interface LogsTable {
         "clearSearch": any;
@@ -266,6 +283,7 @@ export namespace Components {
         "width": 'full' | 'auto';
     }
     interface ProfileComponent {
+        "permissions": string;
         "stringifieduser": string;
         "url": string;
     }
@@ -298,6 +316,7 @@ export namespace Components {
         "url": string;
     }
     interface TabComponent {
+        "permissions": string;
     }
     interface TableSearchModalForm {
         "alias": string;
@@ -361,11 +380,23 @@ declare global {
         prototype: HTMLAllUsersElement;
         new (): HTMLAllUsersElement;
     };
+    interface HTMLAsideContainerElement extends Components.AsideContainer, HTMLStencilElement {
+    }
+    var HTMLAsideContainerElement: {
+        prototype: HTMLAsideContainerElement;
+        new (): HTMLAsideContainerElement;
+    };
     interface HTMLBackdropFilterElement extends Components.BackdropFilter, HTMLStencilElement {
     }
     var HTMLBackdropFilterElement: {
         prototype: HTMLBackdropFilterElement;
         new (): HTMLBackdropFilterElement;
+    };
+    interface HTMLBannerComponentElement extends Components.BannerComponent, HTMLStencilElement {
+    }
+    var HTMLBannerComponentElement: {
+        prototype: HTMLBannerComponentElement;
+        new (): HTMLBannerComponentElement;
     };
     interface HTMLBasicDropdownElement extends Components.BasicDropdown, HTMLStencilElement {
     }
@@ -528,6 +559,12 @@ declare global {
     var HTMLLogTableWrapperElement: {
         prototype: HTMLLogTableWrapperElement;
         new (): HTMLLogTableWrapperElement;
+    };
+    interface HTMLLoginFormElement extends Components.LoginForm, HTMLStencilElement {
+    }
+    var HTMLLoginFormElement: {
+        prototype: HTMLLoginFormElement;
+        new (): HTMLLoginFormElement;
     };
     interface HTMLLogsTableElement extends Components.LogsTable, HTMLStencilElement {
     }
@@ -700,7 +737,9 @@ declare global {
     interface HTMLElementTagNameMap {
         "add-role": HTMLAddRoleElement;
         "all-users": HTMLAllUsersElement;
+        "aside-container": HTMLAsideContainerElement;
         "backdrop-filter": HTMLBackdropFilterElement;
+        "banner-component": HTMLBannerComponentElement;
         "basic-dropdown": HTMLBasicDropdownElement;
         "basic-settings": HTMLBasicSettingsElement;
         "check-box": HTMLCheckBoxElement;
@@ -728,6 +767,7 @@ declare global {
         "loader-component": HTMLLoaderComponentElement;
         "log-page": HTMLLogPageElement;
         "log-table-wrapper": HTMLLogTableWrapperElement;
+        "login-form": HTMLLoginFormElement;
         "logs-table": HTMLLogsTableElement;
         "logs-table-component": HTMLLogsTableComponentElement;
         "menu-drop-down": HTMLMenuDropDownElement;
@@ -772,9 +812,13 @@ declare namespace LocalJSX {
         "url"?: string;
         "users"?: string;
     }
+    interface AsideContainer {
+    }
     interface BackdropFilter {
         "backDropHandler"?: any;
         "showBackDrop"?: boolean;
+    }
+    interface BannerComponent {
     }
     interface BasicDropdown {
         "label"?: string;
@@ -798,6 +842,7 @@ declare namespace LocalJSX {
         "fetchNavigators"?: Function;
         "formatter"?: Function;
         "onClickRun"?: Function;
+        "permissions"?: string;
     }
     interface CustomDropDown {
         "dropDownValue"?: string;
@@ -805,6 +850,8 @@ declare namespace LocalJSX {
         "selectHandler"?: any;
     }
     interface DataTable {
+        "canDeleteRow"?: boolean;
+        "canEditRow"?: boolean;
         "columns"?: {
     id: number | string;
     key: string;
@@ -881,9 +928,11 @@ declare namespace LocalJSX {
         "doc"?: any;
     }
     interface EditorPage {
+        "permissions"?: string;
         "url"?: string;
     }
     interface EditorRes {
+        "permissions"?: string;
     }
     interface FluidContainer {
     }
@@ -921,6 +970,7 @@ declare namespace LocalJSX {
     }
     interface InsertNodeModal {
         "fetchNavigators"?: Function;
+        "permissions"?: string;
     }
     interface InviteComponent {
         "apiurl"?: string;
@@ -946,6 +996,13 @@ declare namespace LocalJSX {
         "autocompute"?: boolean;
         "headerList"?: object[];
         "rowPerPage"?: number[];
+    }
+    interface LoginForm {
+        "email"?: string;
+        "error"?: string;
+        "mode"?: string;
+        "password"?: string;
+        "url"?: string;
     }
     interface LogsTable {
         "clearSearch"?: any;
@@ -1019,6 +1076,7 @@ declare namespace LocalJSX {
         "width"?: 'full' | 'auto';
     }
     interface ProfileComponent {
+        "permissions"?: string;
         "stringifieduser"?: string;
         "url"?: string;
     }
@@ -1051,6 +1109,7 @@ declare namespace LocalJSX {
         "url"?: string;
     }
     interface TabComponent {
+        "permissions"?: string;
     }
     interface TableSearchModalForm {
         "alias"?: string;
@@ -1103,7 +1162,9 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "add-role": AddRole;
         "all-users": AllUsers;
+        "aside-container": AsideContainer;
         "backdrop-filter": BackdropFilter;
+        "banner-component": BannerComponent;
         "basic-dropdown": BasicDropdown;
         "basic-settings": BasicSettings;
         "check-box": CheckBox;
@@ -1131,6 +1192,7 @@ declare namespace LocalJSX {
         "loader-component": LoaderComponent;
         "log-page": LogPage;
         "log-table-wrapper": LogTableWrapper;
+        "login-form": LoginForm;
         "logs-table": LogsTable;
         "logs-table-component": LogsTableComponent;
         "menu-drop-down": MenuDropDown;
@@ -1167,7 +1229,9 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "add-role": LocalJSX.AddRole & JSXBase.HTMLAttributes<HTMLAddRoleElement>;
             "all-users": LocalJSX.AllUsers & JSXBase.HTMLAttributes<HTMLAllUsersElement>;
+            "aside-container": LocalJSX.AsideContainer & JSXBase.HTMLAttributes<HTMLAsideContainerElement>;
             "backdrop-filter": LocalJSX.BackdropFilter & JSXBase.HTMLAttributes<HTMLBackdropFilterElement>;
+            "banner-component": LocalJSX.BannerComponent & JSXBase.HTMLAttributes<HTMLBannerComponentElement>;
             "basic-dropdown": LocalJSX.BasicDropdown & JSXBase.HTMLAttributes<HTMLBasicDropdownElement>;
             "basic-settings": LocalJSX.BasicSettings & JSXBase.HTMLAttributes<HTMLBasicSettingsElement>;
             "check-box": LocalJSX.CheckBox & JSXBase.HTMLAttributes<HTMLCheckBoxElement>;
@@ -1195,6 +1259,7 @@ declare module "@stencil/core" {
             "loader-component": LocalJSX.LoaderComponent & JSXBase.HTMLAttributes<HTMLLoaderComponentElement>;
             "log-page": LocalJSX.LogPage & JSXBase.HTMLAttributes<HTMLLogPageElement>;
             "log-table-wrapper": LocalJSX.LogTableWrapper & JSXBase.HTMLAttributes<HTMLLogTableWrapperElement>;
+            "login-form": LocalJSX.LoginForm & JSXBase.HTMLAttributes<HTMLLoginFormElement>;
             "logs-table": LocalJSX.LogsTable & JSXBase.HTMLAttributes<HTMLLogsTableElement>;
             "logs-table-component": LocalJSX.LogsTableComponent & JSXBase.HTMLAttributes<HTMLLogsTableComponentElement>;
             "menu-drop-down": LocalJSX.MenuDropDown & JSXBase.HTMLAttributes<HTMLMenuDropDownElement>;

@@ -99,6 +99,8 @@ export class DataTable {
   @Prop() data: Array<any> = [];
   @State() processedData: Array<any> = [];
   @Prop() showActions: boolean = false;
+  @Prop() canEditRow: boolean = false;
+  @Prop() canDeleteRow: boolean = false;
   @Prop() onEdit: (id: number | string, changes: Array<{ prevValue: number | Date | string; newValue: number | Date | string; name: string }>) => Promise<any>;
   @Prop() onDelete: (index: number, row: { [field: string]: number | Date | string }) => Promise<any>;
   @Prop() onPaginate: (tcurrentPage: number, limit: number) => Promise<void>;
@@ -283,8 +285,8 @@ export class DataTable {
       if (!this.isEditing)
         return (
           <td class={`py-3 whitespace-nowrap text-sm text-gray-900 ${column.customStyle?.cellClass}`} style={{ cursor: 'auto', ...(column.customStyle?.cellStyle || {}) }}>
-            {getEditingButton()}
-            {getDeleteButton()}
+            {getEditingButton(!this.canEditRow)}
+            {getDeleteButton(!this.canDeleteRow)}
           </td>
         );
 

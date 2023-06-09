@@ -22,6 +22,7 @@ export class CodeEditor {
   @Prop() onClickRun: Function;
   @Prop() formatter: Function;
   @Prop() fetchNavigators: Function;
+  @Prop() permissions: string;
 
   @State() activeIndex: number = 0;
   @State() refreshLoading: boolean = false;
@@ -87,7 +88,7 @@ export class CodeEditor {
     ]);
   }
 
-  async queryDataFetcher() {
+  async retriveQueryData() {
     try {
       const res = await axios.get("/api/editor/saved-queries");
       state.queryHistory = res.data;
@@ -105,7 +106,7 @@ export class CodeEditor {
       const data: any = { queryTitle: state.saveTitle, queryText: query, queryParameter: parameters };
       state.saveTitle = '';
       await axios.post(`/api/editor/saved-queries`, data);
-      this.queryDataFetcher();
+      this.retriveQueryData();
     } catch (error) {
       console.log(error);
 
@@ -153,11 +154,9 @@ export class CodeEditor {
         <div class="px-3 w-full flex content-between" style={{ justifyContent: 'space-between' }}>
           <tabs-component activeIndex={this.activeIndex} tabslist={TAB_LIST} tabClickHandler={this.tabClickHandler}></tabs-component>
           <div class="flex w-40 justify-between">
-            <save-query-modal class="pt-3"
-              deleteQueryData={(deleteId: number) => this.deleteQueryData(deleteId)}
-              queryDataFetcher={() => this.queryDataFetcher()}
-            />
-            <insert-node-modal fetchNavigators={() => this.fetchNavigators()} class="pt-3"></insert-node-modal>
+            <save-query-modal class="pt-3" deleteQueryData={deleteId => this.deleteQueryData(deleteId)} queryDataFetcher={() => this.retriveQueryData()} />
+
+            <insert-node-modal fetchNavigators={() => this.fetchNavigators()} class="pt-3" permissions={this.permissions}></insert-node-modal>
 
             <icon-button-basic
               customClass="mt-3"

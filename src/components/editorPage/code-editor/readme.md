@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property          | Attribute | Description | Type       | Default     |
-| ----------------- | --------- | ----------- | ---------- | ----------- |
-| `fetchNavigators` | --        |             | `Function` | `undefined` |
-| `formatter`       | --        |             | `Function` | `undefined` |
-| `onClickRun`      | --        |             | `Function` | `undefined` |
+| Property          | Attribute     | Description | Type       | Default     |
+| ----------------- | ------------- | ----------- | ---------- | ----------- |
+| `fetchNavigators` | --            |             | `Function` | `undefined` |
+| `formatter`       | --            |             | `Function` | `undefined` |
+| `onClickRun`      | --            |             | `Function` | `undefined` |
+| `permissions`     | `permissions` |             | `string`   | `undefined` |
 
 
 ## Dependencies
