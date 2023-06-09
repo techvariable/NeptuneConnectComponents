@@ -151,7 +151,7 @@ export class EditorPage {
             <code-editor formatter={() => this.formatter()} onClickRun={this.onClickRun} fetchNavigators={this.fetchNavigators} permissions={this.permissions}></code-editor>
             {state.isFetchedData && state.nodes.length === 0 && !state.isLoading && !state.isError && (
               <div class="flex items-center bg-gray-500 text-white text-sm font-bold px-4 py-3" role="alert">
-                <p>No Data Found in Database</p>
+                <p>Nothing returned from the database.</p>
               </div>
             )}
             {state.nodes.length > 0 && !state.isLoading && !state.isError && <tab-component permissions={this.permissions}></tab-component>}

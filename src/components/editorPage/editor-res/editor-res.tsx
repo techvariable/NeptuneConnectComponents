@@ -49,9 +49,13 @@ export class EditorRes {
   @State() isFilterKey: string = null;
   @State() type: string = null;
   @State() isModalOpen: boolean = false;
+  @State() canEditRow: boolean = false;
+  @State() canDeleteRow: boolean = false;
 
   componentWillLoad() {
     this.parsedPermissions = JSON.parse(this.permissions || '[]');
+    this.canEditRow = hasAccess(this.parsedPermissions, { name: 'editor', permission: 'update' })
+    this.canDeleteRow = hasAccess(this.parsedPermissions, { name: 'editor', permission: 'delete' })
   }
 
   removeSortChip = item => {
@@ -156,6 +160,8 @@ export class EditorRes {
             columns={columns}
             data={state.nodes}
             showActions={state.canEdit && !state.isCustomQuery}
+            canEditRow={this.canEditRow}
+            canDeleteRow={this.canDeleteRow}
             showPagination={!state.isCustomQuery}
             total={state.total}
             limit={state.limit}

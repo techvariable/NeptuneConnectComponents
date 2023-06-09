@@ -57,6 +57,8 @@ export namespace Components {
         "selectHandler": any;
     }
     interface DataTable {
+        "canDeleteRow": boolean;
+        "canEditRow": boolean;
         "columns": {
     id: number | string;
     key: string;
@@ -848,6 +850,8 @@ declare namespace LocalJSX {
         "selectHandler"?: any;
     }
     interface DataTable {
+        "canDeleteRow"?: boolean;
+        "canEditRow"?: boolean;
         "columns"?: {
     id: number | string;
     key: string;

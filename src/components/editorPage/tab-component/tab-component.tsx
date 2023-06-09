@@ -28,7 +28,7 @@ export class TabComponent {
           Showing results for <strong>{state.selectedNodeName !== null ? state.selectedNodeName : 'Custom Query'}</strong>
         </p>
 
-        <div class="flex justify-between border-b border-gray-200 ">
+        <div class="flex justify-between border-b border-gray-200">
           <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500">
             <li class="mr-2">
               <button
