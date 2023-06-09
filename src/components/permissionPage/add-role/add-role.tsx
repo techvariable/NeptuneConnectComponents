@@ -57,6 +57,7 @@ export class AddRole {
           disabled={!hasAccess(this.parsedPermissions, { name: 'permissions', permission: 'write' })}
           clickHandler={() => this.toggleModalState()}
           varient="outlined"
+          color="tertiary"
         >
           Add Role
         </icon-label-submit-button>

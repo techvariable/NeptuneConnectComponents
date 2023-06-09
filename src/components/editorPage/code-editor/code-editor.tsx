@@ -1,38 +1,14 @@
 import { Component, h, Element, State, Prop, Host } from '@stencil/core';
 import { EditorState } from '@codemirror/basic-setup';
-import { Compartment } from '@codemirror/state';
+
 import { EditorView, keymap } from '@codemirror/view';
 import { java } from '@codemirror/lang-java';
 import { json } from '@codemirror/lang-json';
 import Swal from 'sweetalert2';
 import state from '../store';
 import { customSetup } from '../../customSetup';
+import axios from 'axios';
 
-let myTheme = EditorView.theme(
-  {
-    '&': {
-      color: 'white',
-      backgroundColor: '#034',
-    },
-    '.cm-content': {
-      caretColor: '#0e9',
-    },
-    '&.cm-focused .cm-cursor': {
-      borderLeftColor: '#0e9',
-    },
-    '&.cm-focused .cm-selectionBackground, ::selection': {
-      backgroundColor: '#074',
-    },
-    '.cm-gutters': {
-      backgroundColor: '#045',
-      color: '#ddd',
-      border: 'none',
-    },
-  },
-  { dark: true },
-);
-
-const themeConfig = new Compartment();
 const TAB_LIST = [
   { name: 'Query', className: 'editor' },
   { name: 'Parameter', className: 'parameter' },
@@ -69,10 +45,6 @@ export class CodeEditor {
       }),
     ];
     const parameterExtensions = [customSetup, json(), this.onCtrlShiftEnter()];
-    if (localStorage.getItem('themesArray') === 'dark') {
-      editorExtensions.push(themeConfig.of([myTheme]));
-      parameterExtensions.push(themeConfig.of([myTheme]));
-    }
     state.stateQuery = EditorState.create({
       doc: state.query,
       extensions: editorExtensions,
@@ -115,105 +87,40 @@ export class CodeEditor {
       },
     ]);
   }
-  saveQueryHandler() {
-    const dbName: string = 'neptuneQueryDB';
-    const dbVersion: number = 1;
 
-    const request: IDBOpenDBRequest = indexedDB.open(dbName, dbVersion);
+  async retriveQueryData() {
+    try {
+      const res = await axios.get("/api/editor/saved-queries");
+      state.queryHistory = res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-    request.onerror = function (event: Event): void {
-      console.log('Database error: ' + (event.target as any).errorCode);
-    };
-
-    request.onupgradeneeded = function (event: IDBVersionChangeEvent): void {
-      const db: IDBDatabase = (event.target as any).result;
-      const objectStore: IDBObjectStore = db.createObjectStore('savedQueries', { keyPath: 'id', autoIncrement: true });
-      objectStore.createIndex('id', 'id', { unique: false });
-    };
-
-    request.onsuccess = function (event: Event): void {
-      const db: IDBDatabase = (event.target as any).result;
-
-      // Add data to the database
-      const transaction: IDBTransaction = db.transaction(['savedQueries'], 'readwrite');
-      const objectStore: IDBObjectStore = transaction.objectStore('savedQueries');
-
-      const data: any = { title: state.saveTitle, query: state.query, parameter: state.queryParameter };
+  async saveQueryHandler() {
+    try {
+      let transactionQuery = state.viewQuery.state.update();
+      const query = transactionQuery.state.doc.toString().trim();
+      let transactionParameter = state.viewParameter.state.update();
+      const parameters = transactionParameter.state.doc.toString().trim();
+      const data: any = { queryTitle: state.saveTitle, queryText: query, queryParameter: parameters };
       state.saveTitle = '';
-      const addRequest: IDBRequest = objectStore.add(data);
-      addRequest.onerror = function (event: Event): void {
-        console.log('Error adding data: ' + (event.target as any).errorCode);
-      };
+      await axios.post(`/api/editor/saved-queries`, data);
+      this.retriveQueryData();
+    } catch (error) {
+      console.log(error);
 
-      addRequest.onsuccess = function (): void {
-        console.log('Data added successfully');
-      };
-    };
-    this.isSaveModalOpen = false;
+    }
   }
-  retriveQueryData() {
-    const dbName: string = 'neptuneQueryDB';
-    const dbVersion: number = 1;
 
-    const request: IDBOpenDBRequest = indexedDB.open(dbName, dbVersion);
+  async deleteQueryData(deleteId: number) {
+    try {
+      const res = await axios.delete(`/api/editor/saved-queries/${deleteId}`);
+      return res
+    } catch (error) {
+      console.log(error);
 
-    request.onerror = function (event: Event): void {
-      console.log('Database error: ' + (event.target as any).errorCode);
-    };
-
-    request.onupgradeneeded = function (event: IDBVersionChangeEvent): void {
-      const db: IDBDatabase = (event.target as any).result;
-      const objectStore: IDBObjectStore = db.createObjectStore('savedQueries', { keyPath: 'id', autoIncrement: true });
-      objectStore.createIndex('id', 'id', { unique: false });
-    };
-
-    request.onsuccess = function (event: Event): void {
-      const db: IDBDatabase = (event.target as any).result;
-      // Retrieve data from the database
-      const transaction2: IDBTransaction = db.transaction(['savedQueries'], 'readonly');
-      const objectStore2: IDBObjectStore = transaction2.objectStore('savedQueries');
-      const index: IDBIndex = objectStore2.index('id');
-      const getRequest: IDBRequest = index.getAll();
-      getRequest.onerror = function (event: Event): void {
-        console.log('Error retrieving data: ' + (event.target as any).errorCode);
-      };
-
-      getRequest.onsuccess = function (event: Event): void {
-        state.queryHistory = (event.target as any).result;
-      };
-    };
-  }
-  deleteQueryData(deleteId: number) {
-    const dbName: string = 'neptuneQueryDB';
-    const dbVersion: number = 1;
-
-    const request: IDBOpenDBRequest = indexedDB.open(dbName, dbVersion);
-
-    request.onerror = function (event: Event): void {
-      console.log('Database error: ' + (event.target as any).errorCode);
-    };
-
-    request.onupgradeneeded = function (event: IDBVersionChangeEvent): void {
-      const db: IDBDatabase = (event.target as any).result;
-      const objectStore: IDBObjectStore = db.createObjectStore('savedQueries', { keyPath: 'id', autoIncrement: true });
-      objectStore.createIndex('id', 'id', { unique: false });
-    };
-
-    request.onsuccess = function (event: Event): void {
-      const db: IDBDatabase = (event.target as any).result;
-      // Delete data from the database
-      const transaction2: IDBTransaction = db.transaction(['savedQueries'], 'readwrite');
-      const objectStore2: IDBObjectStore = transaction2.objectStore('savedQueries');
-
-      const deleteRequest: IDBRequest = objectStore2.delete(deleteId);
-      deleteRequest.onerror = function (event: Event): void {
-        console.log('Error deleting data: ' + (event.target as any).errorCode);
-      };
-
-      deleteRequest.onsuccess = function (): void {
-        console.log('Data deleted successfully');
-      };
-    };
+    }
   }
   saveSubmitHandler() {
     try {

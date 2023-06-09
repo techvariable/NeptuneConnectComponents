@@ -39,7 +39,9 @@ graph TD;
   code-editor --> text-field
   code-editor --> loader-component
   save-query-modal --> icon-button-basic
+  save-query-modal --> data-table
   save-query-modal --> icon-label-submit-button
+  data-table --> plain-button
   insert-node-modal --> icon-button-basic
   insert-node-modal --> custom-drop-down
   insert-node-modal --> basic-dropdown
@@ -58,7 +60,6 @@ graph TD;
   edit-table-modal --> icon-label-submit-button
   table-search-modal-form --> radio-button-multiple
   table-search-modal-form --> icon-label-submit-button
-  data-table --> plain-button
   style editor-page fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

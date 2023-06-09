@@ -1,9 +1,6 @@
 # data-table
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -25,29 +22,31 @@
 | `supportedLimit` | --                |             | `number[]`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | `[]`        |
 | `total`          | `total`           |             | `number`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | `0`         |
 
-
 ## Dependencies
 
 ### Used by
 
- - [editor-res](../../../editorPage/editor-res)
- - [last-logs](../../../userProfilePage/last-logs)
- - [permission-table](../../../userProfilePage/permission-table)
+- [editor-res](../../../editorPage/editor-res)
+- [last-logs](../../../userProfilePage/last-logs)
+- [permission-table](../../../userProfilePage/permission-table)
+- [save-query-modal](../../../editorPage/save-query-modal)
 
 ### Depends on
 
 - [plain-button](../../plain-button)
 
 ### Graph
+
 ```mermaid
 graph TD;
   data-table --> plain-button
   editor-res --> data-table
   last-logs --> data-table
   permission-table --> data-table
+  save-query-modal --> data-table
   style data-table fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

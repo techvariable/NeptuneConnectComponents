@@ -31,8 +31,9 @@ type IStore = {
 
   nodes: Array<any>;
   columnHeaders: Array<any>;
+  savedColumnHeaders: Array<any>;
   availableNodes: Array<any>;
-  queryHistory: Array<{ id: number; title: string; query: string; parameter: string }>;
+  queryHistory: Array<{ id: number, queryTitle: string, queryText: string, queryParameter: string, ownerId: number }>;
   saveTitle: string;
   query: string;
   queryParameter: string;
@@ -84,6 +85,7 @@ const { state, onChange, reset } = createStore<IStore>({
   // response
   nodes: [],
   columnHeaders: [],
+  savedColumnHeaders: [],
   availableNodes: [],
   query: '\n\n\n\n\n\n\n\n\n',
   queryParameter: '{\n  \n}\n\n\n\n\n\n',
@@ -138,6 +140,33 @@ onChange('queryMode', value => {
       state.insertProperties = {};
   }
 });
+
+onChange('queryHistory', value => {
+  const keys = new Set();
+
+  value.forEach(row => {
+    let values = ['id', 'ownerId'];
+    Object.keys(row).filter(item => !values.includes(item)).forEach(k => {
+      keys.add(k);
+    });
+  });
+  state.savedColumnHeaders = [...keys].map((k: string) => {
+    let dataType = 'string';
+    state.queryHistory.every(row => {
+      if (row[k] !== undefined) {
+        dataType = typeof row[k];
+        return false;
+      }
+      return true;
+    });
+
+    return {
+      alias: k,
+      title: k,
+      type: dataType,
+    };
+  });
+})
 
 onChange('nodes', value => {
   const keys = new Set();
