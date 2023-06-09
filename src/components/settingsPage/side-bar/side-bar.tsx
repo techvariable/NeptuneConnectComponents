@@ -126,11 +126,12 @@ export class SideBar {
                   <td class="px-6 py-4 ">{this.api}</td>
 
                   <td class="px-6 py-4 text-right">
-                    <icon-button-basic
+                    <icon-label-submit-button
                       title="Copy to Clip Board"
+                      varient="text"
+                      color="tertiary"
                       clickHandler={() => this.copyToClipboard()}
-                      color="secondary"
-                      icon={
+                      startIcon={
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                           <path
                             stroke-linecap="round"
@@ -146,7 +147,7 @@ export class SideBar {
                     <icon-label-submit-button
                       title="Delete API key"
                       varient="text"
-                      color="secondary"
+                      color="tertiary"
                       disabled={!hasAccess(this.parsedPermissions, { name: 'settings', permission: 'delete' })}
                       clickHandler={() => this.deleteHandler()}
                       startIcon={
@@ -158,7 +159,7 @@ export class SideBar {
                           />
                         </svg>
                       }
-                    ></icon-label-submit-button>
+                    />
                   </td>
                 </tr>
               </tbody>
@@ -176,7 +177,7 @@ export class SideBar {
               title="Create New API Key"
               clickHandler={() => this.createHandler()}
               disabled={!hasAccess(this.parsedPermissions, { name: 'settings', permission: 'write' })}
-              color="secondary"
+              color="tertiary"
               customClass="mt-3"
             >
               Create New Key
