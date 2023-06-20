@@ -123,7 +123,7 @@ export class EditorPage {
           <div>
             <aside class="w-full lg:w-80" aria-label="Sidebar">
               <div class="w-full flex justify-between ">
-                <h2 class="font-mono text-lg font-bold leading-7 text-gray-600">Nodes</h2>
+                <h2 class="font-mono text-lg font-bold leading-7 text-gray-600">Labels</h2>
                 <icon-button-basic
                   color="secondary"
                   size="md"

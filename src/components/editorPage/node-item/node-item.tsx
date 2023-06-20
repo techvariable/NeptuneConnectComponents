@@ -27,7 +27,7 @@ export class NodeItem {
           {state.availableNodes.map(item => {
             return (
               <li>
-                <div class="flex justify-between text-base font-normal text-gray-900 rounded-lg bg-gray-200">
+                <div class="flex justify-between text-base font-normal text-gray-900 rounded-lg bg-gray-300">
                   {/* <div class="ml-3">{item}</div> */}
                   <menu-drop-down listTitle={item} list={DROPDOWN_ITEMS} fetchData={nodeName => this.nodeChangeHandler(nodeName)}></menu-drop-down>
                 </div>
