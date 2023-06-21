@@ -155,7 +155,7 @@ export class EditUser {
                         </div>
 
                         <div class="w-full">
-                          <p class="z-10 text-md text-gray-500 mb-4">Select permissions</p>
+                          <p class="z-10 text-md text-gray-500 mb-4">Select Role</p>
                           <label class="block text-left">
                             <select name="role" class="form-multiselect block w-full mt-1 border rounded-md " multiple>
                               {this.rolesobj.map((role: any) => (

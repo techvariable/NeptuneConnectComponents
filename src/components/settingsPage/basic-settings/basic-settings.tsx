@@ -99,19 +99,19 @@ export class BasicSettings {
     let style = '';
     switch (theme) {
       case 'dark-green':
-        style = 'filter:invert(.9) hue-rotate(30deg)';
+        style = 'filter:invert(.87) hue-rotate(30deg)';
         break;
       case 'dark-night':
-        style = 'filter:invert(.9) hue-rotate(120deg)';
+        style = 'filter:invert(.87) hue-rotate(120deg)';
         break;
       case 'dark-violet':
-        style = 'filter:invert(.9) hue-rotate(220deg)';
+        style = 'filter:invert(.87) hue-rotate(220deg)';
         break;
       case 'dark-orange':
-        style = 'filter:invert(.9) hue-rotate(320deg)';
+        style = 'filter:invert(.87) hue-rotate(320deg)';
         break;
       case 'dark-candy':
-        style = 'filter:invert(.9) hue-rotate(360deg)';
+        style = 'filter:invert(.87) hue-rotate(360deg)';
         break;
       case 'light-blue':
         style = 'filter: hue-rotate(330deg)';

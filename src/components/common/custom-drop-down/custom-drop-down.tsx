@@ -55,7 +55,7 @@ export class CustomDropDown {
           class="justify-between bg-gray-100 border border-gray-200 focus:ring-1 focus:outline-none focus:ring-gray-500 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full"
           type="button"
         >
-          {`Selected Node: ${this.dropdownSearchKey || ''}`}
+          {`Selected Label: ${this.dropdownSearchKey || ''}`}
           <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
           </svg>
@@ -106,7 +106,7 @@ export class CustomDropDown {
               );
             })}
           </ul>
-          <button
+          {(this.dropdownSearchKey !== undefined && this.dropdownSearchKey.length > 0) && <button
             type="button"
             onClick={() => this.handleSelect()}
             class="flex w-full items-center p-3 text-sm font-medium text-gray-700 border-t border-gray-400 rounded-b-lg bg-gray-100 dark:border-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-red-500 "
@@ -114,8 +114,8 @@ export class CustomDropDown {
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span class="px-3">Select</span>
-          </button>
+            <span class="px-3">Select {`"${this.dropdownSearchKey}"`}</span>
+          </button>}
         </form>
       </Host>
     );

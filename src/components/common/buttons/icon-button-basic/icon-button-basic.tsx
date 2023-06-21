@@ -37,9 +37,8 @@ export class IconButtonBasic {
   render() {
     return (
       <button
-        class={`flex border border-transparent ${this.sizeClasses[this.size]} bg-${this.colorClasses[this.color]}-500  text-${this.colorClasses[this.color]}-600 hover:text-${
-          this.colorClasses[this.color]
-        }-800 justify-center w-${this.width} ${this.customClass} cursor-pointer disabled:cursor-default disabled:text-${this.colorClasses[this.color]}-400 `}
+        class={`flex border border-transparent ${this.sizeClasses[this.size]} text-${this.colorClasses[this.color]}-600 hover:text-${this.colorClasses[this.color]
+          }-800 justify-center w-${this.width} ${this.customClass} cursor-pointer disabled:cursor-default disabled:text-${this.colorClasses[this.color]}-400 `}
         title={this.title}
         onClick={this.clickHandler}
         disabled={this.disabled || this.loading}
