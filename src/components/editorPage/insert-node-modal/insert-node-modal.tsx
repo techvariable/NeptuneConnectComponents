@@ -23,7 +23,6 @@ export class InsertNodeModal {
     { label: 'String', selected: true },
     { label: 'Number', selected: false },
   ];
-  @State() propSelectedOptionLabel: string = 'String';
   @State() isFormValid: boolean = true;
 
   componentWillLoad() {
@@ -47,7 +46,7 @@ export class InsertNodeModal {
   discardAddNode() {
     this.isFormValid = true;
     this.toggleModalState();
-    this.addNodeState = [{ property: '', value: '', valueType: '' }];
+    this.addNodeState = [{ property: '', value: '', valueType: 'string' }];
   }
 
   async submitHandler(e) {
@@ -56,7 +55,9 @@ export class InsertNodeModal {
 
   handleChange(event, key, index) {
     if (key === 'value') {
-      this.propSelectedOptionLabel = /^-?\d+\.?\d*$/.test(event.target.value) ? 'Number' : 'String';
+      const copyAddNodeState = [...this.addNodeState];
+      copyAddNodeState[index]["valueType"] = /^-?\d+\.?\d*$/.test(event.target.value) ? 'Number' : 'String';
+      this.addNodeState = copyAddNodeState;
     }
     this.addNodeState[index][key] = event.target.value;
   }
@@ -163,7 +164,7 @@ export class InsertNodeModal {
                         </div>
                         <custom-drop-down class="py-4" selectHandler={value => this.handleCustomSelect(value)} optionListProp={this.nodeMapper()}></custom-drop-down>
                         <div class="max-h-60 overflow-auto custom-scrollbar">
-                          {this.addNodeState.map((_node, index) => {
+                          {this.addNodeState.map((node, index) => {
                             return (
                               <div class="mt-2 flex gap-4">
                                 <div>
@@ -201,7 +202,7 @@ export class InsertNodeModal {
                                   <basic-dropdown
                                     label="Select:"
                                     propOptions={this.valueOptions}
-                                    propSelectedOptionLabel={this.propSelectedOptionLabel}
+                                    propSelectedOptionLabel={node["valueType"]}
                                     optionHandler={selectedLabel => this.optionHandler(index, selectedLabel)}
                                     class="w-40"
                                     id="valueType"
