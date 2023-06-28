@@ -74,7 +74,7 @@ export class EditorPage {
     const demoConstraints = ["drop", "addv", "addvertex", "addedge", "adde", "property", "addlabel"]
     demoConstraints.forEach(constraint => {
       if (value.toLowerCase().includes(constraint)) {
-        throw Error(`You can not perform ${constraint} operation in Demo mode!`)
+        throw Error(`You can perform this operation in Demo mode !`)
       }
     })
   }
