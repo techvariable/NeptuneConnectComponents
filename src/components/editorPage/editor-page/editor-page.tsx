@@ -13,6 +13,7 @@ import { formatJSON } from '../../../utils/utils';
 export class EditorPage {
   @Prop() url: string;
   @Prop() permissions: string;
+  @Prop() mode: string;
 
   @State() selectedNodeName: string;
   @State() nodeList: string[] = [];
@@ -69,7 +70,7 @@ export class EditorPage {
     state.viewParameter.dispatch(transactionToFormatParameter);
   };
 
-  checkIfValidQuery(value) {
+  checkIfValidDemoQuery(value: string) {
     const demoConstraints = ["drop", "addv", "addvertex", "addedge", "adde", "property", "addlabel"]
     demoConstraints.forEach(constraint => {
       if (value.toLowerCase().includes(constraint)) {
@@ -101,7 +102,7 @@ export class EditorPage {
         if (isValid) {
           state.timeTaken = null;
 
-          this.checkIfValidQuery(query)
+          if (this.mode === "demo") this.checkIfValidDemoQuery(query)
 
           const res = await axios.post(`${state.hostUrl}/query/`, {
             query,
