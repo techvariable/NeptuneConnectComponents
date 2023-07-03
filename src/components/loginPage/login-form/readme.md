@@ -7,13 +7,13 @@
 
 ## Properties
 
-| Property   | Attribute  | Description | Type     | Default  |
-| ---------- | ---------- | ----------- | -------- | -------- |
-| `email`    | `email`    |             | `string` | `''`     |
-| `error`    | `error`    |             | `string` | `''`     |
-| `mode`     | `mode`     |             | `string` | `'demo'` |
-| `password` | `password` |             | `string` | `''`     |
-| `url`      | `url`      |             | `string` | `''`     |
+| Property   | Attribute  | Description | Type     | Default |
+| ---------- | ---------- | ----------- | -------- | ------- |
+| `email`    | `email`    |             | `string` | `''`    |
+| `error`    | `error`    |             | `string` | `''`    |
+| `mode`     | `mode`     |             | `string` | `''`    |
+| `password` | `password` |             | `string` | `''`    |
+| `url`      | `url`      |             | `string` | `''`    |
 
 
 ## Dependencies
