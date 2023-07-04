@@ -35,7 +35,7 @@ export class LoginForm {
       })
       this.visitSubmitError = ''
       this.emailSubmited = true
-      this.autoSubmitter()
+      await this.autoSubmitter()
     } catch (error) {
       this.visitSubmitError = error.response.data.message
       this.emailSubmited = false
