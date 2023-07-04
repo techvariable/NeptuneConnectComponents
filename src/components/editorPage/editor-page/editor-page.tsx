@@ -13,6 +13,7 @@ import { formatJSON } from '../../../utils/utils';
 export class EditorPage {
   @Prop() url: string;
   @Prop() permissions: string;
+  @Prop() mode: string;
 
   @State() selectedNodeName: string;
   @State() nodeList: string[] = [];
@@ -43,7 +44,6 @@ export class EditorPage {
       .catch(err => {
         this.loadingNodes = false;
         this.nodeError = err;
-        console.log(err);
       });
   };
 
@@ -70,6 +70,14 @@ export class EditorPage {
     state.viewParameter.dispatch(transactionToFormatParameter);
   };
 
+  checkIfValidDemoQuery(value: string) {
+    const demoConstraints = ["drop", "addv", "addvertex", "addedge", "adde", "property", "addlabel"]
+    demoConstraints.forEach(constraint => {
+      if (value.toLowerCase().includes(constraint)) {
+        throw Error(`You can perform this operation in Demo mode !`)
+      }
+    })
+  }
   onClickRun = async () => {
     if (state.editorTextFlag) {
       state.selectedNodeName = null;
@@ -93,6 +101,9 @@ export class EditorPage {
 
         if (isValid) {
           state.timeTaken = null;
+
+          if (this.mode === "demo") this.checkIfValidDemoQuery(query)
+
           const res = await axios.post(`${state.hostUrl}/query/`, {
             query,
             parameters: JSON.parse(parameters),
@@ -108,9 +119,8 @@ export class EditorPage {
           state.errorMessage = error;
         }
       } catch (error) {
-        console.log({ error });
         state.isError = true;
-        state.errorMessage = error?.response?.data?.error ? error.response.data.error : 'Failed to fetch data from db server.';
+        state.errorMessage = error?.response?.data?.error ? error.response.data.error : error.message ?? 'Failed to fetch data from db server.';
       }
       state.isLoading = false;
     }

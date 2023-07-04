@@ -9,6 +9,7 @@
 
 | Property      | Attribute     | Description | Type     | Default     |
 | ------------- | ------------- | ----------- | -------- | ----------- |
+| `mode`        | `mode`        |             | `string` | `undefined` |
 | `permissions` | `permissions` |             | `string` | `undefined` |
 | `url`         | `url`         |             | `string` | `undefined` |
 
