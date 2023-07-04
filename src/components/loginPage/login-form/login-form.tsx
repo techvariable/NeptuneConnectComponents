@@ -13,7 +13,7 @@ export class LoginForm {
   @Prop() email: string = ''
   @Prop() password: string = ''
 
-  componentWillLoad() {
+  componentDidLoad() {
     if (this.mode === 'demo') {
       this.autoSubmitter()
     }
@@ -26,7 +26,7 @@ export class LoginForm {
         email: this.email,
         password: this.password
       })
-      // location.assign('/')
+      location.assign('/')
     } catch (error) {
       throw Error("Form could not be submitted")
     }
