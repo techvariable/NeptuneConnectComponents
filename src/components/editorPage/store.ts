@@ -195,15 +195,6 @@ onChange('nodes', value => {
   });
 });
 
-onChange('query', value => {
-  if (state.viewQuery) {
-    let transactionToAdd = state.viewQuery.state.update({
-      changes: { from: 0, to: state.viewQuery.state.doc.toString().length, insert: `${value}` },
-    });
-    state.viewQuery.dispatch(transactionToAdd);
-  }
-});
-
 onChange('queryParameter', value => {
   if (state.viewParameter) {
     let transactionToAdd = state.viewParameter.state.update({

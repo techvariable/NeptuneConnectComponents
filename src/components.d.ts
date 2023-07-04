@@ -135,6 +135,7 @@ export namespace Components {
         "doc": any;
     }
     interface EditorPage {
+        "mode": string;
         "permissions": string;
         "url": string;
     }
@@ -928,6 +929,7 @@ declare namespace LocalJSX {
         "doc"?: any;
     }
     interface EditorPage {
+        "mode"?: string;
         "permissions"?: string;
         "url"?: string;
     }
